@@ -1,3 +1,8 @@
+/**
+ * @author Show Pratoomratana, Team 404 Project Aquire
+ * @version v0.0.1
+ */
+
 package ProjectAcquire;
 
 public class Stock {
