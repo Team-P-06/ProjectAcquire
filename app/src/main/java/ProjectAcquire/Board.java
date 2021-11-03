@@ -9,11 +9,11 @@ import java.util.List;
 
 public class Board {
     //instance variables
-    List tileList;
-    List uncharteredCompanies;
-    List charteredCompanies;
-    List playerList;
-    Player CurrentPlayer;
+    private List<Tile> tileList;
+    private List<Company> uncharteredCompanies;
+    private List<Company> charteredCompanies;
+    private List<Player> playerList;
+    private Player CurrentPlayer;
 
     private static Board instance = null; //Singleton instance variable
 

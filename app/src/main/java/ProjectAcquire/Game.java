@@ -7,7 +7,8 @@ package ProjectAcquire;
  * Game class that can get the turns, start, load, or end a game
  */
 public class Game {
-    GameState GameState = new GameState();
+
+    private GameState GameState = new GameState();
 
     /**
      * Load game method that accepts a gson file to get the game state of a specific game

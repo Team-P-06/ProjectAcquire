@@ -8,11 +8,11 @@ package ProjectAcquire;
 
 public class Company {
 
-    String companyName;
-    int tilesOnBoard;
-    int stockPrice;
-    boolean chartered;
-    boolean isPermanent;
+   private String companyName;
+   private int tilesOnBoard;
+   private int stockPrice;
+   private boolean chartered;
+   private boolean isPermanent;
 
 
     /**

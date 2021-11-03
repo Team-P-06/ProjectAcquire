@@ -6,7 +6,7 @@
 package ProjectAcquire;
 
 public class Stock {
-    Company parentCompany;
+    private Company parentCompany;
 
 
     Stock(Company parentCompany){
@@ -26,8 +26,9 @@ public class Stock {
      * @return the price of the stocks based on it's company's worth
      */
     public int getStockPriceFromCompany(){
-        /*parent = getCompany();
-        return parent.getStockPrice();*/
+
+        return parentCompany.getStockPrice();
+
     }
 
     /**
@@ -37,6 +38,6 @@ public class Stock {
      * @return
      */
     public int maxStockBuy(Player player, Company company){
-
+    return 0; //DEFAULT
     }
 }

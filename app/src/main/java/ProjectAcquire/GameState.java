@@ -10,8 +10,8 @@ public class GameState {
     /**
      * Variables needed to maintain a gamestate
      */
-    Player currentPlayer;
-    Board currentBoard;
+    private Player currentPlayer;
+   private Board currentBoard;
 
     /**
      * Determines which player has the next turn available in the gamestate

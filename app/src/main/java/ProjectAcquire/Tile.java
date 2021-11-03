@@ -5,9 +5,9 @@
 package ProjectAcquire;
 
 public class Tile {
-    Company tilesCompany;
-    String tileCoord;
-    Boolean flipped;
+   private Company tilesCompany;
+   private String tileCoord;
+   private Boolean flipped;
 
 
     Tile(){

@@ -42,7 +42,7 @@ public class CompanyLogic {
     static void charterLogic(Company company){
 
 
-        System.out.println("Company "+ company.companyName + " is now chartered");
+        System.out.println("Company "+ company.getCompanyName() + " is now chartered");
     }
 
 
