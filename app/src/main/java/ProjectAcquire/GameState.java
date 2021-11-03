@@ -3,6 +3,8 @@
  */
 package ProjectAcquire;
 
+import java.util.*;
+
 /**
  * GameSate class that contains a games current status
  */
@@ -12,7 +14,11 @@ public class GameState {
      */
     Player currentPlayer;
     Board currentBoard;
+    List<Player> playerList;
 
+    public void newGameState(){
+        GameState currentGameState = new GameState();
+    }
     /**
      * Determines which player has the next turn available in the gamestate
      * @return
