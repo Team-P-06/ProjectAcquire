@@ -1,5 +1,5 @@
 /**
- * @author Show Pratoomratana, Team 404 Project Aquire
+ * @author Show Pratoomratana, Team 404 Project Acquire
  * @version v0.0.1
  */
 
