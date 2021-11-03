@@ -4,16 +4,27 @@
  */
 package ProjectAcquire;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Class to manage the players. This holds their stats and actions
  */
 public class Player {
-   private final String name;
-   private int money;
+    private String name;
+    private int money;
     private List<Stock> stockList;
-   private List<Tile> tileList;
+    private List<Tile> tileList;
+
+    /**
+     * Default constructor with dummy values
+     */
+    Player(){
+        this.name = "player1";
+        this.money = 400;
+        List<Stock> stockList = new ArrayList<>();
+        List<Tile> tileList = new ArrayList<>();
+    }
 
     /**
      *
@@ -26,6 +37,22 @@ public class Player {
         this.money = money;
         this.tileList = tileHand;
     }
+
+    /**
+     * Getters for all the player variables
+     * @return specified getter
+     */
+    public String getName(){ return name; }
+    public int getMoney(){ return money; }
+    public List<Stock> getStockList(){ return stockList; }
+    public List<Tile> getTileList(){ return tileList; }
+
+    /**
+     * Setters for all the players values
+     * @param money/name of player
+     */
+    private void setMoney(int money){ this.money = money; }
+    private void setName(String name){ this.name = name; }
 
     /**
      *
