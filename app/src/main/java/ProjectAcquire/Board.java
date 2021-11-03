@@ -178,7 +178,7 @@ public class Board {
         return company.getTilesOnBoard();
     }
 
-    List getTilesAround(String coord){}
+    List getTilesAround(String coord){ return new ArrayList<String>();}
 
     //other methods
 
