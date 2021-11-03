@@ -18,7 +18,7 @@ public class Stock {
      * @return the stock's parent company
      */
     public Company getCompany(){
-        return  parentCompany;
+        return parentCompany;
     }
 
     /**
@@ -28,6 +28,8 @@ public class Stock {
     public int getStockPriceFromCompany(){
 
         return parentCompany.getStockPrice();
+
+
 
     }
 

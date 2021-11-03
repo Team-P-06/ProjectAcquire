@@ -48,6 +48,7 @@ public class Player {
      */
     public void buyStock(Stock stock){
 
+        stockList.add(stock);
     }
 
     /**
