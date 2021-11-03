@@ -12,17 +12,23 @@ public class GameState {
     /**
      * Variables needed to maintain a gamestate
      */
-<<<<<<< HEAD
     private Player currentPlayer;
-   private Board currentBoard;
-=======
-    Player currentPlayer;
-    Board currentBoard;
-    List<Player> playerList;
->>>>>>> feature/List
+    private Player nextPlayer;
+    private Board currentBoard;
+    private List<Player> playerList;
 
-    public void newGameState(){
-        GameState currentGameState = new GameState();
+    /**
+     * Creates a new GameSate for a new game to be passed
+     * @param currentPlayer
+     * @param nextPlayer
+     * @param currentBoard
+     * @param playerList
+     */
+    public GameState(Player currentPlayer, Player nextPlayer, Board currentBoard, List<Player> playerList){
+        this.currentPlayer = currentPlayer;
+        this.nextPlayer = nextPlayer;
+        this.currentBoard = currentBoard;
+        this.playerList = playerList;
     }
     /**
      * Determines which player has the next turn available in the gamestate
