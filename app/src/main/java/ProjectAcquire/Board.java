@@ -227,9 +227,12 @@ public class Board {
 
     void setDeadTile(Tile tile){} //don't remember what this is. Does it remove a tile from the board?
 
-
-    boolean checkPermanent(String coord){return false;}//not sure why we are using a string here instead of directly passing in a Company. I think we should confine our coord to tile
-    //algorithm to one place: (checkForAction), or make a new method that is a coord to tile method.
+    /**
+     *
+     * @param coord String coordinate location of tile
+     * @return if the company that is at that tile location is permanent.
+     */
+    boolean checkPermanent(String coord){return false;}
 
 
 }

@@ -9,6 +9,14 @@ public class Tile {
     String tileCoord;
     Boolean flipped;
 
+
+    Tile(){
+
+        this.tilesCompany = new Company();
+        this.tileCoord = "A1";
+        this.flipped = false;
+    }
+
     /**
      *
      * @param tilesCompany the company the tile is apart of.
@@ -52,20 +60,5 @@ public class Tile {
         tilesCompany = newCompany;
     }
 
-    /**
-     * creates a new unique tile and give it to the player who drew it.
-     * @return a new unique tile
-     */
-    public Tile drawTile(){
-
-    }
-
-    /**
-     * This might be better to be in Player since Player already has an array of tiles
-     * Removes a tile from the players hand
-     */
-    public void discardTile(Tile){
-
-    }
 
 }

@@ -74,4 +74,24 @@ public class Player {
 
     }
 
+
+
+    /**
+     * creates a new unique tile and give it to the player who drew it.
+     * @return a new unique tile
+     */
+    public Tile drawTile(){
+
+   Tile drawnTile = new Tile(); //DEFAULT TILE
+        tileList.add(drawnTile);
+        return drawnTile;
+    }
+
+    /**
+     * Removes a tile from the players hand
+     */
+    public void discardTile(Tile tile){
+    tileList.remove(tile);
+    }
+
 }
