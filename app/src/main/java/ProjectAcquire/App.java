@@ -13,5 +13,14 @@ public class App {
      */
     public static void main(String[] args) {
         System.out.println("App works");
+
+        //Initialize Game
+        Game game = new Game();
+        game.start();
+
+        //plays the game
+        game.runGame();
+
+
     }
 }
