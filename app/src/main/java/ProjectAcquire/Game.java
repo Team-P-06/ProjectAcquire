@@ -8,7 +8,7 @@ package ProjectAcquire;
  */
 public class Game {
 
-    private GameState GameState = new GameState();
+    GameState currentGame;
 
     /**
      * Load game method that accepts a gson file to get the game state of a specific game
@@ -21,13 +21,16 @@ public class Game {
      * @return
      */
     public GameState getTurn(){
-        return GameState;
+        return currentGame;
     }
 
     /**
      * Start game method that will begin a new game that isn't already saved
      */
-    public void startGame(){ }
+    public void startNewGame(){
+        GameState Game = new GameState();
+        setCurrentGame(Game);
+    }
 
     /**
      * Run a game that is already saved from the gson file gathered from loadGame
@@ -39,4 +42,13 @@ public class Game {
      * Once a player ends the game on their turn the game will end using this method and determine the winner
      */
     public void endGame(){ }
+
+    /**
+     *
+     * @param Game
+     */
+    public void setCurrentGame(GameState Game){
+        this.currentGame = Game;
+    }
+
 }

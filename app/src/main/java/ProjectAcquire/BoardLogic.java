@@ -12,7 +12,7 @@ import java.util.List;
  * @version v0.0.1
  */
 
-public class CompanyLogic {
+public class BoardLogic {
 
     //Not sure these instance variables are needed, since CompanyLogic is not an Object.
     String coordinate;

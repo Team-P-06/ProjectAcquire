@@ -196,14 +196,14 @@ public class Board {
         //which company they want to charter, and then fill in data like initial stock price and
         //initial stocks on board.
 
-        //Since our board is instantiated, our CompanyLogic methods must be static methods.
+        //Since our board is instantiated, our BoardLogic methods must be static methods.
         //This further suggest that we may want to merge Company Logic and Board.
-        CompanyLogic.charterLogic(company);
+        BoardLogic.charterLogic(company);
 
     }
 
     /**
-     * Unlike our charter method, our uncharter method should not initiate the unchartering process. Instead it should be called from our CompanyLogic.merge() function as part of the clean up process of a merge.
+     * Unlike our charter method, our uncharter method should not initiate the unchartering process. Instead it should be called from our BoardLogic.merge() function as part of the clean up process of a merge.
      * @param company Company to uncharter
      */
     void unCharter(Company company){
