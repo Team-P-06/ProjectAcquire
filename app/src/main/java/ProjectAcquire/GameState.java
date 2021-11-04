@@ -16,6 +16,12 @@ public class GameState {
     private Player nextPlayer;
     private Board currentBoard;
     private List<Player> playerList;
+    private boolean isOver = false;
+
+    public GameState(){
+
+    }
+
 
     /**
      * Creates a new GameSate for a new game to be passed
@@ -30,6 +36,29 @@ public class GameState {
         this.currentBoard = currentBoard;
         this.playerList = playerList;
     }
+
+
+    //Getters
+
+    /**
+     *
+     * @return true if the game is over
+     */
+    boolean isOver(){
+        return this.isOver;
+    }
+
+
+    //Setters
+
+    /**
+     * Sets whether the game is done or not
+     * @param isOver whether game is over or not
+     */
+    void setOver(boolean isOver){
+        this.isOver = isOver;
+    }
+
     /**
      * Determines which player has the next turn available in the gamestate
      * @return

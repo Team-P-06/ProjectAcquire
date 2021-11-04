@@ -23,7 +23,7 @@ public class Stock {
 
     /**
      *
-     * @return the price of the stocks based on it's company's worth
+     * @return the price of the stocks based on its company's worth
      */
     public int getStockPriceFromCompany(){
 

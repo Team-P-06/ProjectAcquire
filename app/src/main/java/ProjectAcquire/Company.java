@@ -108,7 +108,7 @@ public class Company {
      * @param permanent whether the company is permanent or not
      */
     private void setPermanent(boolean permanent) {
-        isPermanent = permanent;
+        this.isPermanent = permanent;
     }
 
 
