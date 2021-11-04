@@ -1,5 +1,5 @@
 /**
- * @author Alex Diviney, Team 404, Project Aquire
+ * @author Team 404
  * @version v0.0.1
  */
 
@@ -7,10 +7,6 @@ package ProjectAcquire;
 
 import java.util.List;
 
-/**
- * @author Alex Diviney, Team 404, Project Aquire
- * @version v0.0.1
- */
 
 public class BoardLogic {
 

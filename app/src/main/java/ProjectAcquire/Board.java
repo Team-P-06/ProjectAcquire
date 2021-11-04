@@ -1,5 +1,5 @@
 /**
- * @author Alex Diviney, Team 404, Project Aquire
+ * @author Team 404
  * @version v0.0.1
  */
 
