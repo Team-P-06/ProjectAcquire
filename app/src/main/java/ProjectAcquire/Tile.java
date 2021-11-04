@@ -19,7 +19,7 @@ public class Tile {
 
     /**
      *
-     * @param tilesCompany the company the tile is apart of.
+     * @param tilesCompany the company the tile is a part of.
      * @param tileCoord the coordinate of the tile
      * flipped default value should always be false when created. The default company should be a empty company
      */
