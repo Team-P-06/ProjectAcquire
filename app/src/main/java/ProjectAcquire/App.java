@@ -43,11 +43,11 @@ public class App extends Application {
         launch();
 
         //Initialize Game
-        Game game = new Game();
-        game.start();
+      //  Game game = new Game();
+        //game.start();
 
         //plays the game
-        game.runGame();
+       // game.runGame();
 
     }
 
