@@ -16,11 +16,11 @@ public class App {
         System.out.println("App works");
 
         //Initialize Game
-        Game game = new Game();
-        game.start();
+      //  Game game = new Game();
+        //game.start();
 
         //plays the game
-        game.runGame();
+       // game.runGame();
 
 
     }
