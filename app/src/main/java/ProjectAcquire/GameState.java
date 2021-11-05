@@ -26,7 +26,7 @@ public class GameState {
     /**
      * Create a new game with the starting player, board, and company attributes
      */
-    // public GameState(){ Depreciated until we make the default gamestate structure with the UI in game
+    /* public GameState(){ Depreciated until we make the default gamestate structure with the UI in game
         /**
          * Add a new player 1 and save player 1 to the current gamestate
          */
