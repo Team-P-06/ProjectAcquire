@@ -18,13 +18,13 @@ import java.io.IOException;
 public class App extends Application {
 
     /**
-     * Starts the JavaFX UI. Visuals are found in FXMLUI.fxml in the resources folder. Logic is in FXController.java.
+     * Starts the JavaFX UI. Visuals are found in MainMenu.fxml in the resources folder. Logic is in FXController.java.
      * @param stage default stage for application
      * @throws IOException
      */
     @Override
     public void start(Stage stage) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/FXMLUI.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/MainMenu.fxml"));
 
         Scene mainScene = new Scene(root);
 

@@ -18,8 +18,8 @@
          <children>
             <Label fx:id="loadGameLabel" layoutX="5.0" layoutY="30.0" style="-fx-background-color: white;" text="Choose a game to load" />
             <Button fx:id="loadGame1Button" layoutX="5.0" layoutY="60.0" mnemonicParsing="false" onAction="#loadGame" prefWidth="150.0" text="Game 1" />
-            <Button fx:id="loadGame3Button" layoutX="5.0" layoutY="140.0" mnemonicParsing="false" onAction="#loadGame" prefWidth="150.0" text="Game 3" />
             <Button fx:id="loadGame2Button" layoutX="5.0" layoutY="100.0" mnemonicParsing="false" onAction="#loadGame" prefWidth="150.0" text="Game 2" />
+            <Button fx:id="loadGame3Button" layoutX="5.0" layoutY="140.0" mnemonicParsing="false" onAction="#loadGame" prefWidth="150.0" text="Game 3" />
          </children>
       </Pane>
    </children>

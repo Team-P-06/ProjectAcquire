@@ -9,7 +9,7 @@ import javafx.scene.layout.Pane;
 
 /**
  * Controller for actions of FXMLUI.
- * All functions and variables that are used communicating with FXMLUI.fxml need a @FXML proceeding them.
+ * All functions and variables that are used communicating with MainMenu.fxml need a @FXML proceeding them.
  */
 public class FXController {
     @FXML private Button newGameButton;
@@ -26,8 +26,8 @@ public class FXController {
     public void initialize(){}
 
     /**
-     * Simple test action for clicking a button
-     * @param event The button is pressed
+     * Starting a new fresh game
+     * @param event The NewGame button is pressed.
      */
     @FXML
     private void newGame(ActionEvent event){
@@ -49,7 +49,14 @@ public class FXController {
      */
     @FXML
     private void loadGame(ActionEvent event) {
-            loadGame1Button.setText("loaded");
+        Object source = event.getSource();
+        if (loadGame1Button.equals(source)) {
+            loadGame1Button.setText("G1 loaded");
+        } else if (loadGame2Button.equals(source)) {
+            loadGame2Button.setText("G2 loaded");
+        } else if (loadGame3Button.equals(source)) {
+            loadGame3Button.setText("G3 loaded");
+        }
     }
 
 
@@ -60,5 +67,6 @@ public class FXController {
     @FXML
     private void exitGame(ActionEvent event) {
         exitGameButton.setText("Exiting");
+        System.exit(0);
     }
 }
