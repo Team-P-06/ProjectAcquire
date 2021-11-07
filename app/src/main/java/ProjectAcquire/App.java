@@ -5,6 +5,7 @@
 package ProjectAcquire;
 
 import javafx.application.Application;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -17,6 +18,7 @@ import java.io.IOException;
  */
 public class App extends Application {
 
+    static FXController controller;
     /**
      * Starts the JavaFX UI. Visuals are found in MainMenu.fxml in the resources folder. Logic is in FXController.java.
      * @param stage default stage for application
@@ -24,7 +26,9 @@ public class App extends Application {
      */
     @Override
     public void start(Stage stage) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/MainMenu.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/MainMenu.fxml"));
+        Parent root = loader.load();
+        controller = (FXController) loader.getController();
 
         Scene mainScene = new Scene(root);
 

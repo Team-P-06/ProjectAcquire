@@ -1,16 +1,135 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GameBoard">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ProjectAcquire.FXController">
    <children>
-      <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" style="-fx-background-color: red;" text="A1">
-         <font>
-            <Font size="10.0" />
-         </font>
-      </Button>
+      <Button fx:id="updatePlayerNamesButton" layoutX="50.0" layoutY="750.0" mnemonicParsing="false" onAction="#updatePlayers" text="Populate" />
+      <Button fx:id="exitGameButton" layoutX="150.0" layoutY="750.0" mnemonicParsing="false" onAction="#exitGame" text="Exit" />
+      <GridPane gridLinesVisible="true" layoutX="20.0" layoutY="20.0" prefHeight="500.0" prefWidth="600.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </GridPane>
+      <Pane layoutX="10.0" layoutY="550.0" prefHeight="200.0" prefWidth="600.0">
+         <children>
+            <Label fx:id="playersLabel" layoutX="25.0" layoutY="25.0" text="Players" />
+            <ListView fx:id="playerNameList" layoutY="50.0" prefHeight="80.0" prefWidth="100.0" style="-fx-background-color: black;" />
+            <Label fx:id="playerMoneyLabel" layoutX="130.0" layoutY="25.0" text="Money" />
+            <ListView fx:id="playerMoneyList" layoutX="101.0" layoutY="50.0" prefHeight="80.0" prefWidth="100.0" style="-fx-background-color: black;" />
+            <Label fx:id="playersNetWorth" layoutX="220.0" layoutY="25.0" text="Net Worth" />
+            <ListView fx:id="playerNetList" layoutX="202.0" layoutY="50.0" prefHeight="80.0" prefWidth="100.0" style="-fx-background-color: black;" />
+            <Label fx:id="playerStocksLabel" prefWidth="500.0" style="-fx-background-color: grey; -fx-border-color: black; -fx-border-width: 3;" text="Player Hand" textAlignment="CENTER" />
+            <ListView fx:id="playerTilesList" layoutY="140.0" orientation="HORIZONTAL" prefHeight="50.0" prefWidth="300.0" style="-fx-background-color: blue; -fx-border-insets: black;" />
+         </children>
+      </Pane>
+      <Pane layoutX="675.0" layoutY="25.0" prefHeight="400.0" prefWidth="550.0">
+         <children>
+            <Label fx:id="hotelsLabel" prefHeight="30.0" prefWidth="490.0" style="-fx-background-color: grey; -fx-border-color: black; -fx-border-width: 3;" text="Hotels" textAlignment="CENTER">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="hotelNameLabel" layoutX="5.0" layoutY="33.0" prefWidth="90.0" style="-fx-border-color: black;" text="Hotel Name">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <ListView fx:id="hotelNameListView" layoutY="55.0" prefHeight="275.0" prefWidth="100.0" style="-fx-background-color: black; -fx-border-color: black;" />
+            <Label fx:id="cHotelLabel" layoutX="105.0" layoutY="31.0" prefWidth="50.0" style="-fx-background-color: red; -fx-border-color: black;" text="C" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <ListView fx:id="cStockListView" layoutX="105.0" layoutY="55.0" prefHeight="275.0" prefWidth="50.0" />
+            <Label fx:id="sHotelLabel" layoutX="160.0" layoutY="31.0" prefWidth="50.0" style="-fx-background-color: orange; -fx-border-color: black;" text="S">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <ListView fx:id="sStockListView" layoutX="160.0" layoutY="55.0" prefHeight="275.0" prefWidth="50.0" />
+            <Label fx:id="fHotelLabel" layoutX="215.0" layoutY="31.0" prefWidth="50.0" style="-fx-background-color: green; -fx-border-color: black;" text="F" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <ListView fx:id="fStockListView" layoutX="215.0" layoutY="55.0" prefHeight="275.0" prefWidth="50.0" />
+            <Label fx:id="iHotelLabel" layoutX="270.0" layoutY="31.0" prefWidth="50.0" style="-fx-border-color: black; -fx-background-color: yellow;" text="I" textAlignment="CENTER">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <ListView fx:id="iStockListView" layoutX="270.0" layoutY="55.0" prefHeight="275.0" prefWidth="50.0" />
+            <Label fx:id="aHotelLabel" layoutX="325.0" layoutY="31.0" prefWidth="50.0" style="-fx-background-color: blue; -fx-border-color: black;" text="A" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <ListView fx:id="aStockListView" layoutX="325.0" layoutY="55.0" prefHeight="275.0" prefWidth="50.0" />
+            <Label fx:id="wHotelLabel" layoutX="380.0" layoutY="31.0" prefWidth="50.0" style="-fx-background-color: purple; -fx-border-color: black;" text="W" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <ListView fx:id="wStockListView" layoutX="380.0" layoutY="55.0" prefHeight="275.0" prefWidth="50.0" />
+            <Label fx:id="tHotelLabel" layoutX="435.0" layoutY="31.0" prefWidth="50.0" style="-fx-background-color: grey; -fx-border-color: black;" text="T" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <ListView fx:id="tStockListView" layoutX="435.0" layoutY="55.0" prefHeight="275.0" prefWidth="50.0" />
+         </children>
+      </Pane>
+      <Pane layoutX="660.0" layoutY="450.0" prefHeight="350.0" prefWidth="500.0" style="-fx-border-color: black; -fx-border-width: 4;">
+         <children>
+            <Label fx:id="avaliableStocksLabel" layoutX="15.0" layoutY="15.0" style="-fx-border-color: black; -fx-border-width: 3;" text="Available Stocks">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <ListView fx:id="availableStocksList" layoutX="15.0" layoutY="50.0" prefHeight="200.0" prefWidth="145.0" style="-fx-border-color: black; -fx-border-width: 3;" />
+            <Label fx:id="stocksPurchasedLabel" layoutX="180.0" layoutY="15.0" style="-fx-border-color: black; -fx-border-width: 3;" text="Stocks Purchased">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <ListView fx:id="stocksPurchasedList" layoutX="180.0" layoutY="50.0" prefHeight="200.0" prefWidth="145.0" style="-fx-border-color: black; -fx-border-width: 3;" />
+            <Button fx:id="endTurnSubmitButton" layoutX="415.0" layoutY="311.0" mnemonicParsing="false" style="-fx-background-color: white; -fx-border-color: black; -fx-border-width: 3;" text="Submit">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Button>
+         </children>
+      </Pane>
    </children>
-</AnchorPane>
+</Pane>

@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Class to manage the players. This holds their stats and actions
  */
-public class Player {
+public class Player{
     private String name;
     private int money;
     private List<Stock> stockList;
