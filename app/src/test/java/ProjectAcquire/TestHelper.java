@@ -94,6 +94,14 @@ public class TestHelper {
         return helperPlayer;
     }
 
+    static Stock helperMethod_customStock(String nameOfCompany){
+
+        Company helperComp = TestHelper.helperMethod_Company(nameOfCompany);
+        Stock classUnderTest = new Stock(helperComp);
+
+        return classUnderTest;
+
+    }
 
 
 
