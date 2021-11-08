@@ -4,12 +4,14 @@
  */
 package ProjectAcquire;
 
+import javafx.fxml.FXMLLoader;
+import java.io.IOException;
 import java.util.*;
 
 /**
  * GameSate class that contains a games current status
  */
-public class GameState {
+public class GameState implements Updatable{
     /**
      * Variables needed to maintain a gamestate
      */
@@ -19,10 +21,42 @@ public class GameState {
     private List<Player> playerList;
     private boolean isOver = false;
 
+
     /**
      * Default constructor
      */
     public GameState(){}
+<<<<<<< HEAD
+=======
+    /**
+     * Create a new game with the starting player, board, and company attributes
+     */
+    //Is this constructor still needed? Since all this is all done in Game.start() already. - Show
+     /*public void GameState(){
+        /**
+         * Add a new player 1 and save player 1 to the current gamestate
+         */
+       //Player newCurrentPlayer = new Player();
+       //setCurrentPlayer(newCurrentPlayer);
+        /**
+         * Add a new player 2 and save player 2 to the current gamestate
+         */
+        //Player newNextPlayer = new Player();
+        //setNextPlayer(newNextPlayer);
+        /**
+         * Create a new blank board and save that as the current board until a turn is played
+         */
+        //Board blankBoard = new Board();
+       // setCurrentBoard(blankBoard);
+        /**
+         * Make sure the player list is empty and then add a current player(1) and next player(2)
+         */
+        //playerList.clear();
+        //playerList.add(currentPlayer);
+        //playerList.add(nextPlayer);
+    //}
+
+>>>>>>> 434a7e95e4f27ff0bec71ae4c58fc77c88665e42
 
     /**
      * Creates a GameSate for a game to be passed
@@ -112,6 +146,19 @@ public class GameState {
      */
     public void setCurrentBoard(Board Board){
         this.currentBoard = Board;
+    }
+
+    /**
+     * Currently doesn't update the player information. (but all the logic works and the data is passed)
+     * It doesn't change anything for the current scene.
+     * @throws IOException
+     */
+    @Override
+    public void update() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/GameBoard.fxml"));
+        loader.load();
+        FXController controller = loader.getController();
+        controller.updatePlayerInfo(playerList);
     }
 }
 

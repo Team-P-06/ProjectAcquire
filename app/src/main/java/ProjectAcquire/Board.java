@@ -35,7 +35,7 @@ public class Board {
      * @param cc list of chartered companies
      * @param pl list of players
      */
-    private Board(List tl, List uc, List cc, List pl){
+    public Board(List tl, List uc, List cc, List pl){
         this.tileList = tl;
         this.uncharteredCompanies = uc;
         this.charteredCompanies = cc;
