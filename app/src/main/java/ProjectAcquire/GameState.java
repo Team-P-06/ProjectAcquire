@@ -23,33 +23,6 @@ public class GameState {
      * Default constructor
      */
     public GameState(){}
-    /**
-     * Create a new game with the starting player, board, and company attributes
-     */
-    /* public GameState(){ Depreciated until we make the default gamestate structure with the UI in game
-        /**
-         * Add a new player 1 and save player 1 to the current gamestate
-         */
-       //Player newCurrentPlayer = new Player();
-       //setCurrentPlayer(newCurrentPlayer);
-        /**
-         * Add a new player 2 and save player 2 to the current gamestate
-         */
-        //Player newNextPlayer = new Player();
-        //setNextPlayer(newNextPlayer);
-        /**
-         * Create a new blank board and save that as the current board until a turn is played
-         */
-        //Board blankBoard = new Board();
-        //setCurrentBoard(blankBoard);
-        /**
-         * Make sure the player list is empty and then add a current player(1) and next player(2)
-         */
-        //playerList = null;
-        //playerList.add(currentPlayer);
-        //playerList.add(nextPlayer);
-    //}
-
 
     /**
      * Creates a GameSate for a game to be passed
@@ -64,7 +37,6 @@ public class GameState {
         this.currentBoard = currentBoard;
         this.playerList = playerList;
     }
-
 
     //Getters
 

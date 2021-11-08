@@ -8,12 +8,12 @@ import org.junit.*;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-public class JsonTest {
+public class JsonTest{
     /**
      * Helper class to build a test game to see if it will properly write a json file
      * @return testGame
      */
-    GameState testJson(){
+    @Before GameState testJson(){
         Player PlayerTest1 = new Player();
         Player PlayerTest2 = new Player();
         Board testBoard = new Board();
@@ -24,8 +24,8 @@ public class JsonTest {
         return testGame;
     }
 
-    @Test void test_Json_File(){
+    @Test public void test_Json_File(){
         IOManager testSaveGame = new IOManager();
-        assertNull(testSaveGame.saveGame(testJson()));
+        assertNotNull(testSaveGame.saveGame(testJson()));
     }
 }

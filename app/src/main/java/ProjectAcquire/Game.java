@@ -31,8 +31,6 @@ public class Game {
      */
     public void loadGame(String game){
 
-        //if we have loadgame in IO manager that sets the currentgamestate variable and then call rungame(currentGameState)
-        //we technically dont need a loadGame method here?
     }
 
     /**
