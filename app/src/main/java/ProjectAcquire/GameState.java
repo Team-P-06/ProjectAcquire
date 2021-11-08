@@ -26,37 +26,6 @@ public class GameState implements Updatable{
      * Default constructor
      */
     public GameState(){}
-<<<<<<< HEAD
-=======
-    /**
-     * Create a new game with the starting player, board, and company attributes
-     */
-    //Is this constructor still needed? Since all this is all done in Game.start() already. - Show
-     /*public void GameState(){
-        /**
-         * Add a new player 1 and save player 1 to the current gamestate
-         */
-       //Player newCurrentPlayer = new Player();
-       //setCurrentPlayer(newCurrentPlayer);
-        /**
-         * Add a new player 2 and save player 2 to the current gamestate
-         */
-        //Player newNextPlayer = new Player();
-        //setNextPlayer(newNextPlayer);
-        /**
-         * Create a new blank board and save that as the current board until a turn is played
-         */
-        //Board blankBoard = new Board();
-       // setCurrentBoard(blankBoard);
-        /**
-         * Make sure the player list is empty and then add a current player(1) and next player(2)
-         */
-        //playerList.clear();
-        //playerList.add(currentPlayer);
-        //playerList.add(nextPlayer);
-    //}
-
->>>>>>> 434a7e95e4f27ff0bec71ae4c58fc77c88665e42
 
     /**
      * Creates a GameSate for a game to be passed
