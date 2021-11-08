@@ -33,14 +33,9 @@ public class Game {
      */
     public void loadGame(String game){
 
-<<<<<<< HEAD
-=======
-        //if we have loadgame in IO manager that sets the currentgamestate variable and then call rungame(currentGameState)
-        //we technically dont need a loadGame method here?
-
         //this.currentGameState = (gamestate that we pull from a file)
->>>>>>> 434a7e95e4f27ff0bec71ae4c58fc77c88665e42
-    }
+
+        }
 
     /**
      * Start game method that will begin a new game that isn't already saved
