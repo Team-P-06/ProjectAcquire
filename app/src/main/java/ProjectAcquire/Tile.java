@@ -60,5 +60,10 @@ public class Tile {
         tilesCompany = newCompany;
     }
 
-
+    /**
+     * Sets the flipped instance cariable to true
+     */
+    public void setFlipped(){
+        this.flipped = true;
+    }
 }

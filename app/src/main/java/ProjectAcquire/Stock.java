@@ -3,6 +3,7 @@
  * @version v0.0.1
  */
 
+
 package ProjectAcquire;
 
 public class Stock {
@@ -28,9 +29,6 @@ public class Stock {
     public int getStockPriceFromCompany(){
 
         return parentCompany.getStockPrice();
-
-
-
     }
 
     /**
