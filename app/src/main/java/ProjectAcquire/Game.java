@@ -33,6 +33,8 @@ public class Game {
 
         //if we have loadgame in IO manager that sets the currentgamestate variable and then call rungame(currentGameState)
         //we technically dont need a loadGame method here?
+
+        //this.currentGameState = (gamestate that we pull from a file)
     }
 
     /**
