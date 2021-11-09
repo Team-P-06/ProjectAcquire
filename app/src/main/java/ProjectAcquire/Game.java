@@ -34,12 +34,8 @@ public class Game {
     public void loadGame(String game){
 
         //this.currentGameState = (gamestate that we pull from a file)
-<<<<<<< HEAD
     }
-=======
 
-        }
->>>>>>> f09c977272e7275257e1e24f216ad965b5b74f6d
 
     /**
      * Start game method that will begin a new game that isn't already saved

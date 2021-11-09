@@ -3,23 +3,29 @@
  * @version v0.0.1
  */
 
+
 package ProjectAcquire;
 
+
+import lombok.AccessLevel;
+import lombok.Generated;
+import lombok.Getter;
+import lombok.Setter;
+
 public class Stock {
-    private Company parentCompany;
 
 
+    /**
+     * Getter and setter for parentCompany
+     */
+
+    @Generated @Getter @Setter private Company parentCompany;
+
+    //Custom Constructor
     Stock(Company parentCompany){
         this.parentCompany = parentCompany;
     }
 
-    /**
-     *
-     * @return the stock's parent company
-     */
-    public Company getCompany(){
-        return parentCompany;
-    }
 
     /**
      *
@@ -28,9 +34,6 @@ public class Stock {
     public int getStockPriceFromCompany(){
 
         return parentCompany.getStockPrice();
-
-
-
     }
 
     /**
@@ -42,4 +45,16 @@ public class Stock {
     public int maxStockBuy(Player player, Company company){
     return 0; //DEFAULT
     }
+
+    /**
+     *
+     * @return a toString of the stock
+     */
+    @Override public String toString() {
+
+        return  parentCompany.getCompanyName();
+    }
+
 }
+
+
