@@ -8,6 +8,7 @@ package ProjectAcquire;
 
 
 import lombok.AccessLevel;
+import lombok.Generated;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,7 +18,8 @@ public class Stock {
     /**
      * Getter and setter for parentCompany
      */
-  @Getter @Setter  private Company parentCompany;
+
+    @Generated @Getter @Setter private Company parentCompany;
 
     //Custom Constructor
     Stock(Company parentCompany){
@@ -44,8 +46,13 @@ public class Stock {
     return 0; //DEFAULT
     }
 
+    /**
+     *
+     * @return a toString of the stock
+     */
     @Override public String toString() {
-        return String.format("%s (age: %d)", parentCompany.getCompanyName());
+
+        return  parentCompany.getCompanyName();
     }
 
 }

@@ -7,15 +7,18 @@ package ProjectAcquire;
 
 import java.util.ArrayList;
 import java.util.List;
+import lombok.Generated;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Class to manage the players. This holds their stats and actions
  */
 public class Player{
-    private String name;
-    private int money;
-    private List<Stock> stockList;
-    private List<Tile> tileList;
+    @Getter @Setter private String name;
+    @Getter @Setter private int money;
+    @Getter @Setter private List<Stock> stockList;
+    @Getter @Setter private List<Tile> tileList;
 
     /**
      * Default constructor with dummy values
@@ -43,17 +46,17 @@ public class Player{
      * Getters for all the player variables
      * @return specified getter
      */
-    public String getName(){ return name; }
-    public int getMoney(){ return money; }
-    public List<Stock> getStockList(){ return stockList; }
-    public List<Tile> getTileList(){ return tileList; }
+//    public String getName(){ return name; }
+//    public int getMoney(){ return money; }
+//    public List<Stock> getStockList(){ return stockList; }
+//    public List<Tile> getTileList(){ return tileList; }
 
     /**
      * Setters for all the players values
      * @param money/name of player
      */
-    private void setMoney(int money){ this.money = money; }
-    private void setName(String name){ this.name = name; }
+//    private void setMoney(int money){ this.money = money; }
+//    private void setName(String name){ this.name = name; }
 
     /**
      *
@@ -106,6 +109,10 @@ public class Player{
 
 
     /**
+     * ALEX NOTE: This Method Will not work as written, we should probably move it to Board and change the name to "dealTile".
+     * This is because we are initializing arbitrary tiles here when we should be initializing all tiles in our Game inititalize() method.
+     * DrawTile may be best as a passive action.
+     *
      * creates a new unique tile and give it to the player who drew it.
      * @return a new unique tile
      */

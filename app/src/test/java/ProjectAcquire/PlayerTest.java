@@ -26,6 +26,15 @@ public class PlayerTest {
     }
 
 
+    @Test void test_player_drawTile() {
+
+
+        Player classUnderTest = TestHelper.helperMethod_custom_Player("TEST");
+        assertTrue(classUnderTest.availableTile("TEST"), "app should have available tile method");
+    }
+
+
+
 
 
 }
