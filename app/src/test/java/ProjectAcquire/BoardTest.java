@@ -20,7 +20,7 @@ public class BoardTest {
 
         Board classUnderTest = TestHelper.helperMethod_custom_board();
         //tests that initialized chartered companies is empty
-        System.out.println(classUnderTest.getCharteredCompanies().toString());
+        //System.out.println(classUnderTest.getCharteredCompanies().toString());
         assertTrue(classUnderTest.getCharteredCompanies().isEmpty(),"Chartered companies list should be empty on initialization of a board, but is not");
 
         TestHelper.helperMethod_tearDown();
