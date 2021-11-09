@@ -1,4 +1,6 @@
 package ProjectAcquire;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -17,6 +19,22 @@ public class TestHelper {
 
         return helperComp;
 
+    }
+
+    static List<Company> helperMethod_CompanyList(){
+        List<Company> helperCompanyList = new ArrayList<Company>(); //initialize list
+
+        //initializes helper companies
+        Company helperCompany1 = helperMethod_Company("COMPANY1");
+        Company helperCompany2 = helperMethod_Company("COMPANY2");
+        Company helperCompany3 = helperMethod_Company("COMPANY3");
+
+        //adds companies to list
+        helperCompanyList.add(helperCompany1);
+        helperCompanyList.add(helperCompany2);
+        helperCompanyList.add(helperCompany3);
+
+        return helperCompanyList;
     }
 
     static Tile helperMethod_tile(){
@@ -42,41 +60,15 @@ public class TestHelper {
 
 
 
-    //Returns a list of tiles.
-    static List<Tile> helperMethod_tileList(){
+    static List<Tile> helperMethod_tileList_company1_3_coord_A1_A3(){
         ArrayList<Tile> testTileList = new ArrayList<Tile>();
-        Tile tile = new Tile();
-        Tile tile2 = new Tile();
-        Tile tile3 = new Tile();
-        Tile tile4 = new Tile();
-        Tile tile5 = new Tile();
-        Tile tile6 = new Tile();
+        Tile tile = helperMethod_custom_tile_via_coord_and_companyName("A1","TEST1");
+        Tile tile2 = helperMethod_custom_tile_via_coord_and_companyName("A2","TEST2");
+        Tile tile3 = helperMethod_custom_tile_via_coord_and_companyName("A3","TEST3");
 
         testTileList.add(tile);
         testTileList.add(tile2);
         testTileList.add(tile3);
-        testTileList.add(tile4);
-        testTileList.add(tile5);
-        testTileList.add(tile6);
-
-        return testTileList;
-    }
-
-    static List<Tile> helperMethod_custom_tileList(){
-        ArrayList<Tile> testTileList = new ArrayList<Tile>();
-        Tile tile = new Tile();
-        Tile tile2 = new Tile();
-        Tile tile3 = new Tile();
-        Tile tile4 = new Tile();
-        Tile tile5 = new Tile();
-        Tile tile6 = new Tile();
-
-        testTileList.add(tile);
-        testTileList.add(tile2);
-        testTileList.add(tile3);
-        testTileList.add(tile4);
-        testTileList.add(tile5);
-        testTileList.add(tile6);
 
         return testTileList;
     }
@@ -89,7 +81,7 @@ public class TestHelper {
      */
     static Player helperMethod_custom_Player(String playerName){
         //name, list of tiles, money
-        List<Tile> customTileList = helperMethod_custom_tileList(); //calls Custom Tile list
+        List<Tile> customTileList = helperMethod_tileList_company1_3_coord_A1_A3(); //calls Custom Tile list
         Player helperPlayer = new Player(playerName,customTileList,1000);
         return helperPlayer;
     }
@@ -104,6 +96,35 @@ public class TestHelper {
     }
 
 
+    /**
+     *
+     * @return a Board instance for testing
+     */
+    @Before
+    static Board helperMethod_custom_board(){
+        //Tile tile = helperMethod_custom_tile_via_coord_and_companyName("A1","TEST");
 
+        List<Tile> helperTileList = helperMethod_tileList_company1_3_coord_A1_A3();
+
+        //Chartered companies should start empty
+        List<Company> helperCharteredCompList = new ArrayList<Company>();
+
+        //uncharterd company list should have companies in it on start.
+        List<Company> helperUncharteredCompanyList = helperMethod_CompanyList();
+
+        List<Player> helperPlayerList = new ArrayList<Player>();
+        Player player = new Player();
+        helperPlayerList.add(player);
+
+        Board customBoard = Board.getInstance(helperTileList,helperUncharteredCompanyList,helperCharteredCompList,helperPlayerList);
+        //System.out.println(customBoard.toString());
+        return customBoard;
+    }
+
+    @After
+    static void helperMethod_tearDown(){
+        Board oldBoard = helperMethod_custom_board();
+        oldBoard.setNull();
+    }
 
 }

@@ -4,16 +4,19 @@
  */
 package ProjectAcquire;
 
+import lombok.Getter;
+import lombok.Setter;
+
 public class Tile {
-   private Company tilesCompany;
-   private String tileCoord;
+   private @Getter @Setter Company company;
+   private @Getter @Setter String coord;
    private Boolean flipped;
 
 
     Tile(){
 
-        this.tilesCompany = new Company();
-        this.tileCoord = "A1";
+        this.company = new Company();
+        this.coord = "A1";
         this.flipped = false;
     }
 
@@ -24,8 +27,8 @@ public class Tile {
      * flipped default value should always be false when created. The default company should be a empty company
      */
     Tile(Company tilesCompany, String tileCoord){
-        this.tilesCompany = tilesCompany;
-        this.tileCoord = tileCoord;
+        this.company = tilesCompany;
+        this.coord = tileCoord;
         this.flipped = false;
     }
 
@@ -37,31 +40,7 @@ public class Tile {
     }
 
     /**
-     *
-     * @return the coordinates of the tile
-     */
-    public String getCoord(){
-        return tileCoord;
-    }
-
-    /**
-     *
-     * @return the company the tile belongs to.
-     */
-    public Company getCompany(){
-        return tilesCompany;
-    }
-
-    /**
-     * Changes the company the tile belongs to
-     * @param newCompany the new company the tile is changing to.
-     */
-    public void setCompany(Company newCompany){
-        tilesCompany = newCompany;
-    }
-
-    /**
-     * Sets the flipped instance cariable to true
+     * Sets the flipped instance variable to true
      */
     public void setFlipped(){
         this.flipped = true;

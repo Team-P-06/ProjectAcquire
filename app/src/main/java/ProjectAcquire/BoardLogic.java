@@ -38,7 +38,7 @@ public class BoardLogic {
     static void charterLogic(Company company){
 
 
-        System.out.println("Company "+ company.getCompanyName() + " is now chartered");
+       // System.out.println("Company "+ company.getCompanyName() + " is now chartered");
     }
 
 

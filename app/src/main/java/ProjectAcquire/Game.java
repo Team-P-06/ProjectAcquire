@@ -3,6 +3,10 @@
  * @version v0.0.1
  */
 package ProjectAcquire;
+import lombok.Generated;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +15,7 @@ import java.util.List;
  * Game class that can get the turns, start, load, or end a game
  */
 public class Game {
-    GameState currentGameState;
+   private @Getter @Setter GameState currentGameState;
 
     /**
      * Default constructor
@@ -89,7 +93,7 @@ public class Game {
         GameState gameState = new GameState(player1, player2, board, playerList);
 
         //7. call setCurrentGame() using 6 as our parameter
-        setCurrentGame(gameState);
+        setCurrentGameState(gameState);
 
 
         //if loadGame was called, then simply: setCurrentGame(loadGame())
@@ -112,14 +116,4 @@ public class Game {
      */
     public void endGame(){ }//We should probably move this to GameState.
 
-    /**
-     *
-     * @param gameState The gameState of our current game
-     */
-    public void setCurrentGame(GameState gameState){
-        this.currentGameState = gameState;
-    }
-    public GameState getCurrentGame(){
-        return currentGameState;
-    }
 }

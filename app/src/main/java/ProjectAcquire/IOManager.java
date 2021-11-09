@@ -43,7 +43,7 @@ public class IOManager {
             Gson gson = new GsonBuilder().create();
             GameState savedGameState = gson.fromJson(readFile, GameState.class);
             if (savedGameState != null) {
-                thisGame.setCurrentGame(savedGameState);
+                thisGame.setCurrentGameState(savedGameState);
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -52,6 +52,6 @@ public class IOManager {
                 readFile.close();
             }
         }
-        return thisGame.getCurrentGame();
+        return thisGame.getCurrentGameState();
     }
 }

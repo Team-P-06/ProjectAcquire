@@ -111,6 +111,14 @@ public class Company {
         this.isPermanent = permanent;
     }
 
-
-
+    @Override
+    public String toString() {
+        return "Company{" +
+                "companyName='" + companyName + '\'' +
+                ", tilesOnBoard=" + tilesOnBoard +
+                ", stockPrice=" + stockPrice +
+                ", chartered=" + chartered +
+                ", isPermanent=" + isPermanent +
+                '}';
+    }
 }
