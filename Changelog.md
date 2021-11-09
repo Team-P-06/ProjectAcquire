@@ -7,13 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 - basic testing of classes
-- javafx
-- gson
+
+
 
 ## [0.0.1]
 ### Added
--classes in our class diagram
--basic logic needed for compiling all classes
 
+- classes in our class diagram
+- basic logic needed for compiling all classes
+- javafx
+- gson
+- Jacoco
+- lombok
+- flogger
 ### Changed
 
