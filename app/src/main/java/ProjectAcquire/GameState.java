@@ -15,8 +15,8 @@ public class GameState implements Updatable{
     /**
      * Variables needed to maintain a gamestate
      */
-    private Player currentPlayer;
-    private Player nextPlayer;
+    private Player firstPlayer;
+    private Player secondPlayer;
     private Board currentBoard;
     private List<Player> playerList;
     private boolean isOver = false;
@@ -29,14 +29,14 @@ public class GameState implements Updatable{
 
     /**
      * Creates a GameSate for a game to be passed
-     * @param currentPlayer
-     * @param nextPlayer
+     * @param firstPlayer
+     * @param secondPlayer
      * @param currentBoard
      * @param playerList
      */
-    public GameState(Player currentPlayer, Player nextPlayer, Board currentBoard, List<Player> playerList){
-        this.currentPlayer = currentPlayer;
-        this.nextPlayer = nextPlayer;
+    public GameState(Player firstPlayer, Player secondPlayer, Board currentBoard, List<Player> playerList){
+        this.firstPlayer = firstPlayer;
+        this.secondPlayer = secondPlayer;
         this.currentBoard = currentBoard;
         this.playerList = playerList;
     }
@@ -67,7 +67,12 @@ public class GameState implements Updatable{
      * @return
      */
     public Player nextTurn(){
-        return currentPlayer;
+        if (firstPlayer == playerList.get(1)){
+            return firstPlayer;
+        }
+        else{
+            return secondPlayer;
+        }
     }
 
     /**
@@ -76,45 +81,63 @@ public class GameState implements Updatable{
      * @return
      */
     public boolean hasTurn(Player Player){
-        return true;
+        if(Player == playerList.get(0)){
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     /**
      * If a player has a tile in their hand they can lay on the board let the player place the tile
-     * @param availableTile
      * @return
      */
-    public boolean hasTileToPlay(Tile availableTile){
-        return true;
+    public boolean hasTileToPlay(Player playerTilePlace){
+        if(playerTilePlace.getTileList() != null){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
     /**
      * Recursive play method that is called when a player decides to play their turn
      */
-    public void playTurn(){}
-
-    /**
-     * Setter methods that will set up the new game
-     * @param Player
-     */
-    public void setCurrentPlayer(Player Player){
-        this.currentPlayer = Player;
+    public void playTurn(){
+        if(hasTurn(firstPlayer) == true){
+            //code that can be done inside of playing the turn
+            //switching the player order so every time a player finishes their turn they
+            //get moved to the back of the "list"
+            playerList.set(1,firstPlayer);
+            playerList.set(0, secondPlayer);
+        }
+        if(hasTurn(secondPlayer) == true){
+            //code that can be done inside of playing the turn
+            //switching the player order so every time a player finishes their turn they
+            //get moved to the back of the "list"
+            playerList.set(1, secondPlayer);
+            playerList.set(0,firstPlayer);
+        }
     }
-
-    /**
-     * Set the second player status
-     * @param Player
-     */
-    public void setNextPlayer(Player Player){
-        this.nextPlayer = Player;
-    }
-
     /**
      * Set the new board to be a blank board
      * @param Board
      */
     public void setCurrentBoard(Board Board){
         this.currentBoard = Board;
+    }
+
+    /**
+     * Getters for the players that are contained in the current player list
+     * @return
+     */
+    public Player getFirstPlayer(){
+        return  firstPlayer;
+    }
+    public Player getSecondPlayer(){
+        return secondPlayer;
     }
 
     /**
