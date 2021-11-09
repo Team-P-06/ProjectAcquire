@@ -25,12 +25,19 @@ public class IOManager {
     }
 
     /**
-     * Load a saved game from a json file
+     * Load game methods that will handle all of the loading of a saved json file
      * @param file
+     * @return
+     * @throws IOException
      */
-    public void loadGame(String file) throws IOException {
+    public GameState loadGame(String file) throws IOException {
         BufferedReader readFile = null;
         Game thisGame = new Game();
+        /**
+         * Try to read a json file that was created from the save game method
+         * which will then be converted from a string to a gamestate object within
+         * the gamestate class
+         */
         try {
             readFile = new BufferedReader(new FileReader(file));
             Gson gson = new GsonBuilder().create();
@@ -45,5 +52,6 @@ public class IOManager {
                 readFile.close();
             }
         }
+        return thisGame.getCurrentGame();
     }
 }
