@@ -23,7 +23,7 @@ public class BoardTest {
         //System.out.println(classUnderTest.getCharteredCompanies().toString());
         assertTrue(classUnderTest.getCharteredCompanies().isEmpty(),"Chartered companies list should be empty on initialization of a board, but is not");
 
-        TestHelper.helperMethod_tearDown();
+        TestHelper.helperMethod_tearDownBoard();
     }
 
 
@@ -36,7 +36,7 @@ public class BoardTest {
        // classUnderTest.charter(boardCompanyToCharter);
 
         assertFalse(boardCompanyToCharter.isChartered(),"Company did not initialize as unchartered");
-        TestHelper.helperMethod_tearDown();
+        TestHelper.helperMethod_tearDownBoard();
 
     }
 
@@ -49,7 +49,7 @@ public class BoardTest {
         classUnderTest.charter(boardCompanyToCharter);
 
         assertTrue(boardCompanyToCharter.isChartered(), "Charter method did not work properly");
-        TestHelper.helperMethod_tearDown();
+        TestHelper.helperMethod_tearDownBoard();
 
     }
 
@@ -65,7 +65,7 @@ public class BoardTest {
         classUnderTest.unCharter(boardCompanyForTesting); //uncharters that company
 
         assertFalse(boardCompanyForTesting.isChartered(),"Uncharter method did not work properly");
-        TestHelper.helperMethod_tearDown();
+        TestHelper.helperMethod_tearDownBoard();
 
     }
 

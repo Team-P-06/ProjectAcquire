@@ -9,6 +9,7 @@ import lombok.Setter;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -35,7 +36,7 @@ public class Game {
      * Load game method that accepts a gson file to get the game state of a specific game
      * @param game
      */
-    public void loadGame(String game){
+    public void loadGame(String game)throws IOException{
 
         //this.currentGameState = (gamestate that we pull from a file)
     }
@@ -44,7 +45,7 @@ public class Game {
     /**
      * Start game method that will begin a new game that isn't already saved
      */
-    public void start() throws IOException {
+    public void start() {
         Company defaultCompany = new Company("emptyCo", 0, false, false);
 
         //initializes our game
@@ -60,7 +61,7 @@ public class Game {
         //1. queries for how many players there are, (UI), then adds x amount of players to a playerList.
         //This is just a static creation of players for now, will be more dynamic in the future.
         List<Tile> playerTileList = new ArrayList<>();
-        List<Player> playerList = new ArrayList<>();
+        LinkedList<Player> playerList = new LinkedList<Player>();
         Player player1 = new Player("Player 1", playerTileList, 3000);
         Player player2 = new Player("Player 2", playerTileList, 3000);
         playerList.add(player1);
@@ -90,7 +91,7 @@ public class Game {
 
         //6. initialize our GameState using 4, playerList.next(), 5, and 1 as our parameters
         // This makes p1 current player and p2 next
-        GameState gameState = new GameState(player1, player2, board, playerList);
+        GameState gameState = new GameState(board, playerList);
 
         //7. call setCurrentGame() using 6 as our parameter
         setCurrentGameState(gameState);

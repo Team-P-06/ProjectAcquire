@@ -15,10 +15,9 @@ public class GameState implements Updatable{
     /**
      * Variables needed to maintain a gamestate
      */
-    private Player firstPlayer;
-    private Player secondPlayer;
+    private Player currentPlayer;
     private Board currentBoard;
-    private List<Player> playerList;
+    private LinkedList<Player> playerList;
     private boolean isOver = false;
 
 
@@ -29,14 +28,11 @@ public class GameState implements Updatable{
 
     /**
      * Creates a GameSate for a game to be passed
-     * @param firstPlayer
-     * @param secondPlayer
      * @param currentBoard
      * @param playerList
      */
-    public GameState(Player firstPlayer, Player secondPlayer, Board currentBoard, List<Player> playerList){
-        this.firstPlayer = firstPlayer;
-        this.secondPlayer = secondPlayer;
+    public GameState(Board currentBoard, LinkedList<Player> playerList){
+       // this.currentPlayer = playerList.get(0);
         this.currentBoard = currentBoard;
         this.playerList = playerList;
     }
@@ -62,32 +58,35 @@ public class GameState implements Updatable{
         this.isOver = isOver;
     }
 
-    /**
-     * Determines which player has the next turn available in the gamestate
-     * @return
-     */
-    public Player nextTurn(){
-        if (firstPlayer == playerList.get(1)){
-            return firstPlayer;
-        }
-        else{
-            return secondPlayer;
-        }
-    }
 
-    /**
-     * If a player has a turn let the player play their turn
-     * @param Player
-     * @return
-     */
-    public boolean hasTurn(Player Player){
-        if(Player == playerList.get(0)){
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
+    //Commented out by Alex. I am deprecating these methods.
+
+//    /**
+//     * Determines which player has the next turn available in the gamestate
+//     * @return
+//     */
+//    public Player nextTurn(){
+//        if (firstPlayer == playerList.get(1)){
+//            return firstPlayer;
+//        }
+//        else{
+//            return secondPlayer;
+//        }
+//    }
+//
+//    /**
+//     * If a player has a turn let the player play their turn
+//     * @param player
+//     * @return
+//     */
+//    public boolean hasTurn(Player player){
+//        if(player == playerList.get(0)){
+//            return true;
+//        }
+//        else {
+//            return false;
+//        }
+//    }
 
     /**
      * If a player has a tile in their hand they can lay on the board let the player place the tile
@@ -106,20 +105,14 @@ public class GameState implements Updatable{
      * Recursive play method that is called when a player decides to play their turn
      */
     public void playTurn(){
-        if(hasTurn(firstPlayer) == true){
-            //code that can be done inside of playing the turn
-            //switching the player order so every time a player finishes their turn they
-            //get moved to the back of the "list"
-            playerList.set(1,firstPlayer);
-            playerList.set(0, secondPlayer);
-        }
-        if(hasTurn(secondPlayer) == true){
-            //code that can be done inside of playing the turn
-            //switching the player order so every time a player finishes their turn they
-            //get moved to the back of the "list"
-            playerList.set(1, secondPlayer);
-            playerList.set(0,firstPlayer);
-        }
+        //sets our current player to be the first player of our list.
+        //then removes from the front of the list, so that the second player should now be at the front of the list
+        //Then adds the current player to the back of the list.
+        currentPlayer = playerList.poll();
+        playerList.addLast(currentPlayer);
+
+
+
     }
     /**
      * Set the new board to be a blank board
@@ -129,16 +122,6 @@ public class GameState implements Updatable{
         this.currentBoard = Board;
     }
 
-    /**
-     * Getters for the players that are contained in the current player list
-     * @return
-     */
-    public Player getFirstPlayer(){
-        return  firstPlayer;
-    }
-    public Player getSecondPlayer(){
-        return secondPlayer;
-    }
 
     /**
      * Currently doesn't update the player information. (but all the logic works and the data is passed)

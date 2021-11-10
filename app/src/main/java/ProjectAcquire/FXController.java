@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -157,13 +158,13 @@ public class FXController {
 
         Player p1 = new Player("player 1", pTilesList, 400);
         Player p2 = new Player("player 2", pTilesList, 4000);
-        List<Player> pList = new ArrayList<>();
+        LinkedList<Player> pList = new LinkedList<>();
         pList.add(p1);
         pList.add(p2);
 
         Board board = new Board();
 
-        GameState gameState = new GameState(p1, p2, board, pList);
+        GameState gameState = new GameState(board, pList);
         gameState.update();
         //getLoader();
         updatePlayerInfo(pList);
@@ -175,7 +176,7 @@ public class FXController {
      * This is the update function to update player data.
      * @param playerList a list of players from GameState.
      */
-    public void updatePlayerInfo(List<Player> playerList){
+    public void updatePlayerInfo(LinkedList<Player> playerList){
         playerNameObserList.clear();
         playerMoneyObserList.clear();
         playerNetObserList.clear();
