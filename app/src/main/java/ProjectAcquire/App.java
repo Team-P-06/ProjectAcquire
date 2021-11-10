@@ -5,10 +5,6 @@
 package ProjectAcquire;
 
 import javafx.application.Application;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -25,15 +21,9 @@ public class App extends Application {
      * @throws IOException
      */
     @Override
-    public void start(Stage stage) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/MainMenu.fxml"));
-        Parent root = loader.load();
-        controller = (FXController) loader.getController();
-
-        Scene mainScene = new Scene(root);
-
-        stage.setScene(mainScene);
-        stage.show();
+    public void start(Stage stage) throws IOException, InterruptedException {
+        FXController mainMenu = new FXController();
+        mainMenu.showMainMenu();
     }
 
     /**
@@ -52,6 +42,7 @@ public class App extends Application {
 
         //plays the game
        // game.runGame();
+
 
     }
 

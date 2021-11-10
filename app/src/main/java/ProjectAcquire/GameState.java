@@ -4,9 +4,13 @@
  */
 package ProjectAcquire;
 
-import javafx.fxml.FXMLLoader;
 import java.io.IOException;
 import java.util.*;
+
+import lombok.AccessLevel;
+import lombok.Generated;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * GameSate class that contains a games current status
@@ -15,10 +19,9 @@ public class GameState implements Updatable{
     /**
      * Variables needed to maintain a gamestate
      */
-    private Player firstPlayer;
-    private Player secondPlayer;
-    private Board currentBoard;
-    private List<Player> playerList;
+    private Player currentPlayer;
+    private @Getter Board currentBoard;
+    private @Getter @Setter LinkedList<Player> playerList;
     private boolean isOver = false;
 
 
@@ -29,14 +32,11 @@ public class GameState implements Updatable{
 
     /**
      * Creates a GameSate for a game to be passed
-     * @param firstPlayer
-     * @param secondPlayer
      * @param currentBoard
      * @param playerList
      */
-    public GameState(Player firstPlayer, Player secondPlayer, Board currentBoard, List<Player> playerList){
-        this.firstPlayer = firstPlayer;
-        this.secondPlayer = secondPlayer;
+    public GameState(Board currentBoard, LinkedList<Player> playerList){
+       // this.currentPlayer = playerList.get(0);
         this.currentBoard = currentBoard;
         this.playerList = playerList;
     }
@@ -51,7 +51,6 @@ public class GameState implements Updatable{
         return this.isOver;
     }
 
-
     //Setters
 
     /**
@@ -62,32 +61,46 @@ public class GameState implements Updatable{
         this.isOver = isOver;
     }
 
-    /**
-     * Determines which player has the next turn available in the gamestate
-     * @return
-     */
-    public Player nextTurn(){
-        if (firstPlayer == playerList.get(1)){
-            return firstPlayer;
-        }
-        else{
-            return secondPlayer;
-        }
-    }
+
+    //Commented out by Alex. I am deprecating these methods, but I will temporarily make a nexTurn() method
+
 
     /**
-     * If a player has a turn let the player play their turn
-     * @param Player
-     * @return
+     * For Show from Alex: This method may break your UI logic, feel free to edit.
+     * @return the player that is at the top of the list but is not currentPlayer
      */
-    public boolean hasTurn(Player Player){
-        if(Player == playerList.get(0)){
-            return true;
-        }
-        else {
-            return false;
-        }
+    public Player nextTurn(){
+
+        return playerList.peekFirst();
+
     }
+
+//    /**
+//     * Determines which player has the next turn available in the gamestate
+//     * @return
+//     */
+//    public Player nextTurn(){
+//        if (firstPlayer == playerList.get(1)){
+//            return firstPlayer;
+//        }
+//        else{
+//            return secondPlayer;
+//        }
+//    }
+//
+//    /**
+//     * If a player has a turn let the player play their turn
+//     * @param player
+//     * @return
+//     */
+//    public boolean hasTurn(Player player){
+//        if(player == playerList.get(0)){
+//            return true;
+//        }
+//        else {
+//            return false;
+//        }
+//    }
 
     /**
      * If a player has a tile in their hand they can lay on the board let the player place the tile
@@ -106,51 +119,32 @@ public class GameState implements Updatable{
      * Recursive play method that is called when a player decides to play their turn
      */
     public void playTurn(){
-        if(hasTurn(firstPlayer) == true){
-            //code that can be done inside of playing the turn
-            //switching the player order so every time a player finishes their turn they
-            //get moved to the back of the "list"
-            playerList.set(1,firstPlayer);
-            playerList.set(0, secondPlayer);
-        }
-        if(hasTurn(secondPlayer) == true){
-            //code that can be done inside of playing the turn
-            //switching the player order so every time a player finishes their turn they
-            //get moved to the back of the "list"
-            playerList.set(1, secondPlayer);
-            playerList.set(0,firstPlayer);
-        }
-    }
-    /**
-     * Set the new board to be a blank board
-     * @param Board
-     */
-    public void setCurrentBoard(Board Board){
-        this.currentBoard = Board;
+        //sets our current player to be the first player of our list.
+        //then removes from the front of the list, so that the second player should now be at the front of the list
+        //Then adds the current player to the back of the list.
+        currentPlayer = playerList.poll();
+        playerList.addLast(currentPlayer);
+
+
+
     }
 
-    /**
-     * Getters for the players that are contained in the current player list
-     * @return
-     */
-    public Player getFirstPlayer(){
-        return  firstPlayer;
-    }
-    public Player getSecondPlayer(){
-        return secondPlayer;
-    }
+
 
     /**
      * Currently doesn't update the player information. (but all the logic works and the data is passed)
      * It doesn't change anything for the current scene.
+=======
+     * Updates the UI with the current GameState data.
+     * This currently creates a new window, so every update makes a new window.
+     * This is really gross but works for now while we implement other more important things.
+>>>>>>> feature/UILogic
      * @throws IOException
      */
-    @Override
+    //@Override
     public void update() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/GameBoard.fxml"));
-        loader.load();
-        FXController controller = loader.getController();
-        controller.updatePlayerInfo(playerList);
+        FXController controller = new FXController();
+        controller.updateAll(this);
     }
 }
 

@@ -10,29 +10,72 @@ import static org.junit.jupiter.api.Assertions.*;
 public class TileTest {
 
 
-    Tile helperMethod_tile(){
-        Tile genericTile = new Tile();
-
-        return genericTile;
-    }
-    Tile helperMethod_custom_tile(){
-
-        Company helperComp = new Company();
-        String coord = "A1";
-
-        Tile customTile = new Tile(helperComp, coord);
-
-        return customTile;
-    }
-
+    /**
+     * Tests that the name of a custom initialized tile is set correctly
+     */
     @Test void test_tile_init() {
 
         // Tile helperTile = helperMethod_custom_tile();
 
-        Tile classUnderTest = helperMethod_custom_tile();
-        assertTrue(classUnderTest.getCompany().getCompanyName().equals("TEST"), "app should have available tile method");
+        Tile classUnderTest = TestHelper.helperMethod_custom_tile_via_coord_and_companyName(0,"TEST");
+        assertTrue(classUnderTest.getCompany().getCompanyName().equals("TEST"), "Initialized Tile should have a name of TEST");
     }
 
+    /**
+     * Tests that a Tile is initially not flipped
+     */
+    @Test void test_tile_isFlipped_on_initialize() {
+        Company helperComp = new Company();
+        int coord = 1;
 
+        // Tile helperTile = helperMethod_custom_tile();
+
+        Tile classUnderTest = TestHelper.helperMethod_custom_tile_via_coord_and_companyName(0,"TEST");
+        assertFalse(classUnderTest.isFlipped());
+    }
+
+    /**
+     * Tests that a tile is flipped once setFlipped is called
+     */
+    @Test void test_tile_isFlipped_on_setFlipped() {
+
+
+
+        Tile classUnderTest = TestHelper.helperMethod_custom_tile_via_coord_and_companyName(0,"TEST");
+        classUnderTest.setFlipped();
+        assertTrue(classUnderTest.isFlipped());
+    }
+
+    /**
+     * Tests getCoord()
+     */
+    @Test void test_tile_getCoord() {
+
+        Tile classUnderTest = TestHelper.helperMethod_custom_tile_via_coord_and_companyName(0,"TEST");
+        classUnderTest.setFlipped();
+        assertEquals(0, classUnderTest.getCoord());
+    }
+
+    /**
+     * Tests getCompany() and makes sure that the company name is proper
+     */
+    @Test void test_tile_getCompany() {
+
+        Tile classUnderTest = TestHelper.helperMethod_custom_tile_via_coord_and_companyName(0,"TEST");
+        classUnderTest.setFlipped();
+        assertTrue(classUnderTest.getCompany().getCompanyName().equals("TEST"));
+    }
+
+    //Tests that the name of the company is changed after setCompany is called
+    @Test void test_tile_setCompany() {
+
+        Tile classUnderTest = TestHelper.helperMethod_custom_tile_via_coord_and_companyName(0,"NAME_BEFORE");
+
+        Company testerCompany = TestHelper.helperMethod_Company("NAME_AFTER");
+        classUnderTest.setCompany(testerCompany);
+
+        assertTrue(classUnderTest.getCompany().getCompanyName().equals("NAME_AFTER"));
+
+    }
 
 }
