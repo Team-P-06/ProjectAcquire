@@ -1,17 +1,17 @@
-
+//
 //DEPRECATED BY ALEX. This will not work as written. I will be doing basic turn testing in GameStateTest, but we can
 //rebuild this to test turn logic.
-
-
-
+//
+//
+//
 ///**
 // *  @author Team 404
 // *  @version v0.0.1
 // */
 //package ProjectAcquire;
-
-
-
+//
+//
+//
 //import org.junit.*;
 //import java.util.List;
 //import static org.junit.jupiter.api.Assertions.*;
