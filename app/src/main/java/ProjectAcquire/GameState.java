@@ -4,9 +4,13 @@
  */
 package ProjectAcquire;
 
-import javafx.fxml.FXMLLoader;
 import java.io.IOException;
 import java.util.*;
+
+import lombok.AccessLevel;
+import lombok.Generated;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * GameSate class that contains a games current status
@@ -16,8 +20,8 @@ public class GameState implements Updatable{
      * Variables needed to maintain a gamestate
      */
     private Player currentPlayer;
-    private Board currentBoard;
-    private LinkedList<Player> playerList;
+    private @Getter Board currentBoard;
+    private @Getter @Setter LinkedList<Player> playerList;
     private boolean isOver = false;
 
 
@@ -47,7 +51,6 @@ public class GameState implements Updatable{
         return this.isOver;
     }
 
-
     //Setters
 
     /**
@@ -59,7 +62,18 @@ public class GameState implements Updatable{
     }
 
 
-    //Commented out by Alex. I am deprecating these methods.
+    //Commented out by Alex. I am deprecating these methods, but I will temporarily make a nexTurn() method
+
+
+    /**
+     * For Show from Alex: This method may break your UI logic, feel free to edit.
+     * @return the player that is at the top of the list but is not currentPlayer
+     */
+    public Player nextTurn(){
+
+        return playerList.peekFirst();
+
+    }
 
 //    /**
 //     * Determines which player has the next turn available in the gamestate
@@ -114,26 +128,23 @@ public class GameState implements Updatable{
 
 
     }
-    /**
-     * Set the new board to be a blank board
-     * @param Board
-     */
-    public void setCurrentBoard(Board Board){
-        this.currentBoard = Board;
-    }
+
 
 
     /**
      * Currently doesn't update the player information. (but all the logic works and the data is passed)
      * It doesn't change anything for the current scene.
+=======
+     * Updates the UI with the current GameState data.
+     * This currently creates a new window, so every update makes a new window.
+     * This is really gross but works for now while we implement other more important things.
+>>>>>>> feature/UILogic
      * @throws IOException
      */
-    @Override
+    //@Override
     public void update() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/GameBoard.fxml"));
-        loader.load();
-        FXController controller = loader.getController();
-        controller.updatePlayerInfo(playerList);
+        FXController controller = new FXController();
+        controller.updateAll(this);
     }
 }
 

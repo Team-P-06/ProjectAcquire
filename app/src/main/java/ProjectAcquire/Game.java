@@ -70,7 +70,7 @@ public class Game {
         //2. creates our 1... 2d? list of tiles.
         List<Tile> freeTileList = new ArrayList<>(); //List of the uncharted tiles that no players have. Better variable name ideas?
         for (int i = 0; i < 108; i++){
-            Tile curTile = new Tile(defaultCompany, Integer.toString(i));
+            Tile curTile = new Tile(defaultCompany, i);
             freeTileList.add(curTile);
         }
 
@@ -86,8 +86,8 @@ public class Game {
         // Isn't the current/next player set when we create the gameState?
         // We would already need a GameState object to call GameState.setCurrentPlayer - Show
 
-        //5. initialize a board using 1-4 as our parameters
-        Board board = new Board(freeTileList, uncharteredList, chartedList, playerList);
+        //5. initialize a board using 1-4 as our parameters (using getInstance())
+        Board board = Board.getInstance(freeTileList, uncharteredList, chartedList, playerList);
 
         //6. initialize our GameState using 4, playerList.next(), 5, and 1 as our parameters
         // This makes p1 current player and p2 next

@@ -37,7 +37,7 @@ public class Board {
     /**
      * Default constructor
      */
-    public Board(){
+    private Board(){
     this.tileList = new ArrayList<Tile>();
     this.uncharteredCompanies = new ArrayList<Company>();
     this.charteredCompanies = new ArrayList<Company>();
@@ -52,7 +52,7 @@ public class Board {
      * @param cc list of chartered companies
      * @param pl list of players
      */
-    public Board(List tl, List uc, List cc, List pl){
+    private Board(List tl, List uc, List cc, List pl){
         this.tileList = tl;
         this.uncharteredCompanies = uc;
         this.charteredCompanies = cc;
