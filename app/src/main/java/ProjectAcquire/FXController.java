@@ -22,6 +22,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import lombok.Generated;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Controller for actions of FXMLUI.
@@ -296,7 +299,6 @@ public class FXController {
     private void updateChoiceInfo(GameState gameState) {
         List<Company> companyList = gameState.getBoard().getCharteredCompanies();
         for (Company curCompany : companyList) {
-            System.out.println(curCompany.getCompanyName());
             Button currentCompanyButton = makeCompanyButton(curCompany, gameState.nextTurn());
             availableStocksObserList.add(currentCompanyButton);
         }

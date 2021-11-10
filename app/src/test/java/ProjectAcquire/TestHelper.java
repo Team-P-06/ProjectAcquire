@@ -49,7 +49,7 @@ public class TestHelper {
      * @param companyName Name of company Tile is attached to as string
      * @return a custom Tile
      */
-    static Tile helperMethod_custom_tile_via_coord_and_companyName(String coord, String companyName){
+    static Tile helperMethod_custom_tile_via_coord_and_companyName(Integer coord, String companyName){
 
         Company helperComp = helperMethod_Company(companyName);
 
@@ -62,9 +62,9 @@ public class TestHelper {
 
     static List<Tile> helperMethod_tileList_company1_3_coord_A1_A3(){
         ArrayList<Tile> testTileList = new ArrayList<Tile>();
-        Tile tile = helperMethod_custom_tile_via_coord_and_companyName("A1","TEST1");
-        Tile tile2 = helperMethod_custom_tile_via_coord_and_companyName("A2","TEST2");
-        Tile tile3 = helperMethod_custom_tile_via_coord_and_companyName("A3","TEST3");
+        Tile tile = helperMethod_custom_tile_via_coord_and_companyName(0,"TEST1");
+        Tile tile2 = helperMethod_custom_tile_via_coord_and_companyName(1,"TEST2");
+        Tile tile3 = helperMethod_custom_tile_via_coord_and_companyName(2,"TEST3");
 
         testTileList.add(tile);
         testTileList.add(tile2);

@@ -7,6 +7,11 @@ package ProjectAcquire;
 import java.io.IOException;
 import java.util.*;
 
+import lombok.AccessLevel;
+import lombok.Generated;
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * GameSate class that contains a games current status
  */
