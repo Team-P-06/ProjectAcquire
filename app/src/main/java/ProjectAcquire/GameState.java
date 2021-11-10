@@ -111,7 +111,7 @@ public class GameState implements Updatable{
         currentPlayer = playerList.poll();
         playerList.addLast(currentPlayer);
 
-        
+
 
     }
     /**

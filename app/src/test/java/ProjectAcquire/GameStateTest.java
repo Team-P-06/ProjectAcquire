@@ -31,7 +31,6 @@ public class GameStateTest {
 
         tester.playTurn();
 
-
         assertTrue(tester.isOver()==false);
 
     }
