@@ -40,11 +40,7 @@ public class Game {
 
         //this.currentGameState = (gamestate that we pull from a file)
     }
-<<<<<<< HEAD
-=======
-
->>>>>>> 8450658b5c9033416c91d7f7eab7c39d037ff56b
-
+    
     /**
      * Start game method that will begin a new game that isn't already saved
      */
