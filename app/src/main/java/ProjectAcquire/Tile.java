@@ -11,11 +11,11 @@ public class Tile {
    private @Getter @Setter Company company;
    private @Getter @Setter int coord;
    private Boolean flipped;
+   private @Getter @Setter Boolean dealt;
 
 
+   //Default constructor
     Tile(){
-
-        this.company = new Company();
         this.coord = 1;
         this.company = new Company();
         this.flipped = false;
