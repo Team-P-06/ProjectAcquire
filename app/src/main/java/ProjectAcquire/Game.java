@@ -65,7 +65,7 @@ public class Game {
         //2. creates our 1... 2d? list of tiles.
         List<Tile> freeTileList = new ArrayList<>(); //List of the uncharted tiles that no players have. Better variable name ideas?
         for (int i = 0; i < 108; i++){
-            Tile curTile = new Tile(defaultCompany, Integer.toString(i));
+            Tile curTile = new Tile(defaultCompany, i);
             freeTileList.add(curTile);
         }
 

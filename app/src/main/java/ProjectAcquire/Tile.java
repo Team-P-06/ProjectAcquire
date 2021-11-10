@@ -6,14 +6,14 @@ package ProjectAcquire;
 
 public class Tile {
    private Company tilesCompany;
-   private String tileCoord;
+   private int tileCoord;
    private Boolean flipped;
 
 
     Tile(){
 
         this.tilesCompany = new Company();
-        this.tileCoord = "A1";
+        this.tileCoord = 1;
         this.flipped = false;
     }
 
@@ -23,7 +23,7 @@ public class Tile {
      * @param tileCoord the coordinate of the tile
      * flipped default value should always be false when created. The default company should be a empty company
      */
-    Tile(Company tilesCompany, String tileCoord){
+    Tile(Company tilesCompany, int tileCoord){ //It might work better to make tileCoord to be an int between 1 - 107
         this.tilesCompany = tilesCompany;
         this.tileCoord = tileCoord;
         this.flipped = false;
@@ -40,7 +40,7 @@ public class Tile {
      *
      * @return the coordinates of the tile
      */
-    public String getCoord(){
+    public int getCoord(){
         return tileCoord;
     }
 

@@ -18,7 +18,7 @@ public class TileTest {
     Tile helperMethod_custom_tile(){
 
         Company helperComp = new Company();
-        String coord = "A1";
+        int coord = 1;
 
         Tile customTile = new Tile(helperComp, coord);
 
