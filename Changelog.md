@@ -6,7 +6,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-- basic testing of classes
 
 
 
@@ -20,5 +19,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Jacoco
 - lombok
 - flogger
+- basic testing of most classes
+- basic UI and UI updating 
+- functional initialized game
+
 ### Changed
 
