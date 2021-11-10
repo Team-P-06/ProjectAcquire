@@ -4,7 +4,6 @@
  */
 package ProjectAcquire;
 
-import javafx.fxml.FXMLLoader;
 import java.io.IOException;
 import java.util.*;
 
@@ -51,7 +50,8 @@ public class GameState implements Updatable{
         return this.isOver;
     }
 
-
+    public List<Player> getPlayerList() { return playerList; }
+    public Board getBoard() { return currentBoard;}
     //Setters
 
     /**
@@ -130,6 +130,7 @@ public class GameState implements Updatable{
     }
 
     /**
+<<<<<<< HEAD
      * Getters for the players that are contained in the current player list
      * @return
      */
@@ -143,14 +144,17 @@ public class GameState implements Updatable{
     /**
      * Currently doesn't update the player information. (but all the logic works and the data is passed)
      * It doesn't change anything for the current scene.
+=======
+     * Updates the UI with the current GameState data.
+     * This currently creates a new window, so every update makes a new window.
+     * This is really gross but works for now while we implement other more important things.
+>>>>>>> feature/UILogic
      * @throws IOException
      */
-    @Override
+    //@Override
     public void update() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/GameBoard.fxml"));
-        loader.load();
-        FXController controller = loader.getController();
-        controller.updatePlayerInfo(playerList);
+        FXController controller = new FXController();
+        controller.updateAll(this);
     }
 }
 

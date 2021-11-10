@@ -21,10 +21,15 @@ public class TileTest {
         assertTrue(classUnderTest.getCompany().getCompanyName().equals("TEST"), "Initialized Tile should have a name of TEST");
     }
 
+<<<<<<< HEAD
     /**
      * Tests that a Tile is initially not flipped
      */
     @Test void test_tile_isFlipped_on_initialize() {
+=======
+        Company helperComp = new Company();
+        int coord = 1;
+>>>>>>> feature/UILogic
 
         // Tile helperTile = helperMethod_custom_tile();
 

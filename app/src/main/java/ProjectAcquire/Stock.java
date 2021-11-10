@@ -45,6 +45,7 @@ public class Stock {
     public int maxStockBuy(Player player, Company company){
     return 0; //DEFAULT
     }
+<<<<<<< HEAD
 
     /**
      *
@@ -58,3 +59,6 @@ public class Stock {
 }
 
 
+=======
+}
+>>>>>>> feature/UILogic
