@@ -14,13 +14,8 @@ public class JsonTest{
      * @return testGame
      */
     @Before GameState testJson(){
-        Player PlayerTest1 = new Player();
-        Player PlayerTest2 = new Player();
-        Board testBoard = new Board();
-        List<Player> testList = null;
-        testList.add(PlayerTest1);
-        testList.add(PlayerTest2);
-        GameState testGame = new GameState(PlayerTest1, PlayerTest2, testBoard, testList);
+
+        GameState testGame = TestHelper.helperMethod_GameStateInit();
         return testGame;
     }
 

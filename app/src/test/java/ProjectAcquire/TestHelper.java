@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -122,9 +123,64 @@ public class TestHelper {
     }
 
     @After
-    static void helperMethod_tearDown(){
+    static void helperMethod_tearDownBoard(){
         Board oldBoard = helperMethod_custom_board();
         oldBoard.setNull();
     }
+
+
+    static GameState helperMethod_GameStateInit(){
+
+
+        /*
+        precheck: UI initializes with a starting screen. Player chooses either to exit, start, or load. if load, then call the loadGame() function.
+        App starts the UI with start(Stage stage) (Not sure if that can be changed), but from there selecting new game can start this e.g: Game.start()
+        Load game can call Game.loadGame() instead - show
+        If start, then do the following:
+         */
+
+
+
+        //1. queries for how many players there are, (UI), then adds x amount of players to a playerList.
+        //This is just a static creation of players for now, will be more dynamic in the future.
+        List<Tile> test_playerTileList = new ArrayList<>();
+        LinkedList<Player> test_playerList = new LinkedList<>();
+        Player test_player1 = TestHelper.helperMethod_custom_Player("P1");
+        Player test_player2 = TestHelper.helperMethod_custom_Player("P2");
+        test_playerList.add(test_player1);
+        test_playerList.add(test_player2);
+
+        //2. list of tiles.
+        List<Tile> test_boardTileList = TestHelper.helperMethod_tileList_company1_3_coord_A1_A3();
+
+        //Grab companies from tiles.
+        Company testTileList_company1 = test_boardTileList.get(0).getCompany();
+        Company testTileList_company2 = test_boardTileList.get(1).getCompany();
+        Company testTileList_company3 = test_boardTileList.get(2).getCompany();
+
+        //3. creates our list of chartered and unchartered companies, add tile companies to them.
+        List<Company> test_charteredList = new ArrayList<Company>();
+        List<Company> test_uncharteredList = new ArrayList<Company>();
+        test_uncharteredList.add(testTileList_company1);
+        test_uncharteredList.add(testTileList_company2);
+        test_uncharteredList.add(testTileList_company3);
+
+        //4. set a current player
+        // Isn't the current/next player set when we create the gameState?
+        // We would already need a GameState object to call GameState.setCurrentPlayer - Show
+
+        //5. initialize a board using 1-4 as our parameters
+        Board board = new Board(test_playerTileList, test_uncharteredList, test_charteredList, test_playerList);
+
+        //6. initialize our GameState using 4, playerList.next(), 5, and 1 as our parameters
+        // This makes p1 current player and p2 next
+        GameState gameState = new GameState( board, test_playerList);
+
+        //7. call setCurrentGame() using 6 as our parameter
+        //setCurrentGameState(gameState);
+        return gameState;
+    }
+
+
 
 }
