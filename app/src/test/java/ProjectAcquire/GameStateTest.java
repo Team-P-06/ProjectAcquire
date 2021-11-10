@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class GameStateTest {
 
@@ -18,20 +18,41 @@ public class GameStateTest {
 
       GameState tester = TestHelper.helperMethod_GameStateInit();
 
-      assertTrue(tester.isOver()==false);
+      assertTrue(!tester.isOver()); //game should start with isOVer as false
 
     }
 
     /**
      * Tests that our first turn goes smoothly after an initialization
      */
-    @Test void test_GameStateInitialTurn(){
+    @Test void test_GameState_initialTurn_currentPlayerNotNull(){
 
         GameState tester = TestHelper.helperMethod_GameStateInit();
 
-        tester.playTurn();
+        //Player initial turn
 
-        assertTrue(tester.isOver()==false);
+        Player initPlayer = tester.getCurrentPlayer(); //currentPlayer on initialization
+        System.out.println("Current player is: " + initPlayer);
+        System.out.println("playerList: "+ tester.getPlayerList());
+
+        tester.playTurn(); //plays a turn
+        Player newCurrentPlayer = tester.getCurrentPlayer();//currentPlayer should be different
+        System.out.println("Current player is: " + newCurrentPlayer);
+        System.out.println("playerList: "+ tester.getPlayerList());
+
+        //current player should now not be null.
+        assertNotNull(tester.getCurrentPlayer());
+
+    }
+
+    /**
+     * Tests our GameStat
+     */
+    @Test void test_GameState_initialTurn_deal_cards(){
+
+        GameState test_gameState = TestHelper.helperMethod_GameStateInit();
+
+
 
     }
 

@@ -7,6 +7,9 @@ package ProjectAcquire;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+
+import lombok.Builder;
 import lombok.Generated;
 import lombok.Getter;
 import lombok.Setter;
@@ -130,4 +133,33 @@ public class Player{
     tileList.remove(tile);
     }
 
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Player player = (Player) o;
+        return money == player.money && Objects.equals(name, player.name) && Objects.equals(stockList, player.stockList) && Objects.equals(tileList, player.tileList);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, money, stockList, tileList);
+    }
+
+    @Override
+    public String toString() {
+
+        String retString1 = name;
+
+        String retString2 = "Player{" +
+                "name='" + name + '\'' +
+                ", money=" + money +
+                ", stockList=" + stockList +
+                ", tileList=" + tileList +
+                '}';
+
+        return retString1;
+    }
 }
+

@@ -147,8 +147,12 @@ public class TestHelper {
         LinkedList<Player> test_playerList = new LinkedList<>();
         Player test_player1 = TestHelper.helperMethod_custom_Player("P1");
         Player test_player2 = TestHelper.helperMethod_custom_Player("P2");
+        Player test_player3 = TestHelper.helperMethod_custom_Player("P3");
+
         test_playerList.add(test_player1);
         test_playerList.add(test_player2);
+        test_playerList.add(test_player3);
+
 
         //2. list of tiles.
         List<Tile> test_boardTileList = TestHelper.helperMethod_tileList_company1_3_coord_A1_A3();

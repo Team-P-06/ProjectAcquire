@@ -19,7 +19,7 @@ public class GameState implements Updatable{
     /**
      * Variables needed to maintain a gamestate
      */
-    private Player currentPlayer;
+    private @Getter Player currentPlayer;
     private @Getter Board currentBoard;
     private @Getter @Setter LinkedList<Player> playerList;
     private boolean isOver = false;
@@ -39,6 +39,7 @@ public class GameState implements Updatable{
        // this.currentPlayer = playerList.get(0);
         this.currentBoard = currentBoard;
         this.playerList = playerList;
+      // this.currentPlayer = playerList.peekFirst();
     }
 
     //Getters
@@ -116,19 +117,34 @@ public class GameState implements Updatable{
     }
 
     /**
-     * Recursive play method that is called when a player decides to play their turn
+     * recursively called play method that is called when a player decides to play their turn
      */
     public void playTurn(){
         //sets our current player to be the first player of our list.
         //then removes from the front of the list, so that the second player should now be at the front of the list
         //Then adds the current player to the back of the list.
+        if (currentPlayer == null){
+            setUpInitialTurn(); //if our game has just started, we need to initialize it.
+        }
         currentPlayer = playerList.poll();
         playerList.addLast(currentPlayer);
 
 
 
+
+
     }
 
+    /**
+     * Deals initial cards to players, and... what else does this method need to do for playTurn to be able to run?
+     */
+    private void setUpInitialTurn(){
+
+        //dealing cards
+        //1. I think that we should maybe have a dealt tile list and undealt tilelist that are complements of each other
+        // where their union is equivalent to the board tile list. Then we can keep track of tiles dealt
+
+    }
 
 
     /**

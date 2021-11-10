@@ -386,10 +386,13 @@ public class FXController {
 
         Player p1 = new Player("player 1", pTilesList, 400);
         Player p2 = new Player("player 2", pTilesList, 4000);
+        Player p3 = new Player("player 3", pTilesList, 8000);
+
         //Alex NOTE: This pList is a duplicate of line 233
         LinkedList<Player> pList = new LinkedList<>();
         pList.add(p1);
         pList.add(p2);
+        pList.add(p3);
 
         List<Company> charteredCom = new ArrayList<>();
         Company com1 = new Company("Company 1", 100, true, false);
@@ -405,6 +408,10 @@ public class FXController {
         GameState gameState = new GameState(board, pList);
 
         gameState.update();
+
+
+
+
     }
 
 }
