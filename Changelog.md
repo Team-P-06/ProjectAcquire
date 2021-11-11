@@ -6,6 +6,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- tileList is 2d
+- game logic works
+- Better UI 
+- Fully functional save, load, GSON. 
+
+
+## [0.1.0]
+
+### Added
+
+
+
+### Changed
+
 
 
 ## [0.0.1]

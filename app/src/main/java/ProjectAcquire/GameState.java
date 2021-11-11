@@ -133,11 +133,34 @@ public class GameState{
 
 
         //Looks at the current player, and then runs that players turn
+
         //1. Deals cards if less than 6 cards are in the player's hand
+
+        while (currentPlayer.getTileList().size()<6){
+            currentPlayer.drawTile();
+        }
         //2.a Lets the player flip a tile in their hand, removes that tile from the player's hand.
+             //Interrupt call that lets the player choose which tile in hand to flip
+             //Ie. Tile playerChosenTile = Interrupt() where interrupt makes the tileList clickable on screen, then returns the tile
+             //referenced by the UI tile list position clicked.
+             //playerChosenTile.flip()
+             //currentPlayer.discardTile()
+
         //2.b The player then gets to buy stock from any of the companies.
+            //this is a UI Interrupt too.
+            //While (currentPlayer.getMoney() > lowest corporation stock value and flag == false)
+            //{ Stock playerStockBuy = UI_stock_interrupt()
+            // where UI_stock_interrupt() shows the player the stocks that they can buy, and then returns a stock if they choose to buy, otherwise returns null
+            // if(playerStockBuy == null){then flag = true;}  because our player chose to not buy any stocks
+            //else{ currentPlayer.buyStock(playerStockBuy);} stock that player has chosen is bought, added to stockList.
+            //if the player has not chosen to stop buying tiles, should loop. (this isn't great code, but it is functional)
+            // }
+
         //2.c step 2.a will cause checkForAction to need to be called, then either a charter, merge, or no action happens
-        //2.d any action caused by 2.c should be in a different method (merge, charter, etc)
+            //so after 2.b runs, we call BoardLogic.checkForAction(currentBoard, playerStockBuy.getCoord()).
+            //checkForAction should, based on a coord, get the coord above it, below it, and to the left and right of it,
+            //then decide based on a switch block whether to call merge, charter, or nothing and come back to this method.
+        //2.d any action caused by 2.c should be dealt with in a different method (merge, charter, etc), not in here.
         //3. Turn ends.
     }
 
