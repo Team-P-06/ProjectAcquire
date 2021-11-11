@@ -120,6 +120,8 @@ public class GameState implements Updatable{
      * recursively called play method that is called when a player decides to play their turn
      */
     public void playTurn(){
+
+        //This section checks if we have loaded a game or if we are just starting.
         //sets our current player to be the first player of our list.
         //then removes from the front of the list, so that the second player should now be at the front of the list
         //Then adds the current player to the back of the list.
@@ -128,6 +130,7 @@ public class GameState implements Updatable{
         }
         currentPlayer = playerList.poll();
         playerList.addLast(currentPlayer);
+
 
         //Looks at the current player, and then runs that players turn
         //1. Deals cards if less than 6 cards are in the player's hand
