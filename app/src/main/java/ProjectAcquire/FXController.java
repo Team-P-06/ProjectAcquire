@@ -162,7 +162,7 @@ public class FXController {
             currentButton.setText(getTileCoord(tile));
             currentButton.setStyle("-fx-background-color: 000000");
             GridPane.setHalignment(currentButton, HPos.CENTER);
-            tileGrid.add(currentButton, calculateCol(tile.getCoord()), calculateRow(tile.getCoord()));
+            tileGrid.add(currentButton, calculateCol(tile.getCoord()[1]), calculateRow(tile.getCoord()[0])); //Screwed with by Alex
 
         }
     }
@@ -177,7 +177,7 @@ public class FXController {
         List<Tile> listOfTiles = new ArrayList<>();
         Company defaultCompany = new Company();
         for (int i = 0; i <= 107; i++){
-            Tile currentTile = new Tile(defaultCompany, i);
+            Tile currentTile = new Tile(defaultCompany, new int[]{i,0}); //Screwed with by alex to make compile
             listOfTiles.add(currentTile);
         }
         return listOfTiles;
@@ -207,11 +207,11 @@ public class FXController {
      * @param tile the tile you'd like to get the name of.
      * @return A coordinate name of the unique tile.
      */
-    public String getTileCoord(Tile tile) {
+    public String getTileCoord(Tile tile) {    //Screwed with by Alex to make compile. BREAKS BOARD UI, PLEASE FIX SHOW :(
         String tileString;
         int remainder;
-        int mod = (tile.getCoord() % 12) + 1;
-        switch (remainder = (tile.getCoord() / 12)) {
+        int mod = (tile.getCoord()[0] % 12) + 1;
+        switch (remainder = (tile.getCoord()[0] / 12)) {
             case 0 -> tileString = ("A" + mod);
             case 1 -> tileString = ("B" + mod);
             case 2 -> tileString = ("C" + mod);

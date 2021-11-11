@@ -9,14 +9,14 @@ import lombok.Setter;
 
 public class Tile {
    private @Getter @Setter Company company;
-   private @Getter @Setter int coord;
+   private @Getter @Setter int[] coord;
    private Boolean flipped;
    private @Getter @Setter Boolean dealt;
 
 
    //Default constructor
     Tile(){
-        this.coord = 1;
+        this.coord = new int[]{0, 0};
         this.company = new Company();
         this.flipped = false;
     }
@@ -27,7 +27,7 @@ public class Tile {
      * @param tileCoord the coordinate of the tile
      * flipped default value should always be false when created. The default company should be a empty company
      */
-    Tile(Company tilesCompany, int tileCoord){
+    Tile(Company tilesCompany, int[] tileCoord){
         this.company = tilesCompany;
         this.coord = tileCoord;
         this.flipped = false;
