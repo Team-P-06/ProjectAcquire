@@ -44,7 +44,7 @@ public class Game {
     /**
      * Start game method that will begin a new game that isn't already saved
      */
-    public void start() {
+    public GameState start() {
         Company defaultCompany = new Company("emptyCo", 0, false, false);
 
         //initializes our game
@@ -63,8 +63,12 @@ public class Game {
         LinkedList<Player> playerList = new LinkedList<Player>();
         Player player1 = new Player("Player 1", playerTileList, 3000);
         Player player2 = new Player("Player 2", playerTileList, 3000);
+        Player player3 = new Player("Player 2", playerTileList, 3000);
+
         playerList.add(player1);
         playerList.add(player2);
+        playerList.add(player3);
+
 
         //2. creates our 1... 2d? list of tiles.
         List<Tile> freeTileList = new ArrayList<>(); //List of the uncharted tiles that no players have. Better variable name ideas?
@@ -97,6 +101,10 @@ public class Game {
 
 
         //if loadGame was called, then simply: setCurrentGame(loadGame())
+
+        //now we pass this to JavaFX (javafx calls this)
+
+        return gameState;
     }
 
     /**

@@ -162,7 +162,43 @@ public class FXController {
     @Getter ObservableList<Integer> wStockObserListView = FXCollections.observableArrayList();
     @Getter ObservableList<Integer> tStockObserListView = FXCollections.observableArrayList();
 
+<<<<<<< HEAD
     @FXML private Button populateButton;
+=======
+        Player p1 = new Player("player 1", pTilesList, 400);
+        Player p2 = new Player("player 2", pTilesList, 4000);
+        Player p3 = new Player("player 3", pTilesList, 8000);
+
+        //Alex NOTE: This pList is a duplicate of line 233
+        LinkedList<Player> pList = new LinkedList<>();
+        pList.add(p1);
+        pList.add(p2);
+        pList.add(p3);
+
+        List<Company> charteredCom = new ArrayList<>();
+        Company com1 = new Company("Company 1", 100, true, false);
+        Company com2 = new Company("Company 2", 400, true, false);
+        Company com3 = new Company("Company 3", 900, true, false);
+        charteredCom.add(com1);
+        charteredCom.add(com2);
+        charteredCom.add(com3);
+
+        Board board = Board.getInstance();
+        board.setCharteredCompanies(charteredCom);
+
+        GameState gameState = new GameState(board, pList);
+
+        //ALEX NOTE: We should be able to
+//        Game game = new Game();
+//        GameState gameStateFX = game.start();
+
+        gameState.update();
+
+
+
+
+    }
+>>>>>>> 4aef2493fa5abd22072ebdd611d9ad0361b1de5c
 
     /*public void testPopulateButtonAction() throws IOException {
         Update update = new Update();
