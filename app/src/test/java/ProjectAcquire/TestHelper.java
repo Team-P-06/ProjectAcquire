@@ -96,7 +96,6 @@ public class TestHelper {
 
     }
 
-
     /**
      *
      * @return a Board instance for testing

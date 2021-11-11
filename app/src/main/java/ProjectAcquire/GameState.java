@@ -15,7 +15,7 @@ import lombok.Setter;
 /**
  * GameSate class that contains a games current status
  */
-public class GameState implements Updatable{
+public class GameState{
     /**
      * Variables needed to maintain a gamestate
      */
@@ -159,8 +159,10 @@ public class GameState implements Updatable{
      */
     //@Override
     public void update() throws IOException {
-        FXController controller = new FXController();
-        controller.updateAll(this);
+        Update update = new Update();
+        update.update(this);
+        //FXController controller = new FXController();
+        //controller.updateAll(this);
     }
 }
 

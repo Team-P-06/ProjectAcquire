@@ -10,6 +10,6 @@ public interface Updatable {
     /**
      * Updates UI
      */
-    void update() throws IOException;
+    void update(GameState gameState) throws IOException;
 
 }
