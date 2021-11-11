@@ -178,7 +178,7 @@ public class TestHelper {
 
         //6. initialize our GameState using 4, playerList.next(), 5, and 1 as our parameters
         // This makes p1 current player and p2 next
-        GameState gameState = new GameState( board, test_playerList);
+        GameState gameState = new GameState(board, test_playerList);
 
         //7. call setCurrentGame() using 6 as our parameter
         //setCurrentGameState(gameState);

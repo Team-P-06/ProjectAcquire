@@ -129,10 +129,13 @@ public class GameState implements Updatable{
         currentPlayer = playerList.poll();
         playerList.addLast(currentPlayer);
 
-
-
-
-
+        //Looks at the current player, and then runs that players turn
+        //1. Deals cards if less than 6 cards are in the player's hand
+        //2.a Lets the player flip a tile in their hand, removes that tile from the player's hand.
+        //2.b The player then gets to buy stock from any of the companies.
+        //2.c step 2.a will cause checkForAction to need to be called, then either a charter, merge, or no action happens
+        //2.d any action caused by 2.c should be in a different method (merge, charter, etc)
+        //3. Turn ends.
     }
 
     /**

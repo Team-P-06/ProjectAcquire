@@ -407,6 +407,10 @@ public class FXController {
 
         GameState gameState = new GameState(board, pList);
 
+        //ALEX NOTE: We should be able to
+//        Game game = new Game();
+//        GameState gameStateFX = game.start();
+
         gameState.update();
 
 
