@@ -7,7 +7,7 @@ import java.util.List;
 
 public class UpdateBoard implements Updatable{
 
-    private final Update UIController = Update.getUIController();
+    private FXController UIController;
 
     /**
      * Creates 108 buttons and assigns them to a place on the grid with colors and name.
@@ -16,35 +16,40 @@ public class UpdateBoard implements Updatable{
      * col = n % 12
      * The list of tiles will need to pull from the tile pool and players pool to properly color and associate them with a company.
      */
-    public void update(GameState gameState){
+    public void update(GameState gameState, FXController UIController) {
+        this.UIController = UIController;
         List<Player> playerList = gameState.getPlayerList();
-        List<Tile> tileNotInPlayerHand = gameState.getCurrentBoard().getTileList();
+        List<Tile> tilesNotInPlayerHand = gameState.getCurrentBoard().getTileList();
         Player currentPlayer = gameState.getCurrentPlayer();
-        for (Tile tile: tilesNotInPlayerHand) {
+        for (Tile tile : tilesNotInPlayerHand) {
             Button currentButton = setButtonProperties(tile.getCompany().getCompanyName());
             currentButton.setText(getTileCoord(tile));
             UIController.getTileGrid().add(currentButton, calculateCol(tile.getCoord()), calculateRow(tile.getCoord()));
         }
 
-        for(Player player: playerList)
-            if(player.equals(currentPlayer)) {
-                makeCurrentPlayerTiles(player.getTileList(), player); }
-            else {
-                makeOtherPlayerTile(player.getTileList()); }
+        for (Player player : playerList)
+            if (player.equals(currentPlayer)) {
+                makeCurrentPlayerTiles(player.getTileList(), player);
+            } else {
+                makeOtherPlayerTile(player.getTileList());
+            }
 
     }
 
-    private void makeCurrentPlayerTiles(List<Tile> tileList, Player player){
-        for(Tile tile: tileList) {
+    private void makeCurrentPlayerTiles(List<Tile> tileList, Player player) {
+        for (Tile tile : tileList) {
             Button currentButton = new Button();
             currentButton.setStyle("-fx-border-color: red");
             currentButton.setStyle(getTileCoord(tile));
-            currentButton.setOnAction(action -> { System.out.println("YASSSS");/*player.placeTile(tile)*/;});
+            currentButton.setOnAction(action -> {
+                System.out.println("YASSSS");/*player.placeTile(tile)*/
+                ;
+            });
         }
     }
 
-    private void makeOtherPlayerTile(List<Tile> tileList){
-        for(Tile tile: tileList) {
+    private void makeOtherPlayerTile(List<Tile> tileList) {
+        for (Tile tile : tileList) {
             Button currentButton = new Button();
             currentButton.setStyle("-fx-background-color: 000000");
             currentButton.setText(getTileCoord(tile));
@@ -52,16 +57,16 @@ public class UpdateBoard implements Updatable{
         }
     }
 
-    private Button setButtonProperties(String tileCom){
+    private Button setButtonProperties(String tileCom) {
         Button currentButton = colorButton(tileCom);
         currentButton.setMinSize(40, 45);
         UIController.getTileGrid().setHalignment(currentButton, HPos.CENTER);
         return currentButton;
     }
 
-    private Button colorButton(String companyName){
+    private Button colorButton(String companyName) {
         Button button = new Button();
-        switch(companyName) {
+        switch (companyName) {
             case "Worldwide" -> button.setStyle("-fx-background-color: purple");
             case "Sackson" -> button.setStyle("-fx-background-color: orange");
             case "Festival" -> button.setStyle("-fx-background-color: green");
@@ -77,24 +82,27 @@ public class UpdateBoard implements Updatable{
     /**
      * Gets the row if we count from 0 - 107 and the tiles start from the top left
      * Int division always rounds towards zero
+     *
      * @param n number of the tile
      * @return row
      */
-    private int calculateRow(int n){
-        return n/12;
+    private int calculateRow(int n) {
+        return n / 12;
     }
 
     /**
      * remainder of tile / 12 is the column
-     * @param n  number of the tile
+     *
+     * @param n number of the tile
      * @return column
      */
-    private int calculateCol(int n){
-        return n%12;
+    private int calculateCol(int n) {
+        return n % 12;
     }
 
     /**
      * Extracts the string names of the tiles in the list of tiles
+     *
      * @param tile the tile you'd like to get the name of.
      * @return A coordinate name of the unique tile.
      */
@@ -117,3 +125,5 @@ public class UpdateBoard implements Updatable{
         return tileString;
 
     }
+
+}

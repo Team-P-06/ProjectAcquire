@@ -162,9 +162,7 @@ public class FXController {
     @Getter ObservableList<Integer> wStockObserListView = FXCollections.observableArrayList();
     @Getter ObservableList<Integer> tStockObserListView = FXCollections.observableArrayList();
 
-<<<<<<< HEAD
-    @FXML private Button populateButton;
-=======
+     /*@FXML private Button populateButton;
         Player p1 = new Player("player 1", pTilesList, 400);
         Player p2 = new Player("player 2", pTilesList, 4000);
         Player p3 = new Player("player 3", pTilesList, 8000);
@@ -197,8 +195,7 @@ public class FXController {
 
 
 
-    }
->>>>>>> 4aef2493fa5abd22072ebdd611d9ad0361b1de5c
+    }*.
 
     /*public void testPopulateButtonAction() throws IOException {
         Update update = new Update();

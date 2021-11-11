@@ -4,14 +4,16 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class UpdatePlayer implements Updatable{
-    private final Update UIController = Update.getUIController();
+    private FXController UIController;
 
     /**
      * Updates the information about the players, e.g. money, net worth, and tile hand
      * Tile hand with swap every turn to represent the current players hand.
      * TileList needs to loop to extract the tile coordinates and put them into the string list
      */
-    public void update(GameState gameState){
+    public void update(GameState gameState, FXController UIController){
+        this.UIController = UIController;
+        UpdateBoard boardUpdater = new UpdateBoard();
         LinkedList<Player> playerList = gameState.getPlayerList();
         Player currentPlayer = gameState.nextTurn();
         UIController.getPlayerNameObserList().clear();
@@ -26,7 +28,7 @@ public class UpdatePlayer implements Updatable{
         }
 
         for (Tile tile: currentPlayer.getTileList()) {
-            UIController.getPlayerTilesObserList().add(getTileCoord(tile));
+            UIController.getPlayerTilesObserList().add(boardUpdater.getTileCoord(tile));
         }
         UIController.getPlayerNameList().setItems(UIController.getPlayerNameObserList());
         UIController.getPlayerMoneyList().setItems(UIController.getPlayerMoneyObserList());

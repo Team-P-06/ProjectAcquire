@@ -8,11 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UpdateHotel implements Updatable{
-    private final Update UIController = Update.getUIController();
+    private FXController UIController;
 
-    public void update(GameState gameState){
-        List<Company> cCompany = gameState.getgetCurrentBoard().getCharteredCompanies();
-        List<Company> uCompany = getCurrentBoard().getUncharteredCompanies();
+    public void update(GameState gameState, FXController UIController){
+        this.UIController = UIController;
+        List<Company> cCompany = gameState.getCurrentBoard().getCharteredCompanies();
+        List<Company> uCompany = gameState.getCurrentBoard().getUncharteredCompanies();
         List<Player> playerList = gameState.getPlayerList();
         List<Company> allCompanies = new ArrayList<>();
         setHotelName(playerList);
