@@ -160,6 +160,49 @@ public class GameState{
             //then decide based on a switch block whether to call merge, charter, or nothing and come back to this method.
         //2.d any action caused by 2.c should be dealt with in a different method (merge, charter, etc), not in here.
         //3. Turn ends.
+
+        /* Show's alternate (but really similar) approach
+        1. Set up/ load game board
+            1.a gameState.Update();
+
+        2. CurPlayer places a tile
+            2.a This invokes player.playTile(Tile).
+                -- which calls checkAction()
+                -- If merge goto --> MERGE
+            2.b gameState.Update();
+
+        3. while(buysLeft == 3; buysLeft > 0; buysLeft-- && Player.money > lowest stock price)  {
+            3.a gameState.UpdateBuyStock()
+                -- UI updates available stock buying list.
+            3.b: Player chooses a stock to buy
+            3.c: player.buyStocks() is called
+                -- If they have enough money update information accordingly (player, hotel)
+                -- If they don't call gameState.notEnoughMoney();
+                    -- UI sets a label telling them they don't have enough cash and calls gameState.UpdateBuyStock() again.
+            3.d: gamestate.update()
+            [End Turn button send somthing back to the while loop telling it to stop]
+            }
+
+        4. NextTurn()
+            4.a gamestate.update()
+
+        MERGE:
+        1. Merge will change the data for tiles, businesses etc.
+
+        for each player in playerList{
+        3. while(currentPlayer.numberOfStockInDefunctCompany > 0){
+            -- call gameState.mergeOptions(Company defunctCompany, Player currentPlayer)
+                  -- populates list with sell, keep or trade for current defunct business
+                  -- player click an option and a dialoge box pops up asking for a number
+                  -- Player.checkValidInput(int). return true or false. If false change label to invalid input.. [This will need to check the player stock list and keep adding to an int to see if the player has enough stocks]
+                  -- if true call Player.sell(int, Company), keep(int, Company) etc.}
+                    -- Updates the data for player money, stocks etc and buesiness information.
+            }
+        }
+        4. go to step 3.
+
+        MAIN DRAWBACK: is that we would have to pass around the current gameState a lot
+         */
     }
 
     /**
