@@ -20,6 +20,7 @@ public class Update {
      * Main update logic that branches out and updates different parts of the UI(Player data, Board, Company stocks, and stock options
      */
     public void update(GameState gameState) throws IOException {
+        System.out.println("yes");
         UIController.getMainStage().hide();
         UIController.showBoardMenu(UIController.getGameBoardLoader());
         boardUpdater.update(gameState, UIController);

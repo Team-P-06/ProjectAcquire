@@ -18,6 +18,7 @@ public class UpdatePlayer implements Updatable{
         this.UIController = UIController;
         LinkedList<Player> playerList = gameState.getPlayerList();
         Player currentPlayer = gameState.nextTurn();
+        updateCurrentPlayerLabel(currentPlayer);
         UIController.getPlayerNameObserList().clear();
         UIController.getPlayerMoneyObserList().clear();
         UIController.getPlayerNetObserList().clear();
@@ -57,6 +58,10 @@ public class UpdatePlayer implements Updatable{
             playerNet += player.getMoney();
         }
         return playerNet;
+    }
+
+    private void updateCurrentPlayerLabel(Player currentPlayer){
+        UIController.getCurrentPlayerTurnLabel().setText(currentPlayer.getName());
     }
 
 }

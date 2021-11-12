@@ -21,7 +21,7 @@ public class App extends Application {
      * @throws IOException
      */
     @Override
-    public void start(Stage stage) throws IOException, InterruptedException {
+    public void start(Stage stage) throws IOException {
         FXController mainMenu = new FXController();
         mainMenu.showMainMenu();
     }
@@ -31,7 +31,7 @@ public class App extends Application {
      * @param args
      */
     public static void main(String[] args) throws IOException {
-        System.out.println("App works");
+        //System.out.println("App works");
 
         //Start UI
         launch();
