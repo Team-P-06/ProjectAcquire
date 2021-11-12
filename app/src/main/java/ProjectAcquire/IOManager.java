@@ -35,6 +35,7 @@ public class IOManager {
     public GameState loadGame(String file) throws IOException {
         BufferedReader readFile = null;
         Game thisGame = new Game();
+        GameState loadedGame = new GameState();
         /**
          * Try to read a json file that was created from the save game method
          * which will then be converted from a string to a gamestate object within
@@ -42,11 +43,10 @@ public class IOManager {
          */
         try {
             readFile = new BufferedReader(new FileReader(file));
-            Gson gson = new GsonBuilder().create();
-            GameState savedGameState = gson.fromJson(readFile, GameState.class);
-            if (savedGameState != null) {
-                thisGame.setCurrentGameState(savedGameState);
-            }
+            Gson gson = new Gson();
+            GameState savedGameState = gson.fromJson(file, GameState.class);
+            loadedGame = savedGameState;
+            thisGame.setCurrentGameState(loadedGame);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } finally{
@@ -54,7 +54,7 @@ public class IOManager {
                 readFile.close();
             }
         }
-        return thisGame.getCurrentGameState();
+        return loadedGame;
     }
 
     /**
