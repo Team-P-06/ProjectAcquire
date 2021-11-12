@@ -11,9 +11,7 @@ import java.util.List;
 
 public class BoardLogic {
 
-    //Not sure these instance variables are needed, since CompanyLogic is not an Object.
-    String coordinate;
-    List currentTileList;
+    //ALEX NOTE: I AM DEPRECATING THIS CLASS AND MOVING ALL METHODS TO BOARD
 
 
     /**

@@ -74,6 +74,16 @@ public class Player{
      */
     public void placeTile(Tile tile){
 
+        //Sets the tile to be flipped.
+        tile.setFlipped();
+
+        //removes from the player's hand.
+        tileList.remove(tile);
+
+        
+
+
+
     }
 
     /**
@@ -103,7 +113,7 @@ public class Player{
 
     /**
      * Trades stocks from a defunct company to the larger company
-     * @param amount numer of stocks to trade. 0 - number of stocks the player owns.
+     * @param amount number of stocks to trade. 0 - number of stocks the player owns.
      */
     public void tradeStock(int amount){
 

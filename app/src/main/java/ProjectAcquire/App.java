@@ -35,7 +35,6 @@ public class App extends Application {
 
         //Start UI
         launch();
-
         //Initialize Game
 //       Game game = new Game();
         //plays the game

@@ -179,7 +179,7 @@ public class TestHelper {
         //5. initialize a board using 1-4 as our parameters
         Board board = Board.getInstance(test_playerTileList, test_uncharteredList, test_charteredList, test_playerList);
 
-        //6. initialize our GameState using 4, playerList.next(), 5, and 1 as our parameters
+        //6. initialize our GameState using board and our playerlist as parameters
         // This makes p1 current player and p2 next
         GameState gameState = new GameState(board, test_playerList);
 

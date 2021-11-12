@@ -148,8 +148,8 @@ public class GameState {
         //Interrupt call that lets the player choose which tile in hand to flip
         //Ie. Tile playerChosenTile = Interrupt() where interrupt makes the tileList clickable on screen, then returns the tile
         //referenced by the UI tile list position clicked.
-        //playerChosenTile.flip()
-        //currentPlayer.discardTile()
+        //chosenTile.flip()
+        //player.getTileList().remove(chosenTile)
 
         //2.b The player then gets to buy stock from any of the companies.
         //this is a UI Interrupt too.
@@ -173,7 +173,9 @@ public class GameState {
             1.a gameState.Update();
 
         2. CurPlayer places a tile
-            2.a This invokes player.playTile(Tile).
+            2.a  UI makes the player's tileList clickable.
+            2.b  UI interrupt, Tile in the player's hand that player clicks is returned.
+            2.c  Then we invoke player.playTile(chosenTile). where chosenTile is the tile from 2.b
                 -- which calls checkAction()
                 -- If merge goto --> MERGE
             2.b gameState.Update();
@@ -187,7 +189,7 @@ public class GameState {
                 -- If they don't call gameState.notEnoughMoney();
                     -- UI sets a label telling them they don't have enough cash and calls gameState.UpdateBuyStock() again.
             3.d: gamestate.update()
-            [End Turn button send somthing back to the while loop telling it to stop]
+            [End Turn button send something back to the while loop telling it to stop]
             }
 
         4. NextTurn()
@@ -200,10 +202,10 @@ public class GameState {
         3. while(currentPlayer.numberOfStockInDefunctCompany > 0){
             -- call gameState.mergeOptions(Company defunctCompany, Player currentPlayer)
                   -- populates list with sell, keep or trade for current defunct business
-                  -- player click an option and a dialoge box pops up asking for a number
+                  -- player click an option and a dialogue box pops up asking for a number
                   -- Player.checkValidInput(int). return true or false. If false change label to invalid input.. [This will need to check the player stock list and keep adding to an int to see if the player has enough stocks]
                   -- if true call Player.sell(int, Company), keep(int, Company) etc.}
-                    -- Updates the data for player money, stocks etc and buesiness information.
+                    -- Updates the data for player money, stocks etc and business information.
             }
         }
         4. go to step 3.
