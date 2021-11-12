@@ -33,6 +33,10 @@ public class App extends Application {
     public static void main(String[] args) throws IOException {
         System.out.println("App works");
 
+        //String testWriter = "Hello";
+        //IOManager test = new IOManager();
+        //test.writeFile(testWriter);
+
         //Start UI
         launch();
 
