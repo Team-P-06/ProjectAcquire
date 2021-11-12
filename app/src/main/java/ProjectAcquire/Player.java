@@ -7,6 +7,9 @@ package ProjectAcquire;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+
+import lombok.Builder;
 import lombok.Generated;
 import lombok.Getter;
 import lombok.Setter;
@@ -71,6 +74,16 @@ public class Player{
      */
     public void placeTile(Tile tile){
 
+        //Sets the tile to be flipped.
+        tile.setFlipped();
+
+        //removes from the player's hand.
+        tileList.remove(tile);
+
+        
+
+
+
     }
 
     /**
@@ -100,7 +113,7 @@ public class Player{
 
     /**
      * Trades stocks from a defunct company to the larger company
-     * @param amount numer of stocks to trade. 0 - number of stocks the player owns.
+     * @param amount number of stocks to trade. 0 - number of stocks the player owns.
      */
     public void tradeStock(int amount){
 
@@ -130,4 +143,33 @@ public class Player{
     tileList.remove(tile);
     }
 
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Player player = (Player) o;
+        return money == player.money && Objects.equals(name, player.name) && Objects.equals(stockList, player.stockList) && Objects.equals(tileList, player.tileList);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, money, stockList, tileList);
+    }
+
+    @Override
+    public String toString() {
+
+        String retString1 = name;
+
+        String retString2 = "Player{" +
+                "name='" + name + '\'' +
+                ", money=" + money +
+                ", stockList=" + stockList +
+                ", tileList=" + tileList +
+                '}';
+
+        return retString1;
+    }
 }
+

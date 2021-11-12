@@ -129,10 +129,7 @@ public class Board {
         //initiates charter logic. This will do things like initiate a user action to decide
         //which company they want to charter, and then fill in data like initial stock price and
         //initial stocks on board.
-
-        //Since our board is instantiated, our BoardLogic methods must be static methods.
-        //This further suggest that we may want to merge Company Logic and Board.
-        BoardLogic.charterLogic(company);
+        charterLogic(company);
 
     }
 
@@ -170,6 +167,77 @@ public class Board {
     boolean checkPermanent(String coord){return false;}
 
 
+
+
+    /**
+     *  Should check for an action on a passed in coord string, using the current board. Essentially, if the tile at that coord touches a tile of a different company than itself, an action is chosen.
+     *  Based on the action (merge or charter), the Board.merge() or Board.charter() functions are called.
+     *
+     *  If a charter action is chosen, before the charter method is called, the system should prompt the user to choose a company, then that company is passed in to the charter method.
+     */
+    public boolean checkForAction(int[] coord){
+
+        Boolean actionIsRequired = false;
+        List<Tile> currentTileList = instance.getTileList();
+
+        List<Tile> tilesAroundCoord = new ArrayList<Tile>();
+
+        int row = coord[0];
+        int column = coord[1];
+
+        //tilesAroundCoord.add(currentTileList.get(coord[0]).get(coord[1]))
+
+        //Grab tiles from array above and below, and then the tiles beside the tile, making sure to check for borders
+
+        //checks how many of the tiles are flipped, then chartered calls appropriate method with some if elses.
+
+        //if action is required, return true
+
+        return actionIsRequired;
+    }
+
+    private void merge(){} //leaving this alone for now.
+
+
+    /**
+     * Design Notes: We need to be very careful with how we design this logic. If checkForAction is true after a charter
+     * happens, it should mean, and should ONLY mean, that the current tile in the loop is both unchhartered and has
+     * 1, and only one neighbor that is chartered.
+     *
+     * method description: Should check for action on a company to determine initial size, name etc.
+     *
+     *
+     * @param company
+     */
+    private void charterLogic(Company company){
+
+        //essentially what we have to do here, is look at every flipped and unchartered tile on the board, to see which of them have
+        //neighbors that are flipped and chartered.
+        // Then, every tile that is neighboring a chartered tile, is flipped, and has a default company, has its
+        //company set to the passed in company.
+
+        //So we can set up a very ugly nested while for loop:
+
+        //int foundTiles = 1
+        //while foundTiles>0{
+            //foundTiles =0
+            //for every tile on the board{
+            //List tilesAroundThisPos = getTilesAround(tile)
+            //for tl in tilesAroundThisPos {
+            //Boolean one_of_the_tiles_around_the_current_tile_has_our_newly_chartered_company = false
+        // if(tl.getCompany == company) {one_of_the_tiles_around_the_current_tile_has_our_newly_chartered_company = true }
+                // if (checkForAction(tile) == true and tile.getCompany() == default company and tile.getFlipped == true and one_of_.... ==true){
+                //  tile.setCompany(company)
+                // foundTiles++
+             // }
+              //
+        //}}
+
+
+        // System.out.println("Company "+ company.getCompanyName() + " is now chartered");
+    }
+
+
     @Override
     public String toString() {
         return "Board{" +
@@ -180,4 +248,5 @@ public class Board {
                 ", CurrentPlayer=" + CurrentPlayer +
                 '}';
     }
+
 }

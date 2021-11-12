@@ -6,7 +6,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-- basic testing of classes
+- tileList is 2d
+- game logic works
+- Better UI 
+- Fully functional save, load, GSON. 
+
+
+## [0.1.0]
+
+### Added
+
+
+
+### Changed
 
 
 
@@ -20,5 +32,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Jacoco
 - lombok
 - flogger
+- basic testing of most classes
+- basic UI and UI updating 
+- functional initialized game
+
 ### Changed
 

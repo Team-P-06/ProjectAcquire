@@ -50,7 +50,7 @@ public class TestHelper {
      * @param companyName Name of company Tile is attached to as string
      * @return a custom Tile
      */
-    static Tile helperMethod_custom_tile_via_coord_and_companyName(Integer coord, String companyName){
+    static Tile helperMethod_custom_tile_via_coord_and_companyName(int[] coord, String companyName){
 
         Company helperComp = helperMethod_Company(companyName);
 
@@ -63,9 +63,13 @@ public class TestHelper {
 
     static List<Tile> helperMethod_tileList_company1_3_coord_A1_A3(){
         ArrayList<Tile> testTileList = new ArrayList<Tile>();
-        Tile tile = helperMethod_custom_tile_via_coord_and_companyName(0,"TEST1");
-        Tile tile2 = helperMethod_custom_tile_via_coord_and_companyName(1,"TEST2");
-        Tile tile3 = helperMethod_custom_tile_via_coord_and_companyName(2,"TEST3");
+        int[] coord1 = {0,1};
+        int[] coord2 = {0,2};
+        int[] coord3 = {0,3};
+
+        Tile tile = helperMethod_custom_tile_via_coord_and_companyName(coord1,"TEST1");
+        Tile tile2 = helperMethod_custom_tile_via_coord_and_companyName(coord2,"TEST2");
+        Tile tile3 = helperMethod_custom_tile_via_coord_and_companyName(coord3,"TEST3");
 
         testTileList.add(tile);
         testTileList.add(tile2);
@@ -95,7 +99,6 @@ public class TestHelper {
         return classUnderTest;
 
     }
-
 
     /**
      *
@@ -147,8 +150,12 @@ public class TestHelper {
         LinkedList<Player> test_playerList = new LinkedList<>();
         Player test_player1 = TestHelper.helperMethod_custom_Player("P1");
         Player test_player2 = TestHelper.helperMethod_custom_Player("P2");
+        Player test_player3 = TestHelper.helperMethod_custom_Player("P3");
+
         test_playerList.add(test_player1);
         test_playerList.add(test_player2);
+        test_playerList.add(test_player3);
+
 
         //2. list of tiles.
         List<Tile> test_boardTileList = TestHelper.helperMethod_tileList_company1_3_coord_A1_A3();
@@ -172,9 +179,9 @@ public class TestHelper {
         //5. initialize a board using 1-4 as our parameters
         Board board = Board.getInstance(test_playerTileList, test_uncharteredList, test_charteredList, test_playerList);
 
-        //6. initialize our GameState using 4, playerList.next(), 5, and 1 as our parameters
+        //6. initialize our GameState using board and our playerlist as parameters
         // This makes p1 current player and p2 next
-        GameState gameState = new GameState( board, test_playerList);
+        GameState gameState = new GameState(board, test_playerList);
 
         //7. call setCurrentGame() using 6 as our parameter
         //setCurrentGameState(gameState);

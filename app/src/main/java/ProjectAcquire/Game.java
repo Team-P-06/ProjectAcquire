@@ -44,17 +44,14 @@ public class Game {
     /**
      * Start game method that will begin a new game that isn't already saved
      */
-    public void start() {
+    public GameState start() throws IOException {
         Company defaultCompany = new Company("emptyCo", 0, false, false);
 
-        //initializes our game
-       //GameState gameState = new GameState(); //depreciated, leaving in while we implement the following:
-
         /*
-        precheck: UI initializes with a starting screen. Player chooses either to exit, start, or load. if load, then call the loadGame() function.
+        precheck: UI initializes with a starting screen. Player chooses either to exit, start, or load. if load, then call the loadGame() function instead.
+
         App starts the UI with start(Stage stage) (Not sure if that can be changed), but from there selecting new game can start this e.g: Game.start()
-        Load game can call Game.loadGame() instead - show
-        If start, then do the following:
+       when the player hits the start button in the UI, the UI calls this method, which does the following:
          */
 
         //1. queries for how many players there are, (UI), then adds x amount of players to a playerList.
@@ -63,52 +60,63 @@ public class Game {
         LinkedList<Player> playerList = new LinkedList<Player>();
         Player player1 = new Player("Player 1", playerTileList, 3000);
         Player player2 = new Player("Player 2", playerTileList, 3000);
+        Player player3 = new Player("Player 3", playerTileList, 3000);
+
         playerList.add(player1);
         playerList.add(player2);
+        playerList.add(player3);
 
-        //2. creates our 1... 2d? list of tiles.
+
+        //2. creates 2d? list of tiles.
         List<Tile> freeTileList = new ArrayList<>(); //List of the uncharted tiles that no players have. Better variable name ideas?
-        for (int i = 0; i < 108; i++){
-            Tile curTile = new Tile(defaultCompany, i);
-            freeTileList.add(curTile);
+        for (int r = 0; r < 9; r++){
+            for(int c = 0; c < 12; c++) {
+                Tile curTile = new Tile(defaultCompany, new int[]{r, c}); //SCREWED WITH BY ALEX TO MAKE COMPILE
+                freeTileList.add(curTile);
+            }
         }
 
         //3. creates our list of chartered and unchartered companies (the unchartered list can be empty)
-        List<Company> chartedList = new ArrayList<>();
+        List<Company> charteredList = new ArrayList<>();
         List<Company> uncharteredList = new ArrayList<>();
         for (int i = 0; i < 7; i++){
-            Company curCompany = new Company("Company " + (Integer.toString(i)), 0, true, false);
-            chartedList.add(curCompany);
+            //ALEX NOTE: This will initialize every company with a stock price of 100. We should instead set the companies
+            //statically 1 by 1 here with custom stock prices and names later on.
+            Company curCompany = new Company("Company " + (Integer.toString(i)), 100, true, false);
+            charteredList.add(curCompany);
         }
 
-        //4. set a current player
-        // Isn't the current/next player set when we create the gameState?
-        // We would already need a GameState object to call GameState.setCurrentPlayer - Show
 
-        //5. initialize a board using 1-4 as our parameters (using getInstance())
-        Board board = Board.getInstance(freeTileList, uncharteredList, chartedList, playerList);
+        //4. initialize a board using 1-4 as our parameters (using getInstance())
+        Board board = Board.getInstance(freeTileList, uncharteredList, charteredList, playerList);
 
-        //6. initialize our GameState using 4, playerList.next(), 5, and 1 as our parameters
-        // This makes p1 current player and p2 next
+        //6. initialize our GameState using 4, 1 as our parameters.
+        //ALEX NOTE: it seems that a GameState object holds exactly the same data as the Board object, since Board has the playerList just a thought.
         GameState gameState = new GameState(board, playerList);
 
-        //7. call setCurrentGame() using 6 as our parameter
+
+        //7. call setCurrentGame() of Game using 6 as our parameter
         setCurrentGameState(gameState);
 
 
         //if loadGame was called, then simply: setCurrentGame(loadGame())
+
+        //now we pass this to JavaFX (javafx calls this whole method)
+        //Game.start() is invoked upon the player hitting "new game". So FXController call Game.start()
+        return gameState;
     }
 
     /**
      * Run a game that is already saved from the gson file gathered from loadGame, (runs a game continuousely given starting data)
      */
-    public void runGame(){
+    public void runGame() throws IOException {
 
         //while the game has not ended
         while(!currentGameState.isOver()){
             //game plays
             currentGameState.playTurn();
         }
+        //currentGameState.update();
     }
 
     /**

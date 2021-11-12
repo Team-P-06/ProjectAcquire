@@ -5,23 +5,37 @@
 
 package ProjectAcquire;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
 public class BoardLogic {
 
-    //Not sure these instance variables are needed, since CompanyLogic is not an Object.
-    String coordinate;
-    List currentTileList;
+    //ALEX NOTE: I AM DEPRECATING THIS CLASS AND MOVING ALL METHODS TO BOARD
 
 
     /**
-     *  Should check for an action on a passed in coord string. Essentially, if the tile at that coord touches a tile of a different company than itself, an action is chosen.
+     *  Should check for an action on a passed in coord string, using the current board. Essentially, if the tile at that coord touches a tile of a different company than itself, an action is chosen.
      *  Based on the action (merge or charter), the Board.merge() or Board.charter() functions are called.
      *
      *  If a charter action is chosen, before the charter method is called, the system should prompt the user to choose a company, then that company is passed in to the charter method.
      */
-    public static void checkForAction(String coord){}
+    public static void checkForAction(Board currentBoard, int[] coord){
+
+        List<Tile> currentTileList = currentBoard.getTileList();
+
+        List<Tile> tilesAroundCoord = new ArrayList<Tile>();
+
+        int row = coord[0];
+        int column = coord[1];
+
+        //tilesAroundCoord.add(currentTileList.get(coord[0]).get(coord[1]))
+
+        //Grab tiles from array above and below, and then the tiles beside the tile, making sure to check for borders
+
+        //checks how many of the tiles are flipped, then chartered then calls appropriate method with some if elses. 
+
+    }
 
    private static void merge(){} //leaving this alone for now.
 
