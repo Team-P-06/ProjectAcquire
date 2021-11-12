@@ -1,19 +1,12 @@
 package ProjectAcquire;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.geometry.HPos;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.layout.GridPane;
 import lombok.Getter;
-import org.checkerframework.checker.guieffect.qual.UI;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
 
+/**
+ * Main update UI logic class. Branches out to other parts of the UI Logic for better organization.
+ */
 public class Update {
 
     @Getter

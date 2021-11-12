@@ -7,6 +7,9 @@ import javafx.scene.control.ListView;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Logic to update the Hotel/company information (top right)
+ */
 public class UpdateHotel implements Updatable{
     private FXController UIController;
 

@@ -121,105 +121,10 @@ public class FXController {
     /**
      * Grid for the board to place all the tiles on it.
      */
-<<<<<<< HEAD
     @FXML @Getter public GridPane tileGrid;
 
     /**
-     * Lists for the list of avaliable stocks to purchase.
-=======
-    @FXML private GridPane tileGrid;
-    /**
-     * Creates 108 buttons and assigns them to a place on the grid with colors and name.
-     * If our tiles have a name/int from 0 - 107 associated with them you can find the respective col/row by such
-     * row = n/12 (round down)
-     * col = n % 12
-     * The list of tiles will need to pull from the tile pool and players pool to properly color and associate them with a company.
-     */
-    private void updateBoard() {
-        List<Tile> tilesOnBoard = new ArrayList<>();
-        tilesOnBoard = createTestTile();
-        for (Tile tile: tilesOnBoard) {
-            Button currentButton = new Button();
-            currentButton.setMinSize(40, 45);
-            currentButton.setText(getTileCoord(tile));
-            currentButton.setStyle("-fx-background-color: 000000");
-            GridPane.setHalignment(currentButton, HPos.CENTER);
-            tileGrid.add(currentButton, calculateCol(tile.getCoord()[1]), calculateRow(tile.getCoord()[0])); //Screwed with by Alex
-
-        }
-    }
-
-    /**
-     * List of test tiles to fill the board.
-     * In the final build the tiles will be build when the game starts and that data will then be sent to FXController.
-     * NOT A FUNCTION IN THE FINAL BUILD
-     * @return a list of tiles.
-     */
-    private List<Tile> createTestTile(){
-        List<Tile> listOfTiles = new ArrayList<>();
-        Company defaultCompany = new Company();
-        for (int i = 0; i <= 107; i++){
-            Tile currentTile = new Tile(defaultCompany, new int[]{i,0}); //Screwed with by alex to make compile
-            listOfTiles.add(currentTile);
-        }
-        return listOfTiles;
-    }
-
-    /**
-     * Gets the row if we count from 0 - 107 and the tiles start from the top left
-     * Int division always rounds towards zero
-     * @param n number of the tile
-     * @return row
-     */
-    private int calculateRow(int n){
-        return n/12;
-    }
-
-    /**
-     * remainder of tile / 12 is the column
-     * @param n  number of the tile
-     * @return column
-     */
-    private int calculateCol(int n){
-        return n%12;
-    }
-
-    /**
-     * Extracts the string names of the tiles in the list of tiles
-     * @param tile the tile you'd like to get the name of.
-     * @return A coordinate name of the unique tile.
-     */
-    public String getTileCoord(Tile tile) {    //Screwed with by Alex to make compile. BREAKS BOARD UI, PLEASE FIX SHOW :(
-        String tileString;
-        int remainder;
-        int mod = (tile.getCoord()[0] % 12) + 1;
-        switch (remainder = (tile.getCoord()[0] / 12)) {
-            case 0 -> tileString = ("A" + mod);
-            case 1 -> tileString = ("B" + mod);
-            case 2 -> tileString = ("C" + mod);
-            case 3 -> tileString = ("D" + mod);
-            case 4 -> tileString = ("E" + mod);
-            case 5 -> tileString = ("F" + mod);
-            case 6 -> tileString = ("G" + mod);
-            case 7 -> tileString = ("H" + mod);
-            case 8 -> tileString = ("I" + mod);
-            default -> tileString = ("0" + mod);
-        }
-        return tileString;
-    }
-
-
-
-//        Player p1 = new Player("player 1", pTilesList, 400);
-//        Player p2 = new Player("player 2", pTilesList, 4000);
-//        LinkedList<Player> pList = new LinkedList<Player>();
-//        pList.add(p1);
-//        pList.add(p2);
-
-
-    /**
-     * Lists for the .
->>>>>>> 0b1ce7602575a420b26cbe0cbdc507705e3127f1
+     * Lists for the available companies that a player can buy stocks from
      */
     @FXML private ListView<String> stocksPurchasedList;
     @Getter @FXML private ListView<Button> availableStocksList;
@@ -257,43 +162,4 @@ public class FXController {
     @Getter ObservableList<Integer> wStockObserListView = FXCollections.observableArrayList();
     @Getter ObservableList<Integer> tStockObserListView = FXCollections.observableArrayList();
 
-     /*@FXML private Button populateButton;
-        Player p1 = new Player("player 1", pTilesList, 400);
-        Player p2 = new Player("player 2", pTilesList, 4000);
-        Player p3 = new Player("player 3", pTilesList, 8000);
-
-        //Alex NOTE: This pList is a duplicate of line 233
-        LinkedList<Player> pList = new LinkedList<>();
-        pList.add(p1);
-        pList.add(p2);
-        pList.add(p3);
-
-        List<Company> charteredCom = new ArrayList<>();
-        Company com1 = new Company("Company 1", 100, true, false);
-        Company com2 = new Company("Company 2", 400, true, false);
-        Company com3 = new Company("Company 3", 900, true, false);
-        charteredCom.add(com1);
-        charteredCom.add(com2);
-        charteredCom.add(com3);
-
-        Board board = Board.getInstance();
-        board.setCharteredCompanies(charteredCom);
-
-        GameState gameState = new GameState(board, pList);
-
-        //ALEX NOTE: We should be able to
-//        Game game = new Game();
-//        GameState gameStateFX = game.start();
-
-        gameState.update();
-
-
-
-
-    }*.
-
-    /*public void testPopulateButtonAction() throws IOException {
-        Update update = new Update();
-        update.populateTest();
-    }*/
 }

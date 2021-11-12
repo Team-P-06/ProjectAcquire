@@ -3,6 +3,9 @@ package ProjectAcquire;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Logic to update the player information (bottom left of UI)
+ */
 public class UpdatePlayer implements Updatable{
     private FXController UIController;
 
@@ -13,7 +16,6 @@ public class UpdatePlayer implements Updatable{
      */
     public void update(GameState gameState, FXController UIController){
         this.UIController = UIController;
-        UpdateBoard boardUpdater = new UpdateBoard();
         LinkedList<Player> playerList = gameState.getPlayerList();
         Player currentPlayer = gameState.nextTurn();
         UIController.getPlayerNameObserList().clear();
@@ -28,7 +30,7 @@ public class UpdatePlayer implements Updatable{
         }
 
         for (Tile tile: currentPlayer.getTileList()) {
-            UIController.getPlayerTilesObserList().add(boardUpdater.getTileCoord(tile));
+            UIController.getPlayerTilesObserList().add(tile.tileCoordToString());
         }
         UIController.getPlayerNameList().setItems(UIController.getPlayerNameObserList());
         UIController.getPlayerMoneyList().setItems(UIController.getPlayerMoneyObserList());

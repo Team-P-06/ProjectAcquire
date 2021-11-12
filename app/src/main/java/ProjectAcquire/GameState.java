@@ -4,13 +4,11 @@
  */
 package ProjectAcquire;
 
-import java.io.IOException;
-import java.util.*;
-
-import lombok.AccessLevel;
-import lombok.Generated;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.io.IOException;
+import java.util.LinkedList;
 
 /**
  * GameSate class that contains a games current status
@@ -36,7 +34,7 @@ public class GameState{
      * @param playerList
      */
     public GameState(Board currentBoard, LinkedList<Player> playerList){
-       // this.currentPlayer = playerList.get(0);
+        this.currentPlayer = playerList.get(0);
         this.currentBoard = currentBoard;
         this.playerList = playerList;
       // this.currentPlayer = playerList.peekFirst();

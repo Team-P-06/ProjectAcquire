@@ -4,6 +4,10 @@ import javafx.scene.control.Button;
 
 import java.util.List;
 
+/**
+ * Updates the actions available in the UI (bottom right)
+ * This class is currently a WIP.
+ */
 public class UpdateAction implements Updatable{
 
     private FXController UIController;
@@ -54,72 +58,4 @@ public class UpdateAction implements Updatable{
     private void updateStockInfo() {
     }
 
-    /*public void populateTest() throws IOException {
-        List<Tile> tileList = new ArrayList<>();
-        List<Company> unchartedCompanies = new ArrayList<>();
-        List<Company> charteredCompanies = new ArrayList<>();
-        LinkedList<Player> playerList = new LinkedList<>();
-        List<Tile> p1TileList = new ArrayList<>();
-        List<Tile> p2TileList = new ArrayList<>();
-
-        Player p1 = new Player("p1", p1TileList, 400);
-        Player p2 = new Player("p2", p2TileList, 800);
-        playerList.add(p1);
-        playerList.add(p2);
-
-        Company defaultCom = new Company("default", 500, false, false);
-        Company worldwideCom = new Company("Worldwide", 800, false, false);
-        Company sacksonCom = new Company("Sackson", 4200, false, false);
-        Company festivalCom = new Company("Festival", 1200, false, false);
-        Company imperialCom = new Company("Imperial", 980, false, false);
-        Company americanCom = new Company("American", 5222, false, false);
-        Company continentalCom = new Company("Continental", 4563, false, false);
-        Company towerCom = new Company("Tower", 0, false, false);
-
-        for (int i = 0; i < 6; i++){
-            Tile tile = new Tile(defaultCom, 1);
-            p1TileList.add(tile);
-            p2TileList.add(tile);
-        }
-
-        charteredCompanies.add(defaultCom);
-        charteredCompanies.add(worldwideCom);
-        charteredCompanies.add(sacksonCom);
-        charteredCompanies.add(festivalCom);
-        charteredCompanies.add(imperialCom);
-        charteredCompanies.add(americanCom);
-        charteredCompanies.add(continentalCom);
-        charteredCompanies.add(towerCom);
-
-        for (int i = 0; i <= 107; i++){
-            Tile defaultTile = new Tile(defaultCom, i);
-            tileList.add(defaultTile);
-            i++;
-            Tile worldWideTile = new Tile(worldwideCom, i);
-            tileList.add(worldWideTile);
-            i++;
-            Tile sacksonTile = new Tile(sacksonCom, i);
-            tileList.add(sacksonTile);
-            i++;
-            Tile festivalTile = new Tile(festivalCom, i);
-            tileList.add(festivalTile);
-            i++;
-            Tile imperialTile = new Tile(imperialCom, i);
-            tileList.add(imperialTile);
-            i++;
-            Tile americanTile = new Tile(americanCom, i);
-            tileList.add(americanTile);
-            i++;
-            Tile continentalTile = new Tile(continentalCom, i);
-            tileList.add(continentalTile);
-            i++;
-            Tile towerTile = new Tile(towerCom, i);
-            tileList.add(towerTile);
-            i++;
-        }
-        Board board = new Board(tileList, unchartedCompanies, charteredCompanies, playerList);
-        GameState game = new GameState(board, playerList);
-
-        game.update();
-    }*/
 }

@@ -20,25 +20,25 @@
             <ListView fx:id="playerTilesList" focusTraversable="false" layoutY="140.0" mouseTransparent="true" orientation="HORIZONTAL" prefHeight="50.0" prefWidth="300.0" style="-fx-background-color: blue; -fx-border-insets: black;" />
          </children>
       </Pane>
-      <Pane layoutX="675.0" layoutY="25.0" prefHeight="400.0" prefWidth="550.0">
+      <Pane layoutX="710.0" layoutY="25.0" prefHeight="400.0" prefWidth="550.0">
          <children>
             <Label fx:id="hotelsLabel" prefHeight="30.0" prefWidth="490.0" style="-fx-background-color: grey; -fx-border-color: black; -fx-border-width: 3;" text="Hotels" textAlignment="CENTER">
                <font>
                   <Font size="16.0" />
                </font>
             </Label>
-            <Label fx:id="hotelNameLabel" layoutX="5.0" layoutY="33.0" prefWidth="90.0" style="-fx-border-color: black;" text="Hotel Name">
+            <Label fx:id="hotelNameLabel" layoutY="33.0" prefWidth="85.0" style="-fx-border-color: black;" text="Hotel Name">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <ListView fx:id="hotelNameListView" focusTraversable="false" layoutY="55.0" mouseTransparent="true" prefHeight="275.0" prefWidth="100.0" style="-fx-border-color: black;" />
+            <ListView fx:id="hotelNameListView" focusTraversable="false" layoutY="55.0" mouseTransparent="true" prefHeight="275.0" prefWidth="85.0" style="-fx-border-color: black;" />
             <Label fx:id="cHotelLabel" layoutX="105.0" layoutY="31.0" prefWidth="50.0" style="-fx-background-color: red; -fx-border-color: black;" text="C" textAlignment="CENTER" textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <ListView fx:id="cStockListView" focusTraversable="false" layoutX="105.0" layoutY="55.0" mouseTransparent="true" prefHeight="275.0" prefWidth="50.0" />
+            <ListView fx:id="cStockListView" focusTraversable="false" layoutX="90.0" layoutY="55.0" mouseTransparent="true" prefHeight="275.0" prefWidth="75.0" />
             <Label fx:id="sHotelLabel" layoutX="160.0" layoutY="31.0" prefWidth="50.0" style="-fx-background-color: orange; -fx-border-color: black;" text="S">
                <font>
                   <Font size="18.0" />
@@ -98,7 +98,7 @@
             </Button>
          </children>
       </Pane>
-      <GridPane fx:id="tileGrid" gridLinesVisible="true" layoutX="20.0" layoutY="20.0" prefHeight="500.0" prefWidth="620.0">
+      <GridPane fx:id="tileGrid" gridLinesVisible="true" layoutX="20.0" layoutY="20.0" prefHeight="500.0" prefWidth="600.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
