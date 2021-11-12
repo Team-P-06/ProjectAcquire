@@ -44,7 +44,7 @@ public class Game {
     /**
      * Start game method that will begin a new game that isn't already saved
      */
-    public GameState start() {
+    public GameState start() throws IOException {
         Company defaultCompany = new Company("emptyCo", 0, false, false);
 
         //initializes our game
@@ -63,7 +63,7 @@ public class Game {
         LinkedList<Player> playerList = new LinkedList<Player>();
         Player player1 = new Player("Player 1", playerTileList, 3000);
         Player player2 = new Player("Player 2", playerTileList, 3000);
-        Player player3 = new Player("Player 2", playerTileList, 3000);
+        Player player3 = new Player("Player 3", playerTileList, 3000);
 
         playerList.add(player1);
         playerList.add(player2);
@@ -72,9 +72,11 @@ public class Game {
 
         //2. creates our 1... 2d? list of tiles.
         List<Tile> freeTileList = new ArrayList<>(); //List of the uncharted tiles that no players have. Better variable name ideas?
-        for (int i = 0; i < 108; i++){
-            Tile curTile = new Tile(defaultCompany, new int[]{i,0}); //SCREWED WITH BY ALEX TO MAKE COMPILE
-            freeTileList.add(curTile);
+        for (int r = 0; r < 9; r++){
+            for(int c = 0; c < 12; c++) {
+                Tile curTile = new Tile(defaultCompany, new int[]{r, c}); //SCREWED WITH BY ALEX TO MAKE COMPILE
+                freeTileList.add(curTile);
+            }
         }
 
         //3. creates our list of chartered and unchartered companies (the unchartered list can be empty)
@@ -103,7 +105,7 @@ public class Game {
         //if loadGame was called, then simply: setCurrentGame(loadGame())
 
         //now we pass this to JavaFX (javafx calls this)
-
+        //Game.start() is invoked upon the player hitting "new game". So FXController call Game.start()
         return gameState;
     }
 

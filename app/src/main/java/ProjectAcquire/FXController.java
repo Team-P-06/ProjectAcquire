@@ -63,7 +63,7 @@ public class FXController {
      * @return
      */
     public FXMLLoader getGameBoardLoader() {
-        mainStage.hide();
+        //mainStage.hide();
         FXMLLoader boardMenuLoader = new FXMLLoader(getClass().getResource("/GameBoard.fxml"));
         boardMenuLoader.setController(this);
         return boardMenuLoader;
@@ -74,7 +74,13 @@ public class FXController {
      */
     @FXML
     private void newGame() throws IOException {
+        Update update = new Update();
+        Game newGame = new Game();
+
         showBoardMenu(getGameBoardLoader());
+
+        GameState gameState = newGame.start();
+        update.update(gameState);
     }
 
     /**
@@ -93,13 +99,23 @@ public class FXController {
     @FXML
     private void loadGame(ActionEvent event) {
         Object source = event.getSource();
+        String file = null;
         if (loadGame1Button.equals(source)) {
             loadGame1Button.setText("G1 loaded");
+            //file = "/Savefiles/Savefile1";
         } else if (loadGame2Button.equals(source)) {
             loadGame2Button.setText("G2 loaded");
+            //file = "/Savefiles/Savefile1";
         } else if (loadGame3Button.equals(source)) {
             loadGame3Button.setText("G3 loaded");
+            //file = "/Savefiles/Savefile1";
         }
+        /*Update update = new Update();
+        Game newGame = new Game();
+
+        showBoardMenu(getGameBoardLoader());
+        GameState curGameState = (gameState load from file);
+        update.update(curGameState);*/
     }
 
     /**
@@ -116,8 +132,8 @@ public class FXController {
      * Miscellaneous labels and buttons on the UI,
      */
     @FXML private Label playersLabel, playerMoneyLabel, playerStocksLabel, playersNetWorth;
-    @FXML private Label hotelsLabel, hotelNameLabel, cHotelLabel, sHotelLabel, fHotelLabel, iHotelLabel, aHotelLabel, wHotelLabel, tHotelLabel, avaliableStocksLabel, stocksPurchasedLabel;
-
+    @Getter @FXML private Label hotelsLabel, hotelNameLabel, cHotelLabel, sHotelLabel, fHotelLabel, iHotelLabel, aHotelLabel, wHotelLabel, tHotelLabel, actionLabel, stocksPurchasedLabel, TurnLabel, currentPlayerTurnLabel;
+    //@FXML private Label currentPlayerTurnLabel;
     /**
      * Grid for the board to place all the tiles on it.
      */

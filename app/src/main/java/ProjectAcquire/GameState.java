@@ -231,8 +231,6 @@ public class GameState{
     public void update() throws IOException {
         Update update = new Update();
         update.update(this);
-        //FXController controller = new FXController();
-        //controller.updateAll(this);
     }
 }
 
