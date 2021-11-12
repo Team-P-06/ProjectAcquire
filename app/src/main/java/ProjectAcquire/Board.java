@@ -209,7 +209,7 @@ public class Board {
      *
      * @param company
      */
-    private void charterLogic(Company company){
+    public void charterLogic(Company company){
 
         //essentially what we have to do here, is look at every flipped and unchartered tile on the board, to see which of them have
         //neighbors that are flipped and chartered.
@@ -223,9 +223,9 @@ public class Board {
             //foundTiles =0
             //for every tile on the board{
             //List tilesAroundThisPos = getTilesAround(tile)
-            //for tl in tilesAroundThisPos {
-            //Boolean one_of_the_tiles_around_the_current_tile_has_our_newly_chartered_company = false
-        // if(tl.getCompany == company) {one_of_the_tiles_around_the_current_tile_has_our_newly_chartered_company = true }
+        //Boolean one_of_the_tiles_around_the_current_tile_has_our_newly_chartered_company = false
+        //for tl in tilesAroundThisPos {
+            // if(tl.getCompany == company) {one_of_the_tiles_around_the_current_tile_has_our_newly_chartered_company = true }
                 // if (checkForAction(tile) == true and tile.getCompany() == default company and tile.getFlipped == true and one_of_.... ==true){
                 //  tile.setCompany(company)
                 // foundTiles++
