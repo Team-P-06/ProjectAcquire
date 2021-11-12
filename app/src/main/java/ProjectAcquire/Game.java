@@ -44,7 +44,7 @@ public class Game {
     /**
      * Start game method that will begin a new game that isn't already saved
      */
-    public GameState start() {
+    public GameState start() throws IOException {
         Company defaultCompany = new Company("emptyCo", 0, false, false);
 
         //initializes our game
@@ -95,6 +95,12 @@ public class Game {
         //6. initialize our GameState using 4, playerList.next(), 5, and 1 as our parameters
         // This makes p1 current player and p2 next
         GameState gameState = new GameState(board, playerList);
+//        try {
+//            gameState.update();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+
 
         //7. call setCurrentGame() using 6 as our parameter
         setCurrentGameState(gameState);
@@ -110,13 +116,14 @@ public class Game {
     /**
      * Run a game that is already saved from the gson file gathered from loadGame, (runs a game continuousely given starting data)
      */
-    public void runGame(){
+    public void runGame() throws IOException {
 
         //while the game has not ended
         while(!currentGameState.isOver()){
             //game plays
             currentGameState.playTurn();
         }
+        //currentGameState.update();
     }
 
     /**
