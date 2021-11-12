@@ -9,6 +9,7 @@ import com.google.gson.GsonBuilder;
 import java.io.*;
 
 public class IOManager {
+
     /**
      * Default constructor
      */
@@ -21,6 +22,7 @@ public class IOManager {
         Gson gson = new Gson();
         GameState savedGameState = saveThisGame;
         String jsonFile = gson.toJson(savedGameState);
+        //writeFile(jsonFile);
         return jsonFile;
     }
 
@@ -53,5 +55,28 @@ public class IOManager {
             }
         }
         return thisGame.getCurrentGameState();
+    }
+
+    /**
+     * Write the current gamestate object that is saved into a json string to our resource folder in order to be called
+     * later when they try to load the game back up again
+     * @param game the current game that is being saved into a gamestate json string
+     */
+    public void writeFile(String game){
+        /**
+         * try to create a new file writer that will the to the resource folder with the name of saved game.txt for now
+         */
+        //for now it will only save one game. When the user chooses to save a game and decides what slot they want
+        //to save to that will then change the saved game file name depending on the save slot
+        try{
+            FileWriter file = new FileWriter("C:\\Users\\Tyler Kelley\\Desktop\\CS_2263\\Acquire\\ProjectAcquire\\" +
+                    "app\\src\\main\\resources\\SavedGames\\SavedGame.txt");
+            file.write(game);
+            file.flush();
+            file.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 }
