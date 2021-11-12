@@ -176,7 +176,11 @@ public class GameState {
             2.a  UI makes the player's tileList clickable.
             2.b  UI interrupt, Tile in the player's hand that player clicks is returned.
             2.c  Then we invoke player.playTile(chosenTile). where chosenTile is the tile from 2.b
-                -- which calls checkAction()
+                -- which calls checkActionType()
+                --if checkActionType() == "MERGE", then call merge().
+                --else if checkActionType() == "ADD_TO_CURRENT_COMP", call tileIsAdjacent()
+                --else if checkActionType() == "CHARTER". UI INTERRUPT, get company from player choice call charter(playerChoice)
+                --
                 -- If merge goto --> MERGE
             2.b gameState.Update();
 
