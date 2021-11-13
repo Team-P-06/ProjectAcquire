@@ -88,7 +88,7 @@
       </Pane>
       <Pane layoutX="660.0" layoutY="450.0" prefHeight="350.0" prefWidth="500.0" style="-fx-border-color: black; -fx-border-width: 4;">
          <children>
-            <Pane fx:id="mergePane" layoutX="200.0" layoutY="50.0" prefHeight="200.0" prefWidth="200.0">
+            <Pane fx:id="mergePane" layoutX="200.0" layoutY="50.0" prefHeight="200.0" prefWidth="200.0" visible="false">
                <children>
                   <TextField fx:id="mergeTextField" layoutX="5.0" layoutY="50.0" />
                   <Label layoutY="25.0" text="Choose a number of Stocks" />
@@ -110,6 +110,7 @@
                   <Font size="16.0" />
                </font>
             </Button>
+            <ListView fx:id="endGameListView" layoutX="350.0" layoutY="30.0" prefHeight="50.0" prefWidth="130.0" visible="false" />
          </children>
       </Pane>
       <GridPane fx:id="tileGrid" gridLinesVisible="true" layoutX="5.0" layoutY="5.0" prefHeight="500.0" prefWidth="550.0">

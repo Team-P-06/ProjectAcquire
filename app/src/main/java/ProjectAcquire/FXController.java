@@ -28,7 +28,6 @@ public class FXController {
      * Buttons, pane and lables for MainMenu
      */
     @FXML private Button newGameButton, loadGameMenuButton, exitGameButton, loadGame1Button, loadGame2Button, loadGame3Button;
-    @FXML private Pane loadGameSelectionPane;
     @FXML private Label loadGameLabel, player;
 
     /**
@@ -84,44 +83,21 @@ public class FXController {
     }
 
     /**
-     * enables the menu for the user to select a game slot to load, this does not actually load the game yet
-     */
-    @FXML
-    private void loadGameMenu() {
-        loadGameSelectionPane.setVisible(true);
-    }
-
-    /**
      * Loads the game given a specific game load to load from.
      * Doesn't really load a game yet.
-     * @param event
      */
     @FXML
-    private void loadGame(ActionEvent event) {
-        Object source = event.getSource();
-        String file = null;
-        if (loadGame1Button.equals(source)) {
-            loadGame1Button.setText("G1 loaded");
-            //file = "/Savefiles/Savefile1";
-        } else if (loadGame2Button.equals(source)) {
-            loadGame2Button.setText("G2 loaded");
-            //file = "/Savefiles/Savefile1";
-        } else if (loadGame3Button.equals(source)) {
-            loadGame3Button.setText("G3 loaded");
-            //file = "/Savefiles/Savefile1";
-        }
-        /*Update update = new Update();
-        Game newGame = new Game();
-
-        showBoardMenu(getGameBoardLoader());
-        GameState curGameState = (gameState load from file);
-        update.update(curGameState);*/
+    private void loadGame() {
+        //file = "/Savefiles/Savefile";
     }
 
     /**
      * Function corresponding
      */
     @FXML private void saveGame(){
+        getSaveGameButton().setText("Saved!");
+        //IOManager ioManager = new IOManager();
+        //ioManager.saveGame();
         //Save the game
     }
     
@@ -132,6 +108,13 @@ public class FXController {
     @FXML
     private void exitGame() {
         System.exit(0);
+    }
+
+    @FXML
+    public void endGame() throws IOException {
+        FXMLLoader EndGameLoader = new FXMLLoader(getClass().getResource("/EndGame.fxml"));
+        EndGameLoader.setController(this);
+        mainStage.setScene(new Scene(EndGameLoader.load()));
     }
 
     /**
@@ -188,4 +171,12 @@ public class FXController {
     @Getter ObservableList<Integer> wStockObserListView = FXCollections.observableArrayList();
     @Getter ObservableList<Integer> tStockObserListView = FXCollections.observableArrayList();
 
+
+    /**
+     * End game labels and panes
+     */
+    @Getter @FXML Label winnerLabel, playerResultLabel, resultLabel;
+    @Getter @FXML Button exitGameEndLabel, homeGameEndLabel;
+    @Getter @FXML ListView<Button> endGameListView;
+    @Getter ObservableList<Button> endGameObserListView = FXCollections.observableArrayList();
 }

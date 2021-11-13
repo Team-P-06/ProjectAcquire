@@ -3,6 +3,7 @@ package ProjectAcquire;
 import javafx.geometry.HPos;
 import javafx.scene.control.Button;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -21,6 +22,7 @@ public class UpdateBoard implements Updatable{
         List<Player> playerList = gameState.getPlayerList();
         List<Tile> tilesNotInPlayerHand = gameState.getCurrentBoard().getTileList();
         Player currentPlayer = gameState.getCurrentPlayer();
+        if(endGameCondion(gameState.getCurrentBoard().getCharteredCompanies())){ goToEndScreen(); }
         for (Tile tile : tilesNotInPlayerHand) {
             Button currentButton = setButtonProperties(tile.getCompany().getCompanyName());
             currentButton.setText(tile.tileCoordToString());
@@ -99,6 +101,38 @@ public class UpdateBoard implements Updatable{
         return button;
     }
 
+    /**
+     * Check for the end game conditions if met, a chain has 41 or more tiles OR all hotel chains are permanent
+     * All chain safe means that the total # of safe companies is 7.
+     * @return
+     */
+    private boolean endGameCondion(List<Company> charteredCom){
+        int numberOfPerminetCom = 0;
+        for (Company curCompany : charteredCom){
+            if (curCompany.getTilesOnBoard() >= 41){ return true; }
+            if (curCompany.isPermanent()){ numberOfPerminetCom++; }
+        }
+        return numberOfPerminetCom == 7;
+    }
+
+    /**
+     * If a player chooses to end the game it will add a end game button to the action list.
+     */
+    private void goToEndScreen(){
+        UIController.getEndGameListView().setVisible(true);
+        UIController.getEndGameObserListView().clear();
+        Button endGameButton = new Button();
+        endGameButton.setText("End Game");
+        endGameButton.setOnAction(c -> {
+            try {
+                UIController.endGame();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+        UIController.getEndGameObserListView().add(endGameButton);
+        UIController.getEndGameListView().setItems(UIController.getEndGameObserListView());
+    }
 
 
 }

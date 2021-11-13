@@ -17,13 +17,9 @@ public class GameState {
     /**
      * Variables needed to maintain a gamestate
      */
-    private @Getter
-    Player currentPlayer;
-    private @Getter
-    Board currentBoard;
-    private @Getter
-    @Setter
-    LinkedList<Player> playerList;
+    @Getter private Player currentPlayer;
+    @Getter private Board currentBoard;
+    @Getter @Setter private  LinkedList<Player> playerList;
     private boolean isOver = false;
 
 
@@ -231,31 +227,35 @@ public class GameState {
 
 
     /**
-     * Currently doesn't update the player information. (but all the logic works and the data is passed)
-     * It doesn't change anything for the current scene.
-     * Updates the UI with the current GameState data.
+     * Overall update for when a player would like to place a new tile and the player actions on the bottom right have no actions.
      * This currently creates a new window, so every update makes a new window.
      * This is really gross but works for now while we implement other more important things.
      * @throws IOException
      */
-    //@Override
     public void update() throws IOException {
         Update update = new Update();
-
-        try {
-            update.update(this);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        //FXController controller = new FXController();
-        //controller.updateAll(this);
-
+        update.update(this);
     }
 
-    public void Merge(Company defunctCompany) throws  IOException{
+    /**
+     * Update for when a merge occurs, creates the options for players to sell, trade, or keep stocks.
+     * This should be called mutable times to update every time for the "sub turn" during a merge.
+     * @param defunctCompany the company that is being destroyed from the merge.
+     * @throws IOException
+     */
+    public void mergeInterrupt(Company defunctCompany) throws IOException{
         Update update = new Update();
         update.mergeUI(this, defunctCompany);
+    }
+
+    /**
+     * Update for after the player places a tile. Populates the action area with charted businesses.
+     * Should be called after a playTile() and the board data is set.
+     * @throws IOException
+     */
+    public void sellInterrupt() throws IOException {
+        Update update = new Update();
+        update.sellUI(this);
     }
 }
 

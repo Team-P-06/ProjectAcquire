@@ -2,11 +2,8 @@ package ProjectAcquire;
 
 import javafx.scene.control.Button;
 
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.List;
-import javafx.scene.control.Spinner;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.Pane;
 
 /**
  * Updates the actions available in the UI (bottom right)
@@ -160,6 +157,5 @@ public class UpdateAction{
             if (!userValueOfStocks.matches("[0-9]*")) { return false; }
             else return Integer.parseInt(userValueOfStocks) <= totalStocks;
         }
-
 
 }
