@@ -15,19 +15,32 @@ public class UpdateAction{
 
     /**
      * Updates the list of companies that you can buy stocks from. if merge is true, update via merge method with different choice UI.
-     * @param gameState the current gamestate to put data into the UI.
+     * The huge list of parameters is really gross, but I unfortunately don't have time to implement a better specific update method.
+     * The booleans are pretty much mutually exclusive.
+     * @param gameState The current Gamestate
+     * @param UIController The FXController to update the UI
+     * @param charter weather or not the player placed a tile and needs to choose a buisness to charter.
+     * @param merge weather or not the a merge is happening to display that specific UI for it.
+     * @param defunctCompany If a merge is happening what buisness is going defunct. Null if merge == false
+     * @param mergeChoice weather or not during a merge 2 companies have the same amount of tiles.
+     * @param listOfEqualCompanies the list of companies that have an equal amount of tiles. Null if mergeChoice == false.
      */
-    public void update(GameState gameState, FXController UIController, boolean merge, Company defunctCompany){
+    public void update(GameState gameState, FXController UIController, boolean charter,
+                       boolean merge, Company defunctCompany, boolean mergeChoice, List<Company> listOfEqualCompanies){
         this.UIController = UIController;
         UIController.getActionChoiceObserList().clear();
         UIController.getMergePane().setVisible(false);
-        List<Company> companyList = gameState.getCurrentBoard().getCharteredCompanies();
+        UIController.getActionLabel().setText("");
         if(!merge) {
+            List<Company> companyList = gameState.getCurrentBoard().getCharteredCompanies();
+            UIController.getActionLabel().setText("Sell stocks");
             for (Company curCompany : companyList) {
                 Button currentCompanyButton = makeBuyStocksList(curCompany, gameState.nextTurn());
                 UIController.getActionChoiceObserList().add(currentCompanyButton);
             }
         }
+        else if(charter){showCharterMenu(gameState, gameState.getCurrentBoard().getCharteredCompanies());}
+        else if (mergeChoice){ displayMergeChoice(listOfEqualCompanies); }
         else{ updateMergeInfo(defunctCompany, gameState.getCurrentPlayer()); }
         UIController.getActionChoiceList().setItems(UIController.getActionChoiceObserList());
     }
@@ -158,4 +171,25 @@ public class UpdateAction{
             else return Integer.parseInt(userValueOfStocks) <= totalStocks;
         }
 
+    private void showCharterMenu(GameState gameState, List<Company> charteredComs){
+            UIController.getActionLabel().setText("Choose a company to charter");
+            for (Company com : charteredComs){
+                Button choiceButton = new Button();
+                choiceButton.setText(com.getCompanyName());
+                choiceButton.setStyle("-fx-background-color: ffffff; -fx-border-color: black");
+                choiceButton.setOnAction(a -> {gameState.getCompanyChoice(com);});
+                UIController.getActionChoiceObserList().add(choiceButton);
+        }
+    }
+
+    private void displayMergeChoice(List<Company> companyChoiceList){
+            UIController.getActionLabel().setText("Choose a company you'd like to keep");
+            for (Company com : companyChoiceList){
+                Button choiceButton = new Button();
+                choiceButton.setText(com.getCompanyName());
+                choiceButton.setStyle("-fx-background-color: ffffff; -fx-border-color: black");
+                //choiceButton.setOnAction(a -> {gameState.(com);});
+                UIController.getActionChoiceObserList().add(choiceButton);
+        }
+    }
 }

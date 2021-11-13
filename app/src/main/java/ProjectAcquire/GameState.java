@@ -9,6 +9,7 @@ import lombok.Setter;
 
 import java.io.IOException;
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  * GameSate class that contains a games current status
@@ -225,6 +226,14 @@ public class GameState {
 
     }
 
+    public void getCompanyChoice(Company playerChoice){
+        // Returns the company that the player would like to charter and invokes the rest of the charter().
+    }
+
+    public void getMergeChoice(Company playerChoice){
+        // Returns the company that the player would like to keep and continues with merge.
+    }
+
 
     /**
      * Overall update for when a player would like to place a new tile and the player actions on the bottom right have no actions.
@@ -257,5 +266,17 @@ public class GameState {
         Update update = new Update();
         update.sellUI(this);
     }
+
+    public void charterChoiceInterrupt() throws IOException {
+        Update update = new Update();
+        update.charterChoiceUI(this);
+    }
+
+    public void mergeChoiceInterrupt(List<Company> equalCompanies) throws IOException {
+        Update update = new Update();
+        update.mergeChoiceUI(this, equalCompanies);
+    }
+
+
 }
 
