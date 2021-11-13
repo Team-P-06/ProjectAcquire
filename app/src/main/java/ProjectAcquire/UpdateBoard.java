@@ -22,7 +22,8 @@ public class UpdateBoard implements Updatable{
         List<Player> playerList = gameState.getPlayerList();
         List<Tile> tilesNotInPlayerHand = gameState.getCurrentBoard().getTileList();
         Player currentPlayer = gameState.getCurrentPlayer();
-        if(endGameCondion(gameState.getCurrentBoard().getCharteredCompanies())){ goToEndScreen(); }
+        updateSaveGameButton(gameState);
+        if(endGameCondion(gameState.getCurrentBoard().getCharteredCompanies())){ setEndGameButton(gameState); }
         for (Tile tile : tilesNotInPlayerHand) {
             Button currentButton = setButtonProperties(tile.getCompany().getCompanyName());
             currentButton.setText(tile.tileCoordToString());
@@ -118,20 +119,33 @@ public class UpdateBoard implements Updatable{
     /**
      * If a player chooses to end the game it will add a end game button to the action list.
      */
-    private void goToEndScreen(){
+    private void setEndGameButton(GameState gameState){
         UIController.getEndGameListView().setVisible(true);
         UIController.getEndGameObserListView().clear();
         Button endGameButton = new Button();
         endGameButton.setText("End Game");
         endGameButton.setOnAction(c -> {
             try {
-                UIController.endGame();
+                UIController.endGame(gameState);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         });
         UIController.getEndGameObserListView().add(endGameButton);
         UIController.getEndGameListView().setItems(UIController.getEndGameObserListView());
+    }
+
+    /**
+     * Relates the save game button with the current gameState to save to files.
+     * @param gameState the current gamestate
+     */
+    private void updateSaveGameButton(GameState gameState){
+        IOManager ioManager = new IOManager();
+        Button saveGameButton = UIController.getSaveGameButton();
+        saveGameButton.setOnAction(a -> {
+            saveGameButton.setText("Saved!");
+            ioManager.saveGame(gameState);});
+
     }
 
 

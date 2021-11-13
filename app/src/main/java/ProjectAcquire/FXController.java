@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 import lombok.Getter;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Controller for actions of FXMLUI.
@@ -92,17 +93,6 @@ public class FXController {
     }
 
     /**
-     * Function corresponding
-     */
-    @FXML private void saveGame(){
-        getSaveGameButton().setText("Saved!");
-        //IOManager ioManager = new IOManager();
-        //ioManager.saveGame();
-        //Save the game
-    }
-    
-
-    /**
      * Exits the application
      */
     @FXML
@@ -111,10 +101,25 @@ public class FXController {
     }
 
     @FXML
-    public void endGame() throws IOException {
-        FXMLLoader EndGameLoader = new FXMLLoader(getClass().getResource("/EndGame.fxml"));
-        EndGameLoader.setController(this);
-        mainStage.setScene(new Scene(EndGameLoader.load()));
+    public void endGame(GameState gameState) throws IOException {
+        FXMLLoader endGameLoader = new FXMLLoader(getClass().getResource("/EndGame.fxml"));
+        endGameLoader.setController(this);
+        mainStage.setScene(new Scene(endGameLoader.load()));
+        setWinner(gameState);
+        //mainStage.setScene(new Scene(EndGameLoader.load()));
+    }
+
+    @FXML
+    private void setWinner(GameState gameState){
+        List<Player> playerList = gameState.getPlayerList();
+        String playerResult = "";
+        Player winner = playerList.get(0);
+        for(Player player : playerList){
+            playerResult = (playerResult + player.getName() + "    $" + player.getMoney() + "\n");
+            if (winner.getMoney() < player.getMoney()){ player = winner; }
+        }
+        playerResultLabel.setText(playerResult);
+        winnerLabel.setText("Winner: " + winner.getName());
     }
 
     /**

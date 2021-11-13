@@ -22,7 +22,7 @@ public class IOManager {
         Gson gson = new Gson();
         GameState savedGameState = saveThisGame;
         String jsonFile = gson.toJson(savedGameState);
-        //writeFile(jsonFile);
+        writeFile(jsonFile);
         return jsonFile;
     }
 
@@ -69,8 +69,7 @@ public class IOManager {
         //for now it will only save one game. When the user chooses to save a game and decides what slot they want
         //to save to that will then change the saved game file name depending on the save slot
         try{
-            FileWriter file = new FileWriter("C:\\Users\\Tyler Kelley\\Desktop\\CS_2263\\Acquire\\ProjectAcquire\\" +
-                    "app\\src\\main\\resources\\SavedGames\\SavedGame.txt");
+            FileWriter file = new FileWriter("./src/main/resources/SavedGames/SavedGame.txt");
             file.write(game);
             file.flush();
             file.close();
