@@ -1,14 +1,14 @@
 package ProjectAcquire;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -63,7 +63,6 @@ public class FXController {
      * @return
      */
     public FXMLLoader getGameBoardLoader() {
-        //mainStage.hide();
         FXMLLoader boardMenuLoader = new FXMLLoader(getClass().getResource("/GameBoard.fxml"));
         boardMenuLoader.setController(this);
         return boardMenuLoader;
@@ -80,6 +79,7 @@ public class FXController {
         showBoardMenu(getGameBoardLoader());
 
         GameState gameState = newGame.start();
+        Company com = new Company();
         update.update(gameState);
     }
 
@@ -119,6 +119,14 @@ public class FXController {
     }
 
     /**
+     * Function corresponding
+     */
+    @FXML private void saveGame(){
+        //Save the game
+    }
+    
+
+    /**
      * Exits the application
      */
     @FXML
@@ -133,7 +141,7 @@ public class FXController {
      */
     @FXML private Label playersLabel, playerMoneyLabel, playerStocksLabel, playersNetWorth;
     @Getter @FXML private Label hotelsLabel, hotelNameLabel, cHotelLabel, sHotelLabel, fHotelLabel, iHotelLabel, aHotelLabel, wHotelLabel, tHotelLabel, actionLabel, stocksPurchasedLabel, TurnLabel, currentPlayerTurnLabel;
-    //@FXML private Label currentPlayerTurnLabel;
+
     /**
      * Grid for the board to place all the tiles on it.
      */
@@ -142,14 +150,16 @@ public class FXController {
     /**
      * Lists for the available companies that a player can buy stocks from
      */
-    @FXML private ListView<String> stocksPurchasedList;
-    @Getter @FXML private ListView<Button> availableStocksList;
-    @Getter ObservableList<Button> availableStocksObserList = FXCollections.observableArrayList();
-
+    @Getter @FXML public ListView<Button> actionChoiceList;
+    @Getter ObservableList<Button> actionChoiceObserList = FXCollections.observableArrayList();
+    @Getter @FXML private Button SaveGameButton;
+    @Getter @FXML private Pane mergePane;
+    @Getter @FXML private Spinner<Integer> mergeSpinner;
+    @Getter @FXML private TextField mergeTextField;
+    @Getter @FXML private Label invalidInputLabel;
 
     /**
      * Lists for player information, both ListView and Observable
-     * Net and Tiles may be lists of objects in the future, but just strings for testing purposes now
      */
     @Getter @FXML private ListView<String> playerNameList, playerTilesList;
     @Getter @FXML private ListView<Integer> playerMoneyList, playerNetList;
@@ -160,11 +170,11 @@ public class FXController {
     @Getter ObservableList<Integer> playerNetObserList = FXCollections.observableArrayList();
 
     /**
-     * Buttons and lists for the selection area (where you buy stocks)
+     * Buttons and lists for hotel information
      */
     @Getter @FXML private ListView<String> hotelNameListView;
     @Getter ObservableList<String> hotelNameObserList = FXCollections.observableArrayList();
-    @FXML private Button endTurnSubmitButton;
+    @FXML private Button endTurnButton;
 
     /**
      * List of integers along with it's observableList for all seven companies.

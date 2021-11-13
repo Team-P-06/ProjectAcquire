@@ -232,5 +232,10 @@ public class GameState{
         Update update = new Update();
         update.update(this);
     }
+
+    public void Merge(Company defunctCompany) throws  IOException{
+        Update update = new Update();
+        update.mergeUI(this, defunctCompany);
+    }
 }
 

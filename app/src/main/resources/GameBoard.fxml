@@ -88,19 +88,24 @@
       </Pane>
       <Pane layoutX="660.0" layoutY="450.0" prefHeight="350.0" prefWidth="500.0" style="-fx-border-color: black; -fx-border-width: 4;">
          <children>
+            <Pane fx:id="mergePane" layoutX="200.0" layoutY="50.0" prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <TextField fx:id="mergeTextField" layoutX="5.0" layoutY="50.0" />
+                  <Label layoutY="25.0" text="Choose a number of Stocks" />
+                  <Label fx:id="invalidInputLabel" layoutX="5.0" layoutY="80.0" text="Invalid Input" textFill="RED" visible="false">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
             <Label fx:id="actionLabel" layoutX="40.0" layoutY="15.0" style="-fx-border-color: black; -fx-border-width: 3;" text="Buy Stocks">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-            <ListView fx:id="availableStocksList" focusTraversable="false" layoutX="15.0" layoutY="50.0" mouseTransparent="true" prefHeight="275.0" prefWidth="145.0" style="-fx-border-color: black; -fx-border-width: 3;" />
-            <Label fx:id="stocksPurchasedLabel" layoutX="180.0" layoutY="15.0" style="-fx-border-color: black; -fx-border-width: 3;" text="Stocks Purchased">
-               <font>
-                  <Font name="System Bold" size="15.0" />
-               </font>
-            </Label>
-            <ListView fx:id="stocksPurchasedList" focusTraversable="false" layoutX="180.0" layoutY="50.0" mouseTransparent="true" prefHeight="275.0" prefWidth="145.0" style="-fx-border-color: black; -fx-border-width: 3;" />
-            <Button fx:id="endTurnSubmitButton" layoutX="415.0" layoutY="311.0" mnemonicParsing="false" style="-fx-background-color: white; -fx-border-color: black; -fx-border-width: 3;" text="Submit">
+            <ListView fx:id="actionChoiceList" layoutX="15.0" layoutY="50.0" prefHeight="275.0" prefWidth="145.0" style="-fx-border-color: black; -fx-border-width: 3;" />
+            <Button fx:id="endTurnButton" layoutX="390.0" layoutY="300.0" mnemonicParsing="false" style="-fx-background-color: white; -fx-border-color: black; -fx-border-width: 3;" text="End Turn">
                <font>
                   <Font size="16.0" />
                </font>
@@ -134,5 +139,6 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
       </GridPane>
+      <Button fx:id="SaveGameButton" layoutX="10.0" layoutY="855.0" mnemonicParsing="false" onAction="#saveGame" style="-fx-background-color: white; -fx-border-color: black; -fx-border-width: 3;" text="Save Game" />
    </children>
 </Pane>

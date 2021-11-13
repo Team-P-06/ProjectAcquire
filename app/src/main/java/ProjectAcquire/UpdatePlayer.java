@@ -64,4 +64,8 @@ public class UpdatePlayer implements Updatable{
         UIController.getCurrentPlayerTurnLabel().setText(currentPlayer.getName());
     }
 
+    public void updateMergeOptions(){
+
+    }
+
 }

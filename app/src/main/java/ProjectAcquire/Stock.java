@@ -13,11 +13,6 @@ import lombok.Setter;
 
 public class Stock {
 
-
-    /**
-     * Getter and setter for parentCompany
-     */
-
     @Generated @Getter @Setter private Company parentCompany;
 
     //Custom Constructor

@@ -81,31 +81,32 @@ public class Player{
      * @param stock what company the stocks are coming from
      */
     public void buyStock(Stock stock){
-
         stockList.add(stock);
     }
 
     /**
      * Player cheese to buy 1 - 3 stocks
-     * @param stock what company the stocks come from
+     * @param parentCompany stocks from the company they would like to sell.
+     * @param numberOfStocks the number of stocks they are selling
      */
-    public void sellStock(Stock stock){
-
+    public void sellStock(Company parentCompany, int numberOfStocks){
+        System.out.print(numberOfStocks + " from " + parentCompany.getCompanyName());
     }
 
     /**
      * Keep the stocks from a company after a merge
-     * @param amount number of stocks you'd like to keep. 0 - number of stocks the player owns
+     * @param parentCompany stocks from the company they would like to keep.
+     * @param numberOfStocks the number of stocks they are keep
      */
-    public void keepStock(int amount){
+    public void keepStock(Company parentCompany, int numberOfStocks){
 
     }
 
     /**
-     * Trades stocks from a defunct company to the larger company
-     * @param amount numer of stocks to trade. 0 - number of stocks the player owns.
+     * @param parentCompany stocks from the company they would like to sell.
+     * @param numberOfStocks the number of stocks they are selling
      */
-    public void tradeStock(int amount){
+    public void tradeStock(Company parentCompany, int numberOfStocks){
 
     }
 
