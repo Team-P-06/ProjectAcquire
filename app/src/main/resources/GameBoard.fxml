@@ -25,7 +25,7 @@
             <ListView fx:id="playerMoneyList" focusTraversable="false" layoutX="101.0" layoutY="50.0" mouseTransparent="true" prefHeight="80.0" prefWidth="100.0" style="-fx-background-color: black;" />
             <Label fx:id="playersNetWorth" layoutX="220.0" layoutY="25.0" text="Net Worth" />
             <ListView fx:id="playerNetList" focusTraversable="false" layoutX="202.0" layoutY="50.0" mouseTransparent="true" prefHeight="80.0" prefWidth="100.0" style="-fx-background-color: black;" />
-            <Label fx:id="playerStocksLabel" prefWidth="500.0" style="-fx-background-color: grey; -fx-border-color: black; -fx-border-width: 3;" text="Player Hand" textAlignment="CENTER" />
+            <Label fx:id="playerStocksLabel" prefWidth="300.0" style="-fx-background-color: grey; -fx-border-color: black; -fx-border-width: 3;" text="Player Hand" textAlignment="CENTER" />
             <ListView fx:id="playerTilesList" focusTraversable="false" layoutY="140.0" mouseTransparent="true" orientation="HORIZONTAL" prefHeight="50.0" prefWidth="300.0" style="-fx-background-color: blue; -fx-border-insets: black;" />
          </children>
       </Pane>
@@ -99,7 +99,7 @@
                   </Label>
                </children>
             </Pane>
-            <Label fx:id="actionLabel" layoutX="40.0" layoutY="15.0" style="-fx-border-color: black; -fx-border-width: 3;" text="Buy Stocks">
+            <Label fx:id="actionLabel" layoutX="40.0" layoutY="15.0" style="-fx-border-color: black; -fx-border-width: 3;">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
