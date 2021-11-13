@@ -122,18 +122,83 @@ public class Board {
     private List<Tile> getTilesAround(int[] coord){
 
       List<Tile> tilesAround =  new ArrayList<Tile>();
-      int row = coord[0];
-      int col = coord[1];
-
-      //gets tile to the north
-        if(row>0){
-
-        }
-
-
-
+      Tile adjTile;
+      String[] cardinalDirs = {"NORTH","SOUTH","EAST","WEST"};
+      for(String x : cardinalDirs){
+         adjTile = getAdjacentTile(coord,x);
+         if(adjTile!=null) {
+             tilesAround.add(adjTile);
+         }
+      }
 
         return tilesAround ;
+    }
+
+    /**
+     * Last changed by Alex.
+     * This method is NOT my finest work. It is vomitous, as they say.
+     *
+     * @param coord tile coordinate
+     * @param cardinalDir A cardinal direction "WEST, EAST, NORTH, SOUTH"
+     * @return a tile to the cardinal direction of the passed in coord eg. "West of [1,1]" would return [1,0]
+     */
+    public Tile getAdjacentTile( int[] coord, String cardinalDir){
+
+        int row = coord[0];
+        int col = coord[1];
+        int[] adjCoord = new int[2];
+
+
+       if (cardinalDir.equals("NORTH")) {
+           //gets tile to the north
+           if (row > 0) {
+               adjCoord[0] = row - 1;
+               adjCoord[1] = col;
+           }
+               for (Tile tl : getTileList()) {
+                   if (tl.getCoord() == adjCoord) {
+                       return tl;
+                   }
+               }
+           }
+       else if (cardinalDir.equals("SOUTH")){
+           //gets tile to the south
+
+           if (row < 9) { //ALEX NOTE: This is a magic number, I know.
+               adjCoord[0] = row + 1;
+               adjCoord[1] = col;
+           }
+           for (Tile tl : getTileList()) {
+               if (tl.getCoord() == adjCoord) {
+                   return tl;
+               }
+           }
+        }
+       else if (cardinalDir.equals("WEST")){
+           //gets tile to the west
+           if (col>0) {
+               adjCoord[0] = row;
+               adjCoord[1] = col-1;
+           }
+           for (Tile tl : getTileList()) {
+               if (tl.getCoord() == adjCoord) {
+                   return tl;
+               }
+           }
+       }
+       else if (cardinalDir.equals("EAST")){
+           //gets tile to the east
+           if (col<12) { //ALEX NOTE: This is a magic number, I know.
+               adjCoord[0] = row;
+               adjCoord[1] = col-1;
+           }
+           for (Tile tl : getTileList()) {
+               if (tl.getCoord() == adjCoord) {
+                   return tl;
+               }
+           }
+       }
+       return null;
     }
 
     //other methods
@@ -267,9 +332,7 @@ public class Board {
 
             //merge needed
         }
-
-
-
+        
     }
 
 
