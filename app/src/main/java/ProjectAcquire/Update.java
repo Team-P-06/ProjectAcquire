@@ -26,6 +26,17 @@ public class Update {
         boardUpdater.update(gameState, UIController);
         hotelUpdater.update(gameState, UIController);
         playerUpdater.update(gameState, UIController);
-        actionUpdater.update(gameState, UIController);
+        actionUpdater.update(gameState, UIController, false, null);
+    }
+
+    public void mergeUI(GameState gameState, Company defunctCompany) throws IOException {
+        System.out.println("yes");
+        UIController.getMainStage().hide();
+        UIController.showBoardMenu(UIController.getGameBoardLoader());
+        boardUpdater.update(gameState, UIController);
+        hotelUpdater.update(gameState, UIController);
+        playerUpdater.update(gameState, UIController);
+        actionUpdater.update(gameState, UIController, true, defunctCompany);
+
     }
 }

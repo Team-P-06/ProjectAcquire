@@ -233,12 +233,9 @@ public class GameState {
     /**
      * Currently doesn't update the player information. (but all the logic works and the data is passed)
      * It doesn't change anything for the current scene.
-     * =======
      * Updates the UI with the current GameState data.
      * This currently creates a new window, so every update makes a new window.
      * This is really gross but works for now while we implement other more important things.
-     * >>>>>>> feature/UILogic
-     *
      * @throws IOException
      */
     //@Override
@@ -254,6 +251,11 @@ public class GameState {
         //FXController controller = new FXController();
         //controller.updateAll(this);
 
+    }
+
+    public void Merge(Company defunctCompany) throws  IOException{
+        Update update = new Update();
+        update.mergeUI(this, defunctCompany);
     }
 }
 
