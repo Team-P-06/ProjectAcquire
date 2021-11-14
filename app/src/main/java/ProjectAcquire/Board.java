@@ -293,20 +293,22 @@ public class Board {
         boolean actionIsRequired = false;
         List<Tile> currentTileList = instance.getTileList();
 
-        List<Tile> tilesAroundCoord = new ArrayList<Tile>();
-
-        int row = coord[0];
-        int column = coord[1];
-
-        //tilesAroundCoord.add(currentTileList.get(coord[0]).get(coord[1]))
-
-        //Grab tiles from array above and below, and then the tiles beside the tile, making sure to check for borders
-
+        List<Tile> tilesAroundCoord = getTilesAround(coord);
+        int numFlipped =0;
+        for(Tile x : tilesAroundCoord){
+            if (x.isFlipped()){
+                numFlipped++;
+            }
+        }
         //checks how many of the tiles are flipped, then chartered calls appropriate method with some if elses.
 
         //if action is required, return true
 
-        return true;
+        if (numFlipped>0){
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -407,15 +409,13 @@ public class Board {
                     if (tl.getCompany().equals(company)) {
                         one_of_the_tiles_around_the_current_tile_has_our_company = true;
                     }
-
                     //If our current tile is flipped but of a default company, and
-                    //If checkForAction returns true, and if we have an adjacent chartered tile
-                    if (checkForTileAction(tile.getCoord()) && tile.getCompany().getCompanyName().equals("DEFAULT") &&
+                    // if we have an adjacent chartered tile
+                    if ( tile.getCompany().getCompanyName().equals("DEFAULT") &&
                             tile.isFlipped() && one_of_the_tiles_around_the_current_tile_has_our_company) {
                         tile.setCompany(company); //set our current tile to be part of our passed in company
                         foundTiles++; // if this is hit, we have found a tile, so our loop will restart after it hits the last tile on the board.
                     }
-
                 }
             }
 
