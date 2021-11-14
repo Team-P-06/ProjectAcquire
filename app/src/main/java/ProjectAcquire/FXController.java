@@ -90,10 +90,10 @@ public class FXController {
     @FXML
     private void loadGame() throws IOException {
         IOManager ioManager = new IOManager();
-        Update update = new Update();
+        //Update update = new Update();
         GameState loadedGame = ioManager.loadGame("./src/main/resources/SavedGames/SavedGame.txt");
         showBoardMenu(getGameBoardLoader());
-        update.nextTurnUI(loadedGame);
+        loadedGame.nextTurn();
     }
 
     /**
