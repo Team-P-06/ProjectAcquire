@@ -100,13 +100,15 @@ public class Game {
 
         //7. call setCurrentGame() of Game using 6 as our parameter
         setCurrentGameState(gameState);
-        gameState.playTurn();
+        gameState.playTurnNoUI();
 
 
         //if loadGame was called, then simply: setCurrentGame(loadGame())
 
         //now we pass this to JavaFX (javafx calls this whole method)
         //Game.start() is invoked upon the player hitting "new game". So FXController call Game.start()
+
+        System.out.println("Game.start() was finished");
         return gameState;
     }
 
@@ -116,11 +118,14 @@ public class Game {
     public void runGame() throws IOException {
 
         //while the game has not ended
-        while(!currentGameState.isOver()){
-            //game plays
-            currentGameState.playTurn();
-        }
-        //currentGameState.update();
+//        while(!currentGameState.isOver()){
+//            //game plays
+//            currentGameState.playTurnNoUI();
+//        }
+
+        currentGameState.playTurnNoUI();
+        System.out.println("Current Player is: "+ currentGameState.getCurrentPlayer());
+        System.out.println("Game.runGame() was finished");
     }
 
     /**
