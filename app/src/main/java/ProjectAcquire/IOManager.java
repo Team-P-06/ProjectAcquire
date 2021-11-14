@@ -28,9 +28,8 @@ public class IOManager {
 
     /**
      * Load game methods that will handle all of the loading of a saved json file
-     * @param file
-     * @return
-     * @throws IOException
+     * @param file Json file the contains the saved game objects
+     * @return The gamestate that was saved
      */
     public GameState loadGame(String file){
         Gson converter = new Gson();
@@ -47,8 +46,6 @@ public class IOManager {
         /**
          * try to create a new file writer that will the to the resource folder with the name of saved game.txt for now
          */
-        //for now it will only save one game. When the user chooses to save a game and decides what slot they want
-        //to save to that will then change the saved game file name depending on the save slot
         try{
             FileWriter file = new FileWriter("./src/main/resources/SavedGames/SavedGame.txt");
             file.write(game);
