@@ -34,13 +34,20 @@ public class UpdateAction{
         if(!merge) { //If there is no merge. AKA fresh new curretPlayer to play a tile
             List<Company> companyList = gameState.getCurrentBoard().getCharteredCompanies();
             UIController.getActionLabel().setText("Sell stocks");
+
+            UIController.getEndTurnButton().setVisible(true);
+            UIController.getEndTurnButton().setOnAction(action -> { // Sets an exit button to stop selling stocks
+                try{ gameState.updateNewTurn(); }
+                catch (IOException e) { e.printStackTrace(); }
+            });
+
             for (Company curCompany : companyList) {
                 Button currentCompanyButton = makeBuyStocksList(curCompany, gameState.nextTurn());
                 UIController.getActionChoiceObserList().add(currentCompanyButton);
             }
         }
         else if(charter){showCharterMenu(gameState, gameState.getCurrentBoard().getCharteredCompanies());} //Charter a new company
-        else if (mergeChoice){ displayMergeChoice(gameState.getCurrentBoard(), listOfEqualCompanies); } //Display merge options during a equal merge
+        else if (mergeChoice){ displayMergeChoice(gameState, listOfEqualCompanies); } //Display merge options during a equal merge
         else{ updateMergeInfo(defunctCompany, gameState.getCurrentPlayer()); } //Sell, trade, keep stock menu for merging.
         UIController.getActionChoiceList().setItems(UIController.getActionChoiceObserList());
     }
@@ -173,11 +180,6 @@ public class UpdateAction{
 
     private void showCharterMenu(GameState gameState, List<Company> charteredComs){
         UIController.getActionLabel().setText("Choose a company to charter");
-        UIController.getEndTurnButton().setVisible(true);
-        UIController.getEndTurnButton().setOnAction(action -> { // Sets an exit button to stop selling stocks
-            try{ gameState.updateNewTurn(); }
-            catch (IOException e) { e.printStackTrace(); }
-        });
         for (Company com : charteredComs){
                 Button choiceButton = new Button();
                 choiceButton.setText(com.getCompanyName());
@@ -187,13 +189,13 @@ public class UpdateAction{
         }
     }
 
-    private void displayMergeChoice(Board currentBoard, List<Company> companyChoiceList){
+    private void displayMergeChoice(GameState gameState, List<Company> companyChoiceList){
             UIController.getActionLabel().setText("Choose a company you'd like to keep");
             for (Company com : companyChoiceList){
                 Button choiceButton = new Button();
                 choiceButton.setText(com.getCompanyName());
                 choiceButton.setStyle("-fx-background-color: ffffff; -fx-border-color: black");
-                choiceButton.setOnAction(a -> {currentBoard.charter(com);}); //sets action to charter the choice company
+                choiceButton.setOnAction(a -> {gameState.getMergeChoice(com);}); //sets action to charter the choice company
                 UIController.getActionChoiceObserList().add(choiceButton);
         }
     }

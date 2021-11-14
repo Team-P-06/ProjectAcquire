@@ -45,7 +45,7 @@ public class Game {
      * Start game method that will begin a new game that isn't already saved
      */
     public GameState start() throws IOException {
-        Company defaultCompany = new Company("emptyCo", 0, false, false);
+        //Company defaultCompany = new Company("emptyCo", 0, false, false);
 
         /*
         precheck: UI initializes with a starting screen. Player chooses either to exit, start, or load. if load, then call the loadGame() function instead.
@@ -65,30 +65,43 @@ public class Game {
             playerList.add(newPlayer);
         }
 
-        /*playerList.add(player1);
-        playerList.add(player2);
-        playerList.add(player3);*/
+        List<Company> charteredList = new ArrayList<>();
+        List<Company> uncharteredList = new ArrayList<>();
+        Company worldwideCo =  new Company("Worldwide", 100, false, false);
+        uncharteredList.add(worldwideCo);
+        Company SacksonCo =  new Company("Sackson", 100, false, false);
+        uncharteredList.add(SacksonCo);
+        Company festivalCo =  new Company("Festival", 100, false, false);
+        uncharteredList.add(festivalCo);
+        Company imperialCo =  new Company("Imperial", 100, false, false);
+        uncharteredList.add(imperialCo);
+        Company americanCo =  new Company("American", 100, false, false);
+        uncharteredList.add(americanCo);
+        Company continentalCo =  new Company("Continental", 100, false, false);
+        uncharteredList.add(continentalCo);
+        Company towerCo =  new Company("Tower", 100, false, false);
+        uncharteredList.add(towerCo);
+        Company defaultCo =  new Company("Default", 100, false, false); // for placed tiles but no company
+        uncharteredList.add(defaultCo);
+        Company nullCo =  new Company("nullCo", 100, false, false); // for unplaced tiles and no company
 
 
         //2. creates 2d? list of tiles.
         List<Tile> freeTileList = new ArrayList<>();
         for (int r = 0; r < 9; r++){
             for(int c = 0; c < 12; c++) {
-                Tile curTile = new Tile(defaultCompany, new int[]{r, c});
+                Tile curTile = new Tile(nullCo, new int[]{r, c});
                 freeTileList.add(curTile);
             }
         }
 
         //3. creates our list of chartered and unchartered companies (the unchartered list can be empty)
-        List<Company> charteredList = new ArrayList<>();
-        List<Company> uncharteredList = new ArrayList<>();
-        for (int i = 0; i < 7; i++){
+        /*for (int i = 0; i < 7; i++){
             //ALEX NOTE: This will initialize every company with a stock price of 100. We should instead set the companies
             //statically 1 by 1 here with custom stock prices and names later on.
             Company curCompany = new Company("Company " + (Integer.toString(i)), 100, true, false);
             charteredList.add(curCompany);
-        }
-
+        }*/
 
         //4. initialize a board using 1-4 as our parameters (using getInstance())
         Board board = Board.getInstance(freeTileList, uncharteredList, charteredList, playerList);
@@ -101,7 +114,7 @@ public class Game {
         //7. call setCurrentGame() of Game using 6 as our parameter
         setCurrentGameState(gameState);
         gameState.playTurnNoUI();
-
+        //gameState.playTurn();
 
         //if loadGame was called, then simply: setCurrentGame(loadGame())
 
@@ -122,11 +135,12 @@ public class Game {
 //            //game plays
 //            currentGameState.playTurnNoUI();
 //        }
-
-        currentGameState.playTurnNoUI();
+        currentGameState.playTurn();
+        //currentGameState.playTurnNoUI();
         System.out.println("Current Player is: "+ currentGameState.getCurrentPlayer());
         System.out.println("Game.runGame() was finished");
     }
+
 
     /**
      * Once a player ends the game on their turn the game will end using this method and determine the winner

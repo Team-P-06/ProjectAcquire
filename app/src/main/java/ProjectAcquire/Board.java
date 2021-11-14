@@ -350,6 +350,7 @@ public class Board {
             //If there is one company found around this tile, we can add this tile to that company
             //We do this by passing in the tile's company to charterLogic, which will initiate our algorithm.
             charterLogic(tile.getCompany());
+            return 2;
         }
         else if(uniqueCompaniesAroundTile.size()>1 ){
 
@@ -394,7 +395,7 @@ public class Board {
 
                     //If our current tile is flipped but of a default company, and
                     //If checkForAction returns true, and if we have an adjacent chartered tile
-                    if (checkForTileAction(tile.getCoord()) && tile.getCompany().getCompanyName().equals("DEFAULT") &&
+                    if (checkForTileAction(tile.getCoord()) && tile.getCompany().getCompanyName().equals("Default") &&
                             tile.isFlipped() && one_of_the_tiles_around_the_current_tile_has_our_company) {
                         tile.setCompany(company); //set our current tile to be part of our passed in company
                         foundTiles++; // if this is hit, we have found a tile, so our loop will restart after it hits the last tile on the board.

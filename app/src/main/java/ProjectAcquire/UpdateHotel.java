@@ -31,7 +31,6 @@ public class UpdateHotel implements Updatable{
 
     /**
      * Simply populates the name headers for the table of stocks.
-     * THIS ONLY NEEDS TO BE CALLED ONCE
      */
     private void setHotelName(List<Player> playerList) {
         UIController.getHotelNameObserList().clear();
@@ -75,7 +74,6 @@ public class UpdateHotel implements Updatable{
                 case "Tower" ->{
                     curCompanyObserList = UIController.getTStockObserListView();
                     curCompanyListView = UIController.getTStockListView();}
-                //default -> curCompanyObserList = UIController.getStockObserListView();
             }
             curCompanyObserList.clear();
             curCompanyObserList.add(0); // Available stocks left
@@ -105,6 +103,14 @@ public class UpdateHotel implements Updatable{
                 }
             }
             obserList.add(curNumberOfStocks);
+            listView.setItems(obserList);
         }
     }
+
+    /**
+     * updates the numer of stocks for each hotel.
+     */
+    /*private void countTilesInHotel(GameState gameState){
+        for (Stock stock : gameState.getStockList)
+    }*/
 }
