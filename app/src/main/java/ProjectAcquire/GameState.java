@@ -77,34 +77,6 @@ public class GameState {
         return playerList.peekFirst();
 
     }
-
-//    /**
-//     * Determines which player has the next turn available in the gamestate
-//     * @return
-//     */
-//    public Player nextTurn(){
-//        if (firstPlayer == playerList.get(1)){
-//            return firstPlayer;
-//        }
-//        else{
-//            return secondPlayer;
-//        }
-//    }
-//
-//    /**
-//     * If a player has a turn let the player play their turn
-//     * @param player
-//     * @return
-//     */
-//    public boolean hasTurn(Player player){
-//        if(player == playerList.get(0)){
-//            return true;
-//        }
-//        else {
-//            return false;
-//        }
-//    }
-
     /**
      * If a player has a tile in their hand they can lay on the board let the player place the tile
      *

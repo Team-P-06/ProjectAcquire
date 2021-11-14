@@ -58,7 +58,6 @@ public class Tile {
     /**
      * Extracts the string names of the tiles in the list of tiles
      *
-     * @param tile the tile you'd like to get the name of.
      * @return A coordinate name of the unique tile.
      */
     public String tileCoordToString() {

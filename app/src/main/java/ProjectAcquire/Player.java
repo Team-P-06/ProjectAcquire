@@ -46,23 +46,6 @@ public class Player{
         this.money = money;
         this.tileList = tileHand;
     }
-
-    /**
-     * Getters for all the player variables
-     * @return specified getter
-     */
-//    public String getName(){ return name; }
-//    public int getMoney(){ return money; }
-//    public List<Stock> getStockList(){ return stockList; }
-//    public List<Tile> getTileList(){ return tileList; }
-
-    /**
-     * Setters for all the players values
-     * @param money/name of player
-     */
-//    private void setMoney(int money){ this.money = money; }
-//    private void setName(String name){ this.name = name; }
-
     /**
      *
      * @return Checks if the current tile on the board is occupied.
@@ -118,7 +101,6 @@ public class Player{
 
     /**
      * Trades stocks from a defunct company to the larger company
-     * @param amount number of stocks to trade. 0 - number of stocks the player owns.
      * @param parentCompany stocks from the company they would like to sell.
      * @param numberOfStocks the number of stocks they are selling
      */
