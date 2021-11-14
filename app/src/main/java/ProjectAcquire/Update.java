@@ -23,7 +23,6 @@ public class Update {
     public void update(GameState gameState) throws IOException {
         UIController.getMainStage().hide();
         UIController.showBoardMenu(UIController.getGameBoardLoader());
-        //boardUpdater.update(gameState, UIController, false);//Make a borad update with a true/false for active tiles? true = new current player/ false = no action tile
         hotelUpdater.update(gameState, UIController);
         playerUpdater.update(gameState, UIController);
     }
@@ -46,7 +45,7 @@ public class Update {
      * @param gameState the curretn gamestate
      * @throws IOException
      */
-    public void sellUI(GameState gameState) throws IOException {
+    public void buyUI(GameState gameState) throws IOException {
         update(gameState);
         boardUpdater.update(gameState, UIController, false);
         actionUpdater.update(gameState, UIController, false, false,

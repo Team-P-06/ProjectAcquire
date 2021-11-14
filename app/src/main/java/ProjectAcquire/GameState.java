@@ -6,11 +6,13 @@ package ProjectAcquire;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.checkerframework.checker.units.qual.C;
 
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.concurrent.ConcurrentMap;
 
 /**
  * GameSate class that contains a games current status
@@ -94,7 +96,7 @@ public class GameState {
     /**
      * recursively called play method that is called when a player decides to play their turn
      */
-    public void playTurn() throws IllegalArgumentException {
+    public void playTurn() throws IllegalArgumentException, IOException {
         //This section checks if we have loaded a game or if we are just starting.
         //sets our current player to be the first player of our list.
         //then removes from the front of the list, so that the second player should now be at the front of the list
@@ -107,11 +109,11 @@ public class GameState {
             //Looks at the current player, and then runs that players turn
             //1. Deals cards if less than 6 cards are in the player's hand
 
-                while (currentPlayer.getTileList().size() < 6) {
-                    currentBoard.dealTile(currentPlayer);
-                }
-        } catch (Exception e) {
-            e.printStackTrace();
+            while (currentPlayer.getTileList().size() < 6) {
+                currentBoard.dealTile(currentPlayer);
+            }
+            } catch (Exception e) {
+                e.printStackTrace();
         }
         //2.a Lets the player flip a tile in their hand, removes that tile from the player's hand.
         //Interrupt call that lets the player choose which tile in hand to flip
@@ -119,6 +121,7 @@ public class GameState {
         //referenced by the UI tile list position clicked.
         //chosenTile.flip()
         //player.getTileList().remove(chosenTile)
+        updateNewTurn();
 
         //2.b The player then gets to buy stock from any of the companies.
         //this is a UI Interrupt too.
@@ -276,6 +279,46 @@ public class GameState {
         // Returns the company that the player would like to keep and continues with merge.
     }
 
+    /**
+     * Essencially the "playTile" method, since the interrupts need a gamestate it works better here.
+     * This is called when you click a tile on the board.
+     * @param tile tile that the player placed on the board.
+     * @throws IOException
+     */
+    public void getTileChoice(Tile tile) throws IOException {
+        int action = currentBoard.checkForActionInitiation(tile);
+        if (action == 0) { // If not chartering then jump to buying stocks
+            noCharter(tile);
+        }
+        if (action == 2){
+            charterChoiceInterrupt();
+        }
+    }
+
+    public void noCharter(Tile tile) throws IOException {
+        List<Company> uc = currentBoard.getUncharteredCompanies();
+        List<Company> cc = currentBoard.getCharteredCompanies();
+
+        for (Company defaultCo : uc) {
+            if (defaultCo.getCompanyName().equals("Default")) {
+                tile.setCompany(defaultCo);
+                currentPlayer.getTileList().remove(tile);
+                tile.setFlipped();
+                tile.setDealt(false);
+                buyInterrupt();
+            }
+        }
+        for (Company defaultCo : cc){
+            if (defaultCo.getCompanyName().equals("Default")){
+                tile.setCompany(defaultCo);
+                currentPlayer.getTileList().remove(tile);
+                tile.setFlipped();
+                tile.setDealt(false);
+                buyInterrupt();
+            }
+        }
+    }
+
 
     /**
      * Overall update for when a player would like to place a new tile and the player actions on the bottom right have no actions.
@@ -304,9 +347,9 @@ public class GameState {
      * Should be called after a playTile() and the board data is set.
      * @throws IOException
      */
-    public void sellInterrupt() throws IOException {
+    public void buyInterrupt() throws IOException {
         Update update = new Update();
-        update.sellUI(this);
+        update.buyUI(this);
     }
 
     public void charterChoiceInterrupt() throws IOException {

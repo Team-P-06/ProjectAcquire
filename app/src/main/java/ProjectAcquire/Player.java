@@ -59,6 +59,7 @@ public class Player{
      * UI calls this when clicking on a tile that's in the players hand, this then goes to Board.checkForActionInitiation().
      * @param tile the tile that was placed
      * @param gameState the current gamestate
+     * depreciated, since we need both gamestate and board, this has been moved to GameState and called getTileChoice()
      */
     public void placeTile(Tile tile) throws IOException {
 

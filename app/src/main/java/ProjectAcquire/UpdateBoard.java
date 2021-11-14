@@ -63,7 +63,7 @@ public class UpdateBoard {
             if(placeableTiles) { // If this is a fresh turn allow the tile to be placed.
                 UIController.getActionLabel().setText("Place a tile");
                 currentButton.setOnAction(action -> {
-                    try { currentPlayer.placeTile(tile); }
+                    try { gameState.getTileChoice(tile); }
                     catch (IOException e) { e.printStackTrace(); }
                 });
             }
@@ -111,7 +111,7 @@ public class UpdateBoard {
             case "American" -> button.setStyle("-fx-background-color: blue");
             case "Continental" -> button.setStyle("-fx-background-color: red");
             case "Tower" -> button.setStyle("-fx-background-color: grey");
-            case "default" -> button.setStyle("fx-background-color: black; -fx-text-fill: white");
+            case "Default" -> button.setStyle("-fx-background-color: black; -fx-text-fill: white");
             default -> button.setStyle("-fx-background-color: 000000;");
         }
         return button;
