@@ -78,8 +78,6 @@ public class GameState {
         return playerList.peekFirst();
 
     }
-
-
     /**
      * If a player has a tile in their hand they can lay on the board let the player place the tile
      *
@@ -234,7 +232,7 @@ public class GameState {
         System.out.println(tileChosen);
         currentPlayer.placeTile(tileChosen);
 
-        int actionType = currentBoard.checkForActionInitiation(tileChosen); //will return 1 if no action and 1 if we need to charter
+        int actionType = currentBoard.checkForActionInitiation(tileChosen); //will return 0 if no action and 1 if we need to charter
         System.out.println("ACTION TYPE is: "+ actionType);
         //our player needs to choose a company to charter.
         if (actionType == 1){
