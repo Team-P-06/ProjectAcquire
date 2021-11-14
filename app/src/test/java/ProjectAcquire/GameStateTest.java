@@ -41,7 +41,7 @@ public class GameStateTest {
         System.out.println("playerList: "+ tester.getPlayerList());
 
         //current player should now not be null.
-        assertNotNull(tester.getCurrentPlayer());
+        assertNotNull(newCurrentPlayer);
 
     }
 
