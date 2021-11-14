@@ -410,7 +410,7 @@ public class Board {
 
                     //If our current tile is flipped but of a default company, and
                     //If checkForAction returns true, and if we have an adjacent chartered tile
-                    if (checkForTileAction(tile.getCoord()) && tile.getCompany().getCompanyName().equals("Default") &&
+                    if (checkForTileAction(tile.getCoord()) && tile.getCompany().getCompanyName().equals("DEFAULT") &&
                             tile.isFlipped() && one_of_the_tiles_around_the_current_tile_has_our_company) {
                         tile.setCompany(company); //set our current tile to be part of our passed in company
                         foundTiles++; // if this is hit, we have found a tile, so our loop will restart after it hits the last tile on the board.

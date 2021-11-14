@@ -67,8 +67,6 @@ public class GameState {
     }
 
 
-    //Commented out by Alex. I am deprecating these methods, but I will temporarily make a nexTurn() method
-
 
     /**
      * For Show from Alex: This method may break your UI logic, feel free to edit.

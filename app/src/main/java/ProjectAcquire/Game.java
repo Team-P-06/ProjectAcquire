@@ -58,7 +58,7 @@ public class Game {
         //This is just a static creation of players for now, will be more dynamic in the future.
         //List<Tile> playerTileList = new ArrayList<>();
         LinkedList<Player> playerList = new LinkedList<Player>();
-        int numOfPlayers = 2;
+        int numOfPlayers = 3;
         for (int i = 0; i < numOfPlayers; i++) {
             List<Tile> newPlayerTileList = new ArrayList<>();
             Player newPlayer = new Player("Player " + (i+1), newPlayerTileList, 3000);
@@ -129,10 +129,13 @@ public class Game {
 //            //game plays
 //            currentGameState.playTurnNoUI();
 //        }
-        currentGameState.playTurn();
-        //currentGameState.playTurnNoUI();
-        System.out.println("Current Player is: "+ currentGameState.getCurrentPlayer());
+        for(int x=0;x<9;x++) {
+            currentGameState.playTurn();
+            //currentGameState.playTurnNoUI();
+            System.out.println("Current Player is: " + currentGameState.getCurrentPlayer());
+        }
         System.out.println("Game.runGame() was finished");
+
     }
 
 
