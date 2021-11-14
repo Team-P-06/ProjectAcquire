@@ -161,7 +161,7 @@ public class FXController {
      */
     @Getter @FXML private ListView<String> hotelNameListView;
     @Getter ObservableList<String> hotelNameObserList = FXCollections.observableArrayList();
-    @FXML private Button endTurnButton;
+    @Getter @FXML private Button endTurnButton;
 
     /**
      * List of integers along with it's observableList for all seven companies.

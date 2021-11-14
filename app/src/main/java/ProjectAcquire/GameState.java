@@ -130,16 +130,13 @@ public class GameState {
         if (currentPlayer == null) {
             setUpInitialTurn(); //if our game has just started, we need to initialize it.
         }
-        currentPlayer = playerList.poll();
-        playerList.addLast(currentPlayer);
-
 
         //Looks at the current player, and then runs that players turn
-
         //1. Deals cards if less than 6 cards are in the player's hand
-
-        while (currentPlayer.getTileList().size() < 6) {
-            currentPlayer.drawTile();
+        for(Player curPlayer : playerList) {
+            while (curPlayer.getTileList().size() < 6) {
+                currentBoard.dealTile(currentBoard.getTileList(), curPlayer);
+            }
         }
         //2.a Lets the player flip a tile in their hand, removes that tile from the player's hand.
         //Interrupt call that lets the player choose which tile in hand to flip
@@ -219,7 +216,7 @@ public class GameState {
      * Deals initial cards to players, and... what else does this method need to do for playTurn to be able to run?
      */
     private void setUpInitialTurn() {
-
+        currentPlayer = playerList.peekFirst();
         //dealing cards
         //1. I think that we should maybe have a dealt tile list and undealt tilelist that are complements of each other
         // where their union is equivalent to the board tile list. Then we can keep track of tiles dealt

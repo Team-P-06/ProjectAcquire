@@ -172,8 +172,13 @@ public class UpdateAction{
         }
 
     private void showCharterMenu(GameState gameState, List<Company> charteredComs){
-            UIController.getActionLabel().setText("Choose a company to charter");
-            for (Company com : charteredComs){
+        UIController.getActionLabel().setText("Choose a company to charter");
+        UIController.getEndTurnButton().setVisible(true);
+        UIController.getEndTurnButton().setOnAction(action -> { // Sets an exit button to stop selling stocks
+            try{ gameState.updateNewTurn(); }
+            catch (IOException e) { e.printStackTrace(); }
+        });
+        for (Company com : charteredComs){
                 Button choiceButton = new Button();
                 choiceButton.setText(com.getCompanyName());
                 choiceButton.setStyle("-fx-background-color: ffffff; -fx-border-color: black");

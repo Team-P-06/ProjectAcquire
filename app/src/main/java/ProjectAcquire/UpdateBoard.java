@@ -23,14 +23,19 @@ public class UpdateBoard {
     public void update(GameState gameState, FXController UIController, boolean placeableTiles) {
         this.UIController = UIController;
         List<Player> playerList = gameState.getPlayerList();
-        List<Tile> tilesNotInPlayerHand = gameState.getCurrentBoard().getTileList();
+        List<Tile> allTileList = gameState.getCurrentBoard().getTileList();
         Player currentPlayer = gameState.getCurrentPlayer();
         updateSaveGameButton(gameState);
+        UIController.getEndTurnButton().setVisible(false);
+
         if(endGameCondion(gameState.getCurrentBoard().getCharteredCompanies())){ setEndGameButton(gameState); }
-        for (Tile tile : tilesNotInPlayerHand) {
-            Button currentButton = setButtonProperties(tile.getCompany().getCompanyName());
-            currentButton.setText(tile.tileCoordToString());
-            UIController.getTileGrid().add(currentButton, tile.getCoord()[1], tile.getCoord()[0]);
+
+        for (Tile tile : allTileList) {
+            if(!tile.isDealt()) { //Only add tiles that are not in a players hand
+                Button currentButton = setButtonProperties(tile.getCompany().getCompanyName());
+                currentButton.setText(tile.tileCoordToString());
+                UIController.getTileGrid().add(currentButton, tile.getCoord()[1], tile.getCoord()[0]);
+            }
         }
 
         for (Player player : playerList)
@@ -48,19 +53,18 @@ public class UpdateBoard {
      * @param tileList the list of tiles in the curret players hand
      * @param currentPlayer who the current player is
      */
-    private void makeCurrentPlayerTiles(List<Tile> tileList, Player currentPlayer, GameState gameState, boolean placeableTiles) {
+    private void makeCurrentPlayerTiles(List<Tile> tileList, Player currentPlayer,
+                                        GameState gameState, boolean placeableTiles){
         for (Tile tile : tileList) {
             Button currentButton = new Button();
-            currentButton.setStyle("-fx-background-color: 000000; -fx-border-color: red; -fx-border-width: 3");
+            currentButton.setStyle("-fx-background-color: 000000; -fx-border-color: red; -fx-border-width: 1; ");
             currentButton.setText(tile.tileCoordToString());
-            currentButton.setMinSize(45, 45);
+            currentButton.setMinSize(50, 45);
             if(placeableTiles) { // If this is a fresh turn allow the tile to be placed.
+                UIController.getActionLabel().setText("Place a tile");
                 currentButton.setOnAction(action -> {
-                    try {
-                        currentPlayer.placeTile(tile, gameState);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    try { currentPlayer.placeTile(tile, gameState); }
+                    catch (IOException e) { e.printStackTrace(); }
                 });
             }
             UIController.getTileGrid().add(currentButton, tile.getCoord()[1], tile.getCoord()[0]);

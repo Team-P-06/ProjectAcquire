@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 
 import lombok.Builder;
 import lombok.Generated;
@@ -127,7 +128,9 @@ public class Player{
 
 
 
-    /**
+    /*/**
+     *
+     * Moved to Board and renamed dealTile() - Show
      * ALEX NOTE: This Method Will not work as written, we should probably move it to Board and change the name to "dealTile".
      * This is because we are initializing arbitrary tiles here when we should be initializing all tiles in our Game inititalize() method.
      * DrawTile may be best as a passive action.
@@ -135,11 +138,15 @@ public class Player{
      * creates a new unique tile and give it to the player who drew it.
      * @return a new unique tile
      */
-    public Tile drawTile(){
-        Tile drawnTile = new Tile(); //DEFAULT TILE
-        tileList.add(drawnTile);
+    /*public Tile drawTile(List<Tile> tilesNotOnBoardOrOtherPlayersHand){
+        Random ran = new Random();
+        int randomIndex = ran.nextInt(tilesNotOnBoardOrOtherPlayersHand.size());
+        tileList.add(tilesNotOnBoardOrOtherPlayersHand.get(randomIndex));
+        tilesNotOnBoardOrOtherPlayersHand.remove(randomIndex);
+        //Tile drawnTile = new Tile(); //DEFAULT TILE
+        //tileList.add(drawnTile);
         return drawnTile;
-    }
+    }*/
 
     /**
      * Removes a tile from the players hand
