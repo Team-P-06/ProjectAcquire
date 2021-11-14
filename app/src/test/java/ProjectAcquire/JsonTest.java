@@ -5,6 +5,9 @@
 package ProjectAcquire;
 
 import org.junit.jupiter.api.Test;
+
+import java.io.IOException;
+
 import static org.junit.jupiter.api.Assertions.*;
 public class JsonTest{
 
@@ -24,12 +27,16 @@ public class JsonTest{
      * Result : passed, thus the user can continue where they left off
      */
     @Test
-    void test_Loading_Game(){
+    void test_Loading_Game() {
+        try{
         GameState testGame = TestHelper.helperMethod_GameStateInit();
         IOManager manager = new IOManager();
         String file = manager.saveGame(testGame);
         GameState testGame2 = manager.loadGame(file);
         assertEquals(testGame.getCurrentPlayer().getMoney(), testGame2.getCurrentPlayer().getMoney(), "" +
                 "The gamestates after loading a game is equal to exactly where it left off when saved");
+        } catch (IOException e){
+            e.printStackTrace();
+        }
     }
 }

@@ -111,7 +111,8 @@ public class UpdateBoard {
             case "American" -> button.setStyle("-fx-background-color: blue");
             case "Continental" -> button.setStyle("-fx-background-color: red");
             case "Tower" -> button.setStyle("-fx-background-color: grey");
-            default -> button.setStyle("-fx-background-color: 000000");
+            case "default" -> button.setStyle("fx-background-color: black; -fx-text-fill: white");
+            default -> button.setStyle("-fx-background-color: 000000;");
         }
         return button;
     }
