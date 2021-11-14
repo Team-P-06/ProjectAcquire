@@ -79,8 +79,7 @@ public class FXController {
         showBoardMenu(getGameBoardLoader());
 
         GameState gameState = newGame.start();
-        Company com = new Company();
-        update.update(gameState);
+        update.nextTurnUI(gameState);
     }
 
     /**

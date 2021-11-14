@@ -9,15 +9,18 @@ import java.util.List;
 /**
  * Updates the tiles' information that are places on the board. (top left of UI)
  */
-public class UpdateBoard implements Updatable{
+public class UpdateBoard {
 
     private FXController UIController;
 
     /**
      * Creates 108 buttons and assigns them to a place on the grid with colors and name.
      * The list of tiles will need to pull from the tile pool and players pool to properly color and associate them with a company.
+     * @param gameState current gamestate
+     * @param UIController UIController for updating the UI
+     * @param placeableTiles weather or not a player should be able to place a tile.
      */
-    public void update(GameState gameState, FXController UIController) {
+    public void update(GameState gameState, FXController UIController, boolean placeableTiles) {
         this.UIController = UIController;
         List<Player> playerList = gameState.getPlayerList();
         List<Tile> tilesNotInPlayerHand = gameState.getCurrentBoard().getTileList();
@@ -32,7 +35,7 @@ public class UpdateBoard implements Updatable{
 
         for (Player player : playerList)
             if (player.equals(currentPlayer)) {
-                makeCurrentPlayerTiles(player.getTileList(), player, gameState);
+                makeCurrentPlayerTiles(player.getTileList(), player, gameState, placeableTiles);
             } else {
                 makeOtherPlayerTile(player.getTileList());
             }
@@ -41,22 +44,25 @@ public class UpdateBoard implements Updatable{
 
     /**
      * Creates a unique button for the current player, so they can play a tile and have a custom border color
-     * @param tileList
-     * @param currentPlayer
+     * If this is a fresh turn, e.g the player should place a tile. Then the placetile action is set to the players tilelist. otherwise, no action.
+     * @param tileList the list of tiles in the curret players hand
+     * @param currentPlayer who the current player is
      */
-    private void makeCurrentPlayerTiles(List<Tile> tileList, Player currentPlayer, GameState gameState) {
+    private void makeCurrentPlayerTiles(List<Tile> tileList, Player currentPlayer, GameState gameState, boolean placeableTiles) {
         for (Tile tile : tileList) {
             Button currentButton = new Button();
             currentButton.setStyle("-fx-background-color: 000000; -fx-border-color: red; -fx-border-width: 3");
             currentButton.setText(tile.tileCoordToString());
             currentButton.setMinSize(45, 45);
-            currentButton.setOnAction(action -> {
-                try {
-                    currentPlayer.placeTile(tile, gameState);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            });
+            if(placeableTiles) { // If this is a fresh turn allow the tile to be placed.
+                currentButton.setOnAction(action -> {
+                    try {
+                        currentPlayer.placeTile(tile, gameState);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
+            }
             UIController.getTileGrid().add(currentButton, tile.getCoord()[1], tile.getCoord()[0]);
         }
     }
@@ -149,7 +155,6 @@ public class UpdateBoard implements Updatable{
         saveGameButton.setOnAction(a -> {
             saveGameButton.setText("Saved!");
             ioManager.saveGame(gameState);});
-
     }
 
 

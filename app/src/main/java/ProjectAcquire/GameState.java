@@ -241,9 +241,9 @@ public class GameState {
      * This is really gross but works for now while we implement other more important things.
      * @throws IOException
      */
-    public void update() throws IOException {
+    public void updateNewTurn() throws IOException {
         Update update = new Update();
-        update.update(this);
+        update.nextTurnUI(this);
     }
 
     /**
