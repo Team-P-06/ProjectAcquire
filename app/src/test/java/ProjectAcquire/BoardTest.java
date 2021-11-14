@@ -86,7 +86,7 @@ public class BoardTest {
     @Test void test_updateMethod(){
 
         Board classUnderTest = TestHelper.helperMethod_custom_board();
-        classUnderTest.updateBoard();
+        //classUnderTest.updateBoard(); //updateBoard has been depreciated for mutiable diffrent updates
         assertTrue(1==1);
 
     }

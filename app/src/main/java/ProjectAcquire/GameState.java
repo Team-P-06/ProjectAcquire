@@ -108,7 +108,6 @@ public class GameState {
 
             //Looks at the current player, and then runs that players turn
             //1. Deals cards if less than 6 cards are in the player's hand
-
             while (currentPlayer.getTileList().size() < 6) {
                 currentBoard.dealTile(currentPlayer);
             }
@@ -121,7 +120,7 @@ public class GameState {
         //referenced by the UI tile list position clicked.
         //chosenTile.flip()
         //player.getTileList().remove(chosenTile)
-        updateNewTurn();
+        //updateNewTurn();
 
         //2.b The player then gets to buy stock from any of the companies.
         //this is a UI Interrupt too.
@@ -190,6 +189,19 @@ public class GameState {
          */
 
         System.out.println("GameState.playTurn() was finished");
+    }
+
+    /**
+     * Sets the next player as the current and puts the player who just went to the back of the list.
+     * This is called after stocks are sold.
+     */
+    public void setNextTurn() throws IOException {
+        Player playerWhosTurnJustEnded = playerList.removeFirst();
+        playerList.addLast(playerWhosTurnJustEnded);
+        currentPlayer = playerList.peekFirst();
+        Update update = new Update();
+        playTurn();
+        update.nextTurnUI(this);
     }
 
     /**
@@ -265,23 +277,26 @@ public class GameState {
      */
     private void setUpInitialTurn() {
         currentPlayer = playerList.peekFirst();
-        //dealing cards
-        //1. I think that we should maybe have a dealt tile list and undealt tilelist that are complements of each other
-        // where their union is equivalent to the board tile list. Then we can keep track of tiles dealt
-
-    }
-
-    public void getCompanyChoice(Company playerChoice){
-        // Returns the company that the player would like to charter and invokes the rest of the charter().
-    }
-
-    public void getMergeChoice(Company playerChoice){
-        // Returns the company that the player would like to keep and continues with merge.
     }
 
     /**
-     * Essencially the "playTile" method, since the interrupts need a gamestate it works better here.
+     * Loops until the player has bought 3 stocks or can't afford any more(or hits "end turn")
+     * Then it sets up the next players turn.
+     * @throws IOException
+     */
+    private void buyStocksTurn() throws IOException {
+        int stocksBought = 0;
+        while (stocksBought < 3 && currentPlayer.getMoney() > currentBoard.getLowestStockPrice()) {
+            buyInterrupt();
+            stocksBought++;
+        }
+        setNextTurn();
+    }
+
+    /**
+     * Essentially the "playTile" method, since the interrupts need a gamestate it works better here.
      * This is called when you click a tile on the board.
+     * Decides 1 of 4 actions based on how the tiles should be merged/created
      * @param tile tile that the player placed on the board.
      * @throws IOException
      */
@@ -290,11 +305,32 @@ public class GameState {
         if (action == 0) { // If not chartering then jump to buying stocks
             noCharter(tile);
         }
-        if (action == 2){
-            charterChoiceInterrupt();
+        else if (action == 1){ // If we place a tile next to another empty tile.
+            charterChoiceInterrupt(); // UI calls board.charter(playerChoice)
+        }
+        else if (action == 2){ // If we place a tile next to another company
+            // currentBoard.updateCompanyTiles(); //Currently don't have information about the company that's
+                                                  // increasing, would have to be done inside the function.
+            buyStocksTurn(); // after the size is inceased, let players buy stocks
+        }
+        else if( action == 3){ //If there is a merge started by the tile
+            if (currentBoard.checkEqualsMerge() != null){ //If there are equal companies in a merge
+                List<Company> choicelist = currentBoard.checkEqualsMerge();
+                mergeChoiceInterrupt(choicelist); // Player choice will then call merge(winnerCompany selected)
+            }
+            else { //No equal companies
+                Company defunctCo = currentBoard.getDefunctCompany();
+                currentBoard.merge(defunctCo); // Merge the companies
+                mergeInterrupt(defunctCo); // Start the player selling/trading/keeping stocks turn
+            }
         }
     }
 
+    /**
+     * If no company is chartered, set it to the default company and remove the tile form the players hand.
+     * @param tile
+     * @throws IOException
+     */
     public void noCharter(Tile tile) throws IOException {
         List<Company> uc = currentBoard.getUncharteredCompanies();
         List<Company> cc = currentBoard.getCharteredCompanies();
@@ -305,7 +341,7 @@ public class GameState {
                 currentPlayer.getTileList().remove(tile);
                 tile.setFlipped();
                 tile.setDealt(false);
-                buyInterrupt();
+                buyStocksTurn();
             }
         }
         for (Company defaultCo : cc){
@@ -314,22 +350,11 @@ public class GameState {
                 currentPlayer.getTileList().remove(tile);
                 tile.setFlipped();
                 tile.setDealt(false);
-                buyInterrupt();
+                buyStocksTurn();
             }
         }
     }
 
-
-    /**
-     * Overall update for when a player would like to place a new tile and the player actions on the bottom right have no actions.
-     * This currently creates a new window, so every update makes a new window.
-     * This is really gross but works for now while we implement other more important things.
-     * @throws IOException
-     */
-    public void updateNewTurn() throws IOException {
-        Update update = new Update();
-        update.nextTurnUI(this);
-    }
 
     /**
      * Update for when a merge occurs, creates the options for players to sell, trade, or keep stocks.

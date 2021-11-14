@@ -31,13 +31,13 @@ public class UpdateAction{
         UIController.getActionChoiceObserList().clear();
         UIController.getMergePane().setVisible(false);
         UIController.getActionLabel().setText("");
-        if(!merge) { //If there is no merge. AKA fresh new curretPlayer to play a tile
+        if(!merge) { //If there is no merge. AKA fresh new currentPlayer to play a tile
             List<Company> companyList = gameState.getCurrentBoard().getCharteredCompanies();
             UIController.getActionLabel().setText("Sell stocks");
 
             UIController.getEndTurnButton().setVisible(true);
             UIController.getEndTurnButton().setOnAction(action -> { // Sets an exit button to stop selling stocks
-                try{ gameState.updateNewTurn(); }
+                try{ gameState.setNextTurn(); }
                 catch (IOException e) { e.printStackTrace(); }
             });
 
@@ -184,7 +184,7 @@ public class UpdateAction{
                 Button choiceButton = new Button();
                 choiceButton.setText(com.getCompanyName());
                 choiceButton.setStyle("-fx-background-color: ffffff; -fx-border-color: black");
-                choiceButton.setOnAction(a -> {gameState.getCompanyChoice(com);});
+                choiceButton.setOnAction(a -> {gameState.getCurrentBoard().charter(com);});
                 UIController.getActionChoiceObserList().add(choiceButton);
         }
     }
@@ -195,7 +195,7 @@ public class UpdateAction{
                 Button choiceButton = new Button();
                 choiceButton.setText(com.getCompanyName());
                 choiceButton.setStyle("-fx-background-color: ffffff; -fx-border-color: black");
-                choiceButton.setOnAction(a -> {gameState.getMergeChoice(com);}); //sets action to charter the choice company
+                choiceButton.setOnAction(a -> {gameState.getCurrentBoard().merge(com);}); //sets action to charter the choice company
                 UIController.getActionChoiceObserList().add(choiceButton);
         }
     }
