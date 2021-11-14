@@ -82,9 +82,8 @@ public class Game {
         uncharteredList.add(continentalCo);
         Company towerCo =  new Company("Tower", 400, false, false);
         uncharteredList.add(towerCo);
-
         Company defaultCo =  new Company("DEFAULT", 0, false, false); // for placed tiles but no company
-       // Company nullCo =  new Company("nullCo", 0, false, false); // for unplaced tiles and no company
+        uncharteredList.add(defaultCo);
 
 
         //2. creates 2d? list of tiles.

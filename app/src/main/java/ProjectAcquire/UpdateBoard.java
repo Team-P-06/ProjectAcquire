@@ -32,7 +32,7 @@ public class UpdateBoard {
 
         for (Tile tile : allTileList) {
             if(!tile.isDealt()) { //Only add tiles that are not in a players hand
-                Button currentButton = setButtonProperties(tile.getCompany().getCompanyName());
+                Button currentButton = setButtonProperties(tile.getCompany().getCompanyName(), tile.isFlipped());
                 currentButton.setText(tile.tileCoordToString());
                 UIController.getTileGrid().add(currentButton, tile.getCoord()[1], tile.getCoord()[0]);
             }
@@ -89,8 +89,8 @@ public class UpdateBoard {
      * @param tileCom
      * @return
      */
-    private Button setButtonProperties(String tileCom) {
-        Button currentButton = colorButton(tileCom);
+    private Button setButtonProperties(String tileCom, boolean isFlipped) {
+        Button currentButton = colorButton(tileCom, isFlipped);
         currentButton.setMinSize(45, 45);
         UIController.getTileGrid().setHalignment(currentButton, HPos.CENTER);
         return currentButton;
@@ -101,7 +101,7 @@ public class UpdateBoard {
      * @param companyName
      * @return
      */
-    private Button colorButton(String companyName) {
+    private Button colorButton(String companyName, boolean isFlipped) {
         Button button = new Button();
         switch (companyName) {
             case "Worldwide" -> button.setStyle("-fx-background-color: purple");
@@ -111,8 +111,11 @@ public class UpdateBoard {
             case "American" -> button.setStyle("-fx-background-color: blue");
             case "Continental" -> button.setStyle("-fx-background-color: red");
             case "Tower" -> button.setStyle("-fx-background-color: grey");
-            case "Default" -> button.setStyle("-fx-background-color: black; -fx-text-fill: white");
+            //case "DEFAULT" && isFlipped -> button.setStyle("-fx-background-color: black; -fx-text-fill: white");
             default -> button.setStyle("-fx-background-color: 000000;");
+        }
+        if (companyName.equals("DEFAULT") && isFlipped){
+            button.setStyle("-fx-background-color: black; -fx-text-fill: white");
         }
         return button;
     }

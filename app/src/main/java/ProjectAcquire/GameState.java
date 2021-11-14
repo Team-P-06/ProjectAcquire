@@ -332,10 +332,8 @@ public class GameState {
     public void noCharter(Tile tile) throws IOException {
         List<Company> uc = currentBoard.getUncharteredCompanies();
         List<Company> cc = currentBoard.getCharteredCompanies();
-
         for (Company defaultCo : uc) {
-            if (defaultCo.getCompanyName().equals("Default")) {
-                tile.setCompany(defaultCo);
+            if (defaultCo.getCompanyName().equals("DEFAULT")) {
                 currentPlayer.getTileList().remove(tile);
                 tile.setFlipped();
                 tile.setDealt(false);
@@ -343,8 +341,7 @@ public class GameState {
             }
         }
         for (Company defaultCo : cc){
-            if (defaultCo.getCompanyName().equals("Default")){
-                tile.setCompany(defaultCo);
+            if (defaultCo.getCompanyName().equals("DEFAULT")){
                 currentPlayer.getTileList().remove(tile);
                 tile.setFlipped();
                 tile.setDealt(false);
