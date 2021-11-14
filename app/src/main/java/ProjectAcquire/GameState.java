@@ -121,22 +121,25 @@ public class GameState {
     /**
      * recursively called play method that is called when a player decides to play their turn
      */
-    public void playTurn() {
-
+    public void playTurn() throws IllegalArgumentException {
         //This section checks if we have loaded a game or if we are just starting.
         //sets our current player to be the first player of our list.
         //then removes from the front of the list, so that the second player should now be at the front of the list
         //Then adds the current player to the back of the list.
-        if (currentPlayer == null) {
-            setUpInitialTurn(); //if our game has just started, we need to initialize it.
-        }
-
-        //Looks at the current player, and then runs that players turn
-        //1. Deals cards if less than 6 cards are in the player's hand
-        for(Player curPlayer : playerList) {
-            while (curPlayer.getTileList().size() < 6) {
-                currentBoard.dealTile(currentBoard.getTileList(), curPlayer);
+        try {
+            if (currentPlayer == null) {
+                setUpInitialTurn(); //if our game has just started, we need to initialize it.
             }
+
+            //Looks at the current player, and then runs that players turn
+            //1. Deals cards if less than 6 cards are in the player's hand
+            for (Player curPlayer : playerList) {
+                while (curPlayer.getTileList().size() < 6) {
+                    currentBoard.dealTile(currentBoard.getTileList(), curPlayer);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         //2.a Lets the player flip a tile in their hand, removes that tile from the player's hand.
         //Interrupt call that lets the player choose which tile in hand to flip
