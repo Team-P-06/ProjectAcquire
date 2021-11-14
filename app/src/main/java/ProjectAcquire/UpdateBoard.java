@@ -32,7 +32,7 @@ public class UpdateBoard implements Updatable{
 
         for (Player player : playerList)
             if (player.equals(currentPlayer)) {
-                makeCurrentPlayerTiles(player.getTileList(), player);
+                makeCurrentPlayerTiles(player.getTileList(), player, gameState);
             } else {
                 makeOtherPlayerTile(player.getTileList());
             }
@@ -44,14 +44,18 @@ public class UpdateBoard implements Updatable{
      * @param tileList
      * @param currentPlayer
      */
-    private void makeCurrentPlayerTiles(List<Tile> tileList, Player currentPlayer) {
+    private void makeCurrentPlayerTiles(List<Tile> tileList, Player currentPlayer, GameState gameState) {
         for (Tile tile : tileList) {
             Button currentButton = new Button();
             currentButton.setStyle("-fx-background-color: 000000; -fx-border-color: red; -fx-border-width: 3");
             currentButton.setText(tile.tileCoordToString());
             currentButton.setMinSize(45, 45);
             currentButton.setOnAction(action -> {
-                currentPlayer.placeTile(tile);
+                try {
+                    currentPlayer.placeTile(tile, gameState);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             });
             UIController.getTileGrid().add(currentButton, tile.getCoord()[1], tile.getCoord()[0]);
         }

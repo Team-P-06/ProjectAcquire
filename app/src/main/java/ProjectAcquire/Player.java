@@ -5,6 +5,7 @@
 
 package ProjectAcquire;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -71,14 +72,20 @@ public class Player{
 
     /**
      * Places a tile on the board
+     * UI calls this when clicking on a tile that's in the players hand, this then goes to Board.checkForActionInitiation().
+     * @param tile the tile that was placed
+     * @param gameState the current gamestate
      */
-    public void placeTile(Tile tile){
+    public void placeTile(Tile tile, GameState gameState) throws IOException {
 
         //Sets the tile to be flipped.
         tile.setFlipped();
 
         //removes from the player's hand.
         tileList.remove(tile);
+        Board curBoard = Board.getInstance();
+
+        curBoard.checkForActionInitiation(tile, gameState);
 
     }
 
@@ -129,8 +136,7 @@ public class Player{
      * @return a new unique tile
      */
     public Tile drawTile(){
-
-   Tile drawnTile = new Tile(); //DEFAULT TILE
+        Tile drawnTile = new Tile(); //DEFAULT TILE
         tileList.add(drawnTile);
         return drawnTile;
     }
