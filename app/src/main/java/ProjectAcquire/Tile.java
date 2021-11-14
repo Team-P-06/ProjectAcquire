@@ -13,8 +13,8 @@ public class Tile {
      */
    private @Getter @Setter Company company;
    private @Getter @Setter int[] coord;
-   private Boolean flipped;
-   private @Getter @Setter Boolean dealt;
+   private boolean flipped;
+   private @Getter @Setter boolean dealt;
 
 
    //Default constructor
@@ -39,10 +39,13 @@ public class Tile {
     /**
      * Checks if the tile is on the board yet.
      */
-    public Boolean isFlipped(){
-        return flipped;
-    }
+    public boolean isFlipped(){ return flipped; }
 
+    public boolean isDealt(){ return dealt; }
+
+    public boolean isDealable(){
+        return !isFlipped() && !isDealt();
+    }
 
     /**
      *

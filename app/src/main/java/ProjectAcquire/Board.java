@@ -11,6 +11,7 @@ import lombok.Generated;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Board {
     //instance variables
@@ -73,7 +74,6 @@ public class Board {
     }
 
     /**
-     *
      * @param tl list of tiles
      * @param uc list of unchartered companies
      * @param cc list of chartered companies
@@ -105,12 +105,29 @@ public class Board {
     }
 
     /**
-     *
      * @param company Company passed in
      * @return the number of tiles the company has on the board
      */
    public int getCompanyNumberOfTiles(Company company){
         return company.getTilesOnBoard();
+    }
+
+    /**
+     * Gives a specified player a new tile from the list of tiles that are not currently on the board in a hand.
+     * @param allTiles full tile list
+     * @param player  current player who we are dealing tiles to
+     */
+    public void dealTile(List<Tile> allTiles, Player player){
+        Random ran = new Random();
+        int randomIndex = ran.nextInt(allTiles.size());
+        Tile pulledTile = allTiles.get(randomIndex);
+        if (pulledTile.isDealable()){ // If the tile is able to be dealt
+            pulledTile.setDealt(true);
+            player.getTileList().add(pulledTile);
+        }
+        else{ // recursive call if it can't deal the tile
+            dealTile(allTiles, player);
+        }
     }
 
 

@@ -56,22 +56,25 @@ public class Game {
 
         //1. queries for how many players there are, (UI), then adds x amount of players to a playerList.
         //This is just a static creation of players for now, will be more dynamic in the future.
-        List<Tile> playerTileList = new ArrayList<>();
+        //List<Tile> playerTileList = new ArrayList<>();
         LinkedList<Player> playerList = new LinkedList<Player>();
-        Player player1 = new Player("Player 1", playerTileList, 3000);
-        Player player2 = new Player("Player 2", playerTileList, 3000);
-        Player player3 = new Player("Player 3", playerTileList, 3000);
+        int numOfPlayers = 3;
+        for (int i = 0; i < numOfPlayers; i++) {
+            List<Tile> newPlayerTileList = new ArrayList<>();
+            Player newPlayer = new Player("Player " + (i+1), newPlayerTileList, 3000);
+            playerList.add(newPlayer);
+        }
 
-        playerList.add(player1);
+        /*playerList.add(player1);
         playerList.add(player2);
-        playerList.add(player3);
+        playerList.add(player3);*/
 
 
         //2. creates 2d? list of tiles.
-        List<Tile> freeTileList = new ArrayList<>(); //List of the uncharted tiles that no players have. Better variable name ideas?
+        List<Tile> freeTileList = new ArrayList<>();
         for (int r = 0; r < 9; r++){
             for(int c = 0; c < 12; c++) {
-                Tile curTile = new Tile(defaultCompany, new int[]{r, c}); //SCREWED WITH BY ALEX TO MAKE COMPILE
+                Tile curTile = new Tile(defaultCompany, new int[]{r, c});
                 freeTileList.add(curTile);
             }
         }
@@ -97,6 +100,7 @@ public class Game {
 
         //7. call setCurrentGame() of Game using 6 as our parameter
         setCurrentGameState(gameState);
+        gameState.playTurn();
 
 
         //if loadGame was called, then simply: setCurrentGame(loadGame())
