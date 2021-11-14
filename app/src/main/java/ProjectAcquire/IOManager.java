@@ -7,6 +7,8 @@ package ProjectAcquire;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 public class IOManager {
 
@@ -31,9 +33,10 @@ public class IOManager {
      * @param file Json file the contains the saved game objects
      * @return The gamestate that was saved
      */
-    public GameState loadGame(String file){
+    public GameState loadGame(String file) throws IOException {
         Gson converter = new Gson();
-        GameState savedGame = converter.fromJson(file, GameState.class);
+        String jsonString = Files.readString(Path.of(file)); // Added by Show, this resolved a loading error(Expected BEGIN_OBJECT but was STRING)
+        GameState savedGame = converter.fromJson(jsonString, GameState.class);
         return savedGame;
     }
 
