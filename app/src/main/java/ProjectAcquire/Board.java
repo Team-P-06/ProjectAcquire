@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.Generated;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,12 +22,12 @@ public class Board {
      */
     @Getter @Setter List<Tile> tileList;
 
-    private
+
     /**
      * @param companyList list of companies to update companies to
      * @return A list of the current companies
      */
-    @Getter @Setter List<Company> uncharteredCompanies;
+    private @Getter @Setter List<Company> uncharteredCompanies;
 
     private @Getter @Setter List<Company> charteredCompanies;
     private @Getter @Setter List<Player> playerList;
@@ -293,7 +294,7 @@ public class Board {
      * @param  tile a FLIPPED passed in tile.
      *
      */
-    public void checkForActionInitiation(Tile tile) {
+    public void checkForActionInitiation(Tile tile, GameState gameState) throws IOException {
 
         //ALEX NOTE: If the passed in tile does not have a true isFlipped status we need to throw an exception,
         //but i dont know how to do that.
@@ -321,7 +322,8 @@ public class Board {
 
         if(uniqueCompaniesAroundTile.isEmpty() && flippedTilesAroundTile>0){ //this checks if we have a flipped but unchartered tile next to us
             //This should mean that we can charter a new company.
-            charter(tile.getCompany());
+            //charter(tile.getCompany());
+            gameState.charterChoiceInterrupt(); //Calls UI to update the screen with a choice for the player to choose. After choice UI calls charter().
         }
         else if(uniqueCompaniesAroundTile.size()==1 ){
             //If there is one company found around this tile, we can add this tile to that company

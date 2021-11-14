@@ -31,7 +31,7 @@ public class UpdateAction{
         UIController.getActionChoiceObserList().clear();
         UIController.getMergePane().setVisible(false);
         UIController.getActionLabel().setText("");
-        if(!merge) {
+        if(!merge) { //If there is no merge. AKA fresh new curretPlayer to play a tile
             List<Company> companyList = gameState.getCurrentBoard().getCharteredCompanies();
             UIController.getActionLabel().setText("Sell stocks");
             for (Company curCompany : companyList) {
@@ -39,9 +39,9 @@ public class UpdateAction{
                 UIController.getActionChoiceObserList().add(currentCompanyButton);
             }
         }
-        else if(charter){showCharterMenu(gameState, gameState.getCurrentBoard().getCharteredCompanies());}
-        else if (mergeChoice){ displayMergeChoice(listOfEqualCompanies); }
-        else{ updateMergeInfo(defunctCompany, gameState.getCurrentPlayer()); }
+        else if(charter){showCharterMenu(gameState, gameState.getCurrentBoard().getCharteredCompanies());} //Charter a new company
+        else if (mergeChoice){ displayMergeChoice(gameState.getCurrentBoard(), listOfEqualCompanies); } //Display merge options during a equal merge
+        else{ updateMergeInfo(defunctCompany, gameState.getCurrentPlayer()); } //Sell, trade, keep stock menu for merging.
         UIController.getActionChoiceList().setItems(UIController.getActionChoiceObserList());
     }
 
@@ -182,13 +182,13 @@ public class UpdateAction{
         }
     }
 
-    private void displayMergeChoice(List<Company> companyChoiceList){
+    private void displayMergeChoice(Board currentBoard, List<Company> companyChoiceList){
             UIController.getActionLabel().setText("Choose a company you'd like to keep");
             for (Company com : companyChoiceList){
                 Button choiceButton = new Button();
                 choiceButton.setText(com.getCompanyName());
                 choiceButton.setStyle("-fx-background-color: ffffff; -fx-border-color: black");
-                //choiceButton.setOnAction(a -> {gameState.(com);});
+                choiceButton.setOnAction(a -> {currentBoard.charter(com);}); //sets action to charter the choice company
                 UIController.getActionChoiceObserList().add(choiceButton);
         }
     }
