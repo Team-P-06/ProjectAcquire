@@ -4,11 +4,7 @@
  */
 package ProjectAcquire;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import java.io.IOException;
-
 import static org.junit.jupiter.api.Assertions.*;
 public class JsonTest{
 
@@ -22,34 +18,18 @@ public class JsonTest{
         IOManager testSaveGame = new IOManager();
         assertNotNull(testSaveGame.saveGame(testGame), "There currently is a saved game state");
     }
-    /*
+
+    /**
+     * Test to see if the load game method does create a gamestate properly from the saved game json file
+     * Result : passed, thus the user can continue where they left off
+     */
     @Test
-    void test_Writing_File() throws IOException {
+    void test_Loading_Game(){
         GameState testGame = TestHelper.helperMethod_GameStateInit();
-        IOManager testSaveGame = new IOManager();
-        testSaveGame.saveGame(testGame);
-        assertNotNull();
-    }
-    */
-
-    @Test
-    void test_Loading_Game() throws IOException {
-        Player testPlayer;
-        Player testPlayer2;
-        GameState testGame = TestHelper.helperMethod_GameStateInit();
-        testPlayer = testGame.getCurrentPlayer();
-        IOManager testSaveGame = new IOManager();
-        Game setCurrent = new Game();
-        String testFile = testSaveGame.saveGame(testGame);
-        GameState testGameState = testSaveGame.loadGame(testFile);
-        setCurrent.setCurrentGameState(testGameState);
-        Game set = new Game();
-
-
-
-
-
-        // fails but verifies a gamestate objects is being returned
-        // assertEquals(testGame, testGameState);
+        IOManager manager = new IOManager();
+        String file = manager.saveGame(testGame);
+        GameState testGame2 = manager.loadGame(file);
+        assertEquals(testGame.getCurrentPlayer().getMoney(), testGame2.getCurrentPlayer().getMoney(), "" +
+                "The gamestates after loading a game is equal to exactly where it left off when saved");
     }
 }
