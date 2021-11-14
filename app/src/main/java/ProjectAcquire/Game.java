@@ -58,50 +58,44 @@ public class Game {
         //This is just a static creation of players for now, will be more dynamic in the future.
         //List<Tile> playerTileList = new ArrayList<>();
         LinkedList<Player> playerList = new LinkedList<Player>();
-        int numOfPlayers = 3;
+        int numOfPlayers = 2;
         for (int i = 0; i < numOfPlayers; i++) {
             List<Tile> newPlayerTileList = new ArrayList<>();
             Player newPlayer = new Player("Player " + (i+1), newPlayerTileList, 3000);
             playerList.add(newPlayer);
         }
 
+        //3. creates our list of chartered and unchartered companies (the unchartered list can be empty)
         List<Company> charteredList = new ArrayList<>();
         List<Company> uncharteredList = new ArrayList<>();
-        Company worldwideCo =  new Company("Worldwide", 100, false, false);
+        Company worldwideCo =  new Company("Worldwide", 200, false, false);
         uncharteredList.add(worldwideCo);
-        Company SacksonCo =  new Company("Sackson", 100, false, false);
+        Company SacksonCo =  new Company("Sackson", 200, false, false);
         uncharteredList.add(SacksonCo);
-        Company festivalCo =  new Company("Festival", 100, false, false);
+        Company festivalCo =  new Company("Festival", 300, false, false);
         uncharteredList.add(festivalCo);
-        Company imperialCo =  new Company("Imperial", 100, false, false);
+        Company imperialCo =  new Company("Imperial", 300, false, false);
         uncharteredList.add(imperialCo);
-        Company americanCo =  new Company("American", 100, false, false);
+        Company americanCo =  new Company("American", 300, false, false);
         uncharteredList.add(americanCo);
-        Company continentalCo =  new Company("Continental", 100, false, false);
+        Company continentalCo =  new Company("Continental", 400, false, false);
         uncharteredList.add(continentalCo);
-        Company towerCo =  new Company("Tower", 100, false, false);
+        Company towerCo =  new Company("Tower", 400, false, false);
         uncharteredList.add(towerCo);
-        Company defaultCo =  new Company("DEFAULT", 100, false, false); // for placed tiles but no company
-        uncharteredList.add(defaultCo);
-        Company nullCo =  new Company("nullCo", 100, false, false); // for unplaced tiles and no company
+
+        Company defaultCo =  new Company("DEFAULT", 0, false, false); // for placed tiles but no company
+       // Company nullCo =  new Company("nullCo", 0, false, false); // for unplaced tiles and no company
 
 
         //2. creates 2d? list of tiles.
         List<Tile> freeTileList = new ArrayList<>();
         for (int r = 0; r < 9; r++){
             for(int c = 0; c < 12; c++) {
-                Tile curTile = new Tile(nullCo, new int[]{r, c});
+                Tile curTile = new Tile(defaultCo, new int[]{r, c});
                 freeTileList.add(curTile);
             }
         }
 
-        //3. creates our list of chartered and unchartered companies (the unchartered list can be empty)
-        /*for (int i = 0; i < 7; i++){
-            //ALEX NOTE: This will initialize every company with a stock price of 100. We should instead set the companies
-            //statically 1 by 1 here with custom stock prices and names later on.
-            Company curCompany = new Company("Company " + (Integer.toString(i)), 100, true, false);
-            charteredList.add(curCompany);
-        }*/
 
         //4. initialize a board using 1-4 as our parameters (using getInstance())
         Board board = Board.getInstance(freeTileList, uncharteredList, charteredList, playerList);
@@ -113,8 +107,8 @@ public class Game {
 
         //7. call setCurrentGame() of Game using 6 as our parameter
         setCurrentGameState(gameState);
-        gameState.playTurnNoUI();
-        //gameState.playTurn();
+        //gameState.playTurnNoUI();
+        gameState.playTurn();
 
         //if loadGame was called, then simply: setCurrentGame(loadGame())
 

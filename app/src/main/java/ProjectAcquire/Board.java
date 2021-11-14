@@ -132,6 +132,15 @@ public class Board {
         //System.out.println("DEAL REACHED");
     }
 
+    public int getLowestStockPrice(){
+        int currentLowestPrice = 100000; // Default value, very high since we descend as we get better prices.
+        for (Company company : charteredCompanies){
+            if (currentLowestPrice > company.getStockPrice()){
+             currentLowestPrice = company.getStockPrice();
+            }
+        }
+        return  currentLowestPrice;
+    }
 
     /**
      * This
@@ -250,10 +259,6 @@ public class Board {
         uncharteredCompanies.add(company);
     }
 
-    void updateBoard(){
-        //This has to do with our updatable interface/observable design pattern.
-
-    }
 
     /**
      * This method will set the number of tiles on the board that a passed in company will have. It should be called by our checkForAction method as part of an action to execute.
@@ -355,6 +360,8 @@ public class Board {
         else if(uniqueCompaniesAroundTile.size()>1 ){
 
             //merge needed
+            // This should simply return 3 back to getTileChoice() in GameState. It then turns around and calls board.merge()
+            return 3;
         }
 
         return 0;
@@ -364,7 +371,15 @@ public class Board {
 
 
 
-    private void merge(){} //leaving this alone for now.
+    public void merge(Company winnerCompany){} //leaving this alone for now.
+
+    public List<Company> checkEqualsMerge(){ //Should return a list of companies that are equal, return null if non are equal.
+        return null;
+    }
+
+    public Company getDefunctCompany(){ // Should return the company that is being defunct(assuming 2 are not equal)
+        return null;
+    }
 
 
     /**
