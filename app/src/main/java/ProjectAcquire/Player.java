@@ -77,16 +77,20 @@ public class Player{
      * @param tile the tile that was placed
      * @param gameState the current gamestate
      */
-    public void placeTile(Tile tile, GameState gameState) throws IOException {
+    public void placeTile(Tile tile) throws IOException {
 
-        //Sets the tile to be flipped.
-        tile.setFlipped();
+        try {
+            //Sets the tile to be flipped.
+            tile.setFlipped();
 
-        //removes from the player's hand.
-        tileList.remove(tile);
-        Board curBoard = Board.getInstance();
+            //removes from the player's hand.
+            tileList.remove(tile);
+            // Board curBoard = Board.getInstance();
 
-        curBoard.checkForActionInitiation(tile, gameState);
+            //curBoard.checkForActionInitiation(tile, gameState);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -153,6 +157,15 @@ public class Player{
      */
     public void discardTile(Tile tile){
     tileList.remove(tile);
+    }
+
+    /**
+     * Adds a tile to the player's hand
+     *
+     * @param tile Tile to add to the players hand
+     */
+    public void addTile(Tile tile){
+        tileList.add(tile);
     }
 
 

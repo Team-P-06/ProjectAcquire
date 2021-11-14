@@ -7,6 +7,8 @@ package ProjectAcquire;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Arrays;
+
 public class Tile {
     /**
      * Coord is {Row, Column}
@@ -22,6 +24,7 @@ public class Tile {
         this.coord = new int[]{0, 0};
         this.company = new Company();
         this.flipped = false;
+        this.dealt = false;
     }
 
     /**
@@ -34,6 +37,7 @@ public class Tile {
         this.company = tilesCompany;
         this.coord = tileCoord;
         this.flipped = false;
+        this.dealt = false;
     }
 
     /**
@@ -81,4 +85,10 @@ public class Tile {
         return tileString;
     }
 
+    @Override
+    public String toString() {
+        return "Tile{" +
+                "coord=" + tileCoordToString() +
+                '}';
+    }
 }

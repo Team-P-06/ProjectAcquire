@@ -10,6 +10,7 @@ import lombok.Setter;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  * GameSate class that contains a games current status
@@ -78,32 +79,6 @@ public class GameState {
 
     }
 
-//    /**
-//     * Determines which player has the next turn available in the gamestate
-//     * @return
-//     */
-//    public Player nextTurn(){
-//        if (firstPlayer == playerList.get(1)){
-//            return firstPlayer;
-//        }
-//        else{
-//            return secondPlayer;
-//        }
-//    }
-//
-//    /**
-//     * If a player has a turn let the player play their turn
-//     * @param player
-//     * @return
-//     */
-//    public boolean hasTurn(Player player){
-//        if(player == playerList.get(0)){
-//            return true;
-//        }
-//        else {
-//            return false;
-//        }
-//    }
 
     /**
      * If a player has a tile in their hand they can lay on the board let the player place the tile
@@ -133,11 +108,10 @@ public class GameState {
 
             //Looks at the current player, and then runs that players turn
             //1. Deals cards if less than 6 cards are in the player's hand
-            for (Player curPlayer : playerList) {
-                while (curPlayer.getTileList().size() < 6) {
-                    currentBoard.dealTile(currentBoard.getTileList(), curPlayer);
+
+                while (currentPlayer.getTileList().size() < 6) {
+                    currentBoard.dealTile(currentPlayer);
                 }
-            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -213,7 +187,77 @@ public class GameState {
 
         MAIN DRAWBACK: is that we would have to pass around the current gameState a lot
          */
+
+        System.out.println("GameState.playTurn() was finished");
     }
+
+    /**
+     * While we are waiting on the final UI hooks, we can use playerInputs as our interrupts
+     */
+    public void playTurnNoUI() throws IllegalArgumentException, IOException {
+
+        try {
+            if (currentPlayer == null) {
+                setUpInitialTurn(); //if our game has just started, we need to initialize it.
+            }
+
+            //Looks at the current player, and then runs that players turn
+            //1. Deals cards if less than 6 cards are in the player's hand
+
+//            for(int x =0;x<6;x++){
+//                currentBoard.dealTile(currentPlayer);
+//                System.out.println(currentPlayer.getTileList().size());
+//    }
+            int counter = 0;
+                while (currentPlayer.getTileList().size() < 6 ) {
+                    currentBoard.dealTile(currentPlayer);
+                    counter++;
+                    System.out.println(currentPlayer.getTileList().size());
+                }
+                
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        //ALEX NOTE: Tried using scanners but something something you have to set up event handlers. So I hardcoded
+        //a list of predestined player actions to test things instead.
+        int[] preDestinedActions = {1,1};
+
+        //Scanner scanner = new Scanner(System.in);  // Create a Scanner object
+        //System.out.println("Choose a tile from your hand. (1,2,3,4,5,6)");
+       //String userInput = scanner.nextLine();  // Read user input
+       // int inputInt = Integer.parseInt(userInput);
+      //  Tile tileChosen = currentPlayer.getTileList().get(inputInt-1);
+
+        Tile tileChosen = currentPlayer.getTileList().get(preDestinedActions[0]); //grabs the player's leftmost tile.
+        //prints out the tile chosen. This tile will NOT show up in the UI at the moment, because this tile is going to be played
+        //before the user even sees the UI (or a frame after).
+        System.out.println(tileChosen);
+        currentPlayer.placeTile(tileChosen);
+
+        int actionType = currentBoard.checkForActionInitiation(tileChosen); //will return 1 if no action and 1 if we need to charter
+        System.out.println("ACTION TYPE is: "+ actionType);
+        //our player needs to choose a company to charter.
+        if (actionType == 1){
+            System.out.println("CHOOSE A COMPANY TO CHARTER FROM THE FOLLOWING LIST:");
+            System.out.println("Continental (1), Tower (2)");
+            Company companyChosen = currentBoard.getUncharteredCompanies().get(preDestinedActions[1]); //preDest chooses Continental
+            //we have flipped our tile and chosen a company for it, so now we can assign it a company
+            //and our charterLogic algorithm will deal with what happens next. (the consequences of this chartering)
+            currentBoard.charter(companyChosen);
+        }
+
+        //A tile was placed but didn't cause a charter.
+        if (actionType == 0){
+            System.out.println("The chosen player tile is flipped is: " + tileChosen.isFlipped()); //Nothing in the UI to indicate that a tile is flipped currently
+        }
+
+        //sets our next player
+        playerList.addLast(playerList.poll());
+        currentPlayer = nextTurn();
+        System.out.println("GameState.playTurnNoUI() was finished");
+
+    }
+
 
     /**
      * Deals initial cards to players, and... what else does this method need to do for playTurn to be able to run?

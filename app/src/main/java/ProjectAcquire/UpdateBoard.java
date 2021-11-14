@@ -63,7 +63,7 @@ public class UpdateBoard {
             if(placeableTiles) { // If this is a fresh turn allow the tile to be placed.
                 UIController.getActionLabel().setText("Place a tile");
                 currentButton.setOnAction(action -> {
-                    try { currentPlayer.placeTile(tile, gameState); }
+                    try { currentPlayer.placeTile(tile); }
                     catch (IOException e) { e.printStackTrace(); }
                 });
             }

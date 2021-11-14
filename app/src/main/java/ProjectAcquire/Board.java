@@ -117,17 +117,19 @@ public class Board {
      * @param allTiles full tile list
      * @param player  current player who we are dealing tiles to
      */
-    public void dealTile(List<Tile> allTiles, Player player){
+    public void dealTile(Player player){
         Random ran = new Random();
-        int randomIndex = ran.nextInt(allTiles.size());
-        Tile pulledTile = allTiles.get(randomIndex);
-        if (pulledTile.isDealable()){ // If the tile is able to be dealt
+        int randomIndex = ran.nextInt(getTileList().size());
+        Tile pulledTile = getTileList().get(randomIndex);
+        if (!pulledTile.isFlipped()){ // If the tile is able to be dealt
+            //System.out.println(pulledTile.isDealt());
             pulledTile.setDealt(true);
-            player.getTileList().add(pulledTile);
+            player.addTile(pulledTile);
         }
         else{ // recursive call if it can't deal the tile
-            dealTile(allTiles, player);
+            dealTile(player);
         }
+        //System.out.println("DEAL REACHED");
     }
 
 
@@ -311,7 +313,7 @@ public class Board {
      * @param  tile a FLIPPED passed in tile.
      *
      */
-    public void checkForActionInitiation(Tile tile, GameState gameState) throws IOException {
+    public int checkForActionInitiation(Tile tile) throws IOException {
 
         //ALEX NOTE: If the passed in tile does not have a true isFlipped status we need to throw an exception,
         //but i dont know how to do that.
@@ -340,7 +342,9 @@ public class Board {
         if(uniqueCompaniesAroundTile.isEmpty() && flippedTilesAroundTile>0){ //this checks if we have a flipped but unchartered tile next to us
             //This should mean that we can charter a new company.
             //charter(tile.getCompany());
-            gameState.charterChoiceInterrupt(); //Calls UI to update the screen with a choice for the player to choose. After choice UI calls charter().
+
+            return 1; //ALEX NOTE: I am moving our interrupt back to GameState to avoid having to pass GameState around
+            //gameState.charterChoiceInterrupt(); //Calls UI to update the screen with a choice for the player to choose. After choice UI calls charter().
         }
         else if(uniqueCompaniesAroundTile.size()==1 ){
             //If there is one company found around this tile, we can add this tile to that company
@@ -351,6 +355,8 @@ public class Board {
 
             //merge needed
         }
+
+        return 0;
         
     }
 

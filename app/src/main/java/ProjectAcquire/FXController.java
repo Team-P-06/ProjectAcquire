@@ -80,6 +80,7 @@ public class FXController {
 
         GameState gameState = newGame.start();
         update.nextTurnUI(gameState);
+        newGame.runGame();
     }
 
     /**

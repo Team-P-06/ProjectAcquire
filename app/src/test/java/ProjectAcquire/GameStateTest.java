@@ -32,13 +32,13 @@ public class GameStateTest {
         //Player initial turn
 
         Player initPlayer = tester.getCurrentPlayer(); //currentPlayer on initialization
-        System.out.println("Current player is: " + initPlayer);
-        System.out.println("playerList: "+ tester.getPlayerList());
+       // System.out.println("Current player is: " + initPlayer);
+       // System.out.println("playerList: "+ tester.getPlayerList());
 
         tester.playTurn(); //plays a turn
         Player newCurrentPlayer = tester.getCurrentPlayer();//currentPlayer should be different
-        System.out.println("Current player is: " + newCurrentPlayer);
-        System.out.println("playerList: "+ tester.getPlayerList());
+        //System.out.println("Current player is: " + newCurrentPlayer);
+        //System.out.println("playerList: "+ tester.getPlayerList());
 
         //current player should now not be null.
         assertNotNull(newCurrentPlayer);
@@ -46,16 +46,20 @@ public class GameStateTest {
     }
 
     /**
-     * Tests our GameStat
+     * Tests our GameState
      */
     @Test void test_GameState_initialTurn_deal_cards(){
 
         GameState test_gameState = TestHelper.helperMethod_GameStateInit();
 
+    }
+
+
+    @Test void test_playTurnWorksProperly(){
+
 
 
     }
-
 
     }
 
