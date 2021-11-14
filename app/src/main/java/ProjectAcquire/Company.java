@@ -23,7 +23,7 @@ public class Company {
      * Default constructor
      */
     public Company(){
-        this.companyName = "TEST";
+        this.companyName = "DEFAULT";
         this.stockPrice = 100;
         this.chartered = false;
         this.isPermanent = false;

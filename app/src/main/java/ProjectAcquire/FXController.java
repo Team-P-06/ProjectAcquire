@@ -1,20 +1,21 @@
 package ProjectAcquire;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import lombok.Getter;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Controller for actions of FXMLUI.
@@ -28,7 +29,6 @@ public class FXController {
      * Buttons, pane and lables for MainMenu
      */
     @FXML private Button newGameButton, loadGameMenuButton, exitGameButton, loadGame1Button, loadGame2Button, loadGame3Button;
-    @FXML private Pane loadGameSelectionPane;
     @FXML private Label loadGameLabel, player;
 
     /**
@@ -63,7 +63,6 @@ public class FXController {
      * @return
      */
     public FXMLLoader getGameBoardLoader() {
-        //mainStage.hide();
         FXMLLoader boardMenuLoader = new FXMLLoader(getClass().getResource("/GameBoard.fxml"));
         boardMenuLoader.setController(this);
         return boardMenuLoader;
@@ -80,42 +79,16 @@ public class FXController {
         showBoardMenu(getGameBoardLoader());
 
         GameState gameState = newGame.start();
-        update.update(gameState);
-    }
-
-    /**
-     * enables the menu for the user to select a game slot to load, this does not actually load the game yet
-     */
-    @FXML
-    private void loadGameMenu() {
-        loadGameSelectionPane.setVisible(true);
+        update.nextTurnUI(gameState);
     }
 
     /**
      * Loads the game given a specific game load to load from.
      * Doesn't really load a game yet.
-     * @param event
      */
     @FXML
-    private void loadGame(ActionEvent event) {
-        Object source = event.getSource();
-        String file = null;
-        if (loadGame1Button.equals(source)) {
-            loadGame1Button.setText("G1 loaded");
-            //file = "/Savefiles/Savefile1";
-        } else if (loadGame2Button.equals(source)) {
-            loadGame2Button.setText("G2 loaded");
-            //file = "/Savefiles/Savefile1";
-        } else if (loadGame3Button.equals(source)) {
-            loadGame3Button.setText("G3 loaded");
-            //file = "/Savefiles/Savefile1";
-        }
-        /*Update update = new Update();
-        Game newGame = new Game();
-
-        showBoardMenu(getGameBoardLoader());
-        GameState curGameState = (gameState load from file);
-        update.update(curGameState);*/
+    private void loadGame() {
+        //file = "/Savefiles/Savefile";
     }
 
     /**
@@ -126,6 +99,28 @@ public class FXController {
         System.exit(0);
     }
 
+    @FXML
+    public void endGame(GameState gameState) throws IOException {
+        FXMLLoader endGameLoader = new FXMLLoader(getClass().getResource("/EndGame.fxml"));
+        endGameLoader.setController(this);
+        mainStage.setScene(new Scene(endGameLoader.load()));
+        setWinner(gameState);
+        //mainStage.setScene(new Scene(EndGameLoader.load()));
+    }
+
+    @FXML
+    private void setWinner(GameState gameState){
+        List<Player> playerList = gameState.getPlayerList();
+        String playerResult = "";
+        Player winner = playerList.get(0);
+        for(Player player : playerList){
+            playerResult = (playerResult + player.getName() + "    $" + player.getMoney() + "\n");
+            if (winner.getMoney() < player.getMoney()){ player = winner; }
+        }
+        playerResultLabel.setText(playerResult);
+        winnerLabel.setText("Winner: " + winner.getName());
+    }
+
     /**
      * **********************************************************************************************************
      * Game board UI logic and variables start here
@@ -133,7 +128,7 @@ public class FXController {
      */
     @FXML private Label playersLabel, playerMoneyLabel, playerStocksLabel, playersNetWorth;
     @Getter @FXML private Label hotelsLabel, hotelNameLabel, cHotelLabel, sHotelLabel, fHotelLabel, iHotelLabel, aHotelLabel, wHotelLabel, tHotelLabel, actionLabel, stocksPurchasedLabel, TurnLabel, currentPlayerTurnLabel;
-    //@FXML private Label currentPlayerTurnLabel;
+
     /**
      * Grid for the board to place all the tiles on it.
      */
@@ -142,14 +137,16 @@ public class FXController {
     /**
      * Lists for the available companies that a player can buy stocks from
      */
-    @FXML private ListView<String> stocksPurchasedList;
-    @Getter @FXML private ListView<Button> availableStocksList;
-    @Getter ObservableList<Button> availableStocksObserList = FXCollections.observableArrayList();
-
+    @Getter @FXML public ListView<Button> actionChoiceList;
+    @Getter ObservableList<Button> actionChoiceObserList = FXCollections.observableArrayList();
+    @Getter @FXML private Button SaveGameButton;
+    @Getter @FXML private Pane mergePane;
+    @Getter @FXML private Spinner<Integer> mergeSpinner;
+    @Getter @FXML private TextField mergeTextField;
+    @Getter @FXML private Label invalidInputLabel;
 
     /**
      * Lists for player information, both ListView and Observable
-     * Net and Tiles may be lists of objects in the future, but just strings for testing purposes now
      */
     @Getter @FXML private ListView<String> playerNameList, playerTilesList;
     @Getter @FXML private ListView<Integer> playerMoneyList, playerNetList;
@@ -160,11 +157,11 @@ public class FXController {
     @Getter ObservableList<Integer> playerNetObserList = FXCollections.observableArrayList();
 
     /**
-     * Buttons and lists for the selection area (where you buy stocks)
+     * Buttons and lists for hotel information
      */
     @Getter @FXML private ListView<String> hotelNameListView;
     @Getter ObservableList<String> hotelNameObserList = FXCollections.observableArrayList();
-    @FXML private Button endTurnSubmitButton;
+    @Getter @FXML private Button endTurnButton;
 
     /**
      * List of integers along with it's observableList for all seven companies.
@@ -178,4 +175,12 @@ public class FXController {
     @Getter ObservableList<Integer> wStockObserListView = FXCollections.observableArrayList();
     @Getter ObservableList<Integer> tStockObserListView = FXCollections.observableArrayList();
 
+
+    /**
+     * End game labels and panes
+     */
+    @Getter @FXML Label winnerLabel, playerResultLabel, resultLabel;
+    @Getter @FXML Button exitGameEndLabel, homeGameEndLabel;
+    @Getter @FXML ListView<Button> endGameListView;
+    @Getter ObservableList<Button> endGameObserListView = FXCollections.observableArrayList();
 }

@@ -9,6 +9,7 @@ import lombok.Setter;
 
 import java.io.IOException;
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  * GameSate class that contains a games current status
@@ -17,13 +18,9 @@ public class GameState {
     /**
      * Variables needed to maintain a gamestate
      */
-    private @Getter
-    Player currentPlayer;
-    private @Getter
-    Board currentBoard;
-    private @Getter
-    @Setter
-    LinkedList<Player> playerList;
+    @Getter private Player currentPlayer;
+    @Getter private Board currentBoard;
+    @Getter @Setter private  LinkedList<Player> playerList;
     private boolean isOver = false;
 
 
@@ -133,16 +130,13 @@ public class GameState {
         if (currentPlayer == null) {
             setUpInitialTurn(); //if our game has just started, we need to initialize it.
         }
-        currentPlayer = playerList.poll();
-        playerList.addLast(currentPlayer);
-
 
         //Looks at the current player, and then runs that players turn
-
         //1. Deals cards if less than 6 cards are in the player's hand
-
-        while (currentPlayer.getTileList().size() < 6) {
-            currentPlayer.drawTile();
+        for(Player curPlayer : playerList) {
+            while (curPlayer.getTileList().size() < 6) {
+                currentBoard.dealTile(currentBoard.getTileList(), curPlayer);
+            }
         }
         //2.a Lets the player flip a tile in their hand, removes that tile from the player's hand.
         //Interrupt call that lets the player choose which tile in hand to flip
@@ -222,38 +216,64 @@ public class GameState {
      * Deals initial cards to players, and... what else does this method need to do for playTurn to be able to run?
      */
     private void setUpInitialTurn() {
-
+        currentPlayer = playerList.peekFirst();
         //dealing cards
         //1. I think that we should maybe have a dealt tile list and undealt tilelist that are complements of each other
         // where their union is equivalent to the board tile list. Then we can keep track of tiles dealt
 
     }
 
+    public void getCompanyChoice(Company playerChoice){
+        // Returns the company that the player would like to charter and invokes the rest of the charter().
+    }
+
+    public void getMergeChoice(Company playerChoice){
+        // Returns the company that the player would like to keep and continues with merge.
+    }
+
 
     /**
-     * Currently doesn't update the player information. (but all the logic works and the data is passed)
-     * It doesn't change anything for the current scene.
-     * =======
-     * Updates the UI with the current GameState data.
+     * Overall update for when a player would like to place a new tile and the player actions on the bottom right have no actions.
      * This currently creates a new window, so every update makes a new window.
      * This is really gross but works for now while we implement other more important things.
-     * >>>>>>> feature/UILogic
-     *
      * @throws IOException
      */
-    //@Override
-    public void update() throws IOException {
+    public void updateNewTurn() throws IOException {
         Update update = new Update();
-
-        try {
-            update.update(this);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        //FXController controller = new FXController();
-        //controller.updateAll(this);
-
+        update.nextTurnUI(this);
     }
+
+    /**
+     * Update for when a merge occurs, creates the options for players to sell, trade, or keep stocks.
+     * This should be called mutable times to update every time for the "sub turn" during a merge.
+     * @param defunctCompany the company that is being destroyed from the merge.
+     * @throws IOException
+     */
+    public void mergeInterrupt(Company defunctCompany) throws IOException{
+        Update update = new Update();
+        update.mergeUI(this, defunctCompany);
+    }
+
+    /**
+     * Update for after the player places a tile. Populates the action area with charted businesses.
+     * Should be called after a playTile() and the board data is set.
+     * @throws IOException
+     */
+    public void sellInterrupt() throws IOException {
+        Update update = new Update();
+        update.sellUI(this);
+    }
+
+    public void charterChoiceInterrupt() throws IOException {
+        Update update = new Update();
+        update.charterChoiceUI(this);
+    }
+
+    public void mergeChoiceInterrupt(List<Company> equalCompanies) throws IOException {
+        Update update = new Update();
+        update.mergeChoiceUI(this, equalCompanies);
+    }
+
+
 }
 

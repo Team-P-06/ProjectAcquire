@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Label fx:id="currentPlayerTurnLabel" layoutX="90.0" layoutY="550.0">
          <font>
@@ -15,8 +15,7 @@
          <font>
             <Font size="25.0" />
          </font></Label>
-      <Button fx:id="populateButton" layoutX="400.0" layoutY="600.0" mnemonicParsing="false" text="Populate" />
-      <Button fx:id="exitGameButton" layoutX="500.0" layoutY="600.0" mnemonicParsing="false" onAction="#exitGame" text="Exit" />
+      <Button fx:id="exitGameButton" layoutX="150.0" layoutY="855.0" mnemonicParsing="false" onAction="#exitGame" style="-fx-background-color: white; -fx-border-color: black; -fx-border-width: 3;" text="Exit" />
       <Pane layoutX="10.0" layoutY="650.0" prefHeight="200.0" prefWidth="600.0">
          <children>
             <Label fx:id="playersLabel" layoutX="25.0" layoutY="25.0" text="Players" />
@@ -25,11 +24,11 @@
             <ListView fx:id="playerMoneyList" focusTraversable="false" layoutX="101.0" layoutY="50.0" mouseTransparent="true" prefHeight="80.0" prefWidth="100.0" style="-fx-background-color: black;" />
             <Label fx:id="playersNetWorth" layoutX="220.0" layoutY="25.0" text="Net Worth" />
             <ListView fx:id="playerNetList" focusTraversable="false" layoutX="202.0" layoutY="50.0" mouseTransparent="true" prefHeight="80.0" prefWidth="100.0" style="-fx-background-color: black;" />
-            <Label fx:id="playerStocksLabel" prefWidth="500.0" style="-fx-background-color: grey; -fx-border-color: black; -fx-border-width: 3;" text="Player Hand" textAlignment="CENTER" />
+            <Label fx:id="playerStocksLabel" prefWidth="300.0" style="-fx-background-color: grey; -fx-border-color: black; -fx-border-width: 3;" text="Player Hand" textAlignment="CENTER" />
             <ListView fx:id="playerTilesList" focusTraversable="false" layoutY="140.0" mouseTransparent="true" orientation="HORIZONTAL" prefHeight="50.0" prefWidth="300.0" style="-fx-background-color: blue; -fx-border-insets: black;" />
          </children>
       </Pane>
-      <Pane layoutX="560.0" layoutY="25.0" prefHeight="400.0" prefWidth="650.0">
+      <Pane layoutX="675.0" layoutY="25.0" prefHeight="400.0" prefWidth="650.0">
          <children>
             <Label fx:id="hotelsLabel" prefHeight="30.0" prefWidth="490.0" style="-fx-background-color: grey; -fx-border-color: black; -fx-border-width: 3;" text="Hotels" textAlignment="CENTER">
                <font>
@@ -86,28 +85,34 @@
             <ListView fx:id="tStockListView" focusTraversable="false" layoutX="565.0" layoutY="55.0" mouseTransparent="true" prefHeight="275.0" prefWidth="75.0" />
          </children>
       </Pane>
-      <Pane layoutX="660.0" layoutY="450.0" prefHeight="350.0" prefWidth="500.0" style="-fx-border-color: black; -fx-border-width: 4;">
+      <Pane layoutX="690.0" layoutY="450.0" prefHeight="350.0" prefWidth="500.0" style="-fx-border-color: black; -fx-border-width: 4;">
          <children>
-            <Label fx:id="actionLabel" layoutX="40.0" layoutY="15.0" style="-fx-border-color: black; -fx-border-width: 3;" text="Buy Stocks">
+            <Pane fx:id="mergePane" layoutX="200.0" layoutY="50.0" prefHeight="200.0" prefWidth="200.0" visible="false">
+               <children>
+                  <TextField fx:id="mergeTextField" layoutX="5.0" layoutY="50.0" />
+                  <Label layoutY="25.0" text="Choose a number of Stocks" />
+                  <Label fx:id="invalidInputLabel" layoutX="5.0" layoutY="80.0" text="Invalid Input" textFill="RED" visible="false">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <Label fx:id="actionLabel" layoutX="40.0" layoutY="15.0" style="-fx-border-color: black; -fx-border-width: 3;">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-            <ListView fx:id="availableStocksList" focusTraversable="false" layoutX="15.0" layoutY="50.0" mouseTransparent="true" prefHeight="275.0" prefWidth="145.0" style="-fx-border-color: black; -fx-border-width: 3;" />
-            <Label fx:id="stocksPurchasedLabel" layoutX="180.0" layoutY="15.0" style="-fx-border-color: black; -fx-border-width: 3;" text="Stocks Purchased">
-               <font>
-                  <Font name="System Bold" size="15.0" />
-               </font>
-            </Label>
-            <ListView fx:id="stocksPurchasedList" focusTraversable="false" layoutX="180.0" layoutY="50.0" mouseTransparent="true" prefHeight="275.0" prefWidth="145.0" style="-fx-border-color: black; -fx-border-width: 3;" />
-            <Button fx:id="endTurnSubmitButton" layoutX="415.0" layoutY="311.0" mnemonicParsing="false" style="-fx-background-color: white; -fx-border-color: black; -fx-border-width: 3;" text="Submit">
-               <font>
+            <ListView fx:id="actionChoiceList" focusTraversable="false" layoutX="15.0" layoutY="50.0" prefHeight="275.0" prefWidth="145.0" style="-fx-border-color: black; -fx-border-width: 3;" />
+            <Button fx:id="endTurnButton" layoutX="380.0" layoutY="300.0" mnemonicParsing="false" style="-fx-background-color: white; -fx-border-color: black; -fx-border-width: 3;" text="End Turn" visible="false">
+x               <font>
                   <Font size="16.0" />
                </font>
             </Button>
+            <ListView fx:id="endGameListView" layoutX="350.0" layoutY="30.0" prefHeight="50.0" prefWidth="130.0" visible="false" />
          </children>
       </Pane>
-      <GridPane fx:id="tileGrid" gridLinesVisible="true" layoutX="5.0" layoutY="5.0" prefHeight="500.0" prefWidth="550.0">
+      <GridPane fx:id="tileGrid" gridLinesVisible="true" layoutX="5.0" layoutY="5.0" prefHeight="525.0" prefWidth="625.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -134,5 +139,6 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
       </GridPane>
+      <Button fx:id="SaveGameButton" layoutX="10.0" layoutY="855.0" mnemonicParsing="false" style="-fx-background-color: white; -fx-border-color: black; -fx-border-width: 3;" text="Save Game" />
    </children>
 </Pane>
