@@ -28,7 +28,7 @@ public class FXController {
     /**
      * Buttons, pane and lables for MainMenu
      */
-    @FXML private Button newGameButton, loadGameMenuButton, exitGameButton, loadGame1Button, loadGame2Button, loadGame3Button;
+    @FXML private Button newGameButton, loadGameMenuButton, exitGameButton;
     @FXML private Label loadGameLabel, player;
 
     /**
@@ -88,8 +88,12 @@ public class FXController {
      * Doesn't really load a game yet.
      */
     @FXML
-    private void loadGame() {
-        //file = "/Savefiles/Savefile";
+    private void loadGame() throws IOException {
+        IOManager ioManager = new IOManager();
+        Update update = new Update();
+        GameState loadedGame = ioManager.loadGame("./src/main/resources/SavedGames/SavedGame.txt");
+        showBoardMenu(getGameBoardLoader());
+        update.nextTurnUI(loadedGame);
     }
 
     /**

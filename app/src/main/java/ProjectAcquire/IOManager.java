@@ -7,6 +7,8 @@ package ProjectAcquire;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 public class IOManager {
 
@@ -28,13 +30,13 @@ public class IOManager {
 
     /**
      * Load game methods that will handle all of the loading of a saved json file
-     * @param file
-     * @return
-     * @throws IOException
+     * @param file Json file the contains the saved game objects
+     * @return The gamestate that was saved
      */
-    public GameState loadGame(String file){
+    public GameState loadGame(String file) throws IOException {
         Gson converter = new Gson();
-        GameState savedGame = converter.fromJson(file, GameState.class);
+        String jsonString = Files.readString(Path.of(file)); // Added by Show, this resolved a loading error(Expected BEGIN_OBJECT but was STRING)
+        GameState savedGame = converter.fromJson(jsonString, GameState.class);
         return savedGame;
     }
 
@@ -47,8 +49,6 @@ public class IOManager {
         /**
          * try to create a new file writer that will the to the resource folder with the name of saved game.txt for now
          */
-        //for now it will only save one game. When the user chooses to save a game and decides what slot they want
-        //to save to that will then change the saved game file name depending on the save slot
         try{
             FileWriter file = new FileWriter("./src/main/resources/SavedGames/SavedGame.txt");
             file.write(game);
