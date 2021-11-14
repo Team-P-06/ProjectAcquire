@@ -105,7 +105,7 @@
             </Label>
             <ListView fx:id="actionChoiceList" focusTraversable="false" layoutX="15.0" layoutY="50.0" prefHeight="275.0" prefWidth="145.0" style="-fx-border-color: black; -fx-border-width: 3;" />
             <Button fx:id="endTurnButton" layoutX="380.0" layoutY="300.0" mnemonicParsing="false" style="-fx-background-color: white; -fx-border-color: black; -fx-border-width: 3;" text="End Turn" visible="false">
-               <font>
+x               <font>
                   <Font size="16.0" />
                </font>
             </Button>
