@@ -218,15 +218,12 @@ public class Board {
         int[] adjCoord = {-1,-1};
         //System.out.println("["+row + " "+col+"]");
        // System.out.println(getTileList());
-
-
        if (cardinalDir.equals("NORTH")) {
            //gets tile to the north
            if (row > 0) {
                adjCoord[0] = row - 1;
                adjCoord[1] = col;
            }
-
            }
        else if (cardinalDir.equals("SOUTH")){
            //gets tile to the south
@@ -260,33 +257,6 @@ public class Board {
        return arrayEquals(adjCoord);
     }
 
-//    /**
-//     *
-//     * @param coord Tile coordinate passed in
-//     * @param upOrDown -1 for down 1 for up
-//     * @param leftOrRight -1 for left 1 for right
-//     * @return an adjacent Tile, if not null.
-//     */
-    //public Tile getAdjacentTile(int[] coord, int upOrDown, int leftOrRight)throws Exception{
-
-       //int[] coord = tl.getCoord();
-
-       // List<List<Tile>> tileList2d = new ArrayList<>();
-
-        //Tile adjCoord;
-//        try {
-//             adjCoord = tileList2d.get(coord[0] + upOrDown).get(coord[1] + leftOrRight);
-//            System.out.println("ADJ COORD = "+adjCoord.toString());
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        finally {
-//           adjCoord = new Tile(new Company(), new int[]{-1,-1});
-//       }
-//       return adjCoord;
-
-   // }
 
 
     private Tile arrayEquals(int[] adj) {

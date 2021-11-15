@@ -156,10 +156,8 @@ public class GameState {
             if (currentPlayer == null) {
                 setUpInitialTurn(); //if our game has just started, we need to initialize it.
             }
-
             //Looks at the current player, and then runs that players turn
             //1. Deals cards if less than 6 cards are in the player's hand
-
 //            for(int x =0;x<6;x++){
 //                currentBoard.dealTile(currentPlayer);
 //                System.out.println(currentPlayer.getTileList().size());
