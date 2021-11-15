@@ -36,7 +36,6 @@ public class GameStateTest {
        // System.out.println("Current player is: " + initPlayer);
        // System.out.println("playerList: "+ tester.getPlayerList());
 
-        tester.playTurn(); //plays a turn
         Player newCurrentPlayer = tester.getCurrentPlayer();//currentPlayer should be different
         //System.out.println("Current player is: " + newCurrentPlayer);
         //System.out.println("playerList: "+ tester.getPlayerList());

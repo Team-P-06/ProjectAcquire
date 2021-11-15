@@ -1,6 +1,28 @@
 /**
+ * MIT License
+ *
+ * Copyright (c) 2021 404
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ *
  * @author Team 404
- * @version v0.0.1
+ * @version v1.0.0
  */
 
 package ProjectAcquire;
@@ -10,6 +32,7 @@ import lombok.Generated;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -22,6 +45,7 @@ public class Board {
      * @return A list of the current Tiles on the board (all tiles except dead ones?)
      */
     @Getter @Setter List<Tile> tileList;
+    @Getter @Setter List<List<Tile>> tileList2D;
 
 
     /**
@@ -59,6 +83,7 @@ public class Board {
         this.uncharteredCompanies = uc;
         this.charteredCompanies = cc;
         this.playerList = pl;
+      //  this.tileList2D = tileList2D;
     }
 
     /**
@@ -121,17 +146,24 @@ public class Board {
         Random ran = new Random();
         int randomIndex = ran.nextInt(getTileList().size());
         Tile pulledTile = getTileList().get(randomIndex);
-        if (!pulledTile.isFlipped()){ // If the tile is able to be dealt
-            //System.out.println(pulledTile.isDealt());
+        if (!pulledTile.isFlipped() && !pulledTile.isDealt()){ // If the tile is able to be dealt
             pulledTile.setDealt(true);
             player.addTile(pulledTile);
         }
         else{ // recursive call if it can't deal the tile
             dealTile(player);
         }
-        //System.out.println("DEAL REACHED");
     }
 
+    public int getLowestStockPrice(){
+        int currentLowestPrice = 10000; // Default value, very high since we descend as we get better prices.
+        for (Company company : charteredCompanies){
+            if (currentLowestPrice > company.getStockPrice()){
+             currentLowestPrice = company.getStockPrice();
+            }
+        }
+        return  currentLowestPrice;
+    }
 
     /**
      * This
@@ -139,20 +171,36 @@ public class Board {
      * @param coord Coordinate of a tile
      * @return An ArrayList of all of the Tiles around the passed in coordinate.
      */
-    private List<Tile> getTilesAround(int[] coord){
+    public List<Tile> getTilesAround(int[] coord) throws Exception {
 
       List<Tile> tilesAround =  new ArrayList<Tile>();
-      Tile adjTile;
-      String[] cardinalDirs = {"NORTH","SOUTH","EAST","WEST"};
-      for(String x : cardinalDirs){
-         adjTile = getAdjacentTile(coord,x);
-         if(adjTile!=null) {
-             tilesAround.add(adjTile);
-         }
-      }
 
-        return tilesAround ;
+      Tile south = getAdjacentTile(coord,"SOUTH");
+      Tile north = getAdjacentTile(coord,"NORTH");
+      Tile west = getAdjacentTile(coord,"WEST");
+      Tile east = getAdjacentTile(coord,"EAST");
+      if(south!=null){
+          tilesAround.add(south);
+      }
+        if(north!=null){
+            tilesAround.add(north);
+        }
+        if(west!=null){
+            tilesAround.add(west);
+        }
+        if(east!=null){
+            tilesAround.add(east);
+        }
+        System.out.println("Tiles around "+ coord[0]+ " " + coord[1]+ ": ");
+
+        for(Tile tl : tilesAround) {
+            System.out.print(tl);
+        }
+        return tilesAround;
     }
+
+
+
 
     /**
      * Last changed by Alex.
@@ -164,22 +212,18 @@ public class Board {
      */
     public Tile getAdjacentTile( int[] coord, String cardinalDir){
 
+
         int row = coord[0];
         int col = coord[1];
-        int[] adjCoord = new int[2];
-
-
+        int[] adjCoord = {-1,-1};
+        //System.out.println("["+row + " "+col+"]");
+       // System.out.println(getTileList());
        if (cardinalDir.equals("NORTH")) {
            //gets tile to the north
            if (row > 0) {
                adjCoord[0] = row - 1;
                adjCoord[1] = col;
            }
-               for (Tile tl : getTileList()) {
-                   if (tl.getCoord() == adjCoord) {
-                       return tl;
-                   }
-               }
            }
        else if (cardinalDir.equals("SOUTH")){
            //gets tile to the south
@@ -188,11 +232,6 @@ public class Board {
                adjCoord[0] = row + 1;
                adjCoord[1] = col;
            }
-           for (Tile tl : getTileList()) {
-               if (tl.getCoord() == adjCoord) {
-                   return tl;
-               }
-           }
         }
        else if (cardinalDir.equals("WEST")){
            //gets tile to the west
@@ -200,25 +239,35 @@ public class Board {
                adjCoord[0] = row;
                adjCoord[1] = col-1;
            }
-           for (Tile tl : getTileList()) {
-               if (tl.getCoord() == adjCoord) {
-                   return tl;
-               }
-           }
+           //System.out.println(adjCoord[0]+ " "+ adjCoord[1]);
+
        }
        else if (cardinalDir.equals("EAST")){
            //gets tile to the east
            if (col<12) { //ALEX NOTE: This is a magic number, I know.
                adjCoord[0] = row;
-               adjCoord[1] = col-1;
+               adjCoord[1] = col+1;
+
+             //  System.out.println(row+ " "+ col);
+              // System.out.println(adjCoord[0]+ " "+ adjCoord[1]);
+
            }
-           for (Tile tl : getTileList()) {
-               if (tl.getCoord() == adjCoord) {
-                   return tl;
-               }
-           }
+
        }
-       return null;
+       return arrayEquals(adjCoord);
+    }
+
+
+
+    private Tile arrayEquals(int[] adj) {
+
+        for (Tile tl : getTileList()) {
+            if (Arrays.equals(tl.getCoord(), adj)) {
+                   System.out.println("the tile associated with "+ adj[0] + " " + adj[1] + " is "+ tl);
+                return tl;
+            }
+        }
+        return new Tile();
     }
 
     //other methods
@@ -227,7 +276,7 @@ public class Board {
      * Will deal with the entire chartering process of a company, including prompting for user input and calling our update() method when we implement the observable pattern
      * @param company Company to charter
      */
-    void charter(Company company){
+    void charter(Company company) throws Exception {
         //sets up the data structures to charter
         company.setChartered(true);
         charteredCompanies.add(company);
@@ -237,6 +286,8 @@ public class Board {
         //which company they want to charter, and then fill in data like initial stock price and
         //initial stocks on board.
         charterLogic(company);
+
+        System.out.println("Board.charter() was called");
 
     }
 
@@ -250,10 +301,6 @@ public class Board {
         uncharteredCompanies.add(company);
     }
 
-    void updateBoard(){
-        //This has to do with our updatable interface/observable design pattern.
-
-    }
 
     /**
      * This method will set the number of tiles on the board that a passed in company will have. It should be called by our checkForAction method as part of an action to execute.
@@ -273,35 +320,35 @@ public class Board {
      */
     boolean checkPermanent(String coord){return false;}
 
-
-
     /**
      * This action checker should be called a bunch of times from charterLogic.
      * It basically returns true if the tile that we passed in needs to be added to a chartered company
      *
      * @param coord The coordinate of a tile
      */
-    private boolean checkForTileAction(int[] coord){
+    private boolean checkForTileAction(int[] coord) throws Exception {
 
         //ALEX NOTE: I think that this method is important to implement, but I don't remember why atm. leaving true for now
 
         boolean actionIsRequired = false;
         List<Tile> currentTileList = instance.getTileList();
 
-        List<Tile> tilesAroundCoord = new ArrayList<Tile>();
-
-        int row = coord[0];
-        int column = coord[1];
-
-        //tilesAroundCoord.add(currentTileList.get(coord[0]).get(coord[1]))
-
-        //Grab tiles from array above and below, and then the tiles beside the tile, making sure to check for borders
-
+        List<Tile> tilesAroundCoord = getTilesAround(coord);
+        int numFlipped =0;
+        for(Tile x : tilesAroundCoord){
+            if (x.isFlipped()){
+                numFlipped++;
+            }
+        }
         //checks how many of the tiles are flipped, then chartered calls appropriate method with some if elses.
 
         //if action is required, return true
 
-        return true;
+        if (numFlipped>0){
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -313,13 +360,14 @@ public class Board {
      * @param  tile a FLIPPED passed in tile.
      *
      */
-    public int checkForActionInitiation(Tile tile) throws IOException {
+    public int checkForActionInitiation(Tile tile) throws Exception {
 
         //ALEX NOTE: If the passed in tile does not have a true isFlipped status we need to throw an exception,
         //but i dont know how to do that.
 
         List<Tile> currentTileList = instance.getTileList();
         List<Tile> tilesAroundCoord = getTilesAround(tile.getCoord());
+     //   System.out.println(tilesAroundCoord);
 
         List<Company> uniqueCompaniesAroundTile = new ArrayList<Company>();
         int flippedTilesAroundTile =0;
@@ -332,12 +380,13 @@ public class Board {
                 }
             }
         }
-
+        //System.out.println(uniqueCompaniesAroundTile);
         for(Tile tl: tilesAroundCoord){
             if(tl.isFlipped()){
                 flippedTilesAroundTile++;
             }
         }
+       // System.out.println(flippedTilesAroundTile);
 
         if(uniqueCompaniesAroundTile.isEmpty() && flippedTilesAroundTile>0){ //this checks if we have a flipped but unchartered tile next to us
             //This should mean that we can charter a new company.
@@ -349,11 +398,14 @@ public class Board {
         else if(uniqueCompaniesAroundTile.size()==1 ){
             //If there is one company found around this tile, we can add this tile to that company
             //We do this by passing in the tile's company to charterLogic, which will initiate our algorithm.
-            charterLogic(tile.getCompany());
+            //charterLogic(tile.getCompany());
+            return 2;
         }
         else if(uniqueCompaniesAroundTile.size()>1 ){
 
             //merge needed
+            // This should simply return 3 back to getTileChoice() in GameState. It then turns around and calls board.merge()
+            return 3;
         }
 
         return 0;
@@ -363,7 +415,18 @@ public class Board {
 
 
 
-    private void merge(){} //leaving this alone for now.
+    public void merge(Company winnerCompany){} //leaving this alone for now.
+
+    public List<Company> checkEqualsMerge(){ //Should return a list of companies that are equal, return null if non are equal.
+        return null;
+    }
+
+    public Company getDefunctCompany(){ // Should return the company that is being defunct(assuming 2 are not equal)
+        return null;
+    }
+    public Company getWinningCompany(){
+        return null;
+    }
 
 
     /**
@@ -372,7 +435,7 @@ public class Board {
      *
      * @param company The Company that we are setting flipped adjacent tiles to be part of.
      */
-    public void charterLogic(Company company) {
+    public void charterLogic(Company company) throws Exception {
 
         //essentially what we have to do here, is look at every flipped and unchartered tile on the board, to see which of them have
         //neighbors that are flipped and chartered.
@@ -391,15 +454,13 @@ public class Board {
                     if (tl.getCompany().equals(company)) {
                         one_of_the_tiles_around_the_current_tile_has_our_company = true;
                     }
-
                     //If our current tile is flipped but of a default company, and
-                    //If checkForAction returns true, and if we have an adjacent chartered tile
-                    if (checkForTileAction(tile.getCoord()) && tile.getCompany().getCompanyName().equals("DEFAULT") &&
+                    // if we have an adjacent chartered tile
+                    if ( tile.getCompany().getCompanyName().equals("DEFAULT") &&
                             tile.isFlipped() && one_of_the_tiles_around_the_current_tile_has_our_company) {
                         tile.setCompany(company); //set our current tile to be part of our passed in company
                         foundTiles++; // if this is hit, we have found a tile, so our loop will restart after it hits the last tile on the board.
                     }
-
                 }
             }
 
@@ -408,6 +469,7 @@ public class Board {
         }
 
     }
+
 
 
     @Override

@@ -44,6 +44,13 @@ public class TestHelper {
         return genericTile;
     }
 
+    static Tile helperMethod_customTile(int[] coord){
+        Company helperComp = TestHelper.helperMethod_Company("DEFAULT");
+        Tile customTile = new Tile(helperComp,coord);
+
+        return customTile;
+    }
+
     /**
      *
      * @param coord Tile coordinate position as string
@@ -63,9 +70,9 @@ public class TestHelper {
 
     static List<Tile> helperMethod_tileList_company1_3_coord_A1_A3(){
         ArrayList<Tile> testTileList = new ArrayList<Tile>();
-        int[] coord1 = {0,1};
-        int[] coord2 = {0,2};
-        int[] coord3 = {0,3};
+        int[] coord1 = {0,0};
+        int[] coord2 = {0,1};
+        int[] coord3 = {0,2};
 
         Tile tile = helperMethod_custom_tile_via_coord_and_companyName(coord1,"TEST1");
         Tile tile2 = helperMethod_custom_tile_via_coord_and_companyName(coord2,"TEST2");
@@ -119,6 +126,7 @@ public class TestHelper {
         List<Player> helperPlayerList = new ArrayList<Player>();
         Player player = new Player();
         helperPlayerList.add(player);
+
 
         Board customBoard = Board.getInstance(helperTileList,helperUncharteredCompanyList,helperCharteredCompList,helperPlayerList);
         //System.out.println(customBoard.toString());
@@ -178,6 +186,7 @@ public class TestHelper {
 
         //5. initialize a board using 1-4 as our parameters
         Board board = Board.getInstance(test_playerTileList, test_uncharteredList, test_charteredList, test_playerList);
+
 
         //6. initialize our GameState using board and our playerlist as parameters
         // This makes p1 current player and p2 next

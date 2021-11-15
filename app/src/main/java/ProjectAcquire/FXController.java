@@ -1,3 +1,30 @@
+/**
+ * MIT License
+ *
+ * Copyright (c) 2021 404
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ *
+ * @author Team 404
+ * @version v1.0.0
+ */
+
 package ProjectAcquire;
 
 import javafx.beans.value.ChangeListener;
@@ -72,7 +99,7 @@ public class FXController {
      * Button actions to begin a new game.
      */
     @FXML
-    private void newGame() throws IOException { //ALEX NOTE: This will act as our main method as written.
+    private void newGame() throws Exception { //ALEX NOTE: This will act as our main method as written.
         Update update = new Update();
         Game newGame = new Game();
 
@@ -90,10 +117,10 @@ public class FXController {
     @FXML
     private void loadGame() throws IOException {
         IOManager ioManager = new IOManager();
-        Update update = new Update();
+        //Update update = new Update();
         GameState loadedGame = ioManager.loadGame("./src/main/resources/SavedGames/SavedGame.txt");
         showBoardMenu(getGameBoardLoader());
-        update.nextTurnUI(loadedGame);
+        loadedGame.nextTurn();
     }
 
     /**

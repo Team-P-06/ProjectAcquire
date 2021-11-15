@@ -1,3 +1,30 @@
+/**
+ * MIT License
+ *
+ * Copyright (c) 2021 404
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ *
+ * @author Team 404
+ * @version v1.0.0
+ */
+
 package ProjectAcquire;
 
 import lombok.Getter;
@@ -23,7 +50,6 @@ public class Update {
     public void update(GameState gameState) throws IOException {
         UIController.getMainStage().hide();
         UIController.showBoardMenu(UIController.getGameBoardLoader());
-        //boardUpdater.update(gameState, UIController, false);//Make a borad update with a true/false for active tiles? true = new current player/ false = no action tile
         hotelUpdater.update(gameState, UIController);
         playerUpdater.update(gameState, UIController);
     }
@@ -46,7 +72,7 @@ public class Update {
      * @param gameState the curretn gamestate
      * @throws IOException
      */
-    public void sellUI(GameState gameState) throws IOException {
+    public void buyUI(GameState gameState) throws IOException {
         update(gameState);
         boardUpdater.update(gameState, UIController, false);
         actionUpdater.update(gameState, UIController, false, false,
@@ -66,7 +92,7 @@ public class Update {
     }
 
     /**
-     * Generates a UI for a list of companies if a merge has equal numer of tiles in a company
+     * Generates a UI for a list of companies if a merge has equal number of tiles in a company
      * @param gameState the current gamestate
      * @param companyChoiceList the list of companies that have the same number of tiles on the board.
      * @throws IOException
