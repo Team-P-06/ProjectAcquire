@@ -4,23 +4,39 @@
  */
 package ProjectAcquire;
 
-import org.junit.*;
-import java.util.List;
+import org.junit.jupiter.api.Test;
+
+import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
 public class JsonTest{
-    /**
-     * Helper class to build a test game to see if it will properly write a json file
-     * @return testGame
-     */
-    @Before GameState testJson(){
 
+    @Test
+    /**
+     * Test to see if a json file is created during the save game method inside of the IOManager class
+     * Result: passed, thus a json string file is now created
+     */
+    void test_Json_File(){
         GameState testGame = TestHelper.helperMethod_GameStateInit();
-        return testGame;
+        IOManager testSaveGame = new IOManager();
+        assertNotNull(testSaveGame.saveGame(testGame), "There currently is a saved game state");
     }
 
-    @Test public void test_Json_File(){
-        IOManager testSaveGame = new IOManager();
-        assertNotNull(testSaveGame.saveGame(testJson()));
+    /**
+     * Test to see if the load game method does create a gamestate properly from the saved game json file
+     * Result : passed, thus the user can continue where they left off
+     */
+    @Test
+    void test_Loading_Game() {
+        try{
+        GameState testGame = TestHelper.helperMethod_GameStateInit();
+        IOManager manager = new IOManager();
+        String file = manager.saveGame(testGame);
+        GameState testGame2 = manager.loadGame(file);
+        assertEquals(testGame.getCurrentPlayer().getMoney(), testGame2.getCurrentPlayer().getMoney(), "" +
+                "The gamestates after loading a game is equal to exactly where it left off when saved");
+        } catch (IOException e){
+            e.printStackTrace();
+        }
     }
 }

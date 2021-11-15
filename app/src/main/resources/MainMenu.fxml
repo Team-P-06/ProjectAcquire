@@ -12,14 +12,7 @@
          </image>
       </ImageView>
       <Button fx:id="newGameButton" layoutX="150.0" layoutY="250.0" minWidth="50.0" mnemonicParsing="false" onAction="#newGame" prefHeight="50.0" prefWidth="330.0" style="-fx-background-color: grey; -fx-border-color: black; -fx-border-width: 3;" text="New Game" textFill="WHITE" />
-      <Button fx:id="loadGameMenuButton" layoutX="150.0" layoutY="320.0" mnemonicParsing="false" onAction="#loadGameMenu" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: grey; -fx-border-color: black; -fx-border-width: 3;" text="Load Game" textFill="WHITE" />
+      <Button fx:id="loadGameMenuButton" layoutX="150.0" layoutY="320.0" mnemonicParsing="false" onAction="#loadGame" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: grey; -fx-border-color: black; -fx-border-width: 3;" text="Load Game" textFill="WHITE" />
       <Button fx:id="exitGameButton" layoutX="330.0" layoutY="320.0" mnemonicParsing="false" onAction="#exitGame" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: grey; -fx-border-color: black; -fx-border-width: 3;" text="Exit Game" textFill="WHITE" />
-      <Pane fx:id="loadGameSelectionPane" layoutX="250.0" layoutY="330.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="250.0" prefWidth="150.0" visible="false">
-         <children>
-            <Button fx:id="loadGame1Button" layoutX="5.0" layoutY="60.0" mnemonicParsing="false" onAction="#loadGame" prefWidth="120.0" style="-fx-background-color: grey; -fx-border-color: black; -fx-border-width: 3;" text="Game 1" textFill="WHITE" />
-            <Button fx:id="loadGame2Button" layoutX="5.0" layoutY="100.0" mnemonicParsing="false" onAction="#loadGame" prefWidth="120.0" style="-fx-background-color: grey; -fx-border-color: black; -fx-border-width: 3;" text="Game 2" textFill="WHITE" />
-            <Button fx:id="loadGame3Button" layoutX="5.0" layoutY="140.0" mnemonicParsing="false" onAction="#loadGame" prefWidth="120.0" style="-fx-background-color: grey; -fx-border-color: black; -fx-border-width: 3;" text="Game 3" textFill="WHITE" />
-         </children>
-      </Pane>
    </children>
 </Pane>

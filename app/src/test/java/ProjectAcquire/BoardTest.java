@@ -4,12 +4,13 @@ import org.junit.After;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class BoardTest {
-
 
 
 
@@ -40,7 +41,7 @@ public class BoardTest {
 
     }
 
-    @Test void test_board_company_after_charter() {
+    @Test void test_board_company_after_charter() throws Exception {
 
         Board classUnderTest = TestHelper.helperMethod_custom_board();
 
@@ -53,7 +54,7 @@ public class BoardTest {
 
     }
 
-    @Test void test_board_company_after_uncharter() {
+    @Test void test_board_company_after_uncharter() throws Exception {
 
         Board classUnderTest = TestHelper.helperMethod_custom_board();
 
@@ -86,7 +87,7 @@ public class BoardTest {
     @Test void test_updateMethod(){
 
         Board classUnderTest = TestHelper.helperMethod_custom_board();
-        classUnderTest.updateBoard();
+        //classUnderTest.updateBoard(); //updateBoard has been depreciated for mutiable diffrent updates
         assertTrue(1==1);
 
     }
@@ -98,9 +99,81 @@ public class BoardTest {
 
         Board classUnderTest = TestHelper.helperMethod_custom_board();
         assertFalse(classUnderTest.checkPermanent("A1"));
+    }
+
+    @Test void test_getTileWest() throws Exception {
+
+        GameState helperGameState = TestHelper.helperMethod_GameStateInit();
+        Board helperBoard = helperGameState.getCurrentBoard();
+        int[] coord = {0,1};
+        int[] expectedWest = {0,0};
+        Tile testTile = TestHelper.helperMethod_customTile(coord);
+        List<Tile> helperTileList = helperGameState.getCurrentBoard().getTileList();
+        //System.out.println(helperTileList);
+        Tile tileWestOfCoord = helperBoard.getAdjacentTile(coord,"WEST");
+        System.out.println(tileWestOfCoord);
+      //  assertTrue(Arrays.equals(tileWestOfCoord.getCoord(),expectedWest));
 
     }
 
+    @Test void test_getTileEast() throws Exception {
+
+        GameState helperGameState = TestHelper.helperMethod_GameStateInit();
+        Board helperBoard = helperGameState.getCurrentBoard();
+        int[] coord = {0,1};
+        int[] expectedEast = {0,2};
+        Tile testTile = TestHelper.helperMethod_customTile(coord);
+        List<Tile> helperTileList = helperGameState.getCurrentBoard().getTileList();
+        System.out.println(helperTileList);
+        Tile tileEastOfCoord = helperBoard.getAdjacentTile(coord,"EAST");
+        System.out.println(tileEastOfCoord);
+        //System.out.println(tileEastOfCoord);
+        //assertTrue(Arrays.equals(tileEastOfCoord.getCoord(),expectedEast));
+
+    }
+
+
+
+//    @Test void test_getTilesAround(){
+//
+//        GameState helperGameState = TestHelper.helperMethod_GameStateInit();
+//        Board helperBoard = helperGameState.getCurrentBoard();
+//        int[] coord = {0,1};
+//
+//        Tile testTile = TestHelper.helperMethod_customTile(coord);
+//        List<Tile> helperTileList = helperGameState.getCurrentBoard().getTileList();
+//        List<Tile> tilesAround = helperBoard.getTilesAround(coord);
+//        //System.out.println(helperTileList);
+//
+//        assertTrue(!tilesAround.isEmpty());
+//
+//
+//
+//
+//    }
+
+
+    @Test void test_convTileList2d(){
+
+        GameState helperGameState = TestHelper.helperMethod_GameStateInit();
+        Board helperBoard = helperGameState.getCurrentBoard();
+
+
+        int z = 0;
+        Tile[][] twoDArr = new Tile[9][12];
+        for(Tile[] x : twoDArr){
+            for(int y=0; y<x.length;y++){
+                if(x[y]!=null) {
+                    x[y] = helperBoard.getTileList().get(y + z);
+                    System.out.print(x[y]+ " ");
+                }
+                System.out.println();
+            }
+            z+=x.length;
+        }
+
+
+    }
 
 
 

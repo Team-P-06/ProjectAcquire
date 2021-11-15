@@ -1,25 +1,51 @@
 /**
+ * MIT License
+ *
+ * Copyright (c) 2021 404
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ *
  * @author Team 404
- * @version v0.0.1
+ * @version v1.0.0
  */
 
 
 package ProjectAcquire;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
 public class Company {
 
-   private String companyName;
-   private int tilesOnBoard;
-   private int stockPrice;
-   private boolean chartered;
-   private boolean isPermanent;
+    private String companyName;
+    @Setter private int tilesOnBoard;
+    @Setter private int stockPrice;
+    @Setter private boolean chartered;
+    @Setter private boolean isPermanent;
 
 
     /**
      * Default constructor
      */
     public Company(){
-        this.companyName = "TEST";
+        this.companyName = "DEFAULT";
         this.stockPrice = 100;
         this.chartered = false;
         this.isPermanent = false;
@@ -42,75 +68,6 @@ public class Company {
         this.tilesOnBoard = 0;
     }
 
-    /**
-     * @return the name of the Company
-     */
-    public String getCompanyName() {
-        return companyName;
-    }
-
-    /**
-     * @return the number of tiles on the board
-     */
-    public int getTilesOnBoard() {
-        return tilesOnBoard;
-    }
-
-    /**
-     * @return the current stock price
-     */
-    public int getStockPrice() {
-        return stockPrice;
-    }
-
-    /**
-     * @return whether the company is currently chartered or not
-     */
-    public boolean isChartered() {
-        return chartered;
-    }
-
-    /**
-     *
-     * @return whether the company is permanent or not
-     */
-    public boolean isPermanent() {
-        return isPermanent;
-    }
-
-    /** integer is passed in and the stockPrice is set to that integer
-     *
-     * @param stockPrice an int to set the stock price to
-     */
-    public void setStockPrice(int stockPrice) {
-        this.stockPrice = stockPrice;
-    }
-
-    /** integer is passed in and the tilesOnBoard is set to that integer
-     *
-     * @param tilesOnBoard number of tiles
-     */
-    public void setTilesOnBoard(int tilesOnBoard) {
-        this.tilesOnBoard = tilesOnBoard;
-    }
-
-    /** boolean is passed in and chartered is set to that boolean
-     *
-     * @param chartered whether company is chartered or not
-     */
-    public void setChartered(boolean chartered) {
-        this.chartered = chartered;
-    }
-
-    /** IMPORTANT: this setter is private right now, but I don't remember why
-     * boolean is passed in and permanent is set to that boolean.
-     *
-     * @param permanent whether the company is permanent or not
-     */
-    private void setPermanent(boolean permanent) {
-        this.isPermanent = permanent;
-    }
-
     @Override
     public String toString() {
         return "Company{" +
@@ -120,5 +77,61 @@ public class Company {
                 ", chartered=" + chartered +
                 ", isPermanent=" + isPermanent +
                 '}';
+    }
+
+    /**
+     * Calculates the stock price of the companies based on how many tiles they hold
+     * @return
+     */
+    public int calculateStockPrice(){
+        int stockPrice = 0;
+        switch (tilesOnBoard){
+            case 0 -> stockPrice = 0;
+            case 1 -> stockPrice = 0;
+            case 2 -> stockPrice = 200;
+            case 3 -> stockPrice = 300;
+            case 4 -> stockPrice = 400;
+            case 5 -> stockPrice = 500;
+        }
+        if (tilesOnBoard >=6 && tilesOnBoard <= 10){ stockPrice = 700;}
+        else if (tilesOnBoard >=11 && tilesOnBoard <= 20){ stockPrice = 800;}
+        else if (tilesOnBoard >=21 && tilesOnBoard <= 30){ stockPrice = 900;}
+        else if (tilesOnBoard >=31 && tilesOnBoard <= 40){ stockPrice = 800;}
+        else if (tilesOnBoard >= 32) {stockPrice =  1000; }
+
+        if (companyName.equals("Worldwide") || companyName.equals("Sackson")){
+            stockPrice = stockPrice;
+        }
+        else if (companyName.equals("Festival") || companyName.equals("Imperial") || companyName.equals("American")){
+            stockPrice += 100;
+        }
+        else if (companyName.equals("Continental") || companyName.equals("Tower")){
+            stockPrice += 200;
+        }
+        else if (companyName.equals("DEFAULT")) { stockPrice = 0; }
+        return stockPrice;
+    }
+
+    /**
+     * Majority payout is simply the stock price times 10
+     * @return the payout to the majority holder
+     */
+    public int getMajorityPayout(){
+        return calculateStockPrice() * 10;
+    }
+
+    /**
+     * Minority payout is half of the majority payout.
+     * @return the payout to all players who are not the majority holder.
+     */
+    public int getMinoryPayout(){
+        return getMajorityPayout() / 2;
+    }
+
+    /**
+     * Sets the new stock price for a given company
+     */
+    public int setNewStockPrice(){
+        return stockPrice = calculateStockPrice();
     }
 }

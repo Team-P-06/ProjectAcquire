@@ -98,8 +98,19 @@ jacocoTestReport {
         xml.required = false
         csv.required = false
         html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
+            html{
+                enabled  true;
+            }
+    }
+    afterEvaluate{
+        classDirectories.setFrom(files(classDirectories.files.collect{
+            fileTree(dir : it, exclude:[
+                    //"com/ProjectAcquire/**/FXController.class"
+            ])
+        }))
     }
 }
+test.finalizedBy(project.tasks.jacocoTestReport);
 jacocoTestCoverageVerification {
     violationRules {
         rule {
