@@ -193,6 +193,10 @@ public class Board {
         }
         System.out.println("Tiles around "+ coord[0]+ " " + coord[1]+ ": ");
 
+
+        tilesAround.removeIf(tl -> Arrays.equals(tl.getCoord(), new int[]{-1, -1})); //tilesAround shouldn't include tiles off border.
+
+
         for(Tile tl : tilesAround) {
             System.out.print(tl);
         }

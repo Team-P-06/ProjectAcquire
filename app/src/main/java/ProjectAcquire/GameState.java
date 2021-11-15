@@ -272,12 +272,14 @@ public class GameState {
         }
         else if (action == 1){ // If we place a tile next to another empty tile.
             charterChoiceInterrupt(); // UI calls board.charter(playerChoice)
+
         }
         else if (action == 2){ // If we place a tile next to another company
             // currentBoard.updateCompanyTiles(); //Currently don't have information about the company that's
                                                   // increasing, would have to be done inside the function.
 
-            currentBoard.charterLogic(tile.getCompany()); //add flipped tile to adjacent company.
+            Company adjComp = currentBoard.companiesAroundTile(tile).get(0); //Gets the one (should only be one) company around the tile.
+            currentBoard.charterLogic(adjComp); //add flipped tile to adjacent company.
 
             buyStocksTurn(); // after the size is increased, let players buy stocks
         }

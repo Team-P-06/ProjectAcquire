@@ -160,7 +160,7 @@ public class Game {
      */
 
     public void runGame() throws IOException {
-        currentGameState.playTurn();
+        //currentGameState.playTurn();
         //while the game has not ended
 //        while(!currentGameState.isOver()){
 //            //game plays
