@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
  - Full UI connection to board logic to fully run a game
  - Further testing including excluiding the UI.
  - Loading a game properly
+ - Merge logic
 
 ## [1.0.0]
  - Logical implementation of UI and UI logic
@@ -16,7 +17,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
  - End game conditions and end screen
  - Tests for most classes
  - Player actions (sell, trade etc.) added
- - Merge logic 
  - tileList is 2d
  - game logic works
  - Save, load, GSON

@@ -2,6 +2,7 @@ package ProjectAcquire;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -38,7 +39,6 @@ public class PlayerTest {
         assertTrue(classUnderTest.availableTile(), "app should have available tile method");
     }
 
-<<<<<<< HEAD
     /**
      * Tests the to string method to make sure we can correctly parse to player attributes to a string format
      */
@@ -85,7 +85,6 @@ public class PlayerTest {
         assertTrue(testPlayer1.getStockList() != testList);
     }
 */
-=======
     @Test void buy_stocks_test(){
         List<Tile> helperTileList = TestHelper.helperMethod_tileList_company1_3_coord_A1_A3();
         Company testCo = TestHelper.helperMethod_Company("Sackson");
@@ -101,7 +100,6 @@ public class PlayerTest {
 
         assertEquals(1000, testPlayer.getMoney());
     }
->>>>>>> be156b83d36c86444987ff9b81ed7994dec7da3e
 
     /**
      * Tests that the hash code function actually hashes the objects inside of the player class
