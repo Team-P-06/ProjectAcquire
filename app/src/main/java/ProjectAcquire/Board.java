@@ -413,9 +413,16 @@ public class Board {
     }
 
 
+    /**
+     *
+     * @param winnerCompany The biggest company, or the company that the player has chosen to win.
+     *
+     */
+    public void merge(Company winnerCompany){
 
 
-    public void merge(Company winnerCompany){} //leaving this alone for now.
+
+    } //leaving this alone for now.
 
     public List<Company> checkEqualsMerge(){ //Should return a list of companies that are equal, return null if non are equal.
         return null;
@@ -426,6 +433,24 @@ public class Board {
     }
     public Company getWinningCompany(){
         return null;
+    }
+
+    /**
+     *
+     * @param tl this should return a list of companies around a given tile, using the getTilesAround method
+     * @return A list of unique non default companies around a tile
+     */
+    public List<Company> companiesAroundTile(Tile tl) throws Exception {
+        List<Tile> tilesAround = getTilesAround(tl.getCoord());
+        List<Company>companiesAround = new ArrayList<Company>();
+        for(Tile t : tilesAround){
+            //Adds tiles companies around the current tile if they havent been added already and aren't default.
+            if(!t.getCompany().getCompanyName().equals("DEFAULT")&& !companiesAround.contains(t.getCompany())); //This saying that objects equal if an attribute is equal is a code smell
+            {
+                companiesAround.add(t.getCompany());
+            }
+        }
+        return companiesAround;
     }
 
 
@@ -463,12 +488,28 @@ public class Board {
                     }
                 }
             }
-
-
             // System.out.println("Company "+ company.getCompanyName() + " is now chartered");
         }
-
     }
+
+    public void mergeLogic(Company winnerCo, List<Company> loserCos){
+
+        //this algorithm checks if a tile is associated with a loser company
+        //and if it is, changes its company to be the winner company
+        for(Tile tl: tileList){
+            for(int x=0; x<loserCos.size();x++) {
+                if(tl.getCompany().equals(loserCos.get(x))) {
+                    tl.setCompany(winnerCo);
+                }
+            }
+        }
+        //uncharters the small companies
+        for(Company c: loserCos){
+            unCharter(c);
+        }
+    }
+
+
 
 
 
