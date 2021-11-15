@@ -32,6 +32,7 @@ import lombok.Setter;
 import org.checkerframework.checker.units.qual.C;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
@@ -91,8 +92,6 @@ public class GameState {
         }
         return instance;
     }
-
-
 
     //Getters
 
@@ -278,18 +277,38 @@ public class GameState {
             // currentBoard.updateCompanyTiles(); //Currently don't have information about the company that's
                                                   // increasing, would have to be done inside the function.
 
-            getCurrentBoard().charterLogic(tile.getCompany()); //add flipped tile to adjacent company.
+            currentBoard.charterLogic(tile.getCompany()); //add flipped tile to adjacent company.
 
             buyStocksTurn(); // after the size is increased, let players buy stocks
         }
-        else if( action == 3){ //If there is a merge started by the tile
-            if (currentBoard.checkEqualsMerge() != null){ //If there are equal companies in a merge
+        else if( action == 3){ //If there is a merge action needed
+
+            List<Company> companiesAroundTile = currentBoard.companiesAroundTile(tile);
+            List<Company> tiedCompanies = new ArrayList<Company>();
+            //check which company around the current tile is the biggest
+            Company biggestCompany;
+            int currentMost = 0;
+            for(Company c: companiesAroundTile){
+                if (c.getTilesOnBoard()>currentMost){
+                    biggestCompany = c;
+                    currentMost = c.getTilesOnBoard();
+                }
+            }
+            //checks if the x amount of largest companies are tied.
+            for(Company c: companiesAroundTile){
+                if(c.getTilesOnBoard()==currentMost){
+                    tiedCompanies.add(c);
+                }
+            }
+
+            if (tiedCompanies.size()>1){ //If there are equal companies in a merge
                 List<Company> choicelist = currentBoard.checkEqualsMerge();
                 mergeChoiceInterrupt(choicelist); // Player choice will then call merge(winnerCompany selected)
             }
-            else { //No equal companies
+            else { //No equal companies.
                 Company defunctCo = currentBoard.getDefunctCompany();
-                currentBoard.merge(defunctCo); // Merge the companies
+
+                currentBoard.merge(tiedCompanies.get(0)); // Merge the companies
                 mergeInterrupt(defunctCo); // Start the player selling/trading/keeping stocks turn
             }
         }
