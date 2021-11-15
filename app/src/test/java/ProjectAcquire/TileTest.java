@@ -82,4 +82,49 @@ public class TileTest {
 
     }
 
+    /**
+     * Tests isDealt() method make sure a tile is dealt inside the gamestate
+     */
+    @Test
+    void test_isDealt(){
+        Tile testTile = new Tile();
+        assertFalse(testTile.isDealt());
+    }
+
+    /**
+     * Tests that the isDealable() method returns the right boolean while calling is dealt and flipped inside of the tile class
+     */
+    @Test
+    void test_isDealable(){
+        Tile testTile = new Tile();
+        assertTrue(testTile.isDealable());
+    }
+
+    /**
+     * Tests that the method isFlipped() correctly checks to see if a tile is flipped
+     */
+    @Test
+    void test_isFlipped(){
+        Tile testTile = new Tile();
+        assertFalse(testTile.isFlipped());
+    }
+
+    /**
+     * Tests the toString method to make sure that the tile coordinates are getting turned into a string
+     */
+    @Test
+    void test_toString(){
+        Tile testTile = new Tile();
+        assertNotNull(testTile.toString());
+    }
+
+    /**
+     * Tests the coordToString() method to make sure the tile coords are properly getting converted to a string
+     */
+    @Test
+    void test_TileCoordToString(){
+        Tile testTile = new Tile();
+        assertNotNull(testTile.tileCoordToString());
+    }
+
 }

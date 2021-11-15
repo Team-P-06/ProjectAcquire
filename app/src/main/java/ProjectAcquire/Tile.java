@@ -70,7 +70,7 @@ public class Tile {
         int row = coord[0];
         String col = Integer.toString(coord[1] + 1);
         switch (row) {
-            case 0 -> tileString = "A" + (col);
+            case 0 -> tileString = ("A" + col);
             case 1 -> tileString = ("B" + col);
             case 2 -> tileString = ("C" + col);
             case 3 -> tileString = ("D" + col);

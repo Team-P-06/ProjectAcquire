@@ -260,7 +260,7 @@ public class GameState {
     /**
      * Deals initial cards to players, and... what else does this method need to do for playTurn to be able to run?
      */
-    private void setUpInitialTurn() {
+    public void setUpInitialTurn() {
         currentPlayer = playerList.peekFirst();
         //dealing cards
         //1. I think that we should maybe have a dealt tile list and undealt tilelist that are complements of each other

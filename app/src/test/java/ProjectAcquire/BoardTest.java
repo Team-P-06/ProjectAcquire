@@ -98,9 +98,7 @@ public class BoardTest {
 
         Board classUnderTest = TestHelper.helperMethod_custom_board();
         assertFalse(classUnderTest.checkPermanent("A1"));
-
     }
-
 
 
 
