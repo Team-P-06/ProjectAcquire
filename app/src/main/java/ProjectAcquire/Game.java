@@ -40,11 +40,22 @@ import java.util.List;
  */
 public class Game {
    private @Getter @Setter GameState currentGameState;
+   private static Game instance;
 
     /**
      * Default constructor
      */
-    Game(){}
+    private Game(){}
+
+    public static Game getInstance(){
+
+        if(instance == null){
+            instance = new Game();
+        }
+        return instance;
+    }
+
+
 
 
     /**
@@ -128,7 +139,7 @@ public class Game {
 
         //6. initialize our GameState using 4, 1 as our parameters.
         //ALEX NOTE: it seems that a GameState object holds exactly the same data as the Board object, since Board has the playerList just a thought.
-        GameState gameState = new GameState(board, playerList);
+        GameState gameState =  GameState.getInstance(board, playerList);
 
 
         //7. call setCurrentGame() of Game using 6 as our parameter

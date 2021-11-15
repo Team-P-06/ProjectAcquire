@@ -48,12 +48,12 @@ public class GameState {
     @Getter private Board currentBoard;
     @Getter @Setter private  LinkedList<Player> playerList;
     private boolean isOver = false;
-
+    private static GameState instance;
 
     /**
      * Default constructor
      */
-    public GameState() {
+    private GameState() {
     }
 
     /**
@@ -62,12 +62,37 @@ public class GameState {
      * @param currentBoard
      * @param playerList
      */
-    public GameState(Board currentBoard, LinkedList<Player> playerList) {
+    private GameState(Board currentBoard, LinkedList<Player> playerList) {
         this.currentPlayer = playerList.get(0);
         this.currentBoard = currentBoard;
         this.playerList = playerList;
         // this.currentPlayer = playerList.peekFirst();
     }
+
+    //default getInstance
+    public static GameState getInstance(){
+
+        if(instance == null){
+            instance = new GameState();
+        }
+        return instance;
+    }
+
+    /**
+     *
+     * @param currentBoard The current Board
+     * @param playerList The current list of players
+     * @return A GameState instance
+     */
+    public static GameState getInstance(Board currentBoard,LinkedList<Player> playerList){
+
+        if(instance == null){
+            instance = new GameState(currentBoard,playerList);
+        }
+        return instance;
+    }
+
+
 
     //Getters
 
