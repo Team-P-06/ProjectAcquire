@@ -1,7 +1,30 @@
 /**
+ * MIT License
+ *
+ * Copyright (c) 2021 404
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ *
  * @author Team 404
- * @version v0.0.1
+ * @version v1.0.0
  */
+
 package ProjectAcquire;
 import lombok.Generated;
 import lombok.Getter;
@@ -65,28 +88,28 @@ public class Game {
             playerList.add(newPlayer);
         }
 
-        //3. creates our list of chartered and unchartered companies (the unchartered list can be empty)
+        //2. creates our list of chartered and unchartered companies (the unchartered list can be empty)
         List<Company> charteredList = new ArrayList<>();
         List<Company> uncharteredList = new ArrayList<>();
-        Company worldwideCo =  new Company("Worldwide", 200, false, false);
+        Company worldwideCo =  new Company("Worldwide", 0, false, false);
         uncharteredList.add(worldwideCo);
-        Company SacksonCo =  new Company("Sackson", 200, false, false);
+        Company SacksonCo =  new Company("Sackson", 0, false, false);
         uncharteredList.add(SacksonCo);
-        Company festivalCo =  new Company("Festival", 300, false, false);
+        Company festivalCo =  new Company("Festival", 0, false, false);
         uncharteredList.add(festivalCo);
-        Company imperialCo =  new Company("Imperial", 300, false, false);
+        Company imperialCo =  new Company("Imperial", 0, false, false);
         uncharteredList.add(imperialCo);
-        Company americanCo =  new Company("American", 300, false, false);
+        Company americanCo =  new Company("American", 0, false, false);
         uncharteredList.add(americanCo);
-        Company continentalCo =  new Company("Continental", 400, false, false);
+        Company continentalCo =  new Company("Continental", 0, false, false);
         uncharteredList.add(continentalCo);
-        Company towerCo =  new Company("Tower", 400, false, false);
+        Company towerCo =  new Company("Tower", 0, false, false);
         uncharteredList.add(towerCo);
         Company defaultCo =  new Company("DEFAULT", 0, false, false); // for placed tiles but no company
         uncharteredList.add(defaultCo);
 
 
-        //2. creates 2d? list of tiles.
+        //3. creates 2d list of tiles.
         List<Tile> freeTileList = new ArrayList<>();
         for (int r = 0; r < 9; r++){
             for(int c = 0; c < 12; c++) {
@@ -114,7 +137,6 @@ public class Game {
         //now we pass this to JavaFX (javafx calls this whole method)
         //Game.start() is invoked upon the player hitting "new game". So FXController call Game.start()
 
-        System.out.println("Game.start() was finished");
         return gameState;
     }
 
@@ -122,18 +144,18 @@ public class Game {
      * Run a game that is already saved from the gson file gathered from loadGame, (runs a game continuousely given starting data)
      */
     public void runGame() throws IOException {
-
+        currentGameState.playTurn();
         //while the game has not ended
 //        while(!currentGameState.isOver()){
 //            //game plays
 //            currentGameState.playTurnNoUI();
 //        }
-        for(int x=0;x<9;x++) {
+        /*for(int x=0;x<9;x++) {
             currentGameState.playTurn();
             //currentGameState.playTurnNoUI();
             System.out.println("Current Player is: " + currentGameState.getCurrentPlayer());
         }
-        System.out.println("Game.runGame() was finished");
+        System.out.println("Game.runGame() was finished");*/
 
     }
 

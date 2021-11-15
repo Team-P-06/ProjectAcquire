@@ -32,8 +32,20 @@ public class PlayerTest {
         assertTrue(classUnderTest.availableTile(), "app should have available tile method");
     }
 
+    @Test void buy_stocks_test(){
+        List<Tile> helperTileList = TestHelper.helperMethod_tileList_company1_3_coord_A1_A3();
+        Company testCo = TestHelper.helperMethod_Company("Sackson");
 
+        testCo.setTilesOnBoard(15);
+        testCo.setNewStockPrice();
 
+        List<Stock> testStockList = new ArrayList<>();
+        Stock test_stock = TestHelper.helperMethod_customStock("Sackson");
+        Player testPlayer = new Player("P1", helperTileList, 1000);
+        testPlayer.setStockList(testStockList);
+        testPlayer.buyStock(test_stock);
 
+        assertEquals(1000, testPlayer.getMoney());
+    }
 
 }
