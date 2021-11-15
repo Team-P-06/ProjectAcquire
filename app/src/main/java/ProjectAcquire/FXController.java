@@ -101,13 +101,13 @@ public class FXController {
     @FXML
     private void newGame() throws Exception { //ALEX NOTE: This will act as our main method as written.
         Update update = new Update();
-        Game newGame = new Game();
+        Game newGame = Game.getInstance();
 
         showBoardMenu(getGameBoardLoader());
 
         GameState gameState = newGame.start();
         update.nextTurnUI(gameState);
-        newGame.runGame();
+        //newGame.runGame(); //ALEX NOTE: runGame is never being reached
     }
 
     /**

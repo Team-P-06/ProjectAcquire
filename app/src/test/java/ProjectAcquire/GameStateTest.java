@@ -136,7 +136,7 @@ public class GameStateTest {
 
     @Test
     void test_CharterChoiceInterrupt(){
-        GameState testGame = new GameState();
+        GameState testGame =TestHelper.helperMethod_GameStateInit() ;
     }
 
 
