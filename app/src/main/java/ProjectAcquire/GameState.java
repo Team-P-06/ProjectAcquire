@@ -278,15 +278,14 @@ public class GameState {
     }
 
     /**
-     * Loops until the player has bought 3 stocks or can't afford any more(or hits "end turn")
+     * Loops until the player has bought 3 stocks or can't afford any more (or hits "end turn").
+     * Currently, only allows the player to buy 1 stock.
      * Then it sets up the next players turn.
      * @throws IOException
      */
     private void buyStocksTurn() throws IOException {
-        int stocksBought = 0;
-        while (stocksBought < 3 && currentPlayer.getMoney() > currentBoard.getLowestStockPrice()) {
+        if(currentPlayer.getMoney() > currentBoard.getLowestStockPrice()) {
             buyInterrupt();
-            stocksBought++;
         }
         setNextTurn();
     }

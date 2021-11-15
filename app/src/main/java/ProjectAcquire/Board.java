@@ -121,19 +121,17 @@ public class Board {
         Random ran = new Random();
         int randomIndex = ran.nextInt(getTileList().size());
         Tile pulledTile = getTileList().get(randomIndex);
-        if (!pulledTile.isFlipped()){ // If the tile is able to be dealt
-            //System.out.println(pulledTile.isDealt());
+        if (!pulledTile.isFlipped() && !pulledTile.isDealt()){ // If the tile is able to be dealt
             pulledTile.setDealt(true);
             player.addTile(pulledTile);
         }
         else{ // recursive call if it can't deal the tile
             dealTile(player);
         }
-        //System.out.println("DEAL REACHED");
     }
 
     public int getLowestStockPrice(){
-        int currentLowestPrice = 100000; // Default value, very high since we descend as we get better prices.
+        int currentLowestPrice = 10000; // Default value, very high since we descend as we get better prices.
         for (Company company : charteredCompanies){
             if (currentLowestPrice > company.getStockPrice()){
              currentLowestPrice = company.getStockPrice();
@@ -378,6 +376,9 @@ public class Board {
     }
 
     public Company getDefunctCompany(){ // Should return the company that is being defunct(assuming 2 are not equal)
+        return null;
+    }
+    public Company getWinningCompany(){
         return null;
     }
 

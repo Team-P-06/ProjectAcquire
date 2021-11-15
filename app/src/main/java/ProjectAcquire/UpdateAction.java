@@ -33,7 +33,7 @@ public class UpdateAction{
         UIController.getActionLabel().setText("");
         if(!merge) { //If there is no merge. AKA fresh new currentPlayer to play a tile
             List<Company> companyList = gameState.getCurrentBoard().getCharteredCompanies();
-            UIController.getActionLabel().setText("Sell stocks");
+            UIController.getActionLabel().setText("buy stocks");
 
             UIController.getEndTurnButton().setVisible(true);
             UIController.getEndTurnButton().setOnAction(action -> { // Sets an exit button to stop selling stocks

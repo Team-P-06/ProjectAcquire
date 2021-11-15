@@ -65,7 +65,7 @@ public class Update {
     }
 
     /**
-     * Generates a UI for a list of companies if a merge has equal numer of tiles in a company
+     * Generates a UI for a list of companies if a merge has equal number of tiles in a company
      * @param gameState the current gamestate
      * @param companyChoiceList the list of companies that have the same number of tiles on the board.
      * @throws IOException

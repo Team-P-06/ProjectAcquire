@@ -21,7 +21,7 @@ public class PlayerTest {
 
        List<Tile> helperTileList = TestHelper.helperMethod_tileList_company1_3_coord_A1_A3();
         Player classUnderTest = new Player("TEST",helperTileList,1000);
-        assertTrue(classUnderTest.availableTile("TEST"), "app should have available tile method");
+        assertTrue(classUnderTest.availableTile(), "app should have available tile method");
     }
 
 
@@ -29,7 +29,7 @@ public class PlayerTest {
 
 
         Player classUnderTest = TestHelper.helperMethod_custom_Player("TEST");
-        assertTrue(classUnderTest.availableTile("TEST"), "app should have available tile method");
+        assertTrue(classUnderTest.availableTile(), "app should have available tile method");
     }
 
 

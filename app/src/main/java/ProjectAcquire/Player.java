@@ -46,13 +46,6 @@ public class Player{
         this.money = money;
         this.tileList = tileHand;
     }
-    /**
-     *
-     * @return Checks if the current tile on the board is occupied.
-     */
-    public boolean availableTile(String coord){
-        return true;
-    }
 
     /**
      * Places a tile on the board
@@ -84,56 +77,51 @@ public class Player{
      */
     public void buyStock(Stock stock){
         stockList.add(stock);
+        setMoney(getMoney() - stock.getParentCompany().getStockPrice());
     }
 
     /**
-     * Player cheese to buy 1 - 3 stocks
+     * Player chooses to sell 1 - 3 stocks
+     * Update action already calculated if they have enough stocks to sell.
      * @param parentCompany stocks from the company they would like to sell.
      * @param numberOfStocks the number of stocks they are selling
      */
     public void sellStock(Company parentCompany, int numberOfStocks){
-
+        for (Stock stock : stockList){
+            if(numberOfStocks > 0) {
+                if (stock.getParentCompany() == parentCompany) {
+                    stockList.remove(stock);
+                    setMoney(getMoney() + stock.getParentCompany().getStockPrice());
+                    numberOfStocks--;
+                }
+            }
+        }
     }
 
     /**
      * Keep the stocks from a company after a merge
+     * Update action already calculated if they have enough stocks to keep
      * @param parentCompany stocks from the company they would like to keep.
      * @param numberOfStocks the number of stocks they are keep
      */
-    public void keepStock(Company parentCompany, int numberOfStocks){
-
+    public void keepStock(Company winnerCompany, int numberOfStocks){
+        // Do nothing
     }
 
     /**
      * Trades stocks from a defunct company to the larger company
+     * Currently doesn't remove stock from the defunct company.
      * @param parentCompany stocks from the company they would like to sell.
      * @param numberOfStocks the number of stocks they are selling
      */
-    public void tradeStock(Company parentCompany, int numberOfStocks){
-
+    public void tradeStock(Company winnerCompany, int numberOfStocks){
+        int stocksTraded = 0;
+        for (int i = 0; i < numberOfStocks; i++){
+            Stock newStock = new Stock(winnerCompany);
+            stockList.add(newStock);
+        }
     }
 
-
-
-    /*/**
-     *
-     * Moved to Board and renamed dealTile() - Show
-     * ALEX NOTE: This Method Will not work as written, we should probably move it to Board and change the name to "dealTile".
-     * This is because we are initializing arbitrary tiles here when we should be initializing all tiles in our Game inititalize() method.
-     * DrawTile may be best as a passive action.
-     *
-     * creates a new unique tile and give it to the player who drew it.
-     * @return a new unique tile
-     */
-    /*public Tile drawTile(List<Tile> tilesNotOnBoardOrOtherPlayersHand){
-        Random ran = new Random();
-        int randomIndex = ran.nextInt(tilesNotOnBoardOrOtherPlayersHand.size());
-        tileList.add(tilesNotOnBoardOrOtherPlayersHand.get(randomIndex));
-        tilesNotOnBoardOrOtherPlayersHand.remove(randomIndex);
-        //Tile drawnTile = new Tile(); //DEFAULT TILE
-        //tileList.add(drawnTile);
-        return drawnTile;
-    }*/
 
     /**
      * Removes a tile from the players hand
@@ -178,6 +166,9 @@ public class Player{
                 '}';
 
         return retString1;
+    }
+    public boolean availableTile(){
+        return true;
     }
 }
 
