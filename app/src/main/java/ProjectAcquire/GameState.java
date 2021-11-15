@@ -205,7 +205,7 @@ public class GameState {
     /**
      * While we are waiting on the final UI hooks, we can use playerInputs as our interrupts
      */
-    public void playTurnNoUI() throws IllegalArgumentException, IOException {
+    public void playTurnNoUI() throws Exception {
 
         try {
             if (currentPlayer == null) {
@@ -298,8 +298,9 @@ public class GameState {
      * @param tile tile that the player placed on the board.
      * @throws IOException
      */
-    public void getTileChoice(Tile tile) throws IOException {
+    public void getTileChoice(Tile tile) throws Exception {
         int action = currentBoard.checkForActionInitiation(tile);
+        //System.out.println(action);
         if (action == 0) { // If not chartering then jump to buying stocks
             noCharter(tile);
         }
@@ -309,7 +310,10 @@ public class GameState {
         else if (action == 2){ // If we place a tile next to another company
             // currentBoard.updateCompanyTiles(); //Currently don't have information about the company that's
                                                   // increasing, would have to be done inside the function.
-            buyStocksTurn(); // after the size is inceased, let players buy stocks
+
+            getCurrentBoard().charterLogic(tile.getCompany()); //add flipped tile to adjacent company.
+
+            buyStocksTurn(); // after the size is increased, let players buy stocks
         }
         else if( action == 3){ //If there is a merge started by the tile
             if (currentBoard.checkEqualsMerge() != null){ //If there are equal companies in a merge

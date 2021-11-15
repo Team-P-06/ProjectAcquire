@@ -184,7 +184,13 @@ public class UpdateAction{
                 Button choiceButton = new Button();
                 choiceButton.setText(com.getCompanyName());
                 choiceButton.setStyle("-fx-background-color: ffffff; -fx-border-color: black");
-                choiceButton.setOnAction(a -> {gameState.getCurrentBoard().charter(com);});
+                choiceButton.setOnAction(a -> {
+                    try {
+                        gameState.getCurrentBoard().charter(com);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                });
                 UIController.getActionChoiceObserList().add(choiceButton);
         }
     }

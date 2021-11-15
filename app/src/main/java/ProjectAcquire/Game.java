@@ -88,16 +88,21 @@ public class Game {
 
         //2. creates 2d? list of tiles.
         List<Tile> freeTileList = new ArrayList<>();
+        //List<List<Tile>> tl2D = new ArrayList<>();
         for (int r = 0; r < 9; r++){
             for(int c = 0; c < 12; c++) {
                 Tile curTile = new Tile(defaultCo, new int[]{r, c});
                 freeTileList.add(curTile);
+              //  tl2D.get(r).add(curTile);
             }
         }
 
 
+
         //4. initialize a board using 1-4 as our parameters (using getInstance())
         Board board = Board.getInstance(freeTileList, uncharteredList, charteredList, playerList);
+      //  board.setTileList2D(tl2D);
+        //System.out.println(board.getTileList2D().get(0));
 
         //6. initialize our GameState using 4, 1 as our parameters.
         //ALEX NOTE: it seems that a GameState object holds exactly the same data as the Board object, since Board has the playerList just a thought.
@@ -121,7 +126,8 @@ public class Game {
     /**
      * Run a game that is already saved from the gson file gathered from loadGame, (runs a game continuousely given starting data)
      */
-    public void runGame() throws IOException {
+    public void runGame() throws Exception {
+
 
         //while the game has not ended
 //        while(!currentGameState.isOver()){
@@ -132,6 +138,8 @@ public class Game {
             currentGameState.playTurn();
             //currentGameState.playTurnNoUI();
             System.out.println("Current Player is: " + currentGameState.getCurrentPlayer());
+            int[] testCoord ={1,1};
+            System.out.println("Tiles around 1,1: " + currentGameState.getCurrentBoard().getTilesAround(testCoord));
         }
         System.out.println("Game.runGame() was finished");
 

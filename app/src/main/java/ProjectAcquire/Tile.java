@@ -21,7 +21,7 @@ public class Tile {
 
    //Default constructor
     Tile(){
-        this.coord = new int[]{0, 0};
+        this.coord = new int[]{-1, -1};
         this.company = new Company();
         this.flipped = false;
         this.dealt = false;

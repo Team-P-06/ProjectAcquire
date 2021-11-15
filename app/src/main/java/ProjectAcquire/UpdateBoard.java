@@ -64,7 +64,9 @@ public class UpdateBoard {
                 UIController.getActionLabel().setText("Place a tile");
                 currentButton.setOnAction(action -> {
                     try { gameState.getTileChoice(tile); }
-                    catch (IOException e) { e.printStackTrace(); }
+                    catch (IOException e) { e.printStackTrace(); } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 });
             }
             UIController.getTileGrid().add(currentButton, tile.getCoord()[1], tile.getCoord()[0]);

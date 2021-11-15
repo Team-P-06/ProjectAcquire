@@ -72,7 +72,7 @@ public class FXController {
      * Button actions to begin a new game.
      */
     @FXML
-    private void newGame() throws IOException { //ALEX NOTE: This will act as our main method as written.
+    private void newGame() throws Exception { //ALEX NOTE: This will act as our main method as written.
         Update update = new Update();
         Game newGame = new Game();
 
