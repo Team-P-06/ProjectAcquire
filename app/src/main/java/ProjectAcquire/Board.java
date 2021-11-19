@@ -139,7 +139,6 @@ public class Board {
 
     /**
      * Gives a specified player a new tile from the list of tiles that are not currently on the board in a hand.
-     * @param allTiles full tile list
      * @param player  current player who we are dealing tiles to
      */
     public void dealTile(Player player){
@@ -158,8 +157,8 @@ public class Board {
     public int getLowestStockPrice(){
         int currentLowestPrice = 10000; // Default value, very high since we descend as we get better prices.
         for (Company company : charteredCompanies){
-            if (currentLowestPrice > company.getStockPrice()){
-             currentLowestPrice = company.getStockPrice();
+            if (currentLowestPrice > company.calculateStockPrice()){
+             currentLowestPrice = company.calculateStockPrice();
             }
         }
         return  currentLowestPrice;
@@ -422,10 +421,7 @@ public class Board {
      * @param winnerCompany The biggest company, or the company that the player has chosen to win.
      *
      */
-    public void merge(Company winnerCompany){
-
-
-
+    public void merge(){
     } //leaving this alone for now.
 
     public List<Company> checkEqualsMerge(){ //Should return a list of companies that are equal, return null if non are equal.
@@ -472,7 +468,6 @@ public class Board {
         //company set to the passed in company.
 
         //So we can set up a very ugly nested while for loop:
-
         int foundTiles = 1; //flag
         while (foundTiles > 0) { //while we still have tiles to add to companies
             foundTiles = 0; //reset counter
@@ -487,6 +482,7 @@ public class Board {
                     // if we have an adjacent chartered tile
                     if ( tile.getCompany().getCompanyName().equals("DEFAULT") &&
                             tile.isFlipped() && one_of_the_tiles_around_the_current_tile_has_our_company) {
+                        // I don't think this is every being exectued when chartering. - Show
                         tile.setCompany(company); //set our current tile to be part of our passed in company
                         foundTiles++; // if this is hit, we have found a tile, so our loop will restart after it hits the last tile on the board.
                     }
