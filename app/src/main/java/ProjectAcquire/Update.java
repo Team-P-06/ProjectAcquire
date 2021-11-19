@@ -28,6 +28,7 @@
 package ProjectAcquire;
 
 import lombok.Getter;
+import org.checkerframework.checker.guieffect.qual.UI;
 
 import java.io.IOException;
 import java.util.List;
@@ -60,11 +61,11 @@ public class Update {
      * @param defunctCompany the company that's going under
      * @throws IOException
      */
-    public void mergeUI(GameState gameState, Company defunctCompany) throws IOException {
+    public void mergeUI(GameState gameState, Company winnerCompany, List<Company> defunctCompany) throws IOException {
         update(gameState);
         boardUpdater.update(gameState, UIController, false);
-        actionUpdater.update(gameState, UIController, false, true,
-                defunctCompany, false, null);
+        actionUpdater.update(gameState, UIController, false, winnerCompany,
+                defunctCompany, null);
     }
 
     /**
@@ -75,8 +76,8 @@ public class Update {
     public void buyUI(GameState gameState) throws IOException {
         update(gameState);
         boardUpdater.update(gameState, UIController, false);
-        actionUpdater.update(gameState, UIController, false, false,
-                null, false, null);
+        actionUpdater.update(gameState, UIController, false, null,
+                null, null);
     }
 
     /**
@@ -87,8 +88,7 @@ public class Update {
     public void charterChoiceUI(GameState gameState) throws IOException {
         update(gameState);
         boardUpdater.update(gameState, UIController, false);
-        actionUpdater.update(gameState, UIController, true, false, null, false,
-                null);
+        actionUpdater.update(gameState, UIController, true, null, null, null);
     }
 
     /**
@@ -100,12 +100,13 @@ public class Update {
     public void mergeChoiceUI(GameState gameState, List<Company> companyChoiceList) throws IOException{
         update(gameState);
         boardUpdater.update(gameState, UIController, false);
-        actionUpdater.update(gameState, UIController, true, false,
-                null, true, companyChoiceList);
+        actionUpdater.update(gameState, UIController, false, null,
+                null, companyChoiceList);
     }
 
     public void nextTurnUI(GameState gameState) throws IOException {
         update(gameState);
         boardUpdater.update(gameState, UIController, true);
+        //actionUpdater.update(gameState, UIController, false, null, null, null);
     }
 }

@@ -66,12 +66,11 @@ public class UpdateBoard {
         }
 
         for (Player player : playerList)
-            if (player.equals(currentPlayer)) {
+            if (player.equals(currentPlayer)) { // Make tiles for current player
                 makeCurrentPlayerTiles(player.getTileList(), player, gameState, placeableTiles);
-            } else {
+            } else { // Make tiles for all other players
                 makeOtherPlayerTile(player.getTileList());
             }
-
     }
 
     /**
@@ -90,7 +89,7 @@ public class UpdateBoard {
             if(placeableTiles) { // If this is a fresh turn allow the tile to be placed.
                 UIController.getActionLabel().setText("Place a tile");
                 currentButton.setOnAction(action -> {
-                    try { gameState.getTileChoice(tile); }
+                    try { gameState.getTileChoice(tile, currentPlayer); }
                     catch (IOException e) { e.printStackTrace(); } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -140,7 +139,6 @@ public class UpdateBoard {
             case "American" -> button.setStyle("-fx-background-color: blue");
             case "Continental" -> button.setStyle("-fx-background-color: red");
             case "Tower" -> button.setStyle("-fx-background-color: grey");
-            //case "DEFAULT" && isFlipped -> button.setStyle("-fx-background-color: black; -fx-text-fill: white");
             default -> button.setStyle("-fx-background-color: 000000;");
         }
         if (companyName.equals("DEFAULT") && isFlipped){
@@ -155,12 +153,12 @@ public class UpdateBoard {
      * @return
      */
     private boolean endGameCondion(List<Company> charteredCom){
-        int numberOfPerminetCom = 0;
+        int numberOfPermanentCom = 0;
         for (Company curCompany : charteredCom){
             if (curCompany.getTilesOnBoard() >= 41){ return true; }
-            if (curCompany.isPermanent()){ numberOfPerminetCom++; }
+            if (curCompany.isPermanent()){ numberOfPermanentCom++; }
         }
-        return numberOfPerminetCom == 7;
+        return numberOfPermanentCom == 7;
     }
 
     /**
@@ -194,6 +192,4 @@ public class UpdateBoard {
             ioManager.saveGame(gameState);});
         ioManager.saveGame(gameState); //Could be wrong but just added this to write the file -Tyler
     }
-
-
 }

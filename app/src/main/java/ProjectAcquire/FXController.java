@@ -207,6 +207,34 @@ public class FXController {
     @Getter ObservableList<Integer> wStockObserListView = FXCollections.observableArrayList();
     @Getter ObservableList<Integer> tStockObserListView = FXCollections.observableArrayList();
 
+    /**
+     * Labels, pane and TextFields for buying stocks
+     */
+    @FXML @Getter private TextArea wBuyTextArea;
+    @FXML @Getter private TextArea cBuyTextArea;
+    @FXML @Getter private TextArea sBuyTextArea;
+    @FXML @Getter private TextArea fBuyTextArea;
+    @FXML @Getter private TextArea iBuyTextArea;
+    @FXML @Getter private TextArea aBuyTextArea;
+    @FXML @Getter private TextArea tBuyTextArea;
+
+    @FXML @Getter private Pane wBuyPane;
+    @FXML @Getter private Pane cBuyPane;
+    @FXML @Getter private Pane sBuyPane;
+    @FXML @Getter private Pane fBuyPane;
+    @FXML @Getter private Pane iBuyPane;
+    @FXML @Getter private Pane aBuyPane;
+    @FXML @Getter private Pane tBuyPane;
+
+    /**
+     * Labels, pane and TextFields for merging stocks options
+     *
+     */
+    @FXML @Getter private Label mergeSellLabel, mergeTradeLabel, mergeKeepLabel;
+    @FXML @Getter private TextArea mergeSellTextArea;
+    @FXML @Getter private TextArea mergeTradeTextArea;
+    @FXML @Getter private TextArea mergeKeepTextArea;
+    @FXML @Getter private Pane mergeOptionPane;
 
     /**
      * End game labels and panes

@@ -29,14 +29,11 @@ package ProjectAcquire;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.checkerframework.checker.units.qual.C;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Scanner;
-import java.util.concurrent.ConcurrentMap;
 
 /**
  * GameSate class that contains a games current status
@@ -245,33 +242,26 @@ public class GameState {
     }
 
     /**
-     * Loops until the player has bought 3 stocks or can't afford any more (or hits "end turn").
-     * Currently, only allows the player to buy 1 stock.
-     * Then it sets up the next players turn.
-     * @throws IOException
-     */
-    private void buyStocksTurn() throws IOException {
-        if(currentPlayer.getMoney() > currentBoard.getLowestStockPrice()) {
-            buyInterrupt();
-        }
-        setNextTurn();
-    }
-
-    /**
      * Essentially the "playTile" method, since the interrupts need a gamestate it works better here.
      * This is called when you click a tile on the board.
      * Decides 1 of 4 actions based on how the tiles should be merged/created
      * @param tile tile that the player placed on the board.
      * @throws IOException
      */
-    public void getTileChoice(Tile tile) throws Exception {
+    public void getTileChoice(Tile tile, Player player) throws Exception {
+        player.placeTile(tile); // Might want to change this when we implement dead tiles.
+        currentBoard.checkForActionInitiation(tile);
+
         int action = currentBoard.checkForActionInitiation(tile);
         //System.out.println(action);
         if (action == 0) { // If not chartering then jump to buying stocks
-            noCharter(tile);
+            buyStocksInterrupt();
         }
         else if (action == 1){ // If we place a tile next to another empty tile.
-            charterChoiceInterrupt(); // UI calls board.charter(playerChoice)
+            if(currentBoard.getUncharteredCompanies().size() > 1) { // If there are companies to charter (DEFAULT is alway unchartered)
+                charterChoiceInterrupt(); // UI calls addToACompany -- > board.charter(playerChoice) --> buyInterrupt
+            }
+            else{ buyStocksInterrupt(); }
 
         }
         else if (action == 2){ // If we place a tile next to another company
@@ -281,7 +271,7 @@ public class GameState {
             Company adjComp = currentBoard.companiesAroundTile(tile).get(0); //Gets the one (should only be one) company around the tile.
             currentBoard.charterLogic(adjComp); //add flipped tile to adjacent company.
 
-            buyStocksTurn(); // after the size is increased, let players buy stocks
+            buyStocksInterrupt(); // after the size is increased, let players buy stocks
         }
         else if( action == 3){ //If there is a merge action needed
 
@@ -307,51 +297,51 @@ public class GameState {
                 List<Company> choicelist = currentBoard.checkEqualsMerge();
                 mergeChoiceInterrupt(choicelist); // Player choice will then call merge(winnerCompany selected)
             }
-            else { //No equal companies.
-                Company defunctCo = currentBoard.getDefunctCompany();
+            else { //No equal companies during a merge.
+                // This needs to know the list of loserCompanies and the winner company.
+                // mergeInterrupt will need the list of loserCompanies and the winnerCompany
+                //List<Company> defunctCo = currentBoard.getDefunctCompany();
 
-                currentBoard.merge(tiedCompanies.get(0)); // Merge the companies
-                mergeInterrupt(defunctCo); // Start the player selling/trading/keeping stocks turn
+                //currentBoard.merge(tiedCompanies.get(0)); // Merge the companies
+                //mergeInterrupt(Company winnerCompany, List<Company> defunctCompanies); // Start the player selling/trading/keeping stocks turn
             }
         }
     }
 
     /**
-     * If no company is chartered, set it to the default company and remove the tile form the players hand.
-     * @param tile
-     * @throws IOException
+     * This is called by the UI after the player chose the company to charter.
+     * This should call charter that adds that tile to the company next to it then start the buy phase.
+     * @param company What company was chartered
+     * @throws Exception
      */
-    public void noCharter(Tile tile) throws IOException {
-        List<Company> uc = currentBoard.getUncharteredCompanies();
-        List<Company> cc = currentBoard.getCharteredCompanies();
-        for (Company defaultCo : uc) {
-            if (defaultCo.getCompanyName().equals("DEFAULT")) {
-                currentPlayer.getTileList().remove(tile);
-                tile.setFlipped();
-                tile.setDealt(false);
-                buyStocksTurn();
-            }
-        }
-        for (Company defaultCo : cc){
-            if (defaultCo.getCompanyName().equals("DEFAULT")){
-                currentPlayer.getTileList().remove(tile);
-                tile.setFlipped();
-                tile.setDealt(false);
-                buyStocksTurn();
-            }
-        }
+    public void addToACompany(Company company) throws Exception {
+        currentBoard.charter(company);
+        buyStocksInterrupt();
     }
 
+    /**
+     * Loops until the player has bought 3 stocks or can't afford anymore (or hits "confirm").
+     * Then it sets up the next players turn.
+     * @throws IOException
+     */
+    private void buyStocksInterrupt() throws IOException {
+        if(currentPlayer.getMoney() > currentBoard.getLowestStockPrice()) {
+            buyInterrupt();
+        }
+        else{
+            setNextTurn();
+        }
+    }
 
     /**
      * Update for when a merge occurs, creates the options for players to sell, trade, or keep stocks.
      * This should be called mutable times to update every time for the "sub turn" during a merge.
-     * @param defunctCompany the company that is being destroyed from the merge.
+     * @param defunctCompanies the company that is being destroyed from the merge.
      * @throws IOException
      */
-    public void mergeInterrupt(Company defunctCompany) throws IOException{
+    public void mergeInterrupt(Company winnerCompany, List<Company> defunctCompanies) throws IOException{
         Update update = new Update();
-        update.mergeUI(this, defunctCompany);
+        update.mergeUI(this, winnerCompany, defunctCompanies);
     }
 
     /**

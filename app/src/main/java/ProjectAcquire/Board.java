@@ -139,7 +139,6 @@ public class Board {
 
     /**
      * Gives a specified player a new tile from the list of tiles that are not currently on the board in a hand.
-     * @param allTiles full tile list
      * @param player  current player who we are dealing tiles to
      */
     public void dealTile(Player player){
@@ -155,21 +154,25 @@ public class Board {
         }
     }
 
+    /**
+     * Finds the lowest stock price for all the stocks.
+     * @return Returns the lowest stock price of any company in chartered companies
+     */
     public int getLowestStockPrice(){
         int currentLowestPrice = 10000; // Default value, very high since we descend as we get better prices.
         for (Company company : charteredCompanies){
-            if (currentLowestPrice > company.getStockPrice()){
-             currentLowestPrice = company.getStockPrice();
+            if (currentLowestPrice > company.calculateStockPrice()){
+             currentLowestPrice = company.calculateStockPrice();
             }
         }
         return  currentLowestPrice;
     }
 
     /**
-     * This
+     * This returns a list of Tiles around a given coord.
      *
      * @param coord Coordinate of a tile
-     * @return An ArrayList of all of the Tiles around the passed in coordinate.
+     * @return A List of all of the Tiles around the passed in coordinate.
      */
     public List<Tile> getTilesAround(int[] coord) throws Exception {
 
@@ -207,7 +210,6 @@ public class Board {
 
 
     /**
-     * Last changed by Alex.
      * This method is NOT my finest work. It is vomitous, as they say.
      *
      * @param coord tile coordinate
@@ -216,12 +218,9 @@ public class Board {
      */
     public Tile getAdjacentTile( int[] coord, String cardinalDir){
 
-
         int row = coord[0];
         int col = coord[1];
         int[] adjCoord = {-1,-1};
-        //System.out.println("["+row + " "+col+"]");
-       // System.out.println(getTileList());
        if (cardinalDir.equals("NORTH")) {
            //gets tile to the north
            if (row > 0) {
@@ -231,7 +230,6 @@ public class Board {
            }
        else if (cardinalDir.equals("SOUTH")){
            //gets tile to the south
-
            if (row < 9) { //ALEX NOTE: This is a magic number, I know.
                adjCoord[0] = row + 1;
                adjCoord[1] = col;
@@ -243,28 +241,26 @@ public class Board {
                adjCoord[0] = row;
                adjCoord[1] = col-1;
            }
-           //System.out.println(adjCoord[0]+ " "+ adjCoord[1]);
-
        }
        else if (cardinalDir.equals("EAST")){
            //gets tile to the east
            if (col<12) { //ALEX NOTE: This is a magic number, I know.
                adjCoord[0] = row;
                adjCoord[1] = col+1;
-
-             //  System.out.println(row+ " "+ col);
-              // System.out.println(adjCoord[0]+ " "+ adjCoord[1]);
-
            }
-
        }
        return arrayEquals(adjCoord);
     }
 
 
-
+    /**
+     * Checks if a passed in coordinate has a tile associated with it and returns it
+     * otherwise returns a tile with the coordinate {-1,-1}
+     *
+     * @param adj the adjacent tile that our getAdjacentTile() method has created.
+     * @return
+     */
     private Tile arrayEquals(int[] adj) {
-
         for (Tile tl : getTileList()) {
             if (Arrays.equals(tl.getCoord(), adj)) {
                    System.out.println("the tile associated with "+ adj[0] + " " + adj[1] + " is "+ tl);
@@ -277,7 +273,7 @@ public class Board {
     //other methods
 
     /**
-     * Will deal with the entire chartering process of a company, including prompting for user input and calling our update() method when we implement the observable pattern
+     * sets a passed in company to be chartered then calls charterLogic.
      * @param company Company to charter
      */
     void charter(Company company) throws Exception {
@@ -291,12 +287,11 @@ public class Board {
         //initial stocks on board.
         charterLogic(company);
 
-        System.out.println("Board.charter() was called");
 
     }
 
     /**
-     * Unlike our charter method, our uncharter method should not initiate the unchartering process. Instead it should be called from our BoardLogic.merge() function as part of the clean up process of a merge.
+     * Unlike our charter method, our uncharter method should not initiate the unchartering process. Instead it should be called as part of the clean up process of a merge.
      * @param company Company to uncharter
      */
     void unCharter(Company company){
@@ -422,10 +417,7 @@ public class Board {
      * @param winnerCompany The biggest company, or the company that the player has chosen to win.
      *
      */
-    public void merge(Company winnerCompany){
-
-
-
+    public void merge(){
     } //leaving this alone for now.
 
     public List<Company> checkEqualsMerge(){ //Should return a list of companies that are equal, return null if non are equal.
@@ -472,7 +464,6 @@ public class Board {
         //company set to the passed in company.
 
         //So we can set up a very ugly nested while for loop:
-
         int foundTiles = 1; //flag
         while (foundTiles > 0) { //while we still have tiles to add to companies
             foundTiles = 0; //reset counter
@@ -487,6 +478,7 @@ public class Board {
                     // if we have an adjacent chartered tile
                     if ( tile.getCompany().getCompanyName().equals("DEFAULT") &&
                             tile.isFlipped() && one_of_the_tiles_around_the_current_tile_has_our_company) {
+                        // I don't think this is every being exectued when chartering. - Show
                         tile.setCompany(company); //set our current tile to be part of our passed in company
                         foundTiles++; // if this is hit, we have found a tile, so our loop will restart after it hits the last tile on the board.
                     }
