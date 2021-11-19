@@ -88,25 +88,21 @@ jacoco {
     toolVersion = "0.8.7"
     reportsDirectory = layout.buildDirectory.dir('customJacocoReportDir')
 }
-
-jacocoTestReport {
-    dependsOn test // tests are required to run before generating the report
+test{
+    finalizedBy jacocoTestReport;
+        jacoco{
+            excludes += ["**/com.ProjectAcquire/App/**"]
+        }
 }
-
 jacocoTestReport {
     reports {
-        xml.required = false
-        csv.required = false
-        html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
-            html{
-                enabled  true;
-            }
+
     }
     afterEvaluate{
-        classDirectories.setFrom(files(classDirectories.files.collect{
-            fileTree(dir : it, exclude:[
-                    //"com/ProjectAcquire/**/FXController.class"
-            ])
+        classDirectories.from()
+        (files(classDirectories.files.collect{
+            fileTree(dir : it)
+                    .filter({file -> !file.name.contains('App.java')})
         }))
     }
 }
@@ -121,9 +117,11 @@ jacocoTestCoverageVerification {
                 value = 'COVEREDRATIO'
                 minimum = 0.90
             }
+        excludes = [
+                'ProjectAcquire.FXController',
+                'ProjectAcquire.App'
+        ]
 
-            //includes['App']
-            //excludes = ["**/ProjectAquire/**"]
         }
 
     }

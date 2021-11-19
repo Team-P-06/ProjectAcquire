@@ -9,7 +9,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class TileTest {
 
-
     /**
      * Tests that the name of a custom initialized tile is set correctly
      */
