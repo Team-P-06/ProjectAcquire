@@ -94,7 +94,9 @@ public class Game {
         int numOfPlayers = 3;
         for (int i = 0; i < numOfPlayers; i++) {
             List<Tile> newPlayerTileList = new ArrayList<>();
+            List<Stock> newPlayerStockList = new ArrayList<>();
             Player newPlayer = new Player("Player " + (i+1), newPlayerTileList, 3000);
+            newPlayer.setStockList(newPlayerStockList);
             playerList.add(newPlayer);
         }
 
@@ -121,7 +123,6 @@ public class Game {
 
         //3. creates 2d list of tiles.
         List<Tile> freeTileList = new ArrayList<>();
-        //List<List<Tile>> tl2D = new ArrayList<>();
         for (int r = 0; r < 9; r++){
             for(int c = 0; c < 12; c++) {
                 Tile curTile = new Tile(defaultCo, new int[]{r, c});

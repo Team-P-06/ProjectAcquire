@@ -67,26 +67,21 @@ public class Player{
         this.name = name;
         this.money = money;
         this.tileList = tileHand;
+
     }
 
     /**
      * Places a tile on the board
      * UI calls this when clicking on a tile that's in the players hand, this then goes to Board.checkForActionInitiation().
      * @param tile the tile that was placed
-     * @param gameState the current gamestate
-     * depreciated, since we need both gamestate and board, this has been moved to GameState and called getTileChoice()
      */
     public void placeTile(Tile tile) throws IOException {
-
         try {
             //Sets the tile to be flipped.
             tile.setFlipped();
-
-            //removes from the player's hand.
             tileList.remove(tile);
-            // Board curBoard = Board.getInstance();
-
-            //curBoard.checkForActionInitiation(tile, gameState);
+            tile.setDealt(false);
+            getTileList().remove(tile);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -95,9 +90,10 @@ public class Player{
 
     /**
      * Player chooses to buy 1 - 3 stocks
-     * @param stock what company the stocks are coming from
+     * @param company what company the stocks are coming from
      */
-    public void buyStock(Stock stock){
+    public void buyStock(Company company){
+        Stock stock = new Stock(company);
         stockList.add(stock);
         setMoney(getMoney() - stock.getParentCompany().calculateStockPrice());
     }
@@ -105,13 +101,13 @@ public class Player{
     /**
      * Player chooses to sell 1 - 3 stocks
      * Update action already calculated if they have enough stocks to sell.
-     * @param parentCompany stocks from the company they would like to sell.
+     * @param defunctCo stocks from the company they would like to sell.
      * @param numberOfStocks the number of stocks they are selling
      */
-    public void sellStock(Company parentCompany, int numberOfStocks){
+    public void sellStock(Company defunctCo, int numberOfStocks){
         for (Stock stock : stockList){
             if(numberOfStocks > 0) {
-                if (stock.getParentCompany() == parentCompany) {
+                if (stock.getParentCompany() == defunctCo) {
                     stockList.remove(stock);
                     setMoney(getMoney() + stock.getParentCompany().calculateStockPrice());
                     numberOfStocks--;
@@ -123,24 +119,31 @@ public class Player{
     /**
      * Keep the stocks from a company after a merge
      * Update action already calculated if they have enough stocks to keep
+     * No action is needed, since the price of a stock is dynamically calculated with company.calculateStockPrice()
      * @param parentCompany stocks from the company they would like to keep.
      * @param numberOfStocks the number of stocks they are keep
      */
-    public void keepStock(Company winnerCompany, int numberOfStocks){
-        // Do nothing
+    public void keepStock(Company defunctCo, int numberOfStocks){
+        // No editing of the player stocks is needed.
     }
 
     /**
      * Trades stocks from a defunct company to the larger company
      * Currently doesn't remove stock from the defunct company.
-     * @param parentCompany stocks from the company they would like to sell.
+     * @param winnerCompany the company that won the merge
+     * @param defunctCompany stocks from the company they would like to sell.
      * @param numberOfStocks the number of stocks they are selling
      */
-    public void tradeStock(Company winnerCompany, int numberOfStocks){
-        int stocksTraded = 0;
-        for (int i = 0; i < numberOfStocks; i++){
+    public void tradeStock(Company winnerCompany, Company defunctCompany, int numberOfStocks){
+        for (int i = 0; i < numberOfStocks; i++){ // Give the player the winning stock
             Stock newStock = new Stock(winnerCompany);
             stockList.add(newStock);
+        }
+        for(Stock stock : stockList){ // remove the defunct company stocks
+            if(numberOfStocks != 0 && stock.getParentCompany() == winnerCompany) {
+                stockList.remove(stock);
+                numberOfStocks--;
+            }
         }
     }
 

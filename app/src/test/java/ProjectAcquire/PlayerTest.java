@@ -93,12 +93,11 @@ public class PlayerTest {
         testCo.setNewStockPrice();
 
         List<Stock> testStockList = new ArrayList<>();
-        Stock test_stock = TestHelper.helperMethod_customStock("Sackson");
         Player testPlayer = new Player("P1", helperTileList, 1000);
         testPlayer.setStockList(testStockList);
-        testPlayer.buyStock(test_stock);
+        testPlayer.buyStock(testCo);
 
-        assertEquals(1000, testPlayer.getMoney());
+        assertEquals(200, testPlayer.getMoney());
     }
 
     /**
