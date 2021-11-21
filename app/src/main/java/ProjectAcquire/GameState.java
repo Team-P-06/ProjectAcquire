@@ -64,7 +64,6 @@ public class GameState {
         this.currentPlayer = playerList.get(0);
         this.currentBoard = currentBoard;
         this.playerList = playerList;
-        // this.currentPlayer = playerList.peekFirst();
     }
 
     //default getInstance
@@ -249,62 +248,27 @@ public class GameState {
      * @throws IOException
      */
     public void getTileChoice(Tile tile, Player player) throws Exception {
-        player.placeTile(tile); // Might want to change this when we implement dead tiles.
-        currentBoard.checkForActionInitiation(tile);
-
+        player.placeTile(tile); // Might want to move this when we implement dead tiles.
         int action = currentBoard.checkForActionInitiation(tile);
-        //System.out.println(action);
+
         if (action == 0) { // If not chartering then jump to buying stocks
             buyStocksInterrupt();
         }
         else if (action == 1){ // If we place a tile next to another empty tile.
-            if(currentBoard.getUncharteredCompanies().size() > 1) { // If there are companies to charter (DEFAULT is alway unchartered)
+            if(currentBoard.getUncharteredCompanies().size() > 1) { // If there are companies to charter (DEFAULT is always uncharted)
                 charterChoiceInterrupt(); // UI calls addToACompany -- > board.charter(playerChoice) --> buyInterrupt
             }
             else{ buyStocksInterrupt(); }
 
         }
         else if (action == 2){ // If we place a tile next to another company
-            // currentBoard.updateCompanyTiles(); //Currently don't have information about the company that's
-                                                  // increasing, would have to be done inside the function.
-
             Company adjComp = currentBoard.companiesAroundTile(tile).get(0); //Gets the one (should only be one) company around the tile.
             currentBoard.charterLogic(adjComp); //add flipped tile to adjacent company.
-
-            buyStocksInterrupt(); // after the size is increased, let players buy stocks
+            buyStocksInterrupt();
         }
         else if( action == 3){ //If there is a merge action needed
-
             List<Company> companiesAroundTile = currentBoard.companiesAroundTile(tile);
-            List<Company> tiedCompanies = new ArrayList<Company>();
-            //check which company around the current tile is the biggest
-            Company biggestCompany;
-            int currentMost = 0;
-            for(Company c: companiesAroundTile){
-                if (c.getTilesOnBoard()>currentMost){
-                    biggestCompany = c;
-                    currentMost = c.getTilesOnBoard();
-                }
-            }
-            //checks if the x amount of largest companies are tied.
-            for(Company c: companiesAroundTile){
-                if(c.getTilesOnBoard()==currentMost){
-                    tiedCompanies.add(c);
-                }
-            }
-
-            if (tiedCompanies.size()>1){ //If there are equal companies in a merge
-                List<Company> choicelist = currentBoard.checkEqualsMerge();
-                mergeChoiceInterrupt(choicelist); // Player choice will then call merge(winnerCompany selected)
-            }
-            else { //No equal companies during a merge.
-                // This needs to know the list of loserCompanies and the winner company.
-                // mergeInterrupt will need the list of loserCompanies and the winnerCompany
-                //List<Company> defunctCo = currentBoard.getDefunctCompany();
-
-                //currentBoard.merge(tiedCompanies.get(0)); // Merge the companies
-                //mergeInterrupt(Company winnerCompany, List<Company> defunctCompanies); // Start the player selling/trading/keeping stocks turn
-            }
+            mergeInterrupt(companiesAroundTile);
         }
     }
 
@@ -320,7 +284,7 @@ public class GameState {
     }
 
     /**
-     * Loops until the player has bought 3 stocks or can't afford anymore (or hits "confirm").
+     * Lets the current player buy up to 3 stocks if they have enough money.
      * Then it sets up the next players turn.
      * @throws IOException
      */
@@ -334,14 +298,13 @@ public class GameState {
     }
 
     /**
-     * Update for when a merge occurs, creates the options for players to sell, trade, or keep stocks.
-     * This should be called mutable times to update every time for the "sub turn" during a merge.
-     * @param defunctCompanies the company that is being destroyed from the merge.
+     * Lets a player choose the winner company if there is an equal, merges the companies and starts the sell phase.
+     * @param mergingCompanies the companies that are being merged
      * @throws IOException
      */
-    public void mergeInterrupt(Company winnerCompany, List<Company> defunctCompanies) throws IOException{
+    public void mergeInterrupt(List<Company> mergingCompanies) throws IOException{
         Update update = new Update();
-        update.mergeUI(this, winnerCompany, defunctCompanies);
+        update.mergeUI(this, mergingCompanies);
     }
 
     /**
@@ -354,13 +317,12 @@ public class GameState {
         update.buyUI(this);
     }
 
+    /**
+     * Shows the options for a player to choose what company they would like to charter
+     * @throws IOException
+     */
     public void charterChoiceInterrupt() throws IOException {
         Update update = new Update();
         update.charterChoiceUI(this);
-    }
-
-    public void mergeChoiceInterrupt(List<Company> equalCompanies) throws IOException {
-        Update update = new Update();
-        update.mergeChoiceUI(this, equalCompanies);
     }
 }
