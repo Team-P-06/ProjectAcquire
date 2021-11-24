@@ -176,6 +176,8 @@ public class Board {
      */
     public List<Tile> getTilesAround(int[] coord) throws Exception {
 
+
+
       List<Tile> tilesAround =  new ArrayList<Tile>();
 
       Tile south = getAdjacentTile(coord,"SOUTH");
@@ -194,15 +196,10 @@ public class Board {
         if(east!=null){
             tilesAround.add(east);
         }
-        System.out.println("Tiles around "+ coord[0]+ " " + coord[1]+ ": ");
+
+    tilesAround.removeIf(tl -> Arrays.equals(tl.getCoord(), new int[]{-1, -1})); //tilesAround shouldn't include tiles off border.
 
 
-        tilesAround.removeIf(tl -> Arrays.equals(tl.getCoord(), new int[]{-1, -1})); //tilesAround shouldn't include tiles off border.
-
-
-        for(Tile tl : tilesAround) {
-            System.out.print(tl);
-        }
         return tilesAround;
     }
 
@@ -469,13 +466,19 @@ public class Board {
             foundTiles = 0; //reset counter
             for (Tile tile : getTileList()) { //for every tile on the board
                 List<Tile> tilesAroundThisPos = getTilesAround(tile.getCoord());
+                //System.out.println(tilesAroundThisPos.toString());
                 boolean one_of_the_tiles_around_the_current_tile_has_our_company = false; //explains itself
+
                 for (Tile tl : tilesAroundThisPos) {
-                    if (tl.getCompany().equals(company)) {
+
+                    System.out.println(tl.getCompany().getCompanyName()+ " " + company.getCompanyName());
+                    if (tl.getCompany().getCompanyName().equals(company.getCompanyName())) {
                         one_of_the_tiles_around_the_current_tile_has_our_company = true;
                     }
                     //If our current tile is flipped but of a default company, and
                     // if we have an adjacent chartered tile
+
+                    System.out.println("Name of company: "+tile.getCompany().getCompanyName()+ " isFlipped: "+ tile.isFlipped()+ " tilearoundhascurrentcomp: "+one_of_the_tiles_around_the_current_tile_has_our_company );
                     if ( tile.getCompany().getCompanyName().equals("DEFAULT") &&
                             tile.isFlipped() && one_of_the_tiles_around_the_current_tile_has_our_company) {
                         // I don't think this is every being exectued when chartering. - Show
@@ -484,7 +487,7 @@ public class Board {
                     }
                 }
             }
-            // System.out.println("Company "+ company.getCompanyName() + " is now chartered");
+             System.out.println("Company "+ company.getCompanyName() + " is now chartered");
         }
     }
 

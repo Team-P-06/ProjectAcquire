@@ -153,6 +153,9 @@ public class GameState {
             } catch (Exception e) {
                 e.printStackTrace();
         }
+//        for (Tile tl: currentBoard.getTileList()){
+//            System.out.print(" Tile: " + tl + " is flipped "+tl.isFlipped());
+//        }
     }
 
     /**
