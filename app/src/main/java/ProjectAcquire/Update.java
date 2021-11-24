@@ -61,11 +61,10 @@ public class Update {
      * @param defunctCompany the company that's going under
      * @throws IOException
      */
-    public void mergeUI(GameState gameState, Company winnerCompany, List<Company> defunctCompany) throws IOException {
+    public void mergeUI(GameState gameState, List<Company> mergingCompanies) throws IOException {
         update(gameState);
         boardUpdater.update(gameState, UIController, false);
-        actionUpdater.update(gameState, UIController, false, winnerCompany,
-                defunctCompany, null);
+        actionUpdater.update(gameState, UIController, false, mergingCompanies);
     }
 
     /**
@@ -76,8 +75,7 @@ public class Update {
     public void buyUI(GameState gameState) throws IOException {
         update(gameState);
         boardUpdater.update(gameState, UIController, false);
-        actionUpdater.update(gameState, UIController, false, null,
-                null, null);
+        actionUpdater.update(gameState, UIController, false, null);
     }
 
     /**
@@ -88,20 +86,7 @@ public class Update {
     public void charterChoiceUI(GameState gameState) throws IOException {
         update(gameState);
         boardUpdater.update(gameState, UIController, false);
-        actionUpdater.update(gameState, UIController, true, null, null, null);
-    }
-
-    /**
-     * Generates a UI for a list of companies if a merge has equal number of tiles in a company
-     * @param gameState the current gamestate
-     * @param companyChoiceList the list of companies that have the same number of tiles on the board.
-     * @throws IOException
-     */
-    public void mergeChoiceUI(GameState gameState, List<Company> companyChoiceList) throws IOException{
-        update(gameState);
-        boardUpdater.update(gameState, UIController, false);
-        actionUpdater.update(gameState, UIController, false, null,
-                null, companyChoiceList);
+        actionUpdater.update(gameState, UIController, true, null);
     }
 
     public void nextTurnUI(GameState gameState) throws IOException {

@@ -481,7 +481,7 @@ public class Board {
                     System.out.println("Name of company: "+tile.getCompany().getCompanyName()+ " isFlipped: "+ tile.isFlipped()+ " tilearoundhascurrentcomp: "+one_of_the_tiles_around_the_current_tile_has_our_company );
                     if ( tile.getCompany().getCompanyName().equals("DEFAULT") &&
                             tile.isFlipped() && one_of_the_tiles_around_the_current_tile_has_our_company) {
-                        // I don't think this is every being exectued when chartering. - Show
+                        // I don't think this is every being executed when chartering. - Show
                         tile.setCompany(company); //set our current tile to be part of our passed in company
                         foundTiles++; // if this is hit, we have found a tile, so our loop will restart after it hits the last tile on the board.
                     }
