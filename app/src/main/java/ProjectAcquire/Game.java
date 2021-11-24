@@ -56,8 +56,6 @@ public class Game {
     }
 
 
-
-
     /**
      * Turn method that will determine which players turn it is
      * @return

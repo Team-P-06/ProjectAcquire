@@ -465,6 +465,7 @@ public class Board {
         while (foundTiles > 0) { //while we still have tiles to add to companies
             foundTiles = 0; //reset counter
             for (Tile tile : getTileList()) { //for every tile on the board
+                System.out.println(tile);
                 List<Tile> tilesAroundThisPos = getTilesAround(tile.getCoord());
                 //System.out.println(tilesAroundThisPos.toString());
                 boolean one_of_the_tiles_around_the_current_tile_has_our_company = false; //explains itself
@@ -478,7 +479,7 @@ public class Board {
                     //If our current tile is flipped but of a default company, and
                     // if we have an adjacent chartered tile
 
-                    System.out.println("Name of company: "+tile.getCompany().getCompanyName()+ " isFlipped: "+ tile.isFlipped()+ " tilearoundhascurrentcomp: "+one_of_the_tiles_around_the_current_tile_has_our_company );
+                 //   System.out.println("Name of company: "+tile.getCompany().getCompanyName()+ " isFlipped: "+ tile.isFlipped()+ " tilearoundhascurrentcomp: "+one_of_the_tiles_around_the_current_tile_has_our_company );
                     if ( tile.getCompany().getCompanyName().equals("DEFAULT") &&
                             tile.isFlipped() && one_of_the_tiles_around_the_current_tile_has_our_company) {
                         // I don't think this is every being executed when chartering. - Show
@@ -487,7 +488,7 @@ public class Board {
                     }
                 }
             }
-             System.out.println("Company "+ company.getCompanyName() + " is now chartered");
+             //System.out.println("Company "+ company.getCompanyName() + " is now chartered");
         }
     }
 

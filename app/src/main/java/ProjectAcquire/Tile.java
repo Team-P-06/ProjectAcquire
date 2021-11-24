@@ -89,7 +89,7 @@ public class Tile {
      */
     public String tileCoordToString() {
         String tileString;
-        int[] coord = getCoord();
+        //int[] coord = getCoord(); //deprecating since coord is an instance variable and we wont be editing it.
         int row = coord[0];
         String col = Integer.toString(coord[1] + 1);
         switch (row) {
@@ -110,7 +110,9 @@ public class Tile {
     @Override
     public String toString() {
         return "Tile{" +
-                "coord=" + tileCoordToString() +
+                "coord=" + tileCoordToString() + " " + company.getCompanyName() +
                 '}';
     }
+
+
 }
