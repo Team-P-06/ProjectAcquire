@@ -64,7 +64,7 @@ public class UpdateAction{
 
         if(charter){ // Charter a new company
             showCharterMenu(gameState.getCurrentBoard().getUncharteredCompanies());
-
+           // System.out.println("UpdateAction.update() was reached");
         }
 
         else if(listOfMergingCompanies == null) { //If there is no merge. buy stocks
