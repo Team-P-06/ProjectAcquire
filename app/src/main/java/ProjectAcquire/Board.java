@@ -277,14 +277,6 @@ public class Board {
         charteredCompanies.add(company);
         uncharteredCompanies.remove(company);
 
-        Tile charteredTile = CompanyLedger.getInstance().getCharterTile();
-        int[] charteredTilecoord = CompanyLedger.getInstance().getCharterTile().getCoord();
-        for(Tile tl: tileList)
-        {
-            if(Arrays.equals(tl.getCoord(),charteredTilecoord)){
-                tl.setCompany(charteredTile.getCompany());
-            }
-        }
         //initiates charter logic. This will do things like initiate a user action to decide
         //which company they want to charter, and then fill in data like initial stock price and
         //initial stocks on board.
