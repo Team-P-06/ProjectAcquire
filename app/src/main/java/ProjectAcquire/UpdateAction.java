@@ -30,6 +30,7 @@ package ProjectAcquire;
 import javafx.scene.control.Button;
 import org.checkerframework.checker.guieffect.qual.UI;
 import org.checkerframework.checker.units.qual.C;
+import org.checkerframework.checker.units.qual.Length;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -43,7 +44,7 @@ public class UpdateAction{
 
     private FXController UIController;
     private GameState gameState;
-    private Update update = new Update();
+    //private Update update = new Update();
 
     /**
      * Updates the list of companies that you can buy stocks from. if merge is true, update via merge method with different choice UI.
@@ -63,6 +64,7 @@ public class UpdateAction{
 
         if(charter){ // Charter a new company
             showCharterMenu(gameState.getCurrentBoard().getUncharteredCompanies());
+
         }
 
         else if(listOfMergingCompanies == null) { //If there is no merge. buy stocks
@@ -360,7 +362,13 @@ public class UpdateAction{
     }
 
 
-    private void showCharterMenu(List<Company> unCharteredComs){
+    /**
+     * This method is called after the board sees that two flipped uchartered tiles are next to eachother.
+     * It presents to the user an option for which company from an unchartered company list to charter.
+     * Then it calls gameState.addToACompany() with the chosen company passed in.
+     * @param unCharteredComs List of current unchartered companies.
+     */
+    private void showCharterMenu(List<Company> unCharteredComs ){
         UIController.getActionLabel().setText("Choose a company to charter");
         UIController.getActionChoiceList().setVisible(true);
         for (Company com : unCharteredComs){
@@ -369,6 +377,10 @@ public class UpdateAction{
             choiceButton.setStyle("-fx-background-color: ffffff; -fx-border-color: black");
             choiceButton.setOnAction(a -> {
                 try {
+
+                   Tile charterTile = CompanyLedger.getInstance().getCharterTile();
+                   charterTile.setCompany(com);
+                   CompanyLedger.getInstance().setCharterComp(com);
                     gameState.addToACompany(com);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -390,14 +402,14 @@ public class UpdateAction{
         Company biggestCompany = mergingCompanies.get(0);
         int currentMost = 0;
         for(Company c: mergingCompanies){
-            if (c.getTilesOnBoard()>currentMost){
+            if (c.getNumTiles()>currentMost){
                 biggestCompany = c;
-                currentMost = c.getTilesOnBoard();
+                currentMost = c.getNumTiles();
             }
         }
         //checks if the x amount of largest companies are tied.
         for(Company c: mergingCompanies){
-            if(c.getTilesOnBoard()==currentMost){
+            if(c.getNumTiles()==currentMost){
                 listOfEqualCompanies.add(c);
             }
         }

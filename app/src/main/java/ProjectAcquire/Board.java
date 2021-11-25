@@ -47,13 +47,11 @@ public class Board {
     @Getter @Setter List<Tile> tileList;
     @Getter @Setter List<List<Tile>> tileList2D;
 
-
     /**
      * @param companyList list of companies to update companies to
      * @return A list of the current companies
      */
     private @Getter @Setter List<Company> uncharteredCompanies;
-
     private @Getter @Setter List<Company> charteredCompanies;
     private @Getter @Setter List<Player> playerList;
     private @Getter @Setter Player CurrentPlayer;
@@ -124,8 +122,8 @@ public class Board {
      * @param company A company
      * @return
      */
-    int getTilesOnBoard(Company company) {
-        int tilesOnBoard = company.getTilesOnBoard();
+    List<Tile> getTilesOnBoard(Company company) {
+        List<Tile> tilesOnBoard = company.getTilesOnBoard();
         return tilesOnBoard;
     }
 
@@ -134,7 +132,7 @@ public class Board {
      * @return the number of tiles the company has on the board
      */
    public int getCompanyNumberOfTiles(Company company){
-        return company.getTilesOnBoard();
+        return company.getNumTiles();
     }
 
     /**
@@ -260,7 +258,7 @@ public class Board {
     private Tile arrayEquals(int[] adj) {
         for (Tile tl : getTileList()) {
             if (Arrays.equals(tl.getCoord(), adj)) {
-                   System.out.println("the tile associated with "+ adj[0] + " " + adj[1] + " is "+ tl);
+                   //System.out.println("the tile associated with "+ adj[0] + " " + adj[1] + " is "+ tl);
                 return tl;
             }
         }
@@ -279,12 +277,18 @@ public class Board {
         charteredCompanies.add(company);
         uncharteredCompanies.remove(company);
 
+        Tile charteredTile = CompanyLedger.getInstance().getCharterTile();
+        int[] charteredTilecoord = CompanyLedger.getInstance().getCharterTile().getCoord();
+        for(Tile tl: tileList)
+        {
+            if(Arrays.equals(tl.getCoord(),charteredTilecoord)){
+                tl.setCompany(charteredTile.getCompany());
+            }
+        }
         //initiates charter logic. This will do things like initiate a user action to decide
         //which company they want to charter, and then fill in data like initial stock price and
         //initial stocks on board.
         charterLogic(company);
-
-
     }
 
     /**
@@ -299,12 +303,13 @@ public class Board {
 
 
     /**
+     * Alex Note: DEPRECIATED
      * This method will set the number of tiles on the board that a passed in company will have. It should be called by our checkForAction method as part of an action to execute.
      * @param company Company to update the tiles of
      * @param tileNum number of tiles the company should now have
      */
     private void updateCompanyTiles(Company company, int tileNum){
-        company.setTilesOnBoard(tileNum);
+        company.setNumTiles(tileNum);
     }
 
     void setDeadTile(Tile tile){} //don't remember what this is. Does it remove a tile from the board?
@@ -465,23 +470,25 @@ public class Board {
         while (foundTiles > 0) { //while we still have tiles to add to companies
             foundTiles = 0; //reset counter
             for (Tile tile : getTileList()) { //for every tile on the board
-                System.out.println(tile);
+                if(!tile.getCompany().getCompanyName().equals("DEFAULT")) {
+                    System.out.println(tile);
+                }
                 List<Tile> tilesAroundThisPos = getTilesAround(tile.getCoord());
                 //System.out.println(tilesAroundThisPos.toString());
                 boolean one_of_the_tiles_around_the_current_tile_has_our_company = false; //explains itself
 
                 for (Tile tl : tilesAroundThisPos) {
 
-                    System.out.println(tl.getCompany().getCompanyName()+ " " + company.getCompanyName());
+                    System.out.println(tl.tileCoordToString()+ " " + tl.getCompany().getCompanyName()+ " " + company.getCompanyName());
                     if (tl.getCompany().getCompanyName().equals(company.getCompanyName())) {
                         one_of_the_tiles_around_the_current_tile_has_our_company = true;
                     }
                     //If our current tile is flipped but of a default company, and
                     // if we have an adjacent chartered tile
-
                  //   System.out.println("Name of company: "+tile.getCompany().getCompanyName()+ " isFlipped: "+ tile.isFlipped()+ " tilearoundhascurrentcomp: "+one_of_the_tiles_around_the_current_tile_has_our_company );
                     if ( tile.getCompany().getCompanyName().equals("DEFAULT") &&
                             tile.isFlipped() && one_of_the_tiles_around_the_current_tile_has_our_company) {
+                        System.out.println("TILE AROUND HAS COMPANY");
                         // I don't think this is every being executed when chartering. - Show
                         tile.setCompany(company); //set our current tile to be part of our passed in company
                         foundTiles++; // if this is hit, we have found a tile, so our loop will restart after it hits the last tile on the board.

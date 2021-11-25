@@ -81,7 +81,7 @@ public class Player{
             tile.setFlipped();
             tileList.remove(tile);
             tile.setDealt(false);
-            getTileList().remove(tile);
+           // getTileList().remove(tile);
         } catch (Exception e) {
             e.printStackTrace();
         }

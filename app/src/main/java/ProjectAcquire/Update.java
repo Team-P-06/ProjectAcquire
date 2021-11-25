@@ -39,7 +39,7 @@ import java.util.List;
 public class Update {
 
     @Getter
-    FXController UIController = new FXController();
+    public FXController UIController = new FXController();
     static final UpdateBoard boardUpdater = new UpdateBoard();
     static final UpdateHotel hotelUpdater = new UpdateHotel();
     static final UpdatePlayer playerUpdater = new UpdatePlayer();

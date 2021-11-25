@@ -252,6 +252,7 @@ public class GameState {
      */
     public void getTileChoice(Tile tile, Player player) throws Exception {
         player.placeTile(tile); // Might want to move this when we implement dead tiles.
+
         int action = currentBoard.checkForActionInitiation(tile);
 
         if (action == 0) { // If not chartering then jump to buying stocks
@@ -259,6 +260,7 @@ public class GameState {
         }
         else if (action == 1){ // If we place a tile next to another empty tile.
             if(currentBoard.getUncharteredCompanies().size() > 1) { // If there are companies to charter (DEFAULT is always uncharted)
+                CompanyLedger.getInstance().setCharterTile(tile);
                 charterChoiceInterrupt(); // UI calls addToACompany -- > board.charter(playerChoice) --> buyInterrupt
             }
             else{ buyStocksInterrupt(); }
@@ -325,7 +327,9 @@ public class GameState {
      * @throws IOException
      */
     public void charterChoiceInterrupt() throws IOException {
+
         Update update = new Update();
-        update.charterChoiceUI(this);
+        update.charterChoiceUI(this); //passes in the tile that caused the charter
+
     }
 }

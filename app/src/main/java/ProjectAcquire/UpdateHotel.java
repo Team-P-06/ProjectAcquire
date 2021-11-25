@@ -113,7 +113,7 @@ public class UpdateHotel implements Updatable {
             curCompanyObserList.clear();
             //curCompanyObserList.add(0); // Available stocks left
             addPlayerStocksToHotel(playerList, curCompanyListView, curCompanyObserList, company.getCompanyName());
-            curCompanyObserList.add(company.getTilesOnBoard());
+            curCompanyObserList.add(company.getNumTiles());
             curCompanyObserList.add(company.setNewStockPrice());
             curCompanyListView.setItems(curCompanyObserList);
         }
