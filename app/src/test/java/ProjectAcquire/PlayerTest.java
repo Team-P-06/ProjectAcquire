@@ -89,7 +89,7 @@ public class PlayerTest {
         List<Tile> helperTileList = TestHelper.helperMethod_tileList_company1_3_coord_A1_A3();
         Company testCo = TestHelper.helperMethod_Company("Sackson");
 
-        testCo.setTilesOnBoard(15);
+        testCo.setNumTiles(15);
         testCo.setNewStockPrice();
 
         List<Stock> testStockList = new ArrayList<>();

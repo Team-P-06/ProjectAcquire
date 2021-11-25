@@ -31,14 +31,17 @@ package ProjectAcquire;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
+import java.util.List;
+
+@Getter @Setter
 public class Company {
 
-    private String companyName;
-    @Setter private int tilesOnBoard;
-    @Setter private int stockPrice;
-    @Setter private boolean chartered;
-    @Setter private boolean isPermanent;
+     private String companyName;
+     private List<Tile> tilesOnBoard;
+     private int numTiles;
+     private int stockPrice;
+     private boolean chartered;
+     private boolean isPermanent;
 
 
     /**
@@ -49,8 +52,7 @@ public class Company {
         this.stockPrice = 100;
         this.chartered = false;
         this.isPermanent = false;
-        this.tilesOnBoard = 0;
-
+        this.numTiles = 0;
     }
 
     /**
@@ -65,7 +67,7 @@ public class Company {
         this.stockPrice = sp;
         this.chartered = chart;
         this.isPermanent = perm;
-        this.tilesOnBoard = 0;
+        this.numTiles = 0;
     }
 
     @Override
@@ -85,7 +87,7 @@ public class Company {
      */
     public int calculateStockPrice(){
         int stockPrice = 0;
-        switch (tilesOnBoard){
+        switch (numTiles){
             case 0 -> stockPrice = 0;
             case 1 -> stockPrice = 0;
             case 2 -> stockPrice = 200;
@@ -93,14 +95,14 @@ public class Company {
             case 4 -> stockPrice = 400;
             case 5 -> stockPrice = 500;
         }
-        if (tilesOnBoard >=6 && tilesOnBoard <= 10){ stockPrice = 700;}
-        else if (tilesOnBoard >=11 && tilesOnBoard <= 20){ stockPrice = 800;}
-        else if (tilesOnBoard >=21 && tilesOnBoard <= 30){ stockPrice = 900;}
-        else if (tilesOnBoard >=31 && tilesOnBoard <= 40){ stockPrice = 800;}
-        else if (tilesOnBoard >= 32) {stockPrice =  1000; }
+        if (numTiles >=6 && numTiles <= 10){ stockPrice = 700;}
+        else if (numTiles >=11 && numTiles <= 20){ stockPrice = 800;}
+        else if (numTiles >=21 && numTiles <= 30){ stockPrice = 900;}
+        else if (numTiles >=31 && numTiles <= 40){ stockPrice = 800;}
+        else if (numTiles >= 32) {stockPrice =  1000; }
 
         if (companyName.equals("Worldwide") || companyName.equals("Sackson")){
-            stockPrice = stockPrice;
+            stockPrice +=0;
         }
         else if (companyName.equals("Festival") || companyName.equals("Imperial") || companyName.equals("American")){
             stockPrice += 100;

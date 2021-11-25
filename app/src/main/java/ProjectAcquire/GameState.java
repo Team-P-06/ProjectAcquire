@@ -198,7 +198,6 @@ public class GameState {
         //ALEX NOTE: Tried using scanners but something something you have to set up event handlers. So I hardcoded
         //a list of predestined player actions to test things instead.
         int[] preDestinedActions = {1,1};
-
         //Scanner scanner = new Scanner(System.in);  // Create a Scanner object
         //System.out.println("Choose a tile from your hand. (1,2,3,4,5,6)");
        //String userInput = scanner.nextLine();  // Read user input
@@ -222,7 +221,6 @@ public class GameState {
             //and our charterLogic algorithm will deal with what happens next. (the consequences of this chartering)
             currentBoard.charter(companyChosen);
         }
-
         //A tile was placed but didn't cause a charter.
         if (actionType == 0){
             System.out.println("The chosen player tile is flipped is: " + tileChosen.isFlipped()); //Nothing in the UI to indicate that a tile is flipped currently
@@ -252,21 +250,30 @@ public class GameState {
      */
     public void getTileChoice(Tile tile, Player player) throws Exception {
         player.placeTile(tile); // Might want to move this when we implement dead tiles.
+
         int action = currentBoard.checkForActionInitiation(tile);
 
         if (action == 0) { // If not chartering then jump to buying stocks
+            System.out.println("ACTION 0");
             buyStocksInterrupt();
         }
         else if (action == 1){ // If we place a tile next to another empty tile.
+            System.out.println("ACTION 1");
             if(currentBoard.getUncharteredCompanies().size() > 1) { // If there are companies to charter (DEFAULT is always uncharted)
+                CompanyLedger.getInstance().setCharterTile(tile);
                 charterChoiceInterrupt(); // UI calls addToACompany -- > board.charter(playerChoice) --> buyInterrupt
             }
             else{ buyStocksInterrupt(); }
-
         }
         else if (action == 2){ // If we place a tile next to another company
-            Company adjComp = currentBoard.companiesAroundTile(tile).get(0); //Gets the one (should only be one) company around the tile.
-            currentBoard.charterLogic(adjComp); //add flipped tile to adjacent company.
+            Company adjComp = new Company();
+            for(Company com: currentBoard.companiesAroundTile(tile)){
+                if(!com.getCompanyName().equals("DEFAULT")){
+                    adjComp = com;
+                }
+            }
+            System.out.println("ACTION 2");
+            currentBoard.addToCompLogic(adjComp); //add flipped tile to adjacent company.
             buyStocksInterrupt();
         }
         else if( action == 3){ //If there is a merge action needed
@@ -326,6 +333,7 @@ public class GameState {
      */
     public void charterChoiceInterrupt() throws IOException {
         Update update = new Update();
-        update.charterChoiceUI(this);
+        update.charterChoiceUI(this); //passes in the tile that caused the charter
+
     }
 }
