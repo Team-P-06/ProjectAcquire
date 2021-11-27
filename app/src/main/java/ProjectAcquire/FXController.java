@@ -27,11 +27,9 @@
 
 package ProjectAcquire;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -80,6 +78,7 @@ public class FXController {
      * @throws IOException
      */
     public void showBoardMenu(FXMLLoader loader) throws IOException {
+        Platform.setImplicitExit(false);
         mainStage.hide();
         mainStage.setScene(new Scene(loader.load()));
         mainStage.show();
@@ -107,7 +106,6 @@ public class FXController {
 
         GameState gameState = newGame.start();
         update.nextTurnUI(gameState);
-        //newGame.runGame(); //ALEX NOTE: runGame is never being reached
     }
 
     /**

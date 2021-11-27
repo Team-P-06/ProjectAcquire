@@ -37,15 +37,13 @@ import java.io.IOException;
  */
 public class App extends Application {
 
-    static FXController controller;
     /**
-     * Starts the JavaFX UI. Visuals are found in MainMenu.fxml in the resources folder. Logic is in FXController.java.
+     * Starts the JavaFX UI. Visuals are found in MainMenu.fxml in the resources' folder. Logic is in FXController.java.
      * @param stage default stage for application
      * @throws IOException
      */
     @Override
     public void start(Stage stage) throws IOException {
-        //FXController mainMenu = new FXController();
         Update update = new Update();
        FXController mainMenu = update.UIController;
         mainMenu.showMainMenu();

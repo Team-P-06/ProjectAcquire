@@ -39,7 +39,7 @@ import java.util.List;
 public class Update {
 
     @Getter
-    public FXController UIController = new FXController();
+    public static final FXController UIController = new FXController();
     static final UpdateBoard boardUpdater = new UpdateBoard();
     static final UpdateHotel hotelUpdater = new UpdateHotel();
     static final UpdatePlayer playerUpdater = new UpdatePlayer();
@@ -49,7 +49,6 @@ public class Update {
      * Main update logic that branches out and updates different parts of the UI(Player data, Board, Company stocks, and stock options
      */
     public void update(GameState gameState) throws IOException {
-        UIController.getMainStage().hide();
         UIController.showBoardMenu(UIController.getGameBoardLoader());
         hotelUpdater.update(gameState, UIController);
         playerUpdater.update(gameState, UIController);
@@ -58,7 +57,7 @@ public class Update {
     /**
      * Generates a specific UI for if a merge occurs
      * @param gameState current gamestate
-     * @param defunctCompany the company that's going under
+     * @param mergingCompanies List of companies going under
      * @throws IOException
      */
     public void mergeUI(GameState gameState, List<Company> mergingCompanies) throws IOException {
@@ -92,6 +91,5 @@ public class Update {
     public void nextTurnUI(GameState gameState) throws IOException {
         update(gameState);
         boardUpdater.update(gameState, UIController, true);
-        //actionUpdater.update(gameState, UIController, false, null, null, null);
     }
 }
