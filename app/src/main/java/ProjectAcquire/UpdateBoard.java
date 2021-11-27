@@ -90,11 +90,8 @@ public class UpdateBoard {
             if(placeableTiles) { // If this is a fresh turn allow the tile to be placed.
                 UIController.getActionLabel().setText("Place a tile");
                 currentButton.setOnAction(action -> {
-                    try { gameState.getTileChoice(tile, currentPlayer); }
-                    catch (IOException e) { e.printStackTrace(); } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                });
+                    try { gameState.getTileChoice(tile, currentPlayer); } //Alex NOTE: This is Logic, and is the first step in a charter
+                    catch (IOException e) { e.printStackTrace(); } catch (Exception e) {e.printStackTrace();} });
             }
             UIController.getTileGrid().add(currentButton, tile.getCoord()[1], tile.getCoord()[0]);
         }
@@ -156,7 +153,7 @@ public class UpdateBoard {
     private boolean endGameCondion(List<Company> charteredCom){
         int numberOfPermanentCom = 0;
         for (Company curCompany : charteredCom){
-            if (curCompany.getTilesOnBoard() >= 41){ return true; }
+            if (curCompany.getNumTiles() >= 41){ return true; }
             if (curCompany.isPermanent()){ numberOfPermanentCom++; }
         }
         return numberOfPermanentCom == 7;

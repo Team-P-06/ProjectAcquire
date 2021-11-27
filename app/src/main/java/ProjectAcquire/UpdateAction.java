@@ -29,11 +29,11 @@ package ProjectAcquire;
 
 import javafx.scene.control.Button;
 import org.checkerframework.checker.guieffect.qual.UI;
+import org.checkerframework.checker.units.qual.C;
+import org.checkerframework.checker.units.qual.Length;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -45,22 +45,16 @@ public class UpdateAction{
 
     private FXController UIController;
     private GameState gameState;
-    private Update update = new Update();
+    //private Update update = new Update();
 
     /**
      * Updates the list of companies that you can buy stocks from. if merge is true, update via merge method with different choice UI.
-     * The huge list of parameters is really gross, but I unfortunately don't have time to implement a better specific update method.
-     * The booleans are pretty much mutually exclusive.
      * @param gameState The current Gamestate
      * @param UIController The FXController to update the UI
-     * @param charter weather or not the player placed a tile and needs to choose a buisness to charter.
-     * @param merge weather or not the a merge is happening to display that specific UI for it.
-     * @param defunctCompanies If a merge is happening what buisness is going defunct. Null if merge == false
-     * @param mergeChoice weather or not during a merge 2 companies have the same amount of tiles.
-     * @param listOfEqualCompanies the list of companies that have an equal amount of tiles. Null if mergeChoice == false.
+     * @param charter weather or not the player placed a tile and needs to choose a business to charter.
+     * @param listOfMergingCompanies the list of companies that are being merged together. This is essentially a merge flag.
      */
-    public void update(GameState gameState, FXController UIController, boolean charter, Company winnerCompany,
-                       List<Company> defunctCompanies, List<Company> listOfEqualCompanies) {
+    public void update(GameState gameState, FXController UIController, boolean charter, List<Company> listOfMergingCompanies) {
         this.UIController = UIController;
         this.gameState = gameState;
         UIController.getActionChoiceObserList().clear();
@@ -69,9 +63,12 @@ public class UpdateAction{
         UIController.getActionLabel().setText("");
         clearBuyTextBox(); // Hiding buy stocks options
 
-        if(charter){showCharterMenu(gameState, gameState.getCurrentBoard().getUncharteredCompanies());} //Charter a new company
+        if(charter){ // Charter a new company
+            showCharterMenu(gameState.getCurrentBoard().getUncharteredCompanies());
+           // System.out.println("UpdateAction.update() was reached");
+        }
 
-        else if(winnerCompany == null || defunctCompanies == null) { //If there is no merge. buy stocks
+        else if(listOfMergingCompanies == null) { //If there is no merge. buy stocks
             List<Company> charteredCompanyList = gameState.getCurrentBoard().getCharteredCompanies();
             UIController.getActionLabel().setText("Buy up to 3 stocks");
             UIController.getEndTurnButton().setVisible(true);
@@ -83,13 +80,11 @@ public class UpdateAction{
                 catch (Exception e){e.printStackTrace();}
             });
         }
-
-        else if (listOfEqualCompanies != null){ displayMergeChoice(gameState, listOfEqualCompanies); } //Display merge options during an equal merge
-        else{
-            try { //Sell, trade, keep stock menu for merging.
-                showMergeInfo(winnerCompany, defunctCompanies, gameState.getCurrentBoard().getPlayerList());
+        else{ // Merge is happening, check if there is an equal merge then sell, trade, and keep stock.
+            try {
+                checkEqualCompanies(listOfMergingCompanies);
             } catch (Exception e){ e.printStackTrace(); } }
-        UIController.getActionChoiceList().setItems(UIController.getActionChoiceObserList());
+        UIController.getActionChoiceList().setItems(UIController.getActionChoiceObserList()); // Sets the buttons to the list of actions when chartering.
     }
 
     /**
@@ -124,6 +119,9 @@ public class UpdateAction{
         UIController.getTBuyPane().setVisible(false);
     }
 
+    /**
+     * Clears the textboxes for selling stocks
+     */
     private void clearBuyTextBox(){
         UIController.getFBuyTextArea().clear();
         UIController.getWBuyTextArea().clear();
@@ -132,6 +130,16 @@ public class UpdateAction{
         UIController.getIBuyTextArea().clear();
         UIController.getABuyTextArea().clear();
         UIController.getTBuyTextArea().clear();
+    }
+
+    /**
+     * Clears the textboxes for the merge options.
+     */
+    // CHECK TO MAKE SURE THIS DOESN'T BREAK ANYTHING!
+    private void clearMergeTextBox(){
+        UIController.getMergeSellTextArea().clear();
+        UIController.getMergeTradeTextArea().clear();
+        UIController.getMergeKeepTextArea().clear();
     }
 
     /**
@@ -212,16 +220,21 @@ public class UpdateAction{
 
 
     /**
-     * Updates the current states of all the companies stocks.
-     * requires the winning company, list of defunct companies and current list of players.
+     * Shows UI information for the player to choose what to do with their stocks
+     * @param winnerCo The company that won the merge
+     * @param defunctCos The list of companies that are being consumed
+     * @param playerList The list of players in the game.
+     * @param fullDefunctList The original unedited list of defunct companies. (Used to actually merge the companies data)
+     * @throws IOException
      */
-    private void showMergeInfo(Company winnerCo, List<Company> defunctCos, List<Player> playerList) throws IOException {
+    private void showMergeInfo(Company winnerCo, List<Company> defunctCos,
+                               List<Player> playerList, List<Company> fullDefunctList) throws IOException {
         UIController.getMergeOptionPane().setVisible(true); // Show the action options
         UIController.getEndTurnButton().setVisible(true);
         UIController.getActionLabel().setText(playerList.get(0) + ": " + defunctCos.get(0).getCompanyName() + " is going under, get rid of your stocks");
 
         UIController.getEndTurnButton().setOnAction(action -> { // Sets an button to confirm the stocks to sell/trade/keep.
-            try{ checkActionForMerge( winnerCo, defunctCos, playerList); }
+            try{ mergeTurnRotation( winnerCo, defunctCos, playerList, fullDefunctList); }
             catch (Exception e){ e.printStackTrace();}
         });
      }
@@ -233,24 +246,27 @@ public class UpdateAction{
      * @param winnerCo The company who won the merge
      * @param defunctCompanies The companies who are bing consumed by the winner company
      * @param players the current list of players.
+     * @param originalDefunctCompanies The unedited list of defunct Companies
      * @throws IOException
      */
-        private void checkActionForMerge(Company winnerCo, List<Company> defunctCompanies, List<Player> players) throws IOException {
+        private void mergeTurnRotation(Company winnerCo, List<Company> defunctCompanies,
+                                       List<Player> players, List<Company> originalDefunctCompanies) throws IOException {
             List<Player> playerListCopy = new ArrayList<>(players); // Create copies of list for this "sub turn"
             List<Company> companyListCopy = new ArrayList<>(defunctCompanies);
-            if (validateMergeOptions(companyListCopy.get(0), playerListCopy.get(0))){
+            if (validateMergeOptions(companyListCopy.get(0), playerListCopy.get(0))){ // If all the inputs are valid
                 UIController.getInvalidInputLabel().setText(""); // Clear any labels after a success
-                sellTradeKeepStocks(playerListCopy.get(0), winnerCo, companyListCopy.get(0)); // Deals with the current players stocks
+                sellTradeKeepStocks(playerListCopy.get(0), winnerCo, companyListCopy.get(0));
 
                 playerListCopy.remove(0);
                 if(playerListCopy.size() > 0){
-                    showMergeInfo(winnerCo, companyListCopy, playerListCopy); // Let the next player remove stocks
+                    showMergeInfo(winnerCo, companyListCopy, playerListCopy, originalDefunctCompanies);
                 }
                 else if (playerListCopy.size() == 0 && defunctCompanies.size() > 1){ // rotate the defunct company
                     companyListCopy.remove(0);
-                    showMergeInfo(winnerCo, companyListCopy, gameState.getPlayerList());
+                    showMergeInfo(winnerCo, companyListCopy, gameState.getPlayerList(), originalDefunctCompanies);
                 }
-                else{//if (defunctCompanies == null && players == null){ // When both lists are empty the merge turn ends.
+                else{ // When both lists are empty the merge turn ends.
+                    gameState.getCurrentBoard().mergeLogic(winnerCo, originalDefunctCompanies); // Merges the companies and updates the board.
                     gameState.setNextTurn();
                 }
             }
@@ -278,21 +294,23 @@ public class UpdateAction{
      * @return returns weather or not the input is valid.
      */
     private boolean validateMergeOptions(Company curDefunctCompanies, Player curPlayer){
-            List<String> userInputs = getUserInputs();
-            int totalStocks = 0;
+        List<String> userInputs = getUserInputs();
+        int totalStocks = 0;
 
-            for (String curInput : userInputs ) { // Make sure all the text boxes have a valid integer in them
+        for (String curInput : userInputs ) { // Make sure all the text boxes have a valid integer in them
                 if (!curInput.equals("") && validString(curInput)) {
                     totalStocks += Integer.parseInt(curInput);
                 }
                 else if (!curInput.equals("") && !validString(curInput)){
                     invalidInputError();
+                    clearMergeTextBox();
                     return false;}
             }
 
             if (totalStocks > countStocks(curDefunctCompanies, curPlayer)){ // Check if the user has enough stocks to get rid of
                 UIController.getInvalidInputLabel().setVisible(true);
                 UIController.getInvalidInputLabel().setText("Not enough stocks");
+                clearMergeTextBox();
                 return false;
             }
             else{
@@ -306,23 +324,24 @@ public class UpdateAction{
      * @param defunctCompany What company are the stocks coming form
      */
     private void sellTradeKeepStocks(Player player, Company winnerCompany, Company defunctCompany){
-            List<String> userInput = getUserInputs();
-            int totalStocksPlayerIsRemoving = 0;
-            int totalPlayerStocks = countStocks(defunctCompany, player);
+        List<String> userInput = getUserInputs();
+        int totalStocksPlayerIsRemoving = 0;
+        int totalPlayerStocks = countStocks(defunctCompany, player);
 
-            if (userInput.get(0) != "") {  // Sell stock
-                player.sellStock(defunctCompany , Integer.parseInt(userInput.get(0)));
-                totalStocksPlayerIsRemoving += Integer.parseInt(userInput.get(0));
-            }
-
-            if (userInput.get(1) != "") { // Trade stocks
-                player.tradeStock(winnerCompany, defunctCompany, Integer.parseInt(userInput.get(1)));
-                totalStocksPlayerIsRemoving += Integer.parseInt(userInput.get(1));
-            }
-
-            // Keep the remaining stocks
-            player.keepStock(defunctCompany, totalPlayerStocks - totalStocksPlayerIsRemoving);
+        if (userInput.get(0) != "") {  // Sell stock
+            player.sellStock(defunctCompany , Integer.parseInt(userInput.get(0)));
+            totalStocksPlayerIsRemoving += Integer.parseInt(userInput.get(0));
         }
+
+        if (userInput.get(1) != "") { // Trade stocks
+            player.tradeStock(winnerCompany, defunctCompany, Integer.parseInt(userInput.get(1)));
+            totalStocksPlayerIsRemoving += Integer.parseInt(userInput.get(1));
+        }
+
+        // Keep the remaining stocks
+        player.keepStock(defunctCompany, totalPlayerStocks - totalStocksPlayerIsRemoving);
+        clearMergeTextBox();
+    }
 
     /**
      * Counts the number of stock in the player stock list to see if the input is valid
@@ -344,35 +363,78 @@ public class UpdateAction{
     }
 
 
-    private void showCharterMenu(GameState gameState, List<Company> unCharteredComs){
+    /**
+     * This method is called after the board sees that two flipped uchartered tiles are next to eachother.
+     * It presents to the user an option for which company from an unchartered company list to charter.
+     * Then it calls gameState.addToACompany() with the chosen company passed in.
+     * @param unCharteredComs List of current unchartered companies.
+     */
+    private void showCharterMenu(List<Company> unCharteredComs ){
         UIController.getActionLabel().setText("Choose a company to charter");
         UIController.getActionChoiceList().setVisible(true);
         for (Company com : unCharteredComs){
-                Button choiceButton = new Button();
-                choiceButton.setText(com.getCompanyName());
-                choiceButton.setStyle("-fx-background-color: ffffff; -fx-border-color: black");
-                choiceButton.setOnAction(a -> {
-                    try {
-                        gameState.addToACompany(com);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                });
-                if(com.getCompanyName() != "DEFAULT") {
-                    UIController.getActionChoiceObserList().add(choiceButton);
-                }
-        }
-    }
-
-    private void displayMergeChoice(GameState gameState, List<Company> companyChoiceList){
-        UIController.getActionLabel().setText("Choose a company you'd like to keep");
-        UIController.getActionChoiceList().setVisible(true);
-        for (Company com : companyChoiceList){
             Button choiceButton = new Button();
             choiceButton.setText(com.getCompanyName());
             choiceButton.setStyle("-fx-background-color: ffffff; -fx-border-color: black");
-            choiceButton.setOnAction(a -> {System.out.println("You chose" + com.getCompanyName() + "to win");});/*gameState.getCurrentBoard().merge(com);});*/ //sets action to charter the choice company
-            UIController.getActionChoiceObserList().add(choiceButton);
+            choiceButton.setOnAction(a -> {
+                try {
+
+                   Tile charterTile = CompanyLedger.getInstance().getCharterTile();
+                   charterTile.setCompany(com);
+                   CompanyLedger.getInstance().setCharterComp(com);
+                    gameState.addToACompany(com);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
+            if(com.getCompanyName() != "DEFAULT") {
+                UIController.getActionChoiceObserList().add(choiceButton);
+            }
+        }
+    }
+
+    /**
+     * Checks if the companies in a merge are equal and lets the player choose which wins.
+     * Starts the merge UI for players to sell/trade/keep stocks.
+     * @param mergingCompanies The list of companies to be merged
+     */
+    private void checkEqualCompanies(List<Company> mergingCompanies){
+        List<Company> listOfEqualCompanies = new ArrayList<>();
+        Company biggestCompany = mergingCompanies.get(0);
+        int currentMost = 0;
+        for(Company c: mergingCompanies){
+            if (c.getNumTiles()>currentMost){
+                biggestCompany = c;
+                currentMost = c.getNumTiles();
+            }
+        }
+        //checks if the x amount of largest companies are tied.
+        for(Company c: mergingCompanies){
+            if(c.getNumTiles()==currentMost){
+                listOfEqualCompanies.add(c);
+            }
+        }
+
+        if (listOfEqualCompanies.size()>1){ //If there are equal companies in a merge, let the player choose what company to keep
+            UIController.getActionLabel().setText("Choose the company you'd like to win the merge");
+            UIController.getActionChoiceList().setVisible(true);
+            for (Company com : listOfEqualCompanies){
+                Button choiceButton = new Button();
+                choiceButton.setText(com.getCompanyName());
+                choiceButton.setStyle("-fx-background-color: ffffff; -fx-border-color: black");
+                choiceButton.setOnAction(a -> { // Set the winning company to the players choice and remove it from the defunct company list
+                    mergingCompanies.remove(com);
+                    UIController.getActionChoiceList().setVisible(false);
+                    try{ showMergeInfo(com, mergingCompanies, gameState.getPlayerList(), mergingCompanies); }
+                    catch (Exception e){e.printStackTrace();}
+                });
+                UIController.getActionChoiceObserList().add(choiceButton);
+            }
+        }
+        else { // There are no equal companies in the merge
+            mergingCompanies.remove(biggestCompany);
+            try{ showMergeInfo(biggestCompany, mergingCompanies, gameState.getPlayerList(), mergingCompanies);}
+            catch (Exception e){ e.printStackTrace(); }
         }
     }
 }
