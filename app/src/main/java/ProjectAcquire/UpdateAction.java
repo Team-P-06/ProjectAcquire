@@ -251,8 +251,10 @@ public class UpdateAction{
      */
         private void mergeTurnRotation(Company winnerCo, List<Company> defunctCompanies,
                                        List<Player> players, List<Company> originalDefunctCompanies) throws IOException {
+            defunctCompanies.removeIf(com -> com.getCompanyName().equals("DEFAULT")); // Removes the default companies from the list
             List<Player> playerListCopy = new ArrayList<>(players); // Create copies of list for this "sub turn"
             List<Company> companyListCopy = new ArrayList<>(defunctCompanies);
+
             if (validateMergeOptions(companyListCopy.get(0), playerListCopy.get(0))){ // If all the inputs are valid
                 UIController.getInvalidInputLabel().setText(""); // Clear any labels after a success
                 sellTradeKeepStocks(playerListCopy.get(0), winnerCo, companyListCopy.get(0));
@@ -419,16 +421,21 @@ public class UpdateAction{
             UIController.getActionLabel().setText("Choose the company you'd like to win the merge");
             UIController.getActionChoiceList().setVisible(true);
             for (Company com : listOfEqualCompanies){
-                Button choiceButton = new Button();
-                choiceButton.setText(com.getCompanyName());
-                choiceButton.setStyle("-fx-background-color: ffffff; -fx-border-color: black");
-                choiceButton.setOnAction(a -> { // Set the winning company to the players choice and remove it from the defunct company list
-                    mergingCompanies.remove(com);
-                    UIController.getActionChoiceList().setVisible(false);
-                    try{ showMergeInfo(com, mergingCompanies, gameState.getPlayerList(), mergingCompanies); }
-                    catch (Exception e){e.printStackTrace();}
-                });
-                UIController.getActionChoiceObserList().add(choiceButton);
+                if(!com.getCompanyName().equals("DEFAULT")) {
+                    Button choiceButton = new Button();
+                    choiceButton.setText(com.getCompanyName());
+                    choiceButton.setStyle("-fx-background-color: ffffff; -fx-border-color: black");
+                    choiceButton.setOnAction(a -> { // Set the winning company to the players choice and remove it from the defunct company list
+                        mergingCompanies.remove(com);
+                        UIController.getActionChoiceList().setVisible(false);
+                        try {
+                            showMergeInfo(com, mergingCompanies, gameState.getPlayerList(), mergingCompanies);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    });
+                    UIController.getActionChoiceObserList().add(choiceButton);
+                }
             }
         }
         else { // There are no equal companies in the merge
