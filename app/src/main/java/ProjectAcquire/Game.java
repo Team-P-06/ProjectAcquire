@@ -45,7 +45,7 @@ public class Game {
     /**
      * Default constructor
      */
-    private Game(){}
+    public Game(){}
 
     public static Game getInstance(){
 
@@ -69,6 +69,7 @@ public class Game {
      * Load game method that accepts a gson file to get the game state of a specific game
      * @param game
      */
+    @Generated //Until we use the method
     public void loadGame(String game)throws IOException{
 
         //this.currentGameState = (gamestate that we pull from a file)
@@ -159,7 +160,7 @@ public class Game {
     /**
      * Run a game that is already saved from the gson file gathered from loadGame, (runs a game continuousely given starting data)
      */
-
+    @Generated //Until we use the method
     public void runGame() throws IOException {
         //currentGameState.playTurn();
         //while the game has not ended
@@ -182,6 +183,7 @@ public class Game {
     /**
      * Once a player ends the game on their turn the game will end using this method and determine the winner
      */
+    @Generated //Not used yet
     public void endGame(){ }//We should probably move this to GameState.
 
 }

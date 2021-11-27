@@ -86,26 +86,29 @@ pmd {
 
 jacoco {
     toolVersion = "0.8.7"
-    reportsDirectory = layout.buildDirectory.dir('customJacocoReportDir')
+    reportsDirectory = layout.buildDirectory.dir('JacocoTestCoverage')
 }
 test{
+    useJUnitPlatform()
     finalizedBy jacocoTestReport;
-        jacoco{
-            excludes += ["**/com.ProjectAcquire/App/**"]
-        }
+
 }
 jacocoTestReport {
-    reports {
-
+    dependsOn test
+    reports{
+        xml.enabled false
+        csv.enabled false
+        html.enabled true
     }
     afterEvaluate{
-        classDirectories.from()
-        (files(classDirectories.files.collect{
-            fileTree(dir : it)
-                    .filter({file -> !file.name.contains('App.java')})
+        classDirectories.setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: [
+
+            ])
         }))
     }
 }
+
 test.finalizedBy(project.tasks.jacocoTestReport);
 jacocoTestCoverageVerification {
     violationRules {
@@ -117,10 +120,6 @@ jacocoTestCoverageVerification {
                 value = 'COVEREDRATIO'
                 minimum = 0.90
             }
-        excludes = [
-                'ProjectAcquire.FXController',
-                'ProjectAcquire.App'
-        ]
 
         }
 

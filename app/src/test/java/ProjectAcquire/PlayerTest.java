@@ -74,17 +74,9 @@ public class PlayerTest {
         assertNotEquals(classUnderTest2.getTileList(),classUnderTest.getTileList());
     }
 
-/*
-    @Test
-    void test_buyStock(){
-        Company testCompany = new Company();
-        Stock testStock = new Stock(testCompany);
-        Player testPlayer1 = new Player();
-        List<Stock> testList = testPlayer1.getStockList();
-        testPlayer1.buyStock(testStock);
-        assertTrue(testPlayer1.getStockList() != testList);
-    }
-*/
+    /**
+     * Test that buy stocks correctly updates the player and stocks information
+     */
     @Test void buy_stocks_test(){
         List<Tile> helperTileList = TestHelper.helperMethod_tileList_company1_3_coord_A1_A3();
         Company testCo = TestHelper.helperMethod_Company("Sackson");
@@ -121,5 +113,24 @@ public class PlayerTest {
         classUnderTest.getTileList().add(testTile);
         classUnderTest.discardTile(testTile);
         assertEquals(classUnderTest.getTileList(), testList);
+    }
+
+    @Test
+    void test_Equals(){
+        Player testPlayer = new Player();
+        Object test = null;
+        assertFalse(testPlayer.equals(test));
+    }
+
+    @Test
+    void testEqualsTrue(){
+        Player testPlayer = new Player();
+        Object test = new Object();
+        assertFalse(testPlayer.equals(test));
+    }
+
+    @Test
+    void test_sellStock(){
+
     }
 }

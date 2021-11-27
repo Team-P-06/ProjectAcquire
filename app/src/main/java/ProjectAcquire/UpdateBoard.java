@@ -36,6 +36,7 @@ import java.util.List;
 /**
  * Updates the tiles' information that are places on the board. (top left of UI)
  */
+@Generated
 public class UpdateBoard {
 
     private FXController UIController;

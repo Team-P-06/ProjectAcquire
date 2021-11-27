@@ -87,6 +87,7 @@ public class Tile {
      *
      * @return A coordinate name of the unique tile.
      */
+    @Generated //Tested when playing the game in the UI
     public String tileCoordToString() {
         String tileString;
         int[] coord = getCoord();

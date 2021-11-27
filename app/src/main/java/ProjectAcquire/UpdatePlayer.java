@@ -33,6 +33,7 @@ import java.util.List;
 /**
  * Logic to update the player information (bottom left of UI)
  */
+@Generated
 public class UpdatePlayer implements Updatable{
     private FXController UIController;
 

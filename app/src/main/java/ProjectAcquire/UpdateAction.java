@@ -40,6 +40,7 @@ import java.util.List;
  * Updates the actions available in the UI (bottom right)
  * This class is currently a WIP.
  */
+@Generated
 public class UpdateAction{
 
     private FXController UIController;

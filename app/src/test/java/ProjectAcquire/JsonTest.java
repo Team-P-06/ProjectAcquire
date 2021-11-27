@@ -39,4 +39,14 @@ public class JsonTest{
             e.printStackTrace();
         }
     }
+
+    /**
+     * Test to see if the default constructor does not create a fake object to call the methods in IOManager
+     */
+    @Test
+    void test_IOManager(){
+        IOManager test = new IOManager();
+        assertNotNull(test);
+    }
+
 }

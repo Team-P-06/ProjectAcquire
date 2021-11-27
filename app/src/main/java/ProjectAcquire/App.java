@@ -35,6 +35,7 @@ import java.io.IOException;
 /**
  * Main App class
  */
+@Generated //Deals with UI
 public class App extends Application {
 
     static FXController controller;

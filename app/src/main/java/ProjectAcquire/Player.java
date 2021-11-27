@@ -104,6 +104,7 @@ public class Player{
      * @param defunctCo stocks from the company they would like to sell.
      * @param numberOfStocks the number of stocks they are selling
      */
+    @Generated //Have to actually test this inside of the game UI
     public void sellStock(Company defunctCo, int numberOfStocks){
         for (Stock stock : stockList){
             if(numberOfStocks > 0) {
@@ -123,6 +124,7 @@ public class Player{
      * @param parentCompany stocks from the company they would like to keep.
      * @param numberOfStocks the number of stocks they are keep
      */
+    @Generated //No code to test
     public void keepStock(Company defunctCo, int numberOfStocks){
         // No editing of the player stocks is needed.
     }
@@ -134,6 +136,7 @@ public class Player{
      * @param defunctCompany stocks from the company they would like to sell.
      * @param numberOfStocks the number of stocks they are selling
      */
+    @Generated //Have to actually test this inside of the game UI
     public void tradeStock(Company winnerCompany, Company defunctCompany, int numberOfStocks){
         for (int i = 0; i < numberOfStocks; i++){ // Give the player the winning stock
             Stock newStock = new Stock(winnerCompany);
@@ -165,7 +168,7 @@ public class Player{
     }
 
 
-    @Override
+    @Override @Generated //Tested inside of the UI because no assertion tests are applicable to fully test
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;

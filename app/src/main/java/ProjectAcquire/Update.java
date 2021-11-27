@@ -36,6 +36,7 @@ import java.util.List;
 /**
  * Main update UI logic class. Branches out to other parts of the UI Logic for better organization.
  */
+@Generated
 public class Update {
 
     @Getter

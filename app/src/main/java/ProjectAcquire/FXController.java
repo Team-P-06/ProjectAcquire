@@ -40,7 +40,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import lombok.Getter;
-
 import java.io.IOException;
 import java.util.List;
 
@@ -48,6 +47,7 @@ import java.util.List;
  * Controller for actions of FXMLUI.
  * All functions and variables that are used communicating with MainMenu.fxml need a @FXML proceeding them.
  */
+@Generated
 public class FXController {
     /**
      * MainMenu UI logic and variables start here
@@ -67,6 +67,7 @@ public class FXController {
      * Creates and shows the Main menu where you can select to start, load, or exit.
      * @throws IOException
      */
+    @Generated
     public void showMainMenu() throws IOException {
         FXMLLoader mainMenuLoader = new FXMLLoader(getClass().getResource("/MainMenu.fxml"));
         mainMenuLoader.setController(this);

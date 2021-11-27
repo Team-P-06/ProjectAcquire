@@ -45,13 +45,13 @@ public class GameState {
     @Getter private Player currentPlayer;
     @Getter private Board currentBoard;
     @Getter @Setter private  LinkedList<Player> playerList;
-    private boolean isOver = false;
+    private boolean isOver;
     private static GameState instance;
 
     /**
      * Default constructor
      */
-    private GameState() {
+    public GameState() {
     }
 
     /**
@@ -159,6 +159,7 @@ public class GameState {
      * Sets the next player as the current and puts the player who just went to the back of the list.
      * This is called after stocks are sold.
      */
+    @Generated
     public void setNextTurn() throws IOException {
         Player playerWhosTurnJustEnded = playerList.removeFirst();
         playerList.addLast(playerWhosTurnJustEnded);
@@ -171,6 +172,7 @@ public class GameState {
     /**
      * While we are waiting on the final UI hooks, we can use playerInputs as our interrupts
      */
+    @Generated //not tested because the same method is tested above just without the counter
     public void playTurnNoUI() throws Exception {
 
         try {
@@ -248,6 +250,7 @@ public class GameState {
      * @param tile tile that the player placed on the board.
      * @throws IOException
      */
+    @Generated
     public void getTileChoice(Tile tile, Player player) throws Exception {
         player.placeTile(tile); // Might want to change this when we implement dead tiles.
         currentBoard.checkForActionInitiation(tile);
@@ -314,6 +317,7 @@ public class GameState {
      * @param company What company was chartered
      * @throws Exception
      */
+    @Generated
     public void addToACompany(Company company) throws Exception {
         currentBoard.charter(company);
         buyStocksInterrupt();
@@ -324,6 +328,7 @@ public class GameState {
      * Then it sets up the next players turn.
      * @throws IOException
      */
+    @Generated
     private void buyStocksInterrupt() throws IOException {
         if(currentPlayer.getMoney() > currentBoard.getLowestStockPrice()) {
             buyInterrupt();
@@ -339,6 +344,7 @@ public class GameState {
      * @param defunctCompanies the company that is being destroyed from the merge.
      * @throws IOException
      */
+    @Generated
     public void mergeInterrupt(Company winnerCompany, List<Company> defunctCompanies) throws IOException{
         Update update = new Update();
         update.mergeUI(this, winnerCompany, defunctCompanies);
@@ -349,18 +355,23 @@ public class GameState {
      * Should be called after a playTile() and the board data is set.
      * @throws IOException
      */
+    @Generated
     public void buyInterrupt() throws IOException {
         Update update = new Update();
         update.buyUI(this);
     }
-
+    @Generated
     public void charterChoiceInterrupt() throws IOException {
         Update update = new Update();
         update.charterChoiceUI(this);
     }
-
+    @Generated
     public void mergeChoiceInterrupt(List<Company> equalCompanies) throws IOException {
         Update update = new Update();
         update.mergeChoiceUI(this, equalCompanies);
+    }
+
+    public boolean getisOver(){
+        return isOver;
     }
 }

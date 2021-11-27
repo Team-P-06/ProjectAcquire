@@ -37,6 +37,7 @@ import java.util.List;
 /**
  * Logic to update the Hotel/company information (top right)
  */
+@Generated
 public class UpdateHotel implements Updatable {
     private FXController UIController;
 

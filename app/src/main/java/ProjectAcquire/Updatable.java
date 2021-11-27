@@ -32,6 +32,7 @@ import java.io.IOException;
 /**
  * Interface for each class to update it's UI elements, such as Player and board.
  */
+@Generated
 public interface Updatable {
 
     /**

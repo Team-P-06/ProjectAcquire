@@ -134,12 +134,49 @@ public class GameStateTest {
         assertFalse(test_gameState.hasTileToPlay(testPlayer));
     }
 
+    /**
+     * Test to see if the game will keep flowing properly as long as the is over variable is false
+     */
     @Test
-    void test_CharterChoiceInterrupt(){
-        GameState testGame =TestHelper.helperMethod_GameStateInit() ;
+    void test_SetOver(){
+        GameState test_gameState = TestHelper.helperMethod_GameStateInit();
+        test_gameState.setOver(false);
+        assertFalse(test_gameState.getisOver());
     }
 
+    /**
+     * Test to see if an instance is created when a null instance is already contained in a gamestate
+     */
+    @Test
+    void test_getInstance(){
+        GameState test_gameState = new GameState();
+        assertNotNull(test_gameState.getInstance());
+    }
 
+    /**
+     * Test to make sure the play turn method actually gets the tilesize correctly and that it will deal cards after turn
+     *
+     * @throws IOException
+     */
+    @Test
+    void test_playTurn() throws IOException {
+        GameState test = TestHelper.helperMethod_GameStateInit();
+        test.playTurn();
+        assertEquals(6 , test.getCurrentPlayer().getTileList().size());
+    }
+
+    /**
+     * Test to make sure that when a null gamestate is passed that the current player is initialized so the game
+     * can begin properly. In this case until a current player is set the current player in the front of the list
+     * is a null player which is tested to just to make sure playTurn() is hitting the try block
+     * @throws IOException
+     */
+    @Test
+    void test_playTurnNull() throws IOException {
+        GameState test = new GameState();
+        test.playTurn();
+        assertNull(test.getCurrentPlayer());
+    }
 }
 
 

@@ -41,17 +41,10 @@ public class BoardTest {
 
     }
 
-    @Test void test_board_company_after_charter() throws Exception {
-
-        Board classUnderTest = TestHelper.helperMethod_custom_board();
-
-        Company boardCompanyToCharter = classUnderTest.getUncharteredCompanies().get(0);
-
-        classUnderTest.charter(boardCompanyToCharter);
-
-        assertTrue(boardCompanyToCharter.isChartered(), "Charter method did not work properly");
-        TestHelper.helperMethod_tearDownBoard();
-
+    @Test
+    void test_getLowestStock(){
+        Board test = TestHelper.helperMethod_custom_board();
+        assertNotNull(test.getLowestStockPrice());
     }
 
     @Test void test_board_company_after_uncharter() throws Exception {
@@ -99,6 +92,92 @@ public class BoardTest {
 
         Board classUnderTest = TestHelper.helperMethod_custom_board();
         assertFalse(classUnderTest.checkPermanent("A1"));
+    }
+
+    /**
+     * Test to make sure that a string is properly generated within the board class
+     */
+    @Test
+    void test_String(){
+        Board test = new Board();
+        assertNotNull(test.toString());
+    }
+
+    /**
+     * Test that an instance is being created when a board object is null
+     */
+    @Test
+    void test_Instance(){
+        Board test = new Board();
+        assertNotNull(test.getInstance());
+    }
+
+    /**
+     * Test that we can properly get how many tiles a company has on the board
+     */
+    @Test
+    void test_tilesOnBoard() {
+        GameState test_Game = TestHelper.helperMethod_GameStateInit();
+        Board helperBoard = test_Game.getCurrentBoard();
+        Company test_Company = new Company();
+        assertEquals(0,helperBoard.getTilesOnBoard(test_Company));
+    }
+
+    /**
+     * Test that we can get the company tiles on the board with the override method as the same one above but with
+     * different options being available
+     */
+    @Test
+    void test_companayTiles(){
+        GameState test_Game = TestHelper.helperMethod_GameStateInit();
+        Board helperBoard = test_Game.getCurrentBoard();
+        Company test_Company = new Company();
+        assertEquals(0,helperBoard.getCompanyNumberOfTiles(test_Company));
+    }
+
+    /**
+     * Test that the defuncCompany is being called and correctly and not giving any other company attributes
+     * more tests coming soon
+     */
+    @Test
+    void test_defunctCompany(){
+        GameState test_Game = TestHelper.helperMethod_GameStateInit();
+        Board helperBoard = test_Game.getCurrentBoard();
+        assertNull(helperBoard.getDefunctCompany());
+    }
+
+    /**
+     * Test that the winning company is properly used and not giving any other company attributes
+     * more tests coming soon
+     */
+    @Test
+    void test_winningCompany() {
+        GameState test_Game = TestHelper.helperMethod_GameStateInit();
+        Board helperBoard = test_Game.getCurrentBoard();
+        assertNull(helperBoard.getWinningCompany());
+    }
+
+    /**
+     * Test that we can properly set the number of tiles a company has on the board
+     */
+    @Test
+    void test_setTilesOnBoardWithCompany(){
+        GameState test_Game = TestHelper.helperMethod_GameStateInit();
+        Board helperBoard = test_Game.getCurrentBoard();
+        Company test_Company = new Company();
+        helperBoard.updateCompanyTiles(test_Company,2);
+        assertEquals(2,test_Company.getTilesOnBoard());
+    }
+
+    /**
+     * Test that the check merge is properly getting passed
+     * more tests coming soon when the actaul merge method is created and used
+     */
+    @Test
+    void test_checkMerge(){
+        GameState test_Game = TestHelper.helperMethod_GameStateInit();
+        Board helperBoard = test_Game.getCurrentBoard();
+        assertNull(helperBoard.checkEqualsMerge());
     }
 
     @Test void test_getTileWest() throws Exception {
@@ -176,5 +255,4 @@ public class BoardTest {
     }
 
 
-
-    }
+}
