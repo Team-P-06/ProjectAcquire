@@ -1,6 +1,5 @@
 package ProjectAcquire;
 
-import org.checkerframework.checker.units.qual.C;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -56,7 +55,7 @@ public class StockTest {
     @Test void test_getMinoryPayout(){
         Company testCompany = TestHelper.helperMethod_Company("Worldwide");
         testCompany.setNumTiles(5);
-        assertEquals(2500 , testCompany.getMinoryPayout(), "The minority payout is incorrect");
+        assertEquals(2500 , testCompany.getMinorityPayout(), "The minority payout is incorrect");
     }
 
     @Test void test_stock_price_with_1_tile(){

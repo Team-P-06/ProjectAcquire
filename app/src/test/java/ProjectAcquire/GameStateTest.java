@@ -162,7 +162,7 @@ public class GameStateTest {
     void test_playTurn() throws IOException {
         GameState test = TestHelper.helperMethod_GameStateInit();
         test.playTurn();
-        assertEquals(6 , test.getCurrentPlayer().getTileList().size());
+        assertEquals(6, test.getCurrentPlayer().getTileList().size());
     }
 
     /**

@@ -302,14 +302,10 @@ public class Board {
      * @param company Company to update the tiles of
      * @param tileNum number of tiles the company should now have
      */
-<<<<<<< HEAD
-    public void updateCompanyTiles(Company company, int tileNum){
-        company.setTilesOnBoard(tileNum);
-=======
-    private void updateCompanyTiles(Company company, int tileNum){
+    public void updateCompanyTiles(Company company, int tileNum) {
         company.setNumTiles(tileNum);
->>>>>>> f18323c9c2e21b7d114d6f120dfe336671f4d86b
     }
+
     @Generated //until this method is used
     void setDeadTile(Tile tile){} //don't remember what this is. Does it remove a tile from the board?
 
@@ -522,12 +518,9 @@ public class Board {
             }
         }
     }
-<<<<<<< HEAD
     @Generated //tested while actually playing the game
-=======
 
 
->>>>>>> f18323c9c2e21b7d114d6f120dfe336671f4d86b
     public void mergeLogic(Company winnerCo, List<Company> loserCos){
 
         //this algorithm checks if a tile is associated with a loser company

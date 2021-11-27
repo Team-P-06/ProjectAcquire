@@ -181,8 +181,6 @@ public class TestHelper {
         test_uncharteredList.add(testTileList_company3);
 
         //4. set a current player
-        // Isn't the current/next player set when we create the gameState?
-        // We would already need a GameState object to call GameState.setCurrentPlayer - Show
 
         //5. initialize a board using 1-4 as our parameters
         Board board = Board.getInstance(test_playerTileList, test_uncharteredList, test_charteredList, test_playerList);

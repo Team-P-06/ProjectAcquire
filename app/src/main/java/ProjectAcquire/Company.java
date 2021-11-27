@@ -126,7 +126,7 @@ public class Company {
      * Minority payout is half of the majority payout.
      * @return the payout to all players who are not the majority holder.
      */
-    public int getMinoryPayout(){
+    public int getMinorityPayout(){
         return getMajorityPayout() / 2;
     }
 
