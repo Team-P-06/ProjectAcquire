@@ -19,7 +19,7 @@ public class StockTest {
 
         Stock classUnderTest = TestHelper.helperMethod_customStock("TEST");
 
-        assertTrue(classUnderTest.getStockPriceFromCompany()==100,"Stock price did not match what it should have");
+        assertTrue(classUnderTest.getStockPriceFromCompany()==0,"Stock price did not match what it should have");
     }
     @Test
     void test_stock_dummy_maxStockBuy() {

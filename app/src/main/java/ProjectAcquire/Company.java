@@ -88,8 +88,8 @@ public class Company {
     public int calculateStockPrice(){
         int stockPrice = 0;
         switch (numTiles){
-            case 0 -> stockPrice = 0;
-            case 1 -> stockPrice = 0;
+            //case 0 -> stockPrice = 0;
+            //case 1 -> stockPrice = 0;
             case 2 -> stockPrice = 200;
             case 3 -> stockPrice = 300;
             case 4 -> stockPrice = 400;
@@ -101,8 +101,8 @@ public class Company {
         else if (numTiles >=31 && numTiles <= 40){ stockPrice = 800;}
         else if (numTiles >= 32) {stockPrice =  1000; }
 
-        if (companyName.equals("Worldwide") || companyName.equals("Sackson")){
-            stockPrice +=0;
+        if(numTiles == 0){
+            stockPrice = 0;
         }
         else if (companyName.equals("Festival") || companyName.equals("Imperial") || companyName.equals("American")){
             stockPrice += 100;

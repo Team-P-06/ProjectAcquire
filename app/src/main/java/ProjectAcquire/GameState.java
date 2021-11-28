@@ -280,6 +280,7 @@ public class GameState {
             buyStocksInterrupt();
         }
         else if( action == 3){ //If there is a merge action needed
+            CompanyLedger.getInstance().setCharterTile(tile);
             List<Company> companiesAroundTile = currentBoard.companiesAroundTile(tile);
             mergeInterrupt(companiesAroundTile);
         }

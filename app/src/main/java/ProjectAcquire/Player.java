@@ -121,7 +121,7 @@ public class Player{
      * Keep the stocks from a company after a merge
      * Update action already calculated if they have enough stocks to keep
      * No action is needed, since the price of a stock is dynamically calculated with company.calculateStockPrice()
-     * @param parentCompany stocks from the company they would like to keep.
+     * @param defunctCo stocks from the company they would like to keep.
      * @param numberOfStocks the number of stocks they are keep
      */
     @Generated //No code to test
@@ -131,7 +131,6 @@ public class Player{
 
     /**
      * Trades stocks from a defunct company to the larger company
-     * Currently doesn't remove stock from the defunct company.
      * @param winnerCompany the company that won the merge
      * @param defunctCompany stocks from the company they would like to sell.
      * @param numberOfStocks the number of stocks they are selling

@@ -72,10 +72,10 @@ public class UpdateAction{
             List<Company> charteredCompanyList = gameState.getCurrentBoard().getCharteredCompanies();
             UIController.getActionLabel().setText("Buy up to 3 stocks");
             UIController.getEndTurnButton().setVisible(true);
-
             showBuyOptions(charteredCompanyList);
-            // Change to confirm button for ending the turn
-            UIController.getEndTurnButton().setOnAction(action -> { // Sets an button to confirm the stocks to buy
+
+            // Enable confirm button for ending the turn
+            UIController.getEndTurnButton().setOnAction(action -> { // Sets a button to confirm the stocks to buy
                 try{ purchaseStocks(charteredCompanyList, gameState.getCurrentPlayer()); }
                 catch (Exception e){e.printStackTrace();}
             });
@@ -231,7 +231,7 @@ public class UpdateAction{
                                List<Player> playerList, List<Company> fullDefunctList) throws IOException {
         UIController.getMergeOptionPane().setVisible(true); // Show the action options
         UIController.getEndTurnButton().setVisible(true);
-        UIController.getActionLabel().setText(playerList.get(0) + ": " + defunctCos.get(0).getCompanyName() + " is going under, get rid of your stocks");
+        UIController.getActionLabel().setText(playerList.get(0) + ": " + defunctCos.get(0).getCompanyName() + " is going under, get rid of your stocks (leftover stocks will be kept)");
 
         UIController.getEndTurnButton().setOnAction(action -> { // Sets an button to confirm the stocks to sell/trade/keep.
             try{ mergeTurnRotation( winnerCo, defunctCos, playerList, fullDefunctList); }
@@ -267,8 +267,13 @@ public class UpdateAction{
                     companyListCopy.remove(0);
                     showMergeInfo(winnerCo, companyListCopy, gameState.getPlayerList(), originalDefunctCompanies);
                 }
-                else{ // When both lists are empty the merge turn ends.
+                else{ // When both lists are empty the merge turn ends and set the placed tile to be apart of the winner company.
                     gameState.getCurrentBoard().mergeLogic(winnerCo, originalDefunctCompanies); // Merges the companies and updates the board.
+                    Tile charterTile = CompanyLedger.getInstance().getCharterTile();
+                    charterTile.setCompany(winnerCo);
+                    winnerCo.setNumTiles(winnerCo.getNumTiles() + 1);
+                    CompanyLedger.getInstance().setCharterComp(winnerCo);
+
                     gameState.setNextTurn();
                 }
             }
@@ -380,7 +385,6 @@ public class UpdateAction{
             choiceButton.setStyle("-fx-background-color: ffffff; -fx-border-color: black");
             choiceButton.setOnAction(a -> {
                 try {
-
                    Tile charterTile = CompanyLedger.getInstance().getCharterTile();
                    charterTile.setCompany(com);
                    CompanyLedger.getInstance().setCharterComp(com);
@@ -401,16 +405,18 @@ public class UpdateAction{
      * @param mergingCompanies The list of companies to be merged
      */
     private void checkEqualCompanies(List<Company> mergingCompanies){
+        mergingCompanies.removeIf(com -> com.getCompanyName().equals("DEFAULT"));
         List<Company> listOfEqualCompanies = new ArrayList<>();
         Company biggestCompany = mergingCompanies.get(0);
         int currentMost = 0;
+
         for(Company c: mergingCompanies){
             if (c.getNumTiles()>currentMost){
                 biggestCompany = c;
                 currentMost = c.getNumTiles();
             }
         }
-        //checks if the x amount of largest companies are tied.
+        //checks if the x amount of the largest companies are tied.
         for(Company c: mergingCompanies){
             if(c.getNumTiles()==currentMost){
                 listOfEqualCompanies.add(c);
