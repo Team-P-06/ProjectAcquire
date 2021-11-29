@@ -27,11 +27,9 @@
 
 package ProjectAcquire;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -81,6 +79,7 @@ public class FXController {
      * @throws IOException
      */
     public void showBoardMenu(FXMLLoader loader) throws IOException {
+        Platform.setImplicitExit(false);
         mainStage.hide();
         mainStage.setScene(new Scene(loader.load()));
         mainStage.show();
@@ -108,7 +107,6 @@ public class FXController {
 
         GameState gameState = newGame.start();
         update.nextTurnUI(gameState);
-        //newGame.runGame(); //ALEX NOTE: runGame is never being reached
     }
 
     /**
@@ -133,7 +131,8 @@ public class FXController {
     }
 
     @FXML
-    public void endGame(GameState gameState) throws IOException {
+    public void endGame() throws IOException {
+        GameState gameState = GameState.getInstance();
         FXMLLoader endGameLoader = new FXMLLoader(getClass().getResource("/EndGame.fxml"));
         endGameLoader.setController(this);
         mainStage.setScene(new Scene(endGameLoader.load()));
@@ -143,16 +142,20 @@ public class FXController {
 
     @FXML
     private void setWinner(GameState gameState){
+        UpdatePlayer netCalculator = new UpdatePlayer();
+
         List<Player> playerList = gameState.getPlayerList();
         String playerResult = "";
         Player winner = playerList.get(0);
         for(Player player : playerList){
-            playerResult = (playerResult + player.getName() + "    $" + player.getMoney() + "\n");
-            if (winner.getMoney() < player.getMoney()){ player = winner; }
+            int playerNet = netCalculator.calculateNet(player);
+            playerResult = (playerResult + player.getName() + "    $" + playerNet + "\n");
+            if (netCalculator.calculateNet(winner) < playerNet){ player = winner; }
         }
         playerResultLabel.setText(playerResult);
         winnerLabel.setText("Winner: " + winner.getName());
     }
+
 
     /**
      * **********************************************************************************************************
@@ -242,6 +245,5 @@ public class FXController {
      */
     @Getter @FXML Label winnerLabel, playerResultLabel, resultLabel;
     @Getter @FXML Button exitGameEndLabel, homeGameEndLabel;
-    @Getter @FXML ListView<Button> endGameListView;
-    @Getter ObservableList<Button> endGameObserListView = FXCollections.observableArrayList();
+    @Getter @FXML private Button endGameButton;
 }

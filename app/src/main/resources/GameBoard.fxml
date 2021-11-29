@@ -174,12 +174,12 @@
                </font>
             </Label>
             <ListView fx:id="actionChoiceList" focusTraversable="false" layoutX="15.0" layoutY="65.0" prefHeight="275.0" prefWidth="145.0" style="-fx-border-color: black; -fx-border-width: 3;" visible="false" />
+            <Button fx:id="endGameButton" layoutX="400.0" layoutY="80.0" mnemonicParsing="false" onAction="#endGame" style="-fx-background-color: white; -fx-border-color: black;" text="End Game" visible="false" />
             <Button fx:id="endTurnButton" layoutX="380.0" layoutY="300.0" mnemonicParsing="false" style="-fx-background-color: white; -fx-border-color: black; -fx-border-width: 3;" text="Confirm" visible="false">
 x               <font>
                   <Font size="16.0" />
                </font>
             </Button>
-            <ListView fx:id="endGameListView" layoutX="350.0" layoutY="30.0" prefHeight="50.0" prefWidth="130.0" visible="false" />
             <Pane fx:id="mergeOptionPane" layoutX="85.0" layoutY="75.0" prefHeight="200.0" prefWidth="100.0" visible="false">
                <children>
                   <Label fx:id="mergeSellLabel" layoutY="25.0" text="Sell" />

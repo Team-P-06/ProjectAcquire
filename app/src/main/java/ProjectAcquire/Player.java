@@ -28,10 +28,7 @@
 package ProjectAcquire;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Random;
+import java.util.*;
 
 import lombok.Builder;
 import lombok.Generated;
@@ -106,13 +103,14 @@ public class Player{
      */
     @Generated //Have to actually test this inside of the game UI
     public void sellStock(Company defunctCo, int numberOfStocks){
-        for (Stock stock : stockList){
-            if(numberOfStocks > 0) {
-                if (stock.getParentCompany() == defunctCo) {
-                    stockList.remove(stock);
-                    setMoney(getMoney() + stock.getParentCompany().calculateStockPrice());
-                    numberOfStocks--;
-                }
+        Iterator<Stock> stockIter = stockList.iterator();
+        while (stockIter.hasNext()){
+            Stock curStock = stockIter.next();
+
+            if (curStock.getParentCompany() == defunctCo && numberOfStocks > 0) {
+                stockIter.remove();
+                setMoney(getMoney() + curStock.getParentCompany().calculateStockPrice());
+                numberOfStocks--;
             }
         }
     }
@@ -121,7 +119,7 @@ public class Player{
      * Keep the stocks from a company after a merge
      * Update action already calculated if they have enough stocks to keep
      * No action is needed, since the price of a stock is dynamically calculated with company.calculateStockPrice()
-     * @param parentCompany stocks from the company they would like to keep.
+     * @param defunctCo stocks from the company they would like to keep.
      * @param numberOfStocks the number of stocks they are keep
      */
     @Generated //No code to test
@@ -131,7 +129,6 @@ public class Player{
 
     /**
      * Trades stocks from a defunct company to the larger company
-     * Currently doesn't remove stock from the defunct company.
      * @param winnerCompany the company that won the merge
      * @param defunctCompany stocks from the company they would like to sell.
      * @param numberOfStocks the number of stocks they are selling
@@ -142,9 +139,12 @@ public class Player{
             Stock newStock = new Stock(winnerCompany);
             stockList.add(newStock);
         }
-        for(Stock stock : stockList){ // remove the defunct company stocks
-            if(numberOfStocks != 0 && stock.getParentCompany() == winnerCompany) {
-                stockList.remove(stock);
+
+        Iterator<Stock> stockIter = stockList.iterator();
+        while (stockIter.hasNext()){ // remove the defunct company stocks
+            Stock curStock = stockIter.next();
+            if(numberOfStocks > 0 && curStock.getParentCompany() == winnerCompany) {
+                stockIter.remove();
                 numberOfStocks--;
             }
         }

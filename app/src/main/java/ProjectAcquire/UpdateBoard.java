@@ -56,7 +56,7 @@ public class UpdateBoard {
         updateSaveGameButton(gameState);
         UIController.getEndTurnButton().setVisible(false);
 
-        if(endGameCondion(gameState.getCurrentBoard().getCharteredCompanies())){ setEndGameButton(gameState); }
+        if(endGameCondion(gameState.getCurrentBoard().getCharteredCompanies())){ setEndGameButton(); }
 
         for (Tile tile : allTileList) {
             if(!tile.isDealt()) { //Only add tiles that are not in a players hand
@@ -156,26 +156,28 @@ public class UpdateBoard {
             if (curCompany.getNumTiles() >= 41){ return true; }
             if (curCompany.isPermanent()){ numberOfPermanentCom++; }
         }
-        return numberOfPermanentCom == 7;
+        if (numberOfPermanentCom == 7) { return true; }
+        return false;
     }
 
     /**
      * If a player chooses to end the game it will add a end game button to the action list.
      */
-    private void setEndGameButton(GameState gameState){
-        UIController.getEndGameListView().setVisible(true);
+    private void setEndGameButton(){
+        UIController.getEndGameButton().setVisible(true);
+        /*UIController.getEndGameListView().setVisible(true);
         UIController.getEndGameObserListView().clear();
         Button endGameButton = new Button();
         endGameButton.setText("End Game");
         endGameButton.setOnAction(c -> {
             try {
-                UIController.endGame(gameState);
+                UIController.endGame();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         });
         UIController.getEndGameObserListView().add(endGameButton);
-        UIController.getEndGameListView().setItems(UIController.getEndGameObserListView());
+        UIController.getEndGameListView().setItems(UIController.getEndGameObserListView());*/
     }
 
     /**

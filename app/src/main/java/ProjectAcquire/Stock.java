@@ -49,7 +49,7 @@ public class Stock {
      */
     public int getStockPriceFromCompany(){
 
-        return parentCompany.getStockPrice();
+        return parentCompany.calculateStockPrice();
     }
 
     /**

@@ -279,6 +279,7 @@ public class Board {
         company.setChartered(true);
         charteredCompanies.add(company);
         uncharteredCompanies.remove(company);
+        company.setNumTiles(1); // Any new company that is made will start with 1 tile set.
         //initiates charter logic. This will do things like initiate a user action to decide
         //which company they want to charter, and then fill in data like initial stock price and
         //initial stocks on board.
@@ -302,9 +303,14 @@ public class Board {
      * @param company Company to update the tiles of
      * @param tileNum number of tiles the company should now have
      */
+<<<<<<< HEAD
 
     public void updateCompanyTiles(Company company, int tileNum) {
         company.setTilesOnBoard(tileNum);
+=======
+    public void updateCompanyTiles(Company company, int tileNum) {
+        company.setNumTiles(tileNum);
+>>>>>>> d7ae4edfbd782e111f0cc750a83b793439fedb66
     }
 
     @Generated //until this method is used
@@ -480,8 +486,8 @@ public class Board {
                     if ( tile.getCompany().getCompanyName().equals("DEFAULT") &&
                             tile.isFlipped() && one_of_the_tiles_around_the_current_tile_has_our_company) {
                       //  System.out.println("TILE AROUND HAS COMPANY");
-                        // I don't think this is every being executed when chartering. - Show
                         tile.setCompany(company); //set our current tile to be part of our passed in company
+                        company.setNumTiles(company.getNumTiles() + 1);
                         foundTiles++; // if this is hit, we have found a tile, so our loop will restart after it hits the last tile on the board.
                     }
                 }
@@ -507,6 +513,7 @@ public class Board {
                     for(Tile adj: getTilesAround(tl.getCoord())){
                         if(adj.isFlipped() && adj.getCompany().getCompanyName().equals("DEFAULT")){ //then for any flipped default tile
                             adj.setCompany(comp); //add it
+                            comp.setNumTiles(comp.getNumTiles() + 1); // Increase tile count for company
                             counter++; //and keep the loop going to check for stragglers.
                         }
                     }
@@ -515,6 +522,11 @@ public class Board {
         }
     }
     @Generated //tested while actually playing the game
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> d7ae4edfbd782e111f0cc750a83b793439fedb66
     public void mergeLogic(Company winnerCo, List<Company> loserCos){
 
         //this algorithm checks if a tile is associated with a loser company
@@ -526,8 +538,10 @@ public class Board {
                 }
             }
         }
-        //uncharters the small companies
+        //uncharters the small companies, increase number of tiles for winner, and reset loser companies to 0 tiles on board.
         for(Company c: loserCos){
+            winnerCo.setNumTiles(winnerCo.getNumTiles() + c.getNumTiles());
+            c.setNumTiles(0);
             unCharter(c);
         }
     }

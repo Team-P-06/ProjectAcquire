@@ -120,7 +120,7 @@ public class BoardTest {
         GameState test_Game = TestHelper.helperMethod_GameStateInit();
         Board helperBoard = test_Game.getCurrentBoard();
         Company test_Company = new Company();
-        assertEquals(0,helperBoard.getTilesOnBoard(test_Company));
+        assertEquals(0,test_Company.getNumTiles());
     }
 
     /**
@@ -166,7 +166,7 @@ public class BoardTest {
         Board helperBoard = test_Game.getCurrentBoard();
         Company test_Company = new Company();
         helperBoard.updateCompanyTiles(test_Company,2);
-        assertEquals(2,test_Company.getTilesOnBoard());
+        assertEquals(2,test_Company.getNumTiles());
     }
 
     /**

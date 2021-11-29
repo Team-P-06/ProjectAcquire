@@ -280,6 +280,7 @@ public class GameState {
             buyStocksInterrupt();
         }
         else if( action == 3){ //If there is a merge action needed
+            CompanyLedger.getInstance().setCharterTile(tile);
             List<Company> companiesAroundTile = currentBoard.companiesAroundTile(tile);
             mergeInterrupt(companiesAroundTile);
         }
@@ -317,7 +318,10 @@ public class GameState {
      * @param mergingCompanies the companies that are being merged
      * @throws IOException
      */
+<<<<<<< HEAD
 
+=======
+>>>>>>> d7ae4edfbd782e111f0cc750a83b793439fedb66
     @Generated
     public void mergeInterrupt(List<Company> mergingCompanies) throws IOException{
         Update update = new Update();
@@ -334,11 +338,14 @@ public class GameState {
         Update update = new Update();
         update.buyUI(this);
     }
+<<<<<<< HEAD
     @Generated
     public void mergeChoiceInterrupt(List<Company> equalCompanies) throws IOException {
         Update update = new Update();
         update.mergeChoiceUI(this, equalCompanies);
     }
+=======
+>>>>>>> d7ae4edfbd782e111f0cc750a83b793439fedb66
 
     /**
      * Shows the options for a player to choose what company they would like to charter
@@ -348,7 +355,10 @@ public class GameState {
     public void charterChoiceInterrupt() throws IOException {
         Update update = new Update();
         update.charterChoiceUI(this); //passes in the tile that caused the charter
+<<<<<<< HEAD
 
+=======
+>>>>>>> d7ae4edfbd782e111f0cc750a83b793439fedb66
     }
 
     public boolean getisOver(){

@@ -69,11 +69,11 @@ public class UpdatePlayer implements Updatable{
     }
 
     /**
-     * Calulates the net value of the player by the stock prices they hold plus current money on hand.
+     * Calculates the net value of the player by the stock prices they hold plus current money on hand.
      * @param  player who's net worth would you like to calculate
      * @return  int value for cash worth
      */
-    private int calculateNet(Player player){
+    public int calculateNet(Player player){
         List<Stock> playerStockList = player.getStockList();
         int playerNet = 0;
         if(playerStockList == null){
