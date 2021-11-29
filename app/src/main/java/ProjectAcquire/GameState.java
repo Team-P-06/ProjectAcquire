@@ -317,12 +317,9 @@ public class GameState {
      * @param mergingCompanies the companies that are being merged
      * @throws IOException
      */
-<<<<<<< HEAD
+
     @Generated
-    public void mergeInterrupt(Company winnerCompany, List<Company> defunctCompanies) throws IOException{
-=======
     public void mergeInterrupt(List<Company> mergingCompanies) throws IOException{
->>>>>>> f18323c9c2e21b7d114d6f120dfe336671f4d86b
         Update update = new Update();
         update.mergeUI(this, mergingCompanies);
     }
@@ -337,27 +334,21 @@ public class GameState {
         Update update = new Update();
         update.buyUI(this);
     }
-<<<<<<< HEAD
-    @Generated
-    public void charterChoiceInterrupt() throws IOException {
-        Update update = new Update();
-        update.charterChoiceUI(this);
-    }
     @Generated
     public void mergeChoiceInterrupt(List<Company> equalCompanies) throws IOException {
         Update update = new Update();
         update.mergeChoiceUI(this, equalCompanies);
-=======
+    }
 
     /**
      * Shows the options for a player to choose what company they would like to charter
      * @throws IOException
      */
+    @Generated
     public void charterChoiceInterrupt() throws IOException {
         Update update = new Update();
         update.charterChoiceUI(this); //passes in the tile that caused the charter
 
->>>>>>> f18323c9c2e21b7d114d6f120dfe336671f4d86b
     }
 
     public boolean getisOver(){
