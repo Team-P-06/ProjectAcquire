@@ -28,10 +28,7 @@
 package ProjectAcquire;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Random;
+import java.util.*;
 
 import lombok.Builder;
 import lombok.Generated;
@@ -106,13 +103,14 @@ public class Player{
      */
     @Generated //Have to actually test this inside of the game UI
     public void sellStock(Company defunctCo, int numberOfStocks){
-        for (Stock stock : stockList){
-            if(numberOfStocks > 0) {
-                if (stock.getParentCompany() == defunctCo) {
-                    stockList.remove(stock);
-                    setMoney(getMoney() + stock.getParentCompany().calculateStockPrice());
-                    numberOfStocks--;
-                }
+        Iterator<Stock> stockIter = stockList.iterator();
+        while (stockIter.hasNext()){
+            Stock curStock = stockIter.next();
+
+            if (curStock.getParentCompany() == defunctCo && numberOfStocks > 0) {
+                stockIter.remove();
+                setMoney(getMoney() + curStock.getParentCompany().calculateStockPrice());
+                numberOfStocks--;
             }
         }
     }
@@ -141,9 +139,12 @@ public class Player{
             Stock newStock = new Stock(winnerCompany);
             stockList.add(newStock);
         }
-        for(Stock stock : stockList){ // remove the defunct company stocks
-            if(numberOfStocks != 0 && stock.getParentCompany() == winnerCompany) {
-                stockList.remove(stock);
+
+        Iterator<Stock> stockIter = stockList.iterator();
+        while (stockIter.hasNext()){ // remove the defunct company stocks
+            Stock curStock = stockIter.next();
+            if(numberOfStocks > 0 && curStock.getParentCompany() == winnerCompany) {
+                stockIter.remove();
                 numberOfStocks--;
             }
         }
