@@ -440,7 +440,7 @@ public class Board {
         List<Company>companiesAround = new ArrayList<Company>();
         for(Tile t : tilesAround){
             //Adds tiles companies around the current tile if they havent been added already and aren't default.
-            if(!t.getCompany().getCompanyName().equals("DEFAULT")&& !companiesAround.contains(t.getCompany())); //This saying that objects equal if an attribute is equal is a code smell
+            if(!t.getCompany().getCompanyName().equals("DEFAULT") && !companiesAround.contains(t.getCompany())); //This saying that objects equal if an attribute is equal is a code smell
             {
                 companiesAround.add(t.getCompany());
             }
