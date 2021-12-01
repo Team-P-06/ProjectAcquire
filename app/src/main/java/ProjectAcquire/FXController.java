@@ -137,7 +137,6 @@ public class FXController {
         endGameLoader.setController(this);
         mainStage.setScene(new Scene(endGameLoader.load()));
         setWinner(gameState);
-        //mainStage.setScene(new Scene(EndGameLoader.load()));
     }
 
     @FXML
@@ -150,10 +149,10 @@ public class FXController {
         for(Player player : playerList){
             int playerNet = netCalculator.calculateNet(player);
             playerResult = (playerResult + player.getName() + "    $" + playerNet + "\n");
-            if (netCalculator.calculateNet(winner) < playerNet){ player = winner; }
+            if (netCalculator.calculateNet(winner) < playerNet){ winner = player; }
+            playerResultLabel.setText(playerResult);
+            winnerLabel.setText("Winner: " + winner.getName());
         }
-        playerResultLabel.setText(playerResult);
-        winnerLabel.setText("Winner: " + winner.getName());
     }
 
 

@@ -143,7 +143,7 @@ public class Player{
         Iterator<Stock> stockIter = stockList.iterator();
         while (stockIter.hasNext()){ // remove the defunct company stocks
             Stock curStock = stockIter.next();
-            if(numberOfStocks > 0 && curStock.getParentCompany() == winnerCompany) {
+            if(numberOfStocks > 0 && curStock.getParentCompany() == defunctCompany) {
                 stockIter.remove();
                 numberOfStocks--;
             }
