@@ -318,6 +318,7 @@ public class GameState {
      * @param mergingCompanies the companies that are being merged
      * @throws IOException
      */
+
     @Generated
     public void mergeInterrupt(List<Company> mergingCompanies) throws IOException{
         Update update = new Update();
@@ -333,6 +334,12 @@ public class GameState {
     public void buyInterrupt() throws IOException {
         Update update = new Update();
         update.buyUI(this);
+    }
+
+    @Generated
+    public void mergeChoiceInterrupt(List<Company> equalCompanies) throws IOException {
+        Update update = new Update();
+        //update.mergeChoiceUI(this, equalCompanies);
     }
 
     /**
