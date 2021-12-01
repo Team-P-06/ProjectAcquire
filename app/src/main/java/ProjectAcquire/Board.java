@@ -514,6 +514,7 @@ public class Board {
      * @param comp The comp to set our adj tile to
      * @throws Exception
      */
+    @Generated //This is tested inside of the actual game UI
     public void addToCompLogic(Company comp) throws Exception {
         //System.out.println(comp.getCompanyName());
         int counter = 1;

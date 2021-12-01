@@ -37,6 +37,7 @@ public class IOManager {
     /**
      * Default constructor
      */
+    @Generated
     public void IOManager(){}
     /**
      * Save a current game being played with its current game state being converted to a json file
