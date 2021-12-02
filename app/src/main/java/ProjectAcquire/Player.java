@@ -75,7 +75,7 @@ public class Player{
     public void placeTile(Tile tile) throws IOException {
         try {
             //Sets the tile to be flipped.
-            tile.setFlipped();
+            tile.setFlipped(true);
             tileList.remove(tile);
             tile.setDealt(false);
            // getTileList().remove(tile);

@@ -32,14 +32,16 @@ import lombok.Setter;
 
 import java.util.Arrays;
 
+@Getter @Setter
 public class Tile {
     /**
      * Coord is {Row, Column}
      */
-   private @Getter @Setter Company company;
-   private @Getter @Setter int[] coord;
+   private Company company;
+   private int[] coord;
    private boolean flipped;
-   private @Setter boolean dealt;
+   private boolean dealt;
+   private boolean dead;
 
 
    //Default constructor
@@ -48,6 +50,7 @@ public class Tile {
         this.company = new Company();
         this.flipped = false;
         this.dealt = false;
+        this.dead = false;
     }
 
     /**
@@ -61,26 +64,27 @@ public class Tile {
         this.coord = tileCoord;
         this.flipped = false;
         this.dealt = false;
+        this.dead = false;
     }
 
     /**
      * Checks if the tile is on the board yet.
      */
-    public boolean isFlipped(){ return flipped; }
+    /*public boolean isFlipped(){ return flipped; }
 
     public boolean isDealt(){ return dealt; }
 
     public boolean isDealable(){
         return !isFlipped() && !isDealt();
-    }
+    }*/
 
     /**
      *
      * @return the company the tile belongs to.
      */
-    public void setFlipped(){
-        this.flipped = true;
-    }
+    /*public void setFlipped(boolean state){
+        this.flipped = state;
+    }*/
 
     /**
      * Extracts the string names of the tiles in the list of tiles

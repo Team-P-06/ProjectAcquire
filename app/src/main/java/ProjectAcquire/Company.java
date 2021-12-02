@@ -88,8 +88,6 @@ public class Company {
     public int calculateStockPrice(){
         int stockPrice = 0;
         switch (numTiles){
-            //case 0 -> stockPrice = 0;
-            //case 1 -> stockPrice = 0;
             case 2 -> stockPrice = 200;
             case 3 -> stockPrice = 300;
             case 4 -> stockPrice = 400;

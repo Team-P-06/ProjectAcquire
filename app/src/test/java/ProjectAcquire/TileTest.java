@@ -41,7 +41,7 @@ public class TileTest {
         int[] coord = {0,1};
 
         Tile classUnderTest = TestHelper.helperMethod_custom_tile_via_coord_and_companyName(coord,"TEST");
-        classUnderTest.setFlipped();
+        classUnderTest.setFlipped(true);
         assertTrue(classUnderTest.isFlipped());
     }
 
@@ -53,7 +53,7 @@ public class TileTest {
         int[] coord = {0,1};
 
         Tile classUnderTest = TestHelper.helperMethod_custom_tile_via_coord_and_companyName(coord,"TEST");
-        classUnderTest.setFlipped();
+        classUnderTest.setFlipped(true);
         assertEquals(coord[0], classUnderTest.getCoord()[0]);
     }
 
@@ -64,7 +64,7 @@ public class TileTest {
         int[] coord = {0,1};
 
         Tile classUnderTest = TestHelper.helperMethod_custom_tile_via_coord_and_companyName(coord,"TEST");
-        classUnderTest.setFlipped();
+        classUnderTest.setFlipped(true);
         assertTrue(classUnderTest.getCompany().getCompanyName().equals("TEST"));
     }
 
@@ -93,11 +93,11 @@ public class TileTest {
     /**
      * Tests that the isDealable() method returns the right boolean while calling is dealt and flipped inside of the tile class
      */
-    @Test
+    /*@Test
     void test_isDealable(){
         Tile testTile = new Tile();
         assertTrue(testTile.isDealable());
-    }
+    }*/
 
     /**
      * Tests that the method isFlipped() correctly checks to see if a tile is flipped

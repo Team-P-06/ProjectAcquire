@@ -36,6 +36,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
+@Getter @Setter
 public class Board {
     //instance variables
 
@@ -44,29 +45,17 @@ public class Board {
      * @param tileList List of tiles to set tileList to
      * @return A list of the current Tiles on the board (all tiles except dead ones?)
      */
-    @Getter
-    @Setter
     List<Tile> tileList;
-    @Getter
-    @Setter
     List<List<Tile>> tileList2D;
 
     /**
      * @param companyList list of companies to update companies to
      * @return A list of the current companies
      */
-    private @Getter
-    @Setter
-    List<Company> uncharteredCompanies;
-    private @Getter
-    @Setter
-    List<Company> charteredCompanies;
-    private @Getter
-    @Setter
-    List<Player> playerList;
-    private @Getter
-    @Setter
-    Player CurrentPlayer;
+    private List<Company> uncharteredCompanies;
+    private List<Company> charteredCompanies;
+    private List<Player> playerList;
+    private Player CurrentPlayer;
 
     private static Board instance = null; //Singleton instance variable
 
@@ -161,7 +150,7 @@ public class Board {
         Random ran = new Random();
         int randomIndex = ran.nextInt(getTileList().size());
         Tile pulledTile = getTileList().get(randomIndex);
-        if (!pulledTile.isFlipped() && !pulledTile.isDealt()) { // If the tile is able to be dealt
+        if (!pulledTile.isFlipped() && !pulledTile.isDealt() && !pulledTile.isDead()) { // If the tile is able to be dealt
             pulledTile.setDealt(true);
             player.addTile(pulledTile);
         } else { // recursive call if it can't deal the tile
@@ -387,12 +376,14 @@ public class Board {
 
         List<Company> uniqueCompaniesAroundTile = new ArrayList<Company>();
         int flippedTilesAroundTile = 0;
+        int numOfPermentCompanies = 0;
 
         //makes a list of all the unique companies around the tile.
         for (Tile tl : tilesAroundCoord) {
             if (!tl.getCompany().getCompanyName().equals("DEFAULT")) { //if the company of this tile is not the default one.
                 if (!uniqueCompaniesAroundTile.contains(tl.getCompany())) { //and if we have not already added this tile
                     uniqueCompaniesAroundTile.add(tl.getCompany());  // then add the tile.
+                    if(tl.getCompany().isPermanent()){ numOfPermentCompanies++;}
                 }
             }
         }
@@ -413,6 +404,9 @@ public class Board {
             //We do this by passing in the tile's company to charterLogic, which will initiate our algorithm.
             //charterLogic(tile.getCompany());
             return 2;
+        } else if(uniqueCompaniesAroundTile.size() > 1 && numOfPermentCompanies > 1 ){
+            // You place a tile between two percent companies
+            return 4;
         } else if (uniqueCompaniesAroundTile.size() > 1) {
 
             //merge needed
@@ -450,10 +444,8 @@ public class Board {
         List<Company> companiesAround = new ArrayList<Company>();
         for (Tile t : tilesAround) {
             //Adds tiles companies around the current tile if they havent been added already and aren't default.
-            if(!t.getCompany().getCompanyName().equals("DEFAULT") && !companiesAround.contains(t.getCompany())); //This saying that objects equal if an attribute is equal is a code smell
-            if (!t.getCompany().getCompanyName().equals("DEFAULT") && !companiesAround.contains(t.getCompany()))
+            if (!t.getCompany().getCompanyName().equals("DEFAULT") && !companiesAround.contains(t.getCompany())){
                 ; //This saying that objects equal if an attribute is equal is a code smell
-            {
                 companiesAround.add(t.getCompany());
             }
         }
@@ -462,7 +454,7 @@ public class Board {
 
     /**
      * This method could more accurately be called "add surrounding flipped tiles to a company"
-     * It essentially runs through the whole board and adds unchartered flipped tiles to the companies next to them (if any)
+     * It essentially runs through the whole board and adds uncharted flipped tiles to the companies next to them (if any)
      *
      * @param company The Company that we are setting flipped adjacent tiles to be part of.
      */

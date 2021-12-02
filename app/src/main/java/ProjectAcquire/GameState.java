@@ -31,7 +31,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -146,7 +145,7 @@ public class GameState {
 
             //Looks at the current player, and then runs that players turn
             //1. Deals cards if less than 6 cards are in the player's hand
-            while (currentPlayer.getTileList().size() < 6) {
+            while (currentPlayer.getTileList().size() < 6 && tilesLeft() > 0) {
                 currentBoard.dealTile(currentPlayer);
             }
             } catch (Exception e) {
@@ -155,6 +154,17 @@ public class GameState {
 //        for (Tile tl: currentBoard.getTileList()){
 //            System.out.print(" Tile: " + tl + " is flipped "+tl.isFlipped());
 //        }
+    }
+
+    private int tilesLeft(){
+        int numOfTilesLeft = 108;
+        for(Tile tile : currentBoard.getTileList()){
+            if (tile.isDead() == true || tile.isFlipped() == true || tile.isDealt() == true){
+                numOfTilesLeft--;
+            }
+        }
+        System.out.println("numer of tieles left is ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" + numOfTilesLeft);
+        return numOfTilesLeft;
     }
 
     /**
@@ -253,6 +263,7 @@ public class GameState {
     @Generated
     public void getTileChoice(Tile tile, Player player) throws Exception {
         player.placeTile(tile); // Might want to move this when we implement dead tiles.
+        checkPermanent();
 
         int action = currentBoard.checkForActionInitiation(tile);
 
@@ -283,6 +294,23 @@ public class GameState {
             CompanyLedger.getInstance().setCharterTile(tile);
             List<Company> companiesAroundTile = currentBoard.companiesAroundTile(tile);
             mergeInterrupt(companiesAroundTile);
+        }
+        else if ( action == 4){ // A dead tile was set
+            tile.setDead(true);
+            tile.setFlipped(false);
+            tile.setDealt(false);
+            player.getTileList().remove(tile);
+            playTurn();
+            Update update = new Update();
+            update.nextTurnUI(this);
+        }
+    }
+
+    private void checkPermanent(){
+        for (Company com : currentBoard.getCharteredCompanies()) {
+            if (com.getNumTiles() > 10){
+                com.setPermanent(true);
+            }
         }
     }
 
@@ -318,7 +346,6 @@ public class GameState {
      * @param mergingCompanies the companies that are being merged
      * @throws IOException
      */
-
     @Generated
     public void mergeInterrupt(List<Company> mergingCompanies) throws IOException{
         Update update = new Update();
@@ -334,12 +361,6 @@ public class GameState {
     public void buyInterrupt() throws IOException {
         Update update = new Update();
         update.buyUI(this);
-    }
-
-    @Generated
-    public void mergeChoiceInterrupt(List<Company> equalCompanies) throws IOException {
-        Update update = new Update();
-        //update.mergeChoiceUI(this, equalCompanies);
     }
 
     /**
