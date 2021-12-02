@@ -48,5 +48,4 @@ public class JsonTest{
         IOManager test = new IOManager();
         assertNotNull(test);
     }
-
 }

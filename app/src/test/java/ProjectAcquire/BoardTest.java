@@ -180,6 +180,20 @@ public class BoardTest {
         assertNull(helperBoard.checkEqualsMerge());
     }
 
+    /**
+     * Test that determmines if we are properly getting the tiles on board a company has. In this case our default company
+     * has no tiles on board so it should return a null value
+     */
+    @Test
+    void test_getTilesOnBoard(){
+        GameState helperGameState = TestHelper.helperMethod_GameStateInit();
+        Board helperBoard = helperGameState.getCurrentBoard();
+        Company test = new Company();
+        assertNull(helperBoard.getTilesOnBoard(test));
+    }
+
+
+
     @Test void test_getTileWest() throws Exception {
 
         GameState helperGameState = TestHelper.helperMethod_GameStateInit();
@@ -210,26 +224,6 @@ public class BoardTest {
         //assertTrue(Arrays.equals(tileEastOfCoord.getCoord(),expectedEast));
 
     }
-
-
-
-//    @Test void test_getTilesAround(){
-//
-//        GameState helperGameState = TestHelper.helperMethod_GameStateInit();
-//        Board helperBoard = helperGameState.getCurrentBoard();
-//        int[] coord = {0,1};
-//
-//        Tile testTile = TestHelper.helperMethod_customTile(coord);
-//        List<Tile> helperTileList = helperGameState.getCurrentBoard().getTileList();
-//        List<Tile> tilesAround = helperBoard.getTilesAround(coord);
-//        //System.out.println(helperTileList);
-//
-//        assertTrue(!tilesAround.isEmpty());
-//
-//
-//
-//
-//    }
 
 
     @Test void test_convTileList2d(){

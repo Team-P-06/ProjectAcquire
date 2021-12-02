@@ -16,4 +16,14 @@ public class CompanyTest {
         Company testCompany = new Company("testCom", 200, false, false);
         assertNotNull(testCompany.toString());
     }
+
+    /**
+     * Test that checks the instance in company ledger class to make sure that the get instance method is actually
+     * returning a new company ledger object whenever the instance is null
+     */
+    @Test
+    void test_CompanyLedger(){
+        CompanyLedger test = new CompanyLedger();
+        assertNotNull(test.getInstance());
+    }
 }
