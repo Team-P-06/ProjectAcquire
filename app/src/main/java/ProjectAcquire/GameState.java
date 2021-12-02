@@ -134,28 +134,24 @@ public class GameState {
      * recursively called play method that is called when a player decides to play their turn
      */
     public void playTurn() throws IllegalArgumentException, IOException {
-        //This section checks if we have loaded a game or if we are just starting.
-        //sets our current player to be the first player of our list.
-        //then removes from the front of the list, so that the second player should now be at the front of the list
-        //Then adds the current player to the back of the list.
         try {
             if (currentPlayer == null) {
-                setUpInitialTurn(); //if our game has just started, we need to initialize it.
+                setUpInitialTurn(); //if our game has just started, we need to set up the current player.
             }
 
-            //Looks at the current player, and then runs that players turn
-            //1. Deals cards if less than 6 cards are in the player's hand
+            //Deals cards if less than 6 cards are in the player's hand
             while (currentPlayer.getTileList().size() < 6 && tilesLeft() > 0) {
                 currentBoard.dealTile(currentPlayer);
             }
             } catch (Exception e) {
                 e.printStackTrace();
         }
-//        for (Tile tl: currentBoard.getTileList()){
-//            System.out.print(" Tile: " + tl + " is flipped "+tl.isFlipped());
-//        }
     }
 
+    /**
+     * Counts the number of tiles still able to be dealt to players
+     * @return Numer of tiles left
+     */
     private int tilesLeft(){
         int numOfTilesLeft = 108;
         for(Tile tile : currentBoard.getTileList()){
@@ -163,7 +159,6 @@ public class GameState {
                 numOfTilesLeft--;
             }
         }
-        System.out.println("numer of tieles left is ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" + numOfTilesLeft);
         return numOfTilesLeft;
     }
 
