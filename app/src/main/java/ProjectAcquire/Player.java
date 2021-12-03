@@ -167,6 +167,23 @@ public class Player{
         tileList.add(tile);
     }
 
+    /**
+     * Counts the number of stock in the player stock list to see if the input is valid
+     * @param company the company the stocks are coming from
+     * @return the number of stocks the player has for that company.
+     */
+    public int countStocks (Company company){
+        int numberOfStocks = 0;
+        if(getStockList() != null) {
+            List<Stock> fullStockList = getStockList();
+            for (Stock stock : fullStockList) {
+                if (stock.getParentCompany() == company) {
+                    numberOfStocks++;
+                }
+            }
+        }
+        return numberOfStocks;
+    }
 
     @Override @Generated //Tested inside of the UI because no assertion tests are applicable to fully test
     public boolean equals(Object o) {
