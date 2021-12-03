@@ -183,13 +183,13 @@ public class Board {
      */
     public List<Tile> getTilesAround(int[] coord) throws Exception {
 
-
         List<Tile> tilesAround = new ArrayList<Tile>();
 
         Tile south = getAdjacentTile(coord, "SOUTH");
         Tile north = getAdjacentTile(coord, "NORTH");
         Tile west = getAdjacentTile(coord, "WEST");
         Tile east = getAdjacentTile(coord, "EAST");
+
         if (south != null) {
             tilesAround.add(south);
         }
@@ -204,14 +204,15 @@ public class Board {
         }
 
         tilesAround.removeIf(tl -> Arrays.equals(tl.getCoord(), new int[]{-1, -1})); //tilesAround shouldn't include tiles off border.
-
-
         return tilesAround;
     }
 
 
     /**
      * This method is NOT my finest work. It is vomitous, as they say.
+     *
+     * It returns a Tile based on a passed in coordinate and a cardinal direction, eg.  ([1,1], "EAST") returns the Tile on the board
+     * that has the coordinate [1,2]
      *
      * @param coord       tile coordinate
      * @param cardinalDir A cardinal direction "WEST, EAST, NORTH, SOUTH"
@@ -253,19 +254,19 @@ public class Board {
 
     /**
      * Checks if a passed in coordinate has a tile associated with it and returns it
-     * otherwise returns a tile with the coordinate {-1,-1}
+     * otherwise returns a tile with the coordinate [-1,-1]
      *
      * @param adj the adjacent tile that our getAdjacentTile() method has created.
      * @return
      */
     private Tile arrayEquals(int[] adj) {
-        for (Tile tl : getTileList()) {
-            if (Arrays.equals(tl.getCoord(), adj)) {
+        for (Tile tl : getTileList()) { //for each tile on the board.
+            if (Arrays.equals(tl.getCoord(), adj)) { //checks if the passed in coordinate equals the coordinate of the current tile.
                 //System.out.println("the tile associated with "+ adj[0] + " " + adj[1] + " is "+ tl);
-                return tl;
+                return tl; //returns the tile associated with that coordinate
             }
         }
-        return new Tile();
+        return new Tile(); //else our default constructor for a Tile object instantiates a Tile with the Coordinate [-1,-1] and returns it
     }
 
     //other methods
@@ -275,7 +276,7 @@ public class Board {
      *
      * @param company Company to charter
      */
-    void charter(Company company) throws Exception {
+    public void charter(Company company) throws Exception {
         //sets up the data structures to charter
         company.setChartered(true);
         charteredCompanies.add(company);
@@ -292,12 +293,11 @@ public class Board {
      *
      * @param company Company to uncharter
      */
-    void unCharter(Company company) {
+    public void unCharter(Company company) {
         company.setChartered(false);
         charteredCompanies.remove(company);
         uncharteredCompanies.add(company);
     }
-
 
     /**
      * Alex Note: DEPRECIATED
@@ -311,10 +311,6 @@ public class Board {
         company.setNumTiles(tileNum);
     }
 
-    @Generated
-        //until this method is used
-    void setDeadTile(Tile tile) {
-    } //don't remember what this is. Does it remove a tile from the board?
 
     /**
      * @param coord String coordinate location of tile
@@ -418,21 +414,6 @@ public class Board {
 
     }
 
-    @Generated //until used
-    public void merge() {
-    } //leaving this alone for now.
-
-    public List<Company> checkEqualsMerge() { //Should return a list of companies that are equal, return null if non are equal.
-        return null;
-    }
-
-    public Company getDefunctCompany() { // Should return the company that is being defunct(assuming 2 are not equal)
-        return null;
-    }
-
-    public Company getWinningCompany() {
-        return null;
-    }
 
     /**
      * @param tl this should return a list of companies around a given tile, using the getTilesAround method
@@ -536,10 +517,12 @@ public class Board {
         //this algorithm checks if a tile is associated with a loser company
         //and if it is, changes its company to be the winner company
         for(Tile tl: tileList){
-            for(int x=0; x<loserCos.size();x++) {
-                if(tl.getCompany().equals(loserCos.get(x))) {
-                    tl.setCompany(winnerCo);
-                }
+
+                for(Company c:loserCos){
+                    if(tl.getCompany().equals(c))
+                    {
+                        tl.setCompany(winnerCo);
+                    }
             }
         }
         //uncharters the small companies, increase number of tiles for winner, and reset loser companies to 0 tiles on board.

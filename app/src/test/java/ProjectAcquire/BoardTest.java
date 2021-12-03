@@ -135,27 +135,6 @@ public class BoardTest {
         assertEquals(0,helperBoard.getCompanyNumberOfTiles(test_Company));
     }
 
-    /**
-     * Test that the defuncCompany is being called and correctly and not giving any other company attributes
-     * more tests coming soon
-     */
-    @Test
-    void test_defunctCompany(){
-        GameState test_Game = TestHelper.helperMethod_GameStateInit();
-        Board helperBoard = test_Game.getCurrentBoard();
-        assertNull(helperBoard.getDefunctCompany());
-    }
-
-    /**
-     * Test that the winning company is properly used and not giving any other company attributes
-     * more tests coming soon
-     */
-    @Test
-    void test_winningCompany() {
-        GameState test_Game = TestHelper.helperMethod_GameStateInit();
-        Board helperBoard = test_Game.getCurrentBoard();
-        assertNull(helperBoard.getWinningCompany());
-    }
 
     /**
      * Test that we can properly set the number of tiles a company has on the board
@@ -169,16 +148,7 @@ public class BoardTest {
         assertEquals(2,test_Company.getNumTiles());
     }
 
-    /**
-     * Test that the check merge is properly getting passed
-     * more tests coming soon when the actaul merge method is created and used
-     */
-    @Test
-    void test_checkMerge(){
-        GameState test_Game = TestHelper.helperMethod_GameStateInit();
-        Board helperBoard = test_Game.getCurrentBoard();
-        assertNull(helperBoard.checkEqualsMerge());
-    }
+
 
     /**
      * Test that determmines if we are properly getting the tiles on board a company has. In this case our default company
