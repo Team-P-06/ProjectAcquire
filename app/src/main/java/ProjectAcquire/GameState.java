@@ -143,6 +143,14 @@ public class GameState {
             while (currentPlayer.getTileList().size() < 6 && tilesLeft() > 0) {
                 currentBoard.dealTile(currentPlayer);
             }
+
+            //helper loop (extremely inefficient) that checks specifically for tiles that haven't been added to a company right
+            for(Company comp: getCurrentBoard().getCharteredCompanies()){
+                getCurrentBoard().addToCompLogic(comp); //make sure all chartered companies have adjacent flipped tiles added properly
+            }
+
+
+
             } catch (Exception e) {
                 e.printStackTrace();
         }

@@ -94,7 +94,7 @@ public class Game {
         for (int i = 0; i < numOfPlayers; i++) {
             List<Tile> newPlayerTileList = new ArrayList<>();
             List<Stock> newPlayerStockList = new ArrayList<>();
-            Player newPlayer = new Player("Player " + (i+1), newPlayerTileList, 0);
+            Player newPlayer = new Player("Player " + (i+1), newPlayerTileList, 1000);
             newPlayer.setStockList(newPlayerStockList);
             playerList.add(newPlayer);
         }
