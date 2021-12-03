@@ -63,16 +63,6 @@ public class BoardTest {
 
     }
 
-    /**
-     * Tests our checkPermanent method. this will need to be updated once real logic is implemented.
-     */
-    @Test void test_board_tile_isPermanent_notNull(){
-
-        Board classUnderTest = TestHelper.helperMethod_custom_board();
-
-        assertFalse(classUnderTest.checkPermanent("TEST"));
-
-    }
 
     /**
      * Update this test once we implement observables.
@@ -85,14 +75,7 @@ public class BoardTest {
 
     }
 
-    /**
-     * Tests the checkPermanent method. Real implementation will cause this test to fail.
-     */
-    @Test void test_checkPermanent(){
 
-        Board classUnderTest = TestHelper.helperMethod_custom_board();
-        assertFalse(classUnderTest.checkPermanent("A1"));
-    }
 
     /**
      * Test to make sure that a string is properly generated within the board class
@@ -136,17 +119,6 @@ public class BoardTest {
     }
 
 
-    /**
-     * Test that we can properly set the number of tiles a company has on the board
-     */
-    @Test
-    void test_setTilesOnBoardWithCompany(){
-        GameState test_Game = TestHelper.helperMethod_GameStateInit();
-        Board helperBoard = test_Game.getCurrentBoard();
-        Company test_Company = new Company();
-        helperBoard.updateCompanyTiles(test_Company,2);
-        assertEquals(2,test_Company.getNumTiles());
-    }
 
 
 

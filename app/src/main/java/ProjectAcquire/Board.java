@@ -295,62 +295,11 @@ public class Board {
      */
     public void unCharter(Company company) {
         company.setChartered(false);
+        company.setNumTiles(0);
         charteredCompanies.remove(company);
         uncharteredCompanies.add(company);
     }
 
-    /**
-     * Alex Note: DEPRECIATED
-     * This method will set the number of tiles on the board that a passed in company will have. It should be called by our checkForAction method as part of an action to execute.
-     *
-     * @param company Company to update the tiles of
-     * @param tileNum number of tiles the company should now have
-     */
-
-    public void updateCompanyTiles(Company company, int tileNum) {
-        company.setNumTiles(tileNum);
-    }
-
-
-    /**
-     * @param coord String coordinate location of tile
-     * @return if the company that is at that tile location is permanent.
-     */
-    boolean checkPermanent(String coord) {
-        return false;
-    }
-
-    /**
-     * This action checker should be called a bunch of times from charterLogic.
-     * It basically returns true if the tile that we passed in needs to be added to a chartered company
-     *
-     * @param coord The coordinate of a tile
-     */
-    @Generated //Tested in the UI
-    private boolean checkForTileAction(int[] coord) throws Exception {
-
-        //ALEX NOTE: I think that this method is important to implement, but I don't remember why atm. leaving true for now
-
-        boolean actionIsRequired = false;
-        List<Tile> currentTileList = instance.getTileList();
-
-        List<Tile> tilesAroundCoord = getTilesAround(coord);
-        int numFlipped = 0;
-        for (Tile x : tilesAroundCoord) {
-            if (x.isFlipped()) {
-                numFlipped++;
-            }
-        }
-        //checks how many of the tiles are flipped, then chartered calls appropriate method with some if elses.
-
-        //if action is required, return true
-
-        if (numFlipped > 0) {
-            return true;
-        }
-
-        return false;
-    }
 
     /**
      * Should check for an action on a passed in coord string, using the current board. Essentially, if the tile at that coord touches a tile of a different company than itself, an action is chosen.
@@ -361,55 +310,58 @@ public class Board {
      * @param tile a FLIPPED passed in tile.
      */
     @Generated //Tested while playing the game in the UI
+
+
+    /**
+     * Looks at the tiles around a played tile and decided whether a merge, charter, add to company, or no action is needed.
+     *
+     *
+     * @param tile Tile that was just played by a player
+     * @return an integer representing the action that needs to happen.
+     */
     public int checkForActionInitiation(Tile tile) throws Exception {
 
         //ALEX NOTE: If the passed in tile does not have a true isFlipped status we need to throw an exception,
         //but i dont know how to do that.
-
-        List<Tile> currentTileList = instance.getTileList();
         List<Tile> tilesAroundCoord = getTilesAround(tile.getCoord());
-        //   System.out.println(tilesAroundCoord);
-
         List<Company> uniqueCompaniesAroundTile = new ArrayList<Company>();
         int flippedTilesAroundTile = 0;
-        int numOfPermentCompanies = 0;
+        int numOfPermanentCompanies = 0;
 
         //makes a list of all the unique companies around the tile.
+
         for (Tile tl : tilesAroundCoord) {
             if (!tl.getCompany().getCompanyName().equals("DEFAULT")) { //if the company of this tile is not the default one.
                 if (!uniqueCompaniesAroundTile.contains(tl.getCompany())) { //and if we have not already added this tile
                     uniqueCompaniesAroundTile.add(tl.getCompany());  // then add the tile.
-                    if(tl.getCompany().isPermanent()){ numOfPermentCompanies++;}
+                    if(tl.getCompany().isPermanent()){ numOfPermanentCompanies++;}
                 }
             }
         }
-        //System.out.println(uniqueCompaniesAroundTile);
+        //checks if any tiles around our Tile are flipped.
         for (Tile tl : tilesAroundCoord) {
             if (tl.isFlipped()) {
                 flippedTilesAroundTile++;
             }
         }
-        if (uniqueCompaniesAroundTile.isEmpty() && flippedTilesAroundTile > 0) { //this checks if we have a flipped but unchartered tile next to us
-            //This should mean that we can charter a new company.
-            //charter(tile.getCompany());
-
-            return 1; //ALEX NOTE: I am moving our interrupt back to GameState to avoid having to pass GameState around
-            //gameState.charterChoiceInterrupt(); //Calls UI to update the screen with a choice for the player to choose. After choice UI calls charter().
-        } else if (uniqueCompaniesAroundTile.size() == 1) {
-            //If there is one company found around this tile, we can add this tile to that company
-            //We do this by passing in the tile's company to charterLogic, which will initiate our algorithm.
-            //charterLogic(tile.getCompany());
-            return 2;
-        } else if(uniqueCompaniesAroundTile.size() > 1 && numOfPermentCompanies > 1 ){
-            // You place a tile between two percent companies
-            return 4;
-        } else if (uniqueCompaniesAroundTile.size() > 1) {
+        //this checks iff we have a flipped and unchartered tile next to our Tile, (iff= if and only iff)
+        if (uniqueCompaniesAroundTile.isEmpty() && flippedTilesAroundTile > 0) {
+            return 1; //flipped but not chartered
+        }
+        //If there is one company found around this tile, we can add this tile to that company
+        else if (uniqueCompaniesAroundTile.size() == 1) {
+            return 2; //1 chartered comp seen
+        }
+        else if (uniqueCompaniesAroundTile.size() > 1 && numOfPermanentCompanies <=1) {
 
             //merge needed
             // This should simply return 3 back to getTileChoice() in GameState. It then turns around and calls board.merge()
             return 3;
         }
-
+        else if(uniqueCompaniesAroundTile.size() > 1 && numOfPermanentCompanies > 1 ){
+            // You place a tile between two percent companies
+            return 4;
+        }
         return 0;
 
     }
@@ -517,7 +469,6 @@ public class Board {
         //this algorithm checks if a tile is associated with a loser company
         //and if it is, changes its company to be the winner company
         for(Tile tl: tileList){
-
                 for(Company c:loserCos){
                     if(tl.getCompany().equals(c))
                     {
@@ -528,7 +479,6 @@ public class Board {
         //uncharters the small companies, increase number of tiles for winner, and reset loser companies to 0 tiles on board.
         for(Company c: loserCos){
             winnerCo.setNumTiles(winnerCo.getNumTiles() + c.getNumTiles());
-            c.setNumTiles(0);
             unCharter(c);
         }
     }
