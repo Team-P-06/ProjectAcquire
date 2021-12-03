@@ -443,9 +443,11 @@ public class Board {
         List<Tile> tilesAround = getTilesAround(tl.getCoord());
         List<Company> companiesAround = new ArrayList<Company>();
         for (Tile t : tilesAround) {
-            //Adds tiles companies around the current tile if they havent been added already and aren't default.
-            if (!t.getCompany().getCompanyName().equals("DEFAULT") && !companiesAround.contains(t.getCompany())){
-                ; //This saying that objects equal if an attribute is equal is a code smell
+
+            //Adds tiles companies around the current tile if they haven't been added already and aren't default.
+            if (!t.getCompany().getCompanyName().equals("DEFAULT") && !companiesAround.contains(t.getCompany())) //This saying that objects equal if an attribute is equal is a code smell
+            {
+                System.out.println(t.getCompany());
                 companiesAround.add(t.getCompany());
             }
         }
