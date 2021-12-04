@@ -12,8 +12,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class BoardTest {
 
-
-
     //This test is shitty for checking proper initialization change it.
     @Test void test_board_init_chartered_companies() {
 
@@ -118,10 +116,6 @@ public class BoardTest {
         assertEquals(0,helperBoard.getCompanyNumberOfTiles(test_Company));
     }
 
-
-
-
-
     /**
      * Test that determmines if we are properly getting the tiles on board a company has. In this case our default company
      * has no tiles on board so it should return a null value
@@ -187,7 +181,46 @@ public class BoardTest {
             z+=x.length;
         }
 
+    }
 
+    /**
+     *
+     * Tests the Boards deal tile method
+     */
+    @Test void test_dealTile(){
+        Board helperBoard = TestHelper.helperMethod_custom_board();
+
+        List<Player> pList= helperBoard.getPlayerList();
+        helperBoard.setCurrentPlayer(pList.get(0));
+       // System.out.println(helperBoard.getCurrentPlayer());
+        helperBoard.dealTile(helperBoard.getCurrentPlayer());
+
+        Player testPlayer = pList.get(0);
+        Tile testTile = testPlayer.getTileList().get(testPlayer.getTileList().size()-1);
+        assertEquals(testTile.isDealt(),true);
+
+        TestHelper.helperMethod_tearDownBoard();
+
+    }
+
+
+    /**
+     * Tests getLowestStockPrice
+     */
+    @Test void test_getLowestStockPrice(){
+
+        Board helperBoard = TestHelper.helperMethod_custom_board();
+        List<Company> test_charteredCompanies = TestHelper.helperMethod_CompanyList(); //will make a list of 3 companies
+        test_charteredCompanies.get(0).setNumTiles(2); //equates to a stockPrice of 200
+        test_charteredCompanies.get(1).setNumTiles(3);//equates to a stockPrice of 300
+        test_charteredCompanies.get(2).setNumTiles(4);//equates to a stockPrice of 400
+
+        helperBoard.setCharteredCompanies(test_charteredCompanies); //overrides the chartered companies variable for test
+       int lowestPrice = helperBoard.getLowestStockPrice(); //should be 200
+       for(Company c: test_charteredCompanies) {System.out.print(c.getStockPrice()+ " ");}
+
+       assertEquals(200,lowestPrice);
+        TestHelper.helperMethod_tearDownBoard();
     }
 
 

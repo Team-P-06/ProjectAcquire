@@ -124,8 +124,10 @@ public class TestHelper {
         List<Company> helperUncharteredCompanyList = helperMethod_CompanyList();
 
         List<Player> helperPlayerList = new ArrayList<Player>();
-        Player player = new Player();
+        Player player = helperMethod_custom_Player("Test1");
+        Player player2 = helperMethod_custom_Player("Test2");
         helperPlayerList.add(player);
+        helperPlayerList.add(player2);
 
 
         Board customBoard = Board.getInstance(helperTileList,helperUncharteredCompanyList,helperCharteredCompList,helperPlayerList);

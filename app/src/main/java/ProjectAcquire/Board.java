@@ -145,7 +145,7 @@ public class Board {
      *
      * @param player current player who we are dealing tiles to
      */
-    @Generated //Tested when playing the game in the UI
+   //Tested when playing the game in the UI
     public void dealTile(Player player) {
         Random ran = new Random();
         int randomIndex = ran.nextInt(getTileList().size());
@@ -163,7 +163,7 @@ public class Board {
      *
      * @return Returns the lowest stock price of any company in chartered companies
      */
-    @Generated
+
     //Need a full board with companies and proper UI set up in order to test. Testing inside of the game with UI
     public int getLowestStockPrice() {
         int currentLowestPrice = 10000; // Default value, very high since we descend as we get better prices.
