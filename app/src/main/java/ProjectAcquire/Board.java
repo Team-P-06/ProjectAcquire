@@ -62,7 +62,7 @@ public class Board {
     /**
      * Default constructor
      */
-    public Board() {
+    private Board() {
         this.tileList = new ArrayList<Tile>();
         this.uncharteredCompanies = new ArrayList<Company>();
         this.charteredCompanies = new ArrayList<Company>();

@@ -82,6 +82,7 @@ public class TestHelper {
         testTileList.add(tile2);
         testTileList.add(tile3);
 
+        //System.out.println(testTileList);
         return testTileList;
     }
 

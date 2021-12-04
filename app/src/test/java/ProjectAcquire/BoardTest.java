@@ -80,8 +80,8 @@ public class BoardTest {
      */
     @Test
     void test_String(){
-        Board test = new Board();
-        assertNotNull(test.toString());
+        assertNotNull(Board.getInstance().toString());
+        TestHelper.helperMethod_tearDownBoard();
     }
 
     /**
@@ -89,8 +89,10 @@ public class BoardTest {
      */
     @Test
     void test_Instance(){
-        Board test = new Board();
-        assertNotNull(test.getInstance());
+        //Board test = new Board();
+        assertNotNull(Board.getInstance());
+        TestHelper.helperMethod_tearDownBoard();
+
     }
 
     /**
@@ -102,6 +104,8 @@ public class BoardTest {
         Board helperBoard = test_Game.getCurrentBoard();
         Company test_Company = new Company();
         assertEquals(0,test_Company.getNumTiles());
+        TestHelper.helperMethod_tearDownBoard();
+
     }
 
     /**
@@ -114,6 +118,8 @@ public class BoardTest {
         Board helperBoard = test_Game.getCurrentBoard();
         Company test_Company = new Company();
         assertEquals(0,helperBoard.getCompanyNumberOfTiles(test_Company));
+        TestHelper.helperMethod_tearDownBoard();
+
     }
 
     /**
@@ -126,6 +132,7 @@ public class BoardTest {
         Board helperBoard = helperGameState.getCurrentBoard();
         Company test = new Company();
         assertNull(helperBoard.getTilesOnBoard(test));
+        TestHelper.helperMethod_tearDownBoard();
     }
 
 
@@ -140,8 +147,10 @@ public class BoardTest {
         List<Tile> helperTileList = helperGameState.getCurrentBoard().getTileList();
         //System.out.println(helperTileList);
         Tile tileWestOfCoord = helperBoard.getAdjacentTile(coord,"WEST");
-        System.out.println(tileWestOfCoord);
-      //  assertTrue(Arrays.equals(tileWestOfCoord.getCoord(),expectedWest));
+       // System.out.println(tileWestOfCoord);
+       assertTrue(Arrays.equals(tileWestOfCoord.getCoord(),expectedWest));
+
+        TestHelper.helperMethod_tearDownBoard();
 
     }
 
@@ -153,11 +162,13 @@ public class BoardTest {
         int[] expectedEast = {0,2};
         Tile testTile = TestHelper.helperMethod_customTile(coord);
         List<Tile> helperTileList = helperGameState.getCurrentBoard().getTileList();
-        System.out.println(helperTileList);
+       // System.out.println(helperTileList);
         Tile tileEastOfCoord = helperBoard.getAdjacentTile(coord,"EAST");
-        System.out.println(tileEastOfCoord);
         //System.out.println(tileEastOfCoord);
-        //assertTrue(Arrays.equals(tileEastOfCoord.getCoord(),expectedEast));
+        //System.out.println(tileEastOfCoord);
+        assertTrue(Arrays.equals(tileEastOfCoord.getCoord(),expectedEast));
+
+        TestHelper.helperMethod_tearDownBoard();
 
     }
 
@@ -174,12 +185,13 @@ public class BoardTest {
             for(int y=0; y<x.length;y++){
                 if(x[y]!=null) {
                     x[y] = helperBoard.getTileList().get(y + z);
-                    System.out.print(x[y]+ " ");
+                  //  System.out.print(x[y]+ " ");
                 }
-                System.out.println();
+               // System.out.println();
             }
             z+=x.length;
         }
+        TestHelper.helperMethod_tearDownBoard();
 
     }
 
@@ -189,6 +201,10 @@ public class BoardTest {
      */
     @Test void test_dealTile(){
         Board helperBoard = TestHelper.helperMethod_custom_board();
+
+        List<Tile> tList = TestHelper.helperMethod_tileList_company1_3_coord_A1_A3();
+        System.out.println(tList);
+        helperBoard.setTileList(tList);
 
         List<Player> pList= helperBoard.getPlayerList();
         helperBoard.setCurrentPlayer(pList.get(0));
@@ -217,11 +233,61 @@ public class BoardTest {
 
         helperBoard.setCharteredCompanies(test_charteredCompanies); //overrides the chartered companies variable for test
        int lowestPrice = helperBoard.getLowestStockPrice(); //should be 200
-       for(Company c: test_charteredCompanies) {System.out.print(c.getStockPrice()+ " ");}
+       //for(Company c: test_charteredCompanies) {System.out.print(c.getStockPrice()+ " ");}
 
        assertEquals(200,lowestPrice);
         TestHelper.helperMethod_tearDownBoard();
     }
 
+    /**
+     * This method tests the checkForAction method to make sure it works for seeing a charter action
+     *
+     * @throws Exception
+     */
+    @Test void test_checkForActionInitiation() throws Exception {
+
+        Board helperBoard = TestHelper.helperMethod_custom_board();
+
+        List<Tile> helperTileList = helperBoard.getTileList();
+        //System.out.println(helperTileList);
+        Tile testTile = helperTileList.get(0);
+        int testAction = helperBoard.checkForActionInitiation(testTile);
+        assertEquals(2,testAction); //since the Tiles in our helperTileList have companies associated with them, return 2.
+        TestHelper.helperMethod_tearDownBoard();
+
+
+    }
+
+    /**
+     * This method tests the checkForAction method to make sure it works for seeing a "carry on nothing to see here" action
+     *
+     * @throws Exception
+     */
+    @Test void test_checkForActionInitiation_tilesNotFlipped() throws Exception {
+
+        Board helperBoard = TestHelper.helperMethod_custom_board();
+
+        List<Tile> helperTileList = new ArrayList<>();
+        Tile customTile1 = TestHelper.helperMethod_customTile(new int[]{0,0});
+        Tile customTile2 = TestHelper.helperMethod_customTile(new int[]{0,1});
+        Tile customTile3 = TestHelper.helperMethod_customTile(new int[]{0,2});
+
+        customTile1.setFlipped(false);
+        customTile2.setFlipped(false);
+        customTile3.setFlipped(false);
+
+        helperTileList.add(customTile1);
+        helperTileList.add(customTile2);
+        helperTileList.add(customTile3);
+
+        helperBoard.setTileList(helperTileList);
+        System.out.println(helperBoard.companiesAroundTile(customTile1));
+        Tile testTile = helperTileList.get(0);
+        int testAction = helperBoard.checkForActionInitiation(testTile);
+        assertEquals(0,testAction); //since the Tiles in our helperTileList have companies associated with them, return 2.
+        TestHelper.helperMethod_tearDownBoard();
+
+
+    }
 
 }
