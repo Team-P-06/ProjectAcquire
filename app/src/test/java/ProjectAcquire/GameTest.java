@@ -27,6 +27,6 @@ public class GameTest {
     @Test
     void test_Start() throws IOException {
         Game test = new Game();
-        assertNotNull(test.start());
+        assertNotNull(test.start(2));
     }
 }

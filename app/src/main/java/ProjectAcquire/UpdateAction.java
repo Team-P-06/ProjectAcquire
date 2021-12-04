@@ -28,9 +28,6 @@
 package ProjectAcquire;
 
 import javafx.scene.control.Button;
-import org.checkerframework.checker.guieffect.qual.UI;
-import org.checkerframework.checker.units.qual.C;
-import org.checkerframework.checker.units.qual.Length;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -135,7 +132,6 @@ public class UpdateAction{
     /**
      * Clears the textboxes for the merge options.
      */
-    // CHECK TO MAKE SURE THIS DOESN'T BREAK ANYTHING!
     private void clearMergeTextBox(){
         UIController.getMergeSellTextArea().clear();
         UIController.getMergeTradeTextArea().clear();
@@ -254,20 +250,26 @@ public class UpdateAction{
             defunctCompanies.removeIf(com -> com.getCompanyName().equals("DEFAULT")); // Removes the default companies from the list
             List<Player> playerListCopy = new ArrayList<>(players); // Create copies of list for this "sub turn"
             List<Company> companyListCopy = new ArrayList<>(defunctCompanies);
+            Player curPlayer = playerListCopy.get(0);
+            Company curDefunctCompanies = companyListCopy.get(0);
 
-            if (validateMergeOptions(companyListCopy.get(0), playerListCopy.get(0))){ // If all the inputs are valid
+            if (validateMergeOptions(curDefunctCompanies, curPlayer)){ // If all the inputs are valid
                 UIController.getInvalidInputLabel().setText(""); // Clear any labels after a success
-                sellTradeKeepStocks(playerListCopy.get(0), winnerCo, companyListCopy.get(0));
-
+                sellTradeKeepStocks(curPlayer, winnerCo, curDefunctCompanies);
                 playerListCopy.remove(0);
+
                 if(playerListCopy.size() > 0){
                     showMergeInfo(winnerCo, companyListCopy, playerListCopy, originalDefunctCompanies);
                 }
-                else if (playerListCopy.size() == 0 && defunctCompanies.size() > 1){ // rotate the defunct company
+                else if (playerListCopy.size() == 0 && defunctCompanies.size() > 1){ // rotate the defunct company and give payouts
+
+                    mergePayout(defunctCompanies.get(0)); // Give merge payouts
+
                     companyListCopy.remove(0);
                     showMergeInfo(winnerCo, companyListCopy, gameState.getPlayerList(), originalDefunctCompanies);
                 }
-                else{ // When both lists are empty the merge turn ends and set the placed tile to be apart of the winner company.
+                else{ // When both lists are empty the merge turn ends and set the placed tile to be a part of the winner company.
+                    mergePayout(defunctCompanies.get(0)); // give merge payouts
                     gameState.getCurrentBoard().mergeLogic(winnerCo, originalDefunctCompanies); // Merges the companies and updates the board.
                     Tile charterTile = CompanyLedger.getInstance().getCharterTile();
                     charterTile.setCompany(winnerCo);
@@ -278,6 +280,87 @@ public class UpdateAction{
                 }
             }
         }
+
+    /**
+     * Gives players a cash payout based on have many stocks they have in a company relative to other players.
+     * @param company The company that is doing the cash payout/losing the merge.
+     */
+    private void mergePayout(Company company){
+            List<Player> majorityShareholders = checkMajority(company, 0);
+            List<Player> minorityShareholders = checkMajority(company, 1);
+            if(majorityShareholders != null) {
+                if (majorityShareholders.size() == 1 && minorityShareholders.size() == 1) { // Only 1 majority and minority payout
+                    majorityShareholders.get(0).setMoney(majorityShareholders.get(0).getMoney() + company.getMajorityPayout());
+                    minorityShareholders.get(0).setMoney(minorityShareholders.get(0).getMoney() + company.getMinorityPayout());
+
+                } else if(majorityShareholders.size() == 1 && minorityShareholders.size() == 0) { // Sole owner
+                    int bothPayouts = company.getMajorityPayout() + company.getMinorityPayout();
+                    int roundedBothPayouts = ((bothPayouts + 99) / 100) * 100; // Rounds up to nearist hundreth
+                    majorityShareholders.get(0).setMoney(majorityShareholders.get(0).getMoney() + roundedBothPayouts);
+
+                } else if (majorityShareholders.size() > 1) { // Split the payout for the majority tied players
+                    int splitPayout = (company.getMajorityPayout() + company.getMinorityPayout()) / (majorityShareholders.size());
+                    int roundedBothPayouts = ((splitPayout + 99) / 100) * 100;
+                    for (Player curPlayer : majorityShareholders) {
+                        curPlayer.setMoney(curPlayer.getMoney() + roundedBothPayouts);
+                    }
+
+                } else if (majorityShareholders.size() == 1 && minorityShareholders.size() > 1) { // Split minority payout
+                    majorityShareholders.get(0).setMoney(majorityShareholders.get(0).getMoney() + company.getMajorityPayout());
+                    int splitPayout = company.getMinorityPayout() / minorityShareholders.size();
+                    int roundedBothPayouts = ((splitPayout + 99) / 100) * 100;
+                    for (Player curPlayer : minorityShareholders) {
+                        curPlayer.setMoney(curPlayer.getMoney() + roundedBothPayouts);
+                    }
+                }
+
+            }
+        }
+
+    /**
+     * Adds players to a list based on if they have the majority or minority socks in a company
+     * @param company the company that is losing a merge and giving a payout
+     * @param listToReturn 0 for a list of majority player, 1 for a list of minority players
+     * @return either a list of majority or minority players.
+     */
+        private List<Player> checkMajority(Company company, int listToReturn){
+            List<Player> tiedMajorityPlayers = new ArrayList<>();
+            List<Player> tiedMinorityPlayers = new ArrayList<>();
+            int largestStocks = 0;
+            int nextLargest = 0;
+            for(Player curPlayer : gameState.getPlayerList()){ // Sets the largest
+                int curPlayerStocks = curPlayer.countStocks(company);
+                if (curPlayerStocks > largestStocks) {
+                    largestStocks = curPlayerStocks;
+                }
+            }
+            for(Player curPlayer : gameState.getPlayerList()) { // Sets the nextLargest stock values
+                int curPlayerStocks = curPlayer.countStocks(company);
+                if(curPlayerStocks < largestStocks && curPlayerStocks > nextLargest){
+                    nextLargest = curPlayerStocks;
+                }
+            }
+
+            for (Player curPlayer : gameState.getPlayerList()){
+                if (curPlayer.countStocks(company) == largestStocks && curPlayer.countStocks(company) != 0){
+                    tiedMajorityPlayers.add(curPlayer);
+                }
+            }
+            for (Player curPlayer : gameState.getPlayerList()) {
+                if (curPlayer.countStocks(company) == nextLargest && curPlayer.countStocks(company) != 0) {
+                    tiedMinorityPlayers.add(curPlayer);
+                }
+            }
+
+
+            if(listToReturn == 0) {
+                return tiedMajorityPlayers;
+            }
+            else{
+                return tiedMinorityPlayers;
+            }
+        }
+
 
     /**
      * Simply returns the list of inputs from the user
@@ -314,7 +397,7 @@ public class UpdateAction{
                     return false;}
             }
 
-            if (totalStocks > countStocks(curDefunctCompanies, curPlayer)){ // Check if the user has enough stocks to get rid of
+            if (totalStocks > curPlayer.countStocks(curDefunctCompanies)){ // Check if the user has enough stocks to get rid of
                 UIController.getInvalidInputLabel().setVisible(true);
                 UIController.getInvalidInputLabel().setText("Not enough stocks");
                 clearMergeTextBox();
@@ -333,7 +416,7 @@ public class UpdateAction{
     private void sellTradeKeepStocks(Player player, Company winnerCompany, Company defunctCompany){
         List<String> userInput = getUserInputs();
         int totalStocksPlayerIsRemoving = 0;
-        int totalPlayerStocks = countStocks(defunctCompany, player);
+        int totalPlayerStocks = player.countStocks(defunctCompany);
 
         if (userInput.get(0) != "") {  // Sell stock
             player.sellStock(defunctCompany , Integer.parseInt(userInput.get(0)));
@@ -349,26 +432,6 @@ public class UpdateAction{
         player.keepStock(defunctCompany, totalPlayerStocks - totalStocksPlayerIsRemoving);
         clearMergeTextBox();
     }
-
-    /**
-     * Counts the number of stock in the player stock list to see if the input is valid
-     * @param company the company the stocks are coming from
-     * @param curPlayer the play who's stocks we are checking
-     * @return the numer of stocks the player has for that company.
-     */
-    private int countStocks (Company company, Player curPlayer){
-            int numberOfStocks = 0;
-            if(curPlayer.getStockList() != null) {
-            List<Stock> fullStockList = curPlayer.getStockList();
-            for (Stock stock : fullStockList) {
-                if (stock.getParentCompany() == company) {
-                    numberOfStocks++;
-                }
-            }
-        }
-            return numberOfStocks;
-    }
-
 
     /**
      * This method is called after the board sees that two flipped uchartered tiles are next to eachother.
