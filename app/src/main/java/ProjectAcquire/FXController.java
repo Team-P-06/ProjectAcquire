@@ -98,15 +98,49 @@ public class FXController {
     /**
      * Button actions to begin a new game.
      */
-    @FXML
-    private void newGame() throws Exception { //ALEX NOTE: This will act as our main method as written.
+    private void newGame(int numOfPlayers) throws Exception { //ALEX NOTE: This will act as our main method as written.
         Update update = new Update();
         Game newGame = Game.getInstance();
 
         showBoardMenu(getGameBoardLoader());
 
-        GameState gameState = newGame.start();
+        GameState gameState = newGame.start(numOfPlayers);
         update.nextTurnUI(gameState);
+    }
+
+    @FXML
+    private void showPlayerNumber(){
+        playerChoicePane.setVisible(true);
+        startGameButton.setOnAction(a -> {
+            try {
+                numberOfPlayersChoice(NumberOfPlayersTextField.getText());
+            } catch (Exception e) {e.printStackTrace();}
+        });
+    }
+
+    private void numberOfPlayersChoice(String playerInput) throws Exception {
+        if (playerInput.equals("")) { newGame(2); }
+
+        else if (!checkInput(playerInput)){
+            playerCountErrorLabel.setText("Invalid input");
+        } else if (Integer.parseInt(playerInput) > 10){
+            playerCountErrorLabel.setText("Too many player, only up to 10 people can play");
+        } else if(Integer.parseInt(playerInput) < 2){
+            playerCountErrorLabel.setText("Not enough player, at least 2 people need to play");
+        }
+        else{
+           newGame(Integer.parseInt(playerInput));
+        }
+    }
+
+    /**
+     * Checks to make sure the players input is a integer
+     * @param playerInput The players input from the text box
+     * @return boolean if the input is an int or not
+     */
+    private boolean checkInput(String playerInput){
+        if (playerInput.equals("")) {return true;}
+        return playerInput.matches("[0-9]+");
     }
 
     /**
@@ -158,11 +192,19 @@ public class FXController {
 
     /**
      * **********************************************************************************************************
-     * Game board UI logic and variables start here
-     * Miscellaneous labels and buttons on the UI,
+     * All the FXML labels/buttons and such are found here
      */
     @FXML private Label playersLabel, playerMoneyLabel, playerStocksLabel, playersNetWorth;
     @Getter @FXML private Label hotelsLabel, hotelNameLabel, cHotelLabel, sHotelLabel, fHotelLabel, iHotelLabel, aHotelLabel, wHotelLabel, tHotelLabel, actionLabel, stocksPurchasedLabel, TurnLabel, currentPlayerTurnLabel;
+
+    /**
+     * Main menu player choice UI items
+     */
+    @FXML Label numberOfPlayersLabel;
+    @Getter @FXML Label playerCountErrorLabel;
+    @Getter @FXML Button startGameButton;
+    @Getter @FXML TextField NumberOfPlayersTextField;
+    @FXML Pane playerChoicePane;
 
     /**
      * Grid for the board to place all the tiles on it.

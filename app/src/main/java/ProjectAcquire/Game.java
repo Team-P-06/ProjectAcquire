@@ -76,7 +76,7 @@ public class Game {
     /**
      * Start game method that will begin a new game that isn't already saved
      */
-    public GameState start() throws IOException {
+    public GameState start(int numOfPlayers) throws IOException {
         //Company defaultCompany = new Company("emptyCo", 0, false, false);
 
         /*
@@ -90,11 +90,10 @@ public class Game {
         //This is just a static creation of players for now, will be more dynamic in the future.
         //List<Tile> playerTileList = new ArrayList<>();
         LinkedList<Player> playerList = new LinkedList<Player>();
-        int numOfPlayers = 3;
         for (int i = 0; i < numOfPlayers; i++) {
             List<Tile> newPlayerTileList = new ArrayList<>();
             List<Stock> newPlayerStockList = new ArrayList<>();
-            Player newPlayer = new Player("Player " + (i+1), newPlayerTileList, 1000);
+            Player newPlayer = new Player("Player " + (i+1), newPlayerTileList, 3000);
             newPlayer.setStockList(newPlayerStockList);
             playerList.add(newPlayer);
         }
