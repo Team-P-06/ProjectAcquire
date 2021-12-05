@@ -190,6 +190,5 @@ public class UpdateBoard {
         saveGameButton.setOnAction(a -> {
             saveGameButton.setText("Saved!");
             ioManager.saveGame(gameState);});
-        ioManager.saveGame(gameState); //Could be wrong but just added this to write the file -Tyler
     }
 }

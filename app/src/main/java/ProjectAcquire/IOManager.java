@@ -59,8 +59,8 @@ public class IOManager {
     public GameState loadGame(String file) throws IOException {
         Gson converter = new Gson();
         //readString with path.of(file) is causing the path exceptions io error when running gradle test not sure what to do here -Tyler
-        //String jsonString = Files.readString(Path.of(file)); // Added by Show, this resolved a loading error(Expected BEGIN_OBJECT but was STRING)
-        GameState savedGame = converter.fromJson(file, GameState.class);
+        String jsonString = Files.readString(Path.of(file)); // Added by Show, this resolved a loading error(Expected BEGIN_OBJECT but was STRING)
+        GameState savedGame = converter.fromJson(jsonString, GameState.class);
         return savedGame;
     }
 

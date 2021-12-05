@@ -46,7 +46,6 @@ public class Board {
      * @return A list of the current Tiles on the board (all tiles except dead ones?)
      */
     List<Tile> tileList;
-    List<List<Tile>> tileList2D;
 
     /**
      * @param companyList list of companies to update companies to
@@ -544,7 +543,6 @@ public class Board {
         }
         //uncharters the small companies, increase number of tiles for winner, and reset loser companies to 0 tiles on board.
         for(Company c: loserCos){
-            winnerCo.setNumTiles(winnerCo.getNumTiles() + c.getNumTiles());
             c.setNumTiles(0);
             unCharter(c);
         }

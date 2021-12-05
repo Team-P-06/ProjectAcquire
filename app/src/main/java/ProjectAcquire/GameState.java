@@ -31,6 +31,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -265,7 +266,7 @@ public class GameState {
      */
     @Generated
     public void getTileChoice(Tile tile, Player player) throws Exception {
-        player.placeTile(tile); // Might want to move this when we implement dead tiles.
+        player.placeTile(tile);
         checkPermanent();
 
         int action = currentBoard.checkForActionInitiation(tile);
@@ -290,7 +291,7 @@ public class GameState {
                 }
             }
             System.out.println("ACTION 2");
-            currentBoard.addToCompLogic(adjComp); //add flipped tile to adjacent company.
+            currentBoard.getCharteredCompanies().add(adjComp);
             buyStocksInterrupt();
         }
         else if( action == 3){ //If there is a merge action needed

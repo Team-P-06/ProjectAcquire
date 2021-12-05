@@ -144,16 +144,25 @@ public class FXController {
     }
 
     /**
-     * Loads the game given a specific game load to load from.
-     * Doesn't really load a game yet.
+     * Loads the game given a game to load from.
+     * This effectively mimics game.newGame, except all the data is from the laoded json file.
      */
     @FXML
     private void loadGame() throws IOException {
+        Update update = new Update();
         IOManager ioManager = new IOManager();
-        //Update update = new Update();
-        GameState loadedGame = ioManager.loadGame("./src/main/resources/SavedGames/SavedGame.txt");
+        Game newGame = Game.getInstance();
+
         showBoardMenu(getGameBoardLoader());
-        loadedGame.nextTurn();
+        GameState loadedGame = ioManager.loadGame("./src/main/resources/SavedGames/SavedGame.txt");
+
+        Board board = Board.getInstance(loadedGame.getCurrentBoard().getTileList(), loadedGame.getCurrentBoard().getUncharteredCompanies(),
+                loadedGame.getCurrentBoard().getCharteredCompanies(), loadedGame.getCurrentBoard().getPlayerList());
+
+        GameState gameState =  GameState.getInstance(board, loadedGame.getPlayerList());
+        newGame.loadGame(loadedGame);
+        update.nextTurnUI(gameState);
+
     }
 
     /**

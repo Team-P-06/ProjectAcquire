@@ -68,10 +68,61 @@ public class Game {
      * @param game
      */
     @Generated //Until we use the method
-    public void loadGame(String game)throws IOException{
-
-        //this.currentGameState = (gamestate that we pull from a file)
+    public void loadGame(GameState game)throws IOException{
+        loadCompanies(game);
+        loadPlayers(game);
+        for(Player player : game.getPlayerList()) {
+                loadTileList(game, player);
+            }
+            this.currentGameState = game;
     }
+
+    /**
+     * When a game is loaded the references to the player tile list are not kept for some reason.
+     * This function refreshes the player tile list at the begging of the load with the loaded, correct, tile list.
+     * @param gameState the current loaded gameState
+     * @param player the player whom we are updating the tile list for.
+     */
+    private void loadTileList(GameState gameState, Player player){
+        List<Tile> playerTileListCopy = new ArrayList<>(player.getTileList());
+        player.getTileList().clear();
+
+            for (Tile playerTile : playerTileListCopy) {
+                for (Tile boardTile : gameState.getCurrentBoard().getTileList()) {
+                    if (playerTile.toString().equals(boardTile.toString())) {
+                        player.getTileList().add(boardTile);
+                        boardTile.setDealt(true);
+                    }
+                }
+            }
+        }
+
+        private void loadCompanies(GameState gameState){
+            List<Company> cCompanyListCopy = new ArrayList<>(gameState.getCurrentBoard().getCharteredCompanies());
+            List<Company> uCompanyListCopy = new ArrayList<>(gameState.getCurrentBoard().getUncharteredCompanies());
+            gameState.getCurrentBoard().getCharteredCompanies().clear();
+            gameState.getCurrentBoard().getUncharteredCompanies().clear();
+            for (Company cCompany : cCompanyListCopy){
+                gameState.getCurrentBoard().getCharteredCompanies().add(cCompany);
+            }
+
+            for (Company uCompany : uCompanyListCopy){
+                gameState.getCurrentBoard().getUncharteredCompanies().add(uCompany);
+            }
+        }
+
+        private void loadPlayers(GameState gameState) {
+            List<Player> playerListCopy = new ArrayList<>(gameState.getPlayerList());
+            gameState.getPlayerList().clear();
+            for (Player player : playerListCopy) {
+                gameState.getPlayerList().add(player);
+            }
+            for (Player gamePlayer : gameState.getPlayerList()) {
+                System.out.println(gamePlayer.getName());
+                for (Stock stock : gamePlayer.getStockList())
+                    System.out.println(stock.getParentCompany().getCompanyName());
+            }
+        }
 
     /**
      * Start game method that will begin a new game that isn't already saved

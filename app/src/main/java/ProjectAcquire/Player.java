@@ -74,11 +74,9 @@ public class Player{
      */
     public void placeTile(Tile tile) throws IOException {
         try {
-            //Sets the tile to be flipped.
             tile.setFlipped(true);
             tileList.remove(tile);
             tile.setDealt(false);
-           // getTileList().remove(tile);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -174,10 +172,10 @@ public class Player{
      */
     public int countStocks (Company company){
         int numberOfStocks = 0;
-        if(getStockList() != null) {
-            List<Stock> fullStockList = getStockList();
+        if(stockList != null) {
+            List<Stock> fullStockList = stockList;
             for (Stock stock : fullStockList) {
-                if (stock.getParentCompany() == company) {
+                if (stock.getParentCompany().equals(company)) {
                     numberOfStocks++;
                 }
             }
