@@ -108,6 +108,9 @@ public class FXController {
         update.nextTurnUI(gameState);
     }
 
+    /**
+     * Shows the textbox for the number of players to play the game
+     */
     @FXML
     private void showPlayerNumber(){
         playerChoicePane.setVisible(true);
@@ -118,6 +121,11 @@ public class FXController {
         });
     }
 
+    /**
+     * validates the player's choice of number of players is valid
+     * @param playerInput the player's input
+     * @throws Exception
+     */
     private void numberOfPlayersChoice(String playerInput) throws Exception {
         if (playerInput.equals("")) { newGame(2); }
 
@@ -145,10 +153,10 @@ public class FXController {
 
     /**
      * Loads the game given a game to load from.
-     * This effectively mimics game.newGame, except all the data is from the laoded json file.
+     * This effectively mimics game.newGame, except all the data is from the loaded json file.
      */
     @FXML
-    private void loadGame() throws IOException {
+    private void loadGame() throws Exception {
         Update update = new Update();
         IOManager ioManager = new IOManager();
         Game newGame = Game.getInstance();
@@ -162,7 +170,6 @@ public class FXController {
         GameState gameState =  GameState.getInstance(board, loadedGame.getPlayerList());
         newGame.loadGame(loadedGame);
         update.nextTurnUI(gameState);
-
     }
 
     /**
@@ -173,6 +180,10 @@ public class FXController {
         System.exit(0);
     }
 
+    /**
+     * Shows the end game screen upon a player clicking "end game" when the conditions are met
+     * @throws IOException
+     */
     @FXML
     public void endGame() throws IOException {
         GameState gameState = GameState.getInstance();
@@ -182,6 +193,10 @@ public class FXController {
         setWinner(gameState);
     }
 
+    /**
+     * Calculates the winner based on their net worth
+     * @param gameState the current game's gamestate
+     */
     @FXML
     private void setWinner(GameState gameState){
         UpdatePlayer netCalculator = new UpdatePlayer();

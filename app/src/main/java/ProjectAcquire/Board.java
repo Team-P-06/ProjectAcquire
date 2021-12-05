@@ -262,7 +262,6 @@ public class Board {
     private Tile arrayEquals(int[] adj) {
         for (Tile tl : getTileList()) { //for each tile on the board.
             if (Arrays.equals(tl.getCoord(), adj)) { //checks if the passed in coordinate equals the coordinate of the current tile.
-                //System.out.println("the tile associated with "+ adj[0] + " " + adj[1] + " is "+ tl);
                 return tl; //returns the tile associated with that coordinate
             }
         }
@@ -380,7 +379,6 @@ public class Board {
             //Adds tiles companies around the current tile if they haven't been added already and aren't default.
             if (!t.getCompany().getCompanyName().equals("DEFAULT") && !companiesAround.contains(t.getCompany())) //This saying that objects equal if an attribute is equal is a code smell
             {
-                System.out.println(t.getCompany());
                 companiesAround.add(t.getCompany());
             }
         }
@@ -407,7 +405,6 @@ public class Board {
             foundTiles = 0; //reset counter
             for (Tile tile : getTileList()) { //for every tile on the board
                 if (!tile.getCompany().getCompanyName().equals("DEFAULT")) {
-                    // System.out.println(tile);
                 }
                 List<Tile> tilesAroundThisPos = null;
                 try {
@@ -415,28 +412,24 @@ public class Board {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                //System.out.println(tilesAroundThisPos.toString());
                 boolean one_of_the_tiles_around_the_current_tile_has_our_company = false; //explains itself
 
                 for (Tile tl : tilesAroundThisPos) {
 
-                    //   System.out.println(tl.tileCoordToString()+ " " + tl.getCompany().getCompanyName()+ " " + company.getCompanyName());
                     if (tl.getCompany().getCompanyName().equals(company.getCompanyName())) {
                         one_of_the_tiles_around_the_current_tile_has_our_company = true;
                     }
                     //If our current tile is flipped but of a default company, and
                     // if we have an adjacent chartered tile
-                    //   System.out.println("Name of company: "+tile.getCompany().getCompanyName()+ " isFlipped: "+ tile.isFlipped()+ " tilearoundhascurrentcomp: "+one_of_the_tiles_around_the_current_tile_has_our_company );
                     if (tile.getCompany().getCompanyName().equals("DEFAULT") &&
                             tile.isFlipped() && one_of_the_tiles_around_the_current_tile_has_our_company) {
-                        //  System.out.println("TILE AROUND HAS COMPANY");
                         tile.setCompany(company); //set our current tile to be part of our passed in company
                         company.setNumTiles(company.getNumTiles() + 1);
                         foundTiles++; // if this is hit, we have found a tile, so our loop will restart after it hits the last tile on the board.
                     }
                 }
             }
-            //System.out.println("Company "+ company.getCompanyName() + " is now chartered");
+
         }
     }
 
@@ -448,7 +441,6 @@ public class Board {
      */
      //This is tested inside of the actual game UI
     public void addToCompLogic(Company comp)  {
-        //System.out.println(comp.getCompanyName());
         int counter = 1;
         //while loop so that we can deal with multiple adjacent tiles
         while (counter > 0) {

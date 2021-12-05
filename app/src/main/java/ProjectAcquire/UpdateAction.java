@@ -43,7 +43,6 @@ public class UpdateAction{
 
     private FXController UIController;
     private GameState gameState;
-    //private Update update = new Update();
 
     /**
      * Updates the list of companies that you can buy stocks from. if merge is true, update via merge method with different choice UI.
@@ -185,11 +184,19 @@ public class UpdateAction{
         }
     }
 
+    /**
+     * Simply sets an error label
+     */
     private void invalidInputError(){
         UIController.getInvalidInputLabel().setVisible(true);
         UIController.getInvalidInputLabel().setText("Invalid input");
     }
 
+    /**
+     * Gets the string from the user for a company when buying stocks
+     * @param companyAssociatedWithString what company the player is buying from
+     * @return the value of the user
+     */
     private String getBuyString(Company companyAssociatedWithString){
         String userValue = "";
             switch (companyAssociatedWithString.getCompanyName()){
@@ -258,7 +265,7 @@ public class UpdateAction{
 
             if (validateMergeOptions(curDefunctCompanies, curPlayer)){ // If all the inputs are valid
                 UIController.getInvalidInputLabel().setText(""); // Clear any labels after a success
-                copyStocks(originalDefunctCompanies);
+                copyStocks(originalDefunctCompanies); // Makes sure stock references are correct before selling
 
                 sellTradeKeepStocks(curPlayer, winnerCo, curDefunctCompanies);
                 playerListCopy.remove(0);
@@ -275,6 +282,8 @@ public class UpdateAction{
                         winnerCo.setNumTiles(winnerCo.getNumTiles() + defunctCoList.getNumTiles());
                         defunctCoList.setNumTiles(0);
                     }
+
+                    // Makes sure to fix any references when in a loaded game
                     for(Company company : gameState.getCurrentBoard().getCharteredCompanies()) {
                         if (company.getCompanyName().equals(winnerCo.getCompanyName())) {
                             gameState.getCurrentBoard().getCharteredCompanies().remove(company);
@@ -284,7 +293,7 @@ public class UpdateAction{
 
                     Tile charterTile = CompanyLedger.getInstance().getCharterTile();
                     charterTile.setCompany(winnerCo);
-                    winnerCo.setNumTiles(winnerCo.getNumTiles() + 1);
+                    winnerCo.setNumTiles(winnerCo.getNumTiles() + 1); // Add the played tile to the total count of stocks
 
                     gameState.getCurrentBoard().getCharteredCompanies().add(winnerCo);
                     gameState.getCurrentBoard().mergeLogic(winnerCo, originalDefunctCompanies); // Merges the companies and updates the board.
@@ -294,7 +303,12 @@ public class UpdateAction{
             }
         }
 
-        private void copyStocks(List<Company> originalDefunctCompanies){
+    /**
+     * This fixes an issues with references when loading a game.
+     * Effectively makes sure all the stocks for each player corresponds to the correct company.
+     * @param originalDefunctCompanies
+     */
+    private void copyStocks(List<Company> originalDefunctCompanies){
             for(Company defunctCompany : originalDefunctCompanies) {
 
                 for (Player player : gameState.getPlayerList()) {
@@ -305,7 +319,6 @@ public class UpdateAction{
                         Stock curStock = stockIter.next();
                         if (curStock.getParentCompany().getCompanyName().equals(defunctCompany.getCompanyName())) {
                             stockIter.remove();
-                            //player.getStockList().add(new Stock(winnerCo));
                         }
                     }
 
@@ -313,20 +326,6 @@ public class UpdateAction{
                         player.getStockList().add(new Stock(defunctCompany));
                     }
                 }
-            }
-        }
-
-        private void refreshCompanies(){
-            List<Company> cCompanyListCopy = new ArrayList<>(gameState.getCurrentBoard().getCharteredCompanies());
-            List<Company> uCompanyListCopy = new ArrayList<>(gameState.getCurrentBoard().getUncharteredCompanies());
-            gameState.getCurrentBoard().getCharteredCompanies().clear();
-            gameState.getCurrentBoard().getUncharteredCompanies().clear();
-            for (Company cCompany : cCompanyListCopy){
-                gameState.getCurrentBoard().getCharteredCompanies().add(cCompany);
-            }
-
-            for (Company uCompany : uCompanyListCopy){
-                gameState.getCurrentBoard().getUncharteredCompanies().add(uCompany);
             }
         }
 
