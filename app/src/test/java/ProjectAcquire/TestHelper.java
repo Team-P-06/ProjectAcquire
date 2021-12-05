@@ -112,7 +112,7 @@ public class TestHelper {
      *
      * @return a Board instance for testing
      */
-    @Before
+   // @Before
     static Board helperMethod_custom_board(){
         //Tile tile = helperMethod_custom_tile_via_coord_and_companyName("A1","TEST");
 
@@ -136,7 +136,7 @@ public class TestHelper {
         return customBoard;
     }
 
-    @After
+   // @After
     static void helperMethod_tearDownBoard(){
         Board oldBoard = helperMethod_custom_board();
         oldBoard.setNull();

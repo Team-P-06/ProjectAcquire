@@ -281,11 +281,104 @@ public class BoardTest {
         helperTileList.add(customTile3);
 
         helperBoard.setTileList(helperTileList);
-        System.out.println(helperBoard.companiesAroundTile(customTile1));
+        //System.out.println(helperBoard.companiesAroundTile(customTile1));
         Tile testTile = helperTileList.get(0);
         int testAction = helperBoard.checkForActionInitiation(testTile);
         assertEquals(0,testAction); //since the Tiles in our helperTileList have companies associated with them, return 2.
         TestHelper.helperMethod_tearDownBoard();
+
+    }
+
+    @Test void test_companiesAroundTile(){
+        Board helperBoard = TestHelper.helperMethod_custom_board();
+        List<Tile> tList = helperBoard.getTileList();
+        List<Company> helperComp = helperBoard.companiesAroundTile(tList.get(0));
+        assert(helperComp.size()>0);
+        TestHelper.helperMethod_tearDownBoard();
+
+    }
+
+    /**
+     * Test that charterLogic works correctly.
+     */
+    @Test void test_charterLogic(){
+
+        Board helperBoard = TestHelper.helperMethod_custom_board();
+        List<Tile> tList = helperBoard.getTileList();
+        Tile companyTile =tList.get(0);
+        companyTile.setDealt(true);
+        companyTile.setFlipped(true);
+        Tile adjToCompanyTile = tList.get(1);
+        adjToCompanyTile.setDealt(true);
+        adjToCompanyTile.setFlipped(true);
+
+        Company defCom = TestHelper.helperMethod_Company("DEFAULT");
+        adjToCompanyTile.setCompany(defCom);
+        helperBoard.charterLogic(companyTile.getCompany());
+        assert(companyTile.getCompany().getCompanyName().equals(adjToCompanyTile.getCompany().getCompanyName())); //adj company should now have the same name as companyTile
+        TestHelper.helperMethod_tearDownBoard();
+
+    }
+
+    /**
+     * Tests that adding flipped tiles to chartered company works correctly.
+     */
+    @Test void test_addToComp(){
+
+        Board helperBoard = TestHelper.helperMethod_custom_board();
+        List<Tile> tList = helperBoard.getTileList();
+        Tile companyTile =tList.get(0);
+        companyTile.setDealt(true);
+        companyTile.setFlipped(true);
+        Tile adjToCompanyTile = tList.get(1);
+        adjToCompanyTile.setDealt(true);
+        adjToCompanyTile.setFlipped(true);
+
+        Company defCom = TestHelper.helperMethod_Company("DEFAULT");
+        adjToCompanyTile.setCompany(defCom);
+        helperBoard.addToCompLogic(companyTile.getCompany());
+        assert(companyTile.getCompany().getCompanyName().equals(adjToCompanyTile.getCompany().getCompanyName())); //adj company should now have the same name as companyTile
+        TestHelper.helperMethod_tearDownBoard();
+
+    }
+
+    /**
+     * Tests that merging works correctly
+     */
+    @Test void test_mergerLogic(){
+
+        Board helperBoard = TestHelper.helperMethod_custom_board();
+        List<Tile> tList = helperBoard.getTileList();
+        List<Company> compList = helperBoard.getUncharteredCompanies();
+        System.out.println(compList);
+
+
+        Company winnerComp = compList.get(0);
+        winnerComp.setNumTiles(4);
+        winnerComp.calculateStockPrice();
+
+        List<Company> loserList = new ArrayList<>();
+        Company loserComp1 = compList.get(1);
+        loserComp1.setNumTiles(3);
+        loserComp1.calculateStockPrice();
+        Company loserComp2 = compList.get(2);
+        loserComp2.setNumTiles(2);
+        loserComp2.calculateStockPrice();
+
+        loserList.add(loserComp1);
+        loserList.add(loserComp2);
+
+        //charters the unchartered companies
+        helperBoard.charter(compList.get(0));
+        helperBoard.charter(compList.get(0));
+        helperBoard.charter(compList.get(0));
+        //passes into mergeLogic
+        helperBoard.mergeLogic(winnerComp,loserList);
+        assertEquals(helperBoard.getCharteredCompanies().size(), 1); //merge should uncharter the two smaller companies, leaving us with 1 chartered company.
+        TestHelper.helperMethod_tearDownBoard();
+
+
+
 
 
     }
