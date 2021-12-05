@@ -165,19 +165,6 @@ public class UpdateBoard {
      */
     private void setEndGameButton(){
         UIController.getEndGameButton().setVisible(true);
-        /*UIController.getEndGameListView().setVisible(true);
-        UIController.getEndGameObserListView().clear();
-        Button endGameButton = new Button();
-        endGameButton.setText("End Game");
-        endGameButton.setOnAction(c -> {
-            try {
-                UIController.endGame();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
-        UIController.getEndGameObserListView().add(endGameButton);
-        UIController.getEndGameListView().setItems(UIController.getEndGameObserListView());*/
     }
 
     /**
