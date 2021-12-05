@@ -26,4 +26,9 @@ public class CompanyTest {
         CompanyLedger test = new CompanyLedger();
         assertNotNull(test.getInstance());
     }
+
+    @Test void test_hashCode(){
+        Company helperComp = TestHelper.helperMethod_Company("DEFAULT");
+        assertNotEquals(0, helperComp.hashCode());
+    }
 }
