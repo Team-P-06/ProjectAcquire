@@ -62,7 +62,7 @@ public class Board {
     /**
      * Default constructor
      */
-    public Board() {
+    private Board() {
         this.tileList = new ArrayList<Tile>();
         this.uncharteredCompanies = new ArrayList<Company>();
         this.charteredCompanies = new ArrayList<Company>();
@@ -106,7 +106,7 @@ public class Board {
      * @param pl list of players
      * @return instance of a board
      */
-    @Generated //Instance variable for the singleton
+    //Instance variable for the singleton
     public static Board getInstance(List tl, List uc, List cc, List pl) {
 
         if (instance == null) {
@@ -145,7 +145,7 @@ public class Board {
      *
      * @param player current player who we are dealing tiles to
      */
-    @Generated //Tested when playing the game in the UI
+   //Tested when playing the game in the UI
     public void dealTile(Player player) {
         Random ran = new Random();
         int randomIndex = ran.nextInt(getTileList().size());
@@ -163,7 +163,7 @@ public class Board {
      *
      * @return Returns the lowest stock price of any company in chartered companies
      */
-    @Generated
+
     //Need a full board with companies and proper UI set up in order to test. Testing inside of the game with UI
     public int getLowestStockPrice() {
         int currentLowestPrice = 10000; // Default value, very high since we descend as we get better prices.
@@ -183,13 +183,13 @@ public class Board {
      */
     public List<Tile> getTilesAround(int[] coord) throws Exception {
 
-
         List<Tile> tilesAround = new ArrayList<Tile>();
 
         Tile south = getAdjacentTile(coord, "SOUTH");
         Tile north = getAdjacentTile(coord, "NORTH");
         Tile west = getAdjacentTile(coord, "WEST");
         Tile east = getAdjacentTile(coord, "EAST");
+
         if (south != null) {
             tilesAround.add(south);
         }
@@ -204,8 +204,6 @@ public class Board {
         }
 
         tilesAround.removeIf(tl -> Arrays.equals(tl.getCoord(), new int[]{-1, -1})); //tilesAround shouldn't include tiles off border.
-
-
         return tilesAround;
     }
 
@@ -213,10 +211,14 @@ public class Board {
     /**
      * This method is NOT my finest work. It is vomitous, as they say.
      *
+     * It returns a Tile based on a passed in coordinate and a cardinal direction, eg.  ([1,1], "EAST") returns the Tile on the board
+     * that has the coordinate [1,2]
+     *
      * @param coord       tile coordinate
      * @param cardinalDir A cardinal direction "WEST, EAST, NORTH, SOUTH"
      * @return a tile to the cardinal direction of the passed in coord eg. "West of [1,1]" would return [1,0]
      */
+
     public Tile getAdjacentTile(int[] coord, String cardinalDir) {
 
         int row = coord[0];
@@ -253,19 +255,19 @@ public class Board {
 
     /**
      * Checks if a passed in coordinate has a tile associated with it and returns it
-     * otherwise returns a tile with the coordinate {-1,-1}
+     * otherwise returns a tile with the coordinate [-1,-1]
      *
      * @param adj the adjacent tile that our getAdjacentTile() method has created.
      * @return
      */
     private Tile arrayEquals(int[] adj) {
-        for (Tile tl : getTileList()) {
-            if (Arrays.equals(tl.getCoord(), adj)) {
+        for (Tile tl : getTileList()) { //for each tile on the board.
+            if (Arrays.equals(tl.getCoord(), adj)) { //checks if the passed in coordinate equals the coordinate of the current tile.
                 //System.out.println("the tile associated with "+ adj[0] + " " + adj[1] + " is "+ tl);
-                return tl;
+                return tl; //returns the tile associated with that coordinate
             }
         }
-        return new Tile();
+        return new Tile(); //else our default constructor for a Tile object instantiates a Tile with the Coordinate [-1,-1] and returns it
     }
 
     //other methods
@@ -275,7 +277,7 @@ public class Board {
      *
      * @param company Company to charter
      */
-    void charter(Company company) throws Exception {
+    public void charter(Company company) {
         //sets up the data structures to charter
         company.setChartered(true);
         charteredCompanies.add(company);
@@ -292,155 +294,87 @@ public class Board {
      *
      * @param company Company to uncharter
      */
-    void unCharter(Company company) {
+    public void unCharter(Company company) {
         company.setChartered(false);
+        company.setNumTiles(0);
         charteredCompanies.remove(company);
         uncharteredCompanies.add(company);
     }
 
 
     /**
-     * Alex Note: DEPRECIATED
-     * This method will set the number of tiles on the board that a passed in company will have. It should be called by our checkForAction method as part of an action to execute.
+     * Looks at the tiles around a played tile and decided whether a merge, charter, add to company, or no action is needed.
      *
-     * @param company Company to update the tiles of
-     * @param tileNum number of tiles the company should now have
-     */
-
-    public void updateCompanyTiles(Company company, int tileNum) {
-        company.setNumTiles(tileNum);
-    }
-
-    @Generated
-        //until this method is used
-    void setDeadTile(Tile tile) {
-    } //don't remember what this is. Does it remove a tile from the board?
-
-    /**
-     * @param coord String coordinate location of tile
-     * @return if the company that is at that tile location is permanent.
-     */
-    boolean checkPermanent(String coord) {
-        return false;
-    }
-
-    /**
-     * This action checker should be called a bunch of times from charterLogic.
-     * It basically returns true if the tile that we passed in needs to be added to a chartered company
      *
-     * @param coord The coordinate of a tile
+     * @param tile Tile that was just played by a player
+     * @return an integer representing the action that needs to happen.
      */
-    @Generated //Tested in the UI
-    private boolean checkForTileAction(int[] coord) throws Exception {
-
-        //ALEX NOTE: I think that this method is important to implement, but I don't remember why atm. leaving true for now
-
-        boolean actionIsRequired = false;
-        List<Tile> currentTileList = instance.getTileList();
-
-        List<Tile> tilesAroundCoord = getTilesAround(coord);
-        int numFlipped = 0;
-        for (Tile x : tilesAroundCoord) {
-            if (x.isFlipped()) {
-                numFlipped++;
-            }
-        }
-        //checks how many of the tiles are flipped, then chartered calls appropriate method with some if elses.
-
-        //if action is required, return true
-
-        if (numFlipped > 0) {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * Should check for an action on a passed in coord string, using the current board. Essentially, if the tile at that coord touches a tile of a different company than itself, an action is chosen.
-     * Based on the action (merge or charter), the Board.merge() or Board.charter() functions are called.
-     * <p>
-     * If a charter action is chosen, before the charter method is called, the system should prompt the user to choose a company, then that company is passed in to the charter method.
-     *
-     * @param tile a FLIPPED passed in tile.
-     */
-    @Generated //Tested while playing the game in the UI
-    public int checkForActionInitiation(Tile tile) throws Exception {
+    //we want jacoco to ignore this, beacuse it throws an exception (tests are implemented though)
+    public int checkForActionInitiation(Tile tile) {
 
         //ALEX NOTE: If the passed in tile does not have a true isFlipped status we need to throw an exception,
         //but i dont know how to do that.
-
-        List<Tile> currentTileList = instance.getTileList();
-        List<Tile> tilesAroundCoord = getTilesAround(tile.getCoord());
-        //   System.out.println(tilesAroundCoord);
-
+        List<Tile> tilesAroundCoord = null;
+        try {
+            tilesAroundCoord = getTilesAround(tile.getCoord());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         List<Company> uniqueCompaniesAroundTile = new ArrayList<Company>();
         int flippedTilesAroundTile = 0;
-        int numOfPermentCompanies = 0;
+        int numOfPermanentCompanies = 0;
 
         //makes a list of all the unique companies around the tile.
+
         for (Tile tl : tilesAroundCoord) {
             if (!tl.getCompany().getCompanyName().equals("DEFAULT")) { //if the company of this tile is not the default one.
                 if (!uniqueCompaniesAroundTile.contains(tl.getCompany())) { //and if we have not already added this tile
                     uniqueCompaniesAroundTile.add(tl.getCompany());  // then add the tile.
-                    if(tl.getCompany().isPermanent()){ numOfPermentCompanies++;}
+                    if(tl.getCompany().isPermanent()){ numOfPermanentCompanies++;}
                 }
             }
         }
-        //System.out.println(uniqueCompaniesAroundTile);
+        //checks if any tiles around our Tile are flipped.
         for (Tile tl : tilesAroundCoord) {
             if (tl.isFlipped()) {
                 flippedTilesAroundTile++;
             }
         }
-        if (uniqueCompaniesAroundTile.isEmpty() && flippedTilesAroundTile > 0) { //this checks if we have a flipped but unchartered tile next to us
-            //This should mean that we can charter a new company.
-            //charter(tile.getCompany());
-
-            return 1; //ALEX NOTE: I am moving our interrupt back to GameState to avoid having to pass GameState around
-            //gameState.charterChoiceInterrupt(); //Calls UI to update the screen with a choice for the player to choose. After choice UI calls charter().
-        } else if (uniqueCompaniesAroundTile.size() == 1) {
-            //If there is one company found around this tile, we can add this tile to that company
-            //We do this by passing in the tile's company to charterLogic, which will initiate our algorithm.
-            //charterLogic(tile.getCompany());
-            return 2;
-        } else if(uniqueCompaniesAroundTile.size() > 1 && numOfPermentCompanies > 1 ){
-            // You place a tile between two percent companies
-            return 4;
-        } else if (uniqueCompaniesAroundTile.size() > 1) {
+        //this checks iff we have a flipped and unchartered tile next to our Tile, (iff= if and only iff)
+        if (uniqueCompaniesAroundTile.isEmpty() && flippedTilesAroundTile > 0) {
+            return 1; //flipped but not chartered
+        }
+        //If there is one company found around this tile, we can add this tile to that company
+        else if (uniqueCompaniesAroundTile.size() == 1) {
+            return 2; //1 chartered comp seen
+        }
+        else if (uniqueCompaniesAroundTile.size() > 1 && numOfPermanentCompanies <=1) {
 
             //merge needed
             // This should simply return 3 back to getTileChoice() in GameState. It then turns around and calls board.merge()
             return 3;
         }
-
+        else if(uniqueCompaniesAroundTile.size() > 1 && numOfPermanentCompanies > 1 ){
+            // You place a tile between two percent companies
+            return 4;
+        }
         return 0;
 
     }
 
-    @Generated //until used
-    public void merge() {
-    } //leaving this alone for now.
-
-    public List<Company> checkEqualsMerge() { //Should return a list of companies that are equal, return null if non are equal.
-        return null;
-    }
-
-    public Company getDefunctCompany() { // Should return the company that is being defunct(assuming 2 are not equal)
-        return null;
-    }
-
-    public Company getWinningCompany() {
-        return null;
-    }
 
     /**
      * @param tl this should return a list of companies around a given tile, using the getTilesAround method
      * @return A list of unique non default companies around a tile
      */
-    @Generated //Tested while playing the game in the UI
-    public List<Company> companiesAroundTile(Tile tl) throws Exception {
-        List<Tile> tilesAround = getTilesAround(tl.getCoord());
+    //Tested while playing the game in the UI
+    public List<Company> companiesAroundTile(Tile tl) {
+        List<Tile> tilesAround = null;
+        try {
+            tilesAround = getTilesAround(tl.getCoord());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         List<Company> companiesAround = new ArrayList<Company>();
         for (Tile t : tilesAround) {
 
@@ -460,8 +394,8 @@ public class Board {
      *
      * @param company The Company that we are setting flipped adjacent tiles to be part of.
      */
-    @Generated //tested while playing the game with the UI
-    public void charterLogic(Company company) throws Exception {
+     //tested while playing the game with the UI
+    public void charterLogic(Company company) {
 
         //essentially what we have to do here, is look at every flipped and unchartered tile on the board, to see which of them have
         //neighbors that are flipped and chartered.
@@ -476,7 +410,12 @@ public class Board {
                 if (!tile.getCompany().getCompanyName().equals("DEFAULT")) {
                     // System.out.println(tile);
                 }
-                List<Tile> tilesAroundThisPos = getTilesAround(tile.getCoord());
+                List<Tile> tilesAroundThisPos = null;
+                try {
+                    tilesAroundThisPos = getTilesAround(tile.getCoord());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 //System.out.println(tilesAroundThisPos.toString());
                 boolean one_of_the_tiles_around_the_current_tile_has_our_company = false; //explains itself
 
@@ -507,10 +446,9 @@ public class Board {
      * outside in (adjacent -> the tile that we are observing).
      *
      * @param comp The comp to set our adj tile to
-     * @throws Exception
      */
-    @Generated //This is tested inside of the actual game UI
-    public void addToCompLogic(Company comp) throws Exception {
+     //This is tested inside of the actual game UI
+    public void addToCompLogic(Company comp)  {
         //System.out.println(comp.getCompanyName());
         int counter = 1;
         //while loop so that we can deal with multiple adjacent tiles
@@ -518,34 +456,43 @@ public class Board {
             for (Tile tl : tileList) { //for every tile on the board
                 counter = 0; //resets counter
                 if (tl.getCompany().getCompanyName().equals(comp.getCompanyName())) { //if our current tile has the company to add adjacent tiles to
-                    for (Tile adj : getTilesAround(tl.getCoord())) {
-                        if (adj.isFlipped() && adj.getCompany().getCompanyName().equals("DEFAULT")) { //then for any flipped default tile
-                            adj.setCompany(comp); //add it
-                            comp.setNumTiles(comp.getNumTiles() + 1); // Increase tile count for company
-                            counter++; //and keep the loop going to check for stragglers.
+                    try {
+                        for (Tile adj : getTilesAround(tl.getCoord())) {
+                            if (adj.isFlipped() && adj.getCompany().getCompanyName().equals("DEFAULT")) { //then for any flipped default tile
+                                adj.setCompany(comp); //add it
+                                comp.setNumTiles(comp.getNumTiles() + 1); // Increase tile count for company
+                                counter++; //and keep the loop going to check for stragglers.
+                            }
                         }
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
                 }
             }
         }
     }
 
-    @Generated //tested while actually playing the game
+    /**
+     * Lets a merge happen based on a passed in winner and list of losers (companies)
+     *
+     * @param winnerCo The winning company of the merger
+     * @param loserCos The Losing companies of the merger
+     */
     public void mergeLogic(Company winnerCo, List<Company> loserCos){
 
         //this algorithm checks if a tile is associated with a loser company
         //and if it is, changes its company to be the winner company
         for(Tile tl: tileList){
-            for(int x=0; x<loserCos.size();x++) {
-                if(tl.getCompany().equals(loserCos.get(x))) {
-                    tl.setCompany(winnerCo);
-                }
+                for(Company c:loserCos){
+                    if(tl.getCompany().equals(c))
+                    {
+                        tl.setCompany(winnerCo);
+                    }
             }
         }
         //uncharters the small companies, increase number of tiles for winner, and reset loser companies to 0 tiles on board.
         for(Company c: loserCos){
             winnerCo.setNumTiles(winnerCo.getNumTiles() + c.getNumTiles());
-            c.setNumTiles(0);
             unCharter(c);
         }
     }
