@@ -1,11 +1,12 @@
+/**
+ *  @author Team 404
+ *  @version v0.0.1
+ */
+
 package ProjectAcquire;
 
-import org.junit.After;
-import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
+import org.junit.jupiter.api.Test;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -13,21 +14,22 @@ import static org.junit.jupiter.api.Assertions.*;
 public class BoardTest {
 
 
-
-    //This test is shitty for checking proper initialization change it.
+    /**
+     * Test that chartered comapanies are actually contained inside of a list. Inside of this specific test it should
+     * be empty since no chartered companies are created on this certain board
+     */
     @Test void test_board_init_chartered_companies() {
-
-        // Tile helperTile = helperMethod_custom_tile();
-
         Board classUnderTest = TestHelper.helperMethod_custom_board();
         //tests that initialized chartered companies is empty
-        //System.out.println(classUnderTest.getCharteredCompanies().toString());
         assertTrue(classUnderTest.getCharteredCompanies().isEmpty(),"Chartered companies list should be empty on initialization of a board, but is not");
 
         TestHelper.helperMethod_tearDownBoard();
     }
 
-
+    /**
+     * Test that a company from the company class that is contained on a board is not chartered before a user
+     * wants to either charter a company or do other specific options
+     */
     @Test void test_board_company_before_charter() {
 
         Board classUnderTest = TestHelper.helperMethod_custom_board();
@@ -41,12 +43,20 @@ public class BoardTest {
 
     }
 
+    /**
+     * Test that get lowest stock method inside of board actually generates a lowest stock price inside of the board
+     * class that we can use later when a user is playing the game
+     */
     @Test
     void test_getLowestStock(){
         Board test = TestHelper.helperMethod_custom_board();
         assertNotNull(test.getLowestStockPrice());
     }
 
+    /**
+     * Test that a company can be un-chartered properly throughout the uncharter method inside of the board class
+     * @throws Exception
+     */
     @Test void test_board_company_after_uncharter() throws Exception {
 
         Board classUnderTest = TestHelper.helperMethod_custom_board();
@@ -193,7 +203,7 @@ public class BoardTest {
     }
 
 
-
+    //Not needed test anymore?
     @Test void test_getTileWest() throws Exception {
 
         GameState helperGameState = TestHelper.helperMethod_GameStateInit();
@@ -209,6 +219,7 @@ public class BoardTest {
 
     }
 
+    //Not needed test anymore?
     @Test void test_getTileEast() throws Exception {
 
         GameState helperGameState = TestHelper.helperMethod_GameStateInit();
@@ -225,12 +236,14 @@ public class BoardTest {
 
     }
 
-
+    /**
+     * Test that our tile list convert to 2d array method actually generates a 2d list that we can use throughout our
+     * board class
+     */
     @Test void test_convTileList2d(){
 
         GameState helperGameState = TestHelper.helperMethod_GameStateInit();
         Board helperBoard = helperGameState.getCurrentBoard();
-
 
         int z = 0;
         Tile[][] twoDArr = new Tile[9][12];
@@ -244,8 +257,6 @@ public class BoardTest {
             }
             z+=x.length;
         }
-
-
     }
 
 

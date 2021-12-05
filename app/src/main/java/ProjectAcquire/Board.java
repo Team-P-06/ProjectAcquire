@@ -530,11 +530,14 @@ public class Board {
         }
     }
 
+    /**
+     * Checks if a tile is associated with a loser company and if it is, it changes a company to be the winner company
+     * @param winnerCo
+     * @param loserCos
+     */
     @Generated //tested while actually playing the game
     public void mergeLogic(Company winnerCo, List<Company> loserCos){
 
-        //this algorithm checks if a tile is associated with a loser company
-        //and if it is, changes its company to be the winner company
         for(Tile tl: tileList){
             for(int x=0; x<loserCos.size();x++) {
                 if(tl.getCompany().equals(loserCos.get(x))) {
@@ -550,7 +553,10 @@ public class Board {
         }
     }
 
-
+    /**
+     * Creates a string of our instance variabels we have in the class
+     * @return
+     */
     @Override
     public String toString() {
         return "Board{" +

@@ -35,6 +35,7 @@ import java.util.Arrays;
 @Getter @Setter
 public class Tile {
     /**
+     * Instance variables
      * Coord is {Row, Column}
      */
    private Company company;
@@ -44,7 +45,9 @@ public class Tile {
    private boolean dead;
 
 
-   //Default constructor
+    /**
+     * Default constructor
+     */
     Tile(){
         this.coord = new int[]{-1, -1};
         this.company = new Company();
@@ -66,25 +69,6 @@ public class Tile {
         this.dealt = false;
         this.dead = false;
     }
-
-    /**
-     * Checks if the tile is on the board yet.
-     */
-    /*public boolean isFlipped(){ return flipped; }
-
-    public boolean isDealt(){ return dealt; }
-
-    public boolean isDealable(){
-        return !isFlipped() && !isDealt();
-    }*/
-
-    /**
-     *
-     * @return the company the tile belongs to.
-     */
-    /*public void setFlipped(boolean state){
-        this.flipped = state;
-    }*/
 
     /**
      * Extracts the string names of the tiles in the list of tiles
@@ -112,12 +96,14 @@ public class Tile {
         return tileString;
     }
 
+    /**
+     * Turn the comapny coordinates into a string with the compain name next to the coordinates
+     * @return String
+     */
     @Override
     public String toString() {
         return "Tile{" +
                 "coord=" + tileCoordToString() + " " + company.getCompanyName() +
                 '}';
     }
-
-
 }

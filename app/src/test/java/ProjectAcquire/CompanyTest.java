@@ -26,4 +26,13 @@ public class CompanyTest {
         CompanyLedger test = new CompanyLedger();
         assertNotNull(test.getInstance());
     }
+
+    /**
+     * Tests that the hash method actually generates a proper hash code with the variables inside of company class
+     */
+    @Test
+    void test_Hash(){
+        Company testCompany =  new Company();
+        assertNotNull(testCompany.hashCode());
+    }
 }

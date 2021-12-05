@@ -16,7 +16,7 @@ public class JsonTest{
      * Test to see if a json file is created during the save game method inside of the IOManager class
      * Result: passed, thus a json string file is now created
      */
-    void test_Json_File(){
+    void test_Json_File() throws IOException {
         GameState testGame = TestHelper.helperMethod_GameStateInit();
         IOManager testSaveGame = new IOManager();
         assertNotNull(testSaveGame.saveGame(testGame), "There currently is a saved game state");

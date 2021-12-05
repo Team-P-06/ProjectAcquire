@@ -43,11 +43,15 @@ public class IOManager {
      * Save a current game being played with its current game state being converted to a json file
      * @param saveThisGame
      */
-    public String saveGame(GameState saveThisGame){
+    public String saveGame(GameState saveThisGame) throws IOException {
         Gson gson = new Gson();
         GameState savedGameState = saveThisGame;
         String jsonFile = gson.toJson(savedGameState);
-        writeFile(jsonFile);
+        FileWriter file = new FileWriter("./src/main/resources/SavedGames/SavedGame.txt");
+        file.write(jsonFile);
+        file.flush();
+        file.close();
+
         return jsonFile;
     }
 
@@ -58,8 +62,6 @@ public class IOManager {
      */
     public GameState loadGame(String file) throws IOException {
         Gson converter = new Gson();
-        //readString with path.of(file) is causing the path exceptions io error when running gradle test not sure what to do here -Tyler
-        //String jsonString = Files.readString(Path.of(file)); // Added by Show, this resolved a loading error(Expected BEGIN_OBJECT but was STRING)
         GameState savedGame = converter.fromJson(file, GameState.class);
         return savedGame;
     }
@@ -69,6 +71,9 @@ public class IOManager {
      * later when they try to load the game back up again
      * @param game the current game that is being saved into a gamestate json string
      */
+
+    //Not needed anymore?
+    @Generated
     public void writeFile(String game){
         /**
          * try to create a new file writer that will the to the resource folder with the name of saved game.txt for now

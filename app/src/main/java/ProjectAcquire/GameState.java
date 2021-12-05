@@ -59,13 +59,17 @@ public class GameState {
      * @param currentBoard
      * @param playerList
      */
-    private GameState(Board currentBoard, LinkedList<Player> playerList) {
+    public GameState(Board currentBoard, LinkedList<Player> playerList) {
         this.currentPlayer = playerList.get(0);
         this.currentBoard = currentBoard;
         this.playerList = playerList;
     }
 
-    //default getInstance
+    /**
+     * Default get instance for singleton
+     * @return
+     */
+    @Generated
     public static GameState getInstance(){
 
         if(instance == null){
@@ -309,7 +313,10 @@ public class GameState {
         }
     }
 
-    private void checkPermanent(){
+    /**
+     * Check to see if a company inside of the players company list is permanent
+     */
+    public void checkPermanent(){
         for (Company com : currentBoard.getCharteredCompanies()) {
             if (com.getNumTiles() > 10){
                 com.setPermanent(true);
@@ -376,6 +383,10 @@ public class GameState {
         update.charterChoiceUI(this); //passes in the tile that caused the charter
     }
 
+    /**
+     * Check to see if the game is over
+     * @return
+     */
     public boolean getisOver(){
         return isOver;
     }

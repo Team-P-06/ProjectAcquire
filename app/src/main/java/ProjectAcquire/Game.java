@@ -47,6 +47,10 @@ public class Game {
      */
     public Game(){}
 
+    /**
+     * Get instance method for our singleton
+     * @return
+     */
     public static Game getInstance(){
 
         if(instance == null){
@@ -133,8 +137,6 @@ public class Game {
 
         //4. initialize a board using 1-4 as our parameters (using getInstance())
         Board board = Board.getInstance(freeTileList, uncharteredList, charteredList, playerList);
-      //  board.setTileList2D(tl2D);
-        //System.out.println(board.getTileList2D().get(0));
 
         //6. initialize our GameState using 4, 1 as our parameters.
         //ALEX NOTE: it seems that a GameState object holds exactly the same data as the Board object, since Board has the playerList just a thought.

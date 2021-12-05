@@ -72,6 +72,10 @@ public class Company {
         this.numTiles = 0;
     }
 
+    /**
+     * Create a string with our instance variables inside of the class
+     * @return
+     */
     @Override
     public String toString() {
         return "Company{" +
@@ -152,6 +156,7 @@ public class Company {
      * @param o A company object
      * @return Whether the passed in company equals our current company.
      */
+    @Generated
     @Override public boolean equals(Object o) {
         if (o == this)
             return true;
