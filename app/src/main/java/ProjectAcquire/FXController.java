@@ -162,7 +162,7 @@ public class FXController {
         Game newGame = Game.getInstance();
 
         showBoardMenu(getGameBoardLoader());
-        GameState loadedGame = ioManager.loadGame("./src/main/resources/SavedGames/SavedGameTest.txt");
+        GameState loadedGame = ioManager.loadGame("./src/main/resources/SavedGames/SavedGame.txt");
 
         Board board = Board.getInstance(loadedGame.getCurrentBoard().getTileList(), loadedGame.getCurrentBoard().getUncharteredCompanies(),
                 loadedGame.getCurrentBoard().getCharteredCompanies(), loadedGame.getCurrentBoard().getPlayerList());
