@@ -277,6 +277,84 @@ public class BoardTest {
     }
 
     /**
+     * Test checkForAction's adding Flipped tiles to company branch
+     * @throws Exception
+     */
+    @Test void test_checkForActionInitiation_addComp() throws Exception {
+
+        Board helperBoard = TestHelper.helperMethod_custom_board();
+
+        List<Tile> helperTileList = helperBoard.getTileList();
+        //System.out.println(helperTileList);
+        Tile testTile = helperTileList.get(0);
+        Tile adjTile = helperTileList.get(1);
+        Company defCom = TestHelper.helperMethod_Company("DEFAULT");
+        adjTile.setCompany(defCom);
+        adjTile.setFlipped(true);
+        int testAction = helperBoard.checkForActionInitiation(testTile);
+        assertEquals(1,testAction); //since the Tiles in our helperTileList have companies associated with them, return 2.
+        TestHelper.helperMethod_tearDownBoard();
+
+    }
+
+    /**
+     * Tests checkForActions normal merging branch
+     * @throws Exception
+     */
+    @Test void test_checkForActionInitiation_merge() throws Exception {
+
+        Board helperBoard = TestHelper.helperMethod_custom_board();
+
+        List<Tile> helperTileList = helperBoard.getTileList();
+        //System.out.println(helperTileList);
+        Tile testTile = helperTileList.get(1);
+        Tile adjTile = helperTileList.get(0);
+        Tile adjTile2 = helperTileList.get(2);
+
+        Company mergeCom1 = TestHelper.helperMethod_Company("COMP1");
+        Company mergeCom2 = TestHelper.helperMethod_Company("COMP2");
+        mergeCom1.setChartered(true);
+        mergeCom2.setChartered(true);
+        adjTile.setCompany(mergeCom1);
+        adjTile2.setCompany(mergeCom2);
+
+        int testAction = helperBoard.checkForActionInitiation(testTile);
+        assertEquals(3,testAction); //since the Tiles in our helperTileList have companies associated with them, return 2.
+        TestHelper.helperMethod_tearDownBoard();
+
+    }
+
+    /**
+     * tests checkForActions merging between permanent companies branch
+     * @throws Exception
+     */
+    @Test void test_checkForActionInitiation_merge_perms() throws Exception {
+
+        Board helperBoard = TestHelper.helperMethod_custom_board();
+
+        List<Tile> helperTileList = helperBoard.getTileList();
+        //System.out.println(helperTileList);
+        Tile testTile = helperTileList.get(1);
+        Tile adjTile = helperTileList.get(0);
+        Tile adjTile2 = helperTileList.get(2);
+
+        Company mergeCom1 = TestHelper.helperMethod_Company("COMP1");
+        Company mergeCom2 = TestHelper.helperMethod_Company("COMP2");
+        mergeCom1.setChartered(true);
+        mergeCom2.setChartered(true);
+        adjTile.setCompany(mergeCom1);
+        adjTile2.setCompany(mergeCom2);
+        adjTile.getCompany().setPermanent(true);
+        adjTile2.getCompany().setPermanent(true);
+
+
+        int testAction = helperBoard.checkForActionInitiation(testTile);
+        assertEquals(4,testAction); //since the Tiles in our helperTileList have companies associated with them, return 2.
+        TestHelper.helperMethod_tearDownBoard();
+
+    }
+
+    /**
      * This method tests the checkForAction method to make sure it works for seeing a "carry on nothing to see here" action
      *
      * @throws Exception
@@ -323,7 +401,8 @@ public class BoardTest {
 
         Board helperBoard = TestHelper.helperMethod_custom_board();
         List<Tile> tList = helperBoard.getTileList();
-        Tile companyTile =tList.get(0);
+        //System.out.println(tList);
+        Tile companyTile = tList.get(0);
         companyTile.setDealt(true);
         companyTile.setFlipped(true);
         Tile adjToCompanyTile = tList.get(1);

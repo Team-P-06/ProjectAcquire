@@ -167,4 +167,18 @@ public class PlayerTest {
 
         assertEquals(1,testPlayer.countStocks(testCom));
     }
+    @Test
+    void test_countStocks(){
+
+        Player testPlayer = TestHelper.helperMethod_custom_Player("P1");
+        List<Stock> sList = new ArrayList<>();
+        Stock testStock1 = TestHelper.helperMethod_customStock("COMPANY1");
+        sList.add(testStock1);
+        testPlayer.setStockList(sList);
+        Company testCompany = sList.get(0).getParentCompany();
+        assertEquals(1, testPlayer.countStocks(testCompany));
+
+    }
+
+
 }

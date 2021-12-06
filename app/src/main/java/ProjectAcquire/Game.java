@@ -45,7 +45,7 @@ public class Game {
     /**
      * Default constructor
      */
-    public Game(){}
+    private Game(){}
 
     /**
      * Get instance method for our singleton
@@ -71,8 +71,8 @@ public class Game {
      * Creates a gamestate and starts the game with a given gamestate that was loaded from a json file
      * @param game the loaded gamestate from a file
      */
-    @Generated //Until we use the method
-    public void loadGame(GameState game)throws IOException{
+
+    public void loadGame(GameState game){
         loadCompanies(game);
         loadPlayers(game);
         for(Player player : game.getPlayerList()) {
@@ -138,70 +138,69 @@ public class Game {
      * @throws IOException
      * @return The newly constructed gameState to start the game
      */
-    public GameState start(int numOfPlayers) throws IOException {
+    public GameState start(int numOfPlayers) {
         //queries for how many players there are, (UI), then adds x amount of players to a playerList.
-        LinkedList<Player> playerList = new LinkedList<Player>();
-        for (int i = 0; i < numOfPlayers; i++) {
-            List<Tile> newPlayerTileList = new ArrayList<>();
-            List<Stock> newPlayerStockList = new ArrayList<>();
-            Player newPlayer = new Player("Player " + (i+1), newPlayerTileList, 3000);
-            newPlayer.setStockList(newPlayerStockList);
-            playerList.add(newPlayer);
-        }
 
-        // Creates a list of chartered and unchartered companies (the unchartered list can be empty)
-        List<Company> charteredList = new ArrayList<>();
-        List<Company> uncharteredList = new ArrayList<>();
-        Company worldwideCo =  new Company("Worldwide", 0, false, false);
-        uncharteredList.add(worldwideCo);
-        Company SacksonCo =  new Company("Sackson", 0, false, false);
-        uncharteredList.add(SacksonCo);
-        Company festivalCo =  new Company("Festival", 0, false, false);
-        uncharteredList.add(festivalCo);
-        Company imperialCo =  new Company("Imperial", 0, false, false);
-        uncharteredList.add(imperialCo);
-        Company americanCo =  new Company("American", 0, false, false);
-        uncharteredList.add(americanCo);
-        Company continentalCo =  new Company("Continental", 0, false, false);
-        uncharteredList.add(continentalCo);
-        Company towerCo =  new Company("Tower", 0, false, false);
-        uncharteredList.add(towerCo);
-        Company defaultCo =  new Company("DEFAULT", 0, false, false); // for placed tiles but no company
-        uncharteredList.add(defaultCo);
-
-
-        // Creates a list of tiles with a int[] as a coordinate.
-        List<Tile> freeTileList = new ArrayList<>();
-        for (int r = 0; r < 9; r++){
-            for(int c = 0; c < 12; c++) {
-                Tile curTile = new Tile(defaultCo, new int[]{r, c});
-                freeTileList.add(curTile);
+            LinkedList<Player> playerList = new LinkedList<Player>();
+            for (int i = 0; i < numOfPlayers; i++) {
+                List<Tile> newPlayerTileList = new ArrayList<>();
+                List<Stock> newPlayerStockList = new ArrayList<>();
+                Player newPlayer = new Player("Player " + (i + 1), newPlayerTileList, 3000);
+                newPlayer.setStockList(newPlayerStockList);
+                playerList.add(newPlayer);
             }
+
+            // Creates a list of chartered and unchartered companies (the unchartered list can be empty)
+            List<Company> charteredList = new ArrayList<>();
+            List<Company> uncharteredList = new ArrayList<>();
+            Company worldwideCo = new Company("Worldwide", 0, false, false);
+            uncharteredList.add(worldwideCo);
+            Company SacksonCo = new Company("Sackson", 0, false, false);
+            uncharteredList.add(SacksonCo);
+            Company festivalCo = new Company("Festival", 0, false, false);
+            uncharteredList.add(festivalCo);
+            Company imperialCo = new Company("Imperial", 0, false, false);
+            uncharteredList.add(imperialCo);
+            Company americanCo = new Company("American", 0, false, false);
+            uncharteredList.add(americanCo);
+            Company continentalCo = new Company("Continental", 0, false, false);
+            uncharteredList.add(continentalCo);
+            Company towerCo = new Company("Tower", 0, false, false);
+            uncharteredList.add(towerCo);
+            Company defaultCo = new Company("DEFAULT", 0, false, false); // for placed tiles but no company
+            uncharteredList.add(defaultCo);
+
+
+            // Creates a list of tiles with a int[] as a coordinate.
+            List<Tile> freeTileList = new ArrayList<>();
+            for (int r = 0; r < 9; r++) {
+                for (int c = 0; c < 12; c++) {
+                    Tile curTile = new Tile(defaultCo, new int[]{r, c});
+                    freeTileList.add(curTile);
+                }
+            }
+        try {
+            //initialize a board/GameState
+            Board board = Board.getInstance(freeTileList, uncharteredList, charteredList, playerList);
+
+            GameState gameState = GameState.getInstance(board, playerList);
+            setCurrentGameState(gameState);
+            gameState.playTurn();
+            return gameState;
         }
+     catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
 
-        //initialize a board/GameState
-        Board board = Board.getInstance(freeTileList, uncharteredList, charteredList, playerList);
-
-        //6. initialize our GameState using 4, 1 as our parameters.
-        //ALEX NOTE: it seems that a GameState object holds exactly the same data as the Board object, since Board has the playerList just a thought.
-
-        GameState gameState =  GameState.getInstance(board, playerList);
-        setCurrentGameState(gameState);
-        gameState.playTurn();
-        return gameState;
     }
 
-    /**
-     * Run a game that is already saved from the gson file gathered from loadGame, (runs a game continuousely given starting data)
-     */
-    @Generated // deprecated
-    public void runGame() throws IOException {}
 
 
-    /**
-     * Once a player ends the game on their turn the game will end using this method and determine the winner
-     */
-    @Generated //deprecated
-    public void endGame(){ }
+    @Generated
+    public void setNull(){
+        instance = null;
+    }
+
 
 }

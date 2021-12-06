@@ -173,10 +173,20 @@ public class TestHelper {
         oldBoard.setNull();
     }
 
+    static void helperMethod_tearDownGameState(){
+        GameState oldGameState = helperMethod_GameStateInit();
+        oldGameState.setNull();
+    }
+    static void helperMethod_tearDownGame(){
+        Game oldGame = Game.getInstance();
+        oldGame.setNull();
+    }
+
     /**
      * Creates a new gamestate object that can be used for testing
      * @return Gamestate
      */
+
     static GameState helperMethod_GameStateInit(){
 
 
