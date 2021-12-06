@@ -62,13 +62,17 @@ public class GameState {
      * @param currentBoard
      * @param playerList
      */
-    private GameState(Board currentBoard, LinkedList<Player> playerList) {
+    public GameState(Board currentBoard, LinkedList<Player> playerList) {
         this.currentPlayer = playerList.get(0);
         this.currentBoard = currentBoard;
         this.playerList = playerList;
     }
 
-    //default getInstance
+    /**
+     * Default get instance for singleton
+     * @return
+     */
+    @Generated
     public static GameState getInstance(){
 
         if(instance == null){
@@ -259,7 +263,10 @@ public class GameState {
     }
 
     @Generated
-    private void checkPermanent(){
+    /**
+     * Check to see if a company inside of the players company list is permanent
+     */
+    public void checkPermanent(){
         for (Company com : currentBoard.getCharteredCompanies()) {
             if (com.getNumTiles() > 10){
                 com.setPermanent(true);
@@ -305,12 +312,13 @@ public class GameState {
         update.mergeUI(this, mergingCompanies);
     }
 
+
+    @Generated
     /**
      * Update for after the player places a tile. Populates the action area with charted businesses.
      * Should be called after a playTile() and the board data is set.
      * @throws IOException
      */
-    @Generated
     public void buyInterrupt() throws IOException {
         Update update = new Update();
         update.buyUI(this);
@@ -327,6 +335,10 @@ public class GameState {
     }
 
     @Generated
+    /**
+     * Check to see if the game is over
+     * @return
+     */
     public boolean getisOver(){
         return isOver;
     }

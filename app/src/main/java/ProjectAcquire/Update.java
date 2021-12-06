@@ -49,10 +49,14 @@ public class Update {
     /**
      * Main update logic that branches out and updates different parts of the UI(Player data, Board, Company stocks, and stock options
      */
-    public void update(GameState gameState) throws IOException {
-        UIController.showBoardMenu(UIController.getGameBoardLoader());
-        hotelUpdater.update(gameState, UIController);
-        playerUpdater.update(gameState, UIController);
+    public void update(GameState gameState) {
+        try {
+            UIController.showBoardMenu(UIController.getGameBoardLoader());
+            hotelUpdater.update(gameState, UIController);
+            playerUpdater.update(gameState, UIController);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -90,11 +94,13 @@ public class Update {
     }
 
     public void nextTurnUI(GameState gameState) {
-        try {
+
             update(gameState);
+
+        try {
+            boardUpdater.update(gameState, UIController, true);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        boardUpdater.update(gameState, UIController, true);
     }
 }

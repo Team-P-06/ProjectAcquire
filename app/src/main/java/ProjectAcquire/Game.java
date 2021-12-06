@@ -47,6 +47,10 @@ public class Game {
      */
     private Game(){}
 
+    /**
+     * Get instance method for our singleton
+     * @return
+     */
     public static Game getInstance(){
 
         if(instance == null){
@@ -188,6 +192,7 @@ public class Game {
             e.printStackTrace();
         }
         return null;
+
     }
 
 

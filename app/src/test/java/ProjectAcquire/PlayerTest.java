@@ -1,16 +1,19 @@
+/**
+ *  @author Team 404
+ *  @version v0.0.1
+ */
 package ProjectAcquire;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class PlayerTest {
 
-    //Helper methods should be deprecated adn replaced once our gamestate
-    //initializer method works properly.
 
     /**
      * Need helper class for building a player.
@@ -115,6 +118,9 @@ public class PlayerTest {
         assertEquals(classUnderTest.getTileList(), testList);
     }
 
+    /**
+     * Test that the equals method properly takes in an object and compares it to other player objects inside of the class
+     */
     @Test
     void test_Equals(){
         Player testPlayer = new Player();
@@ -122,6 +128,9 @@ public class PlayerTest {
         assertFalse(testPlayer.equals(test));
     }
 
+    /**
+     * Same test as above but instead the object ins't null
+     */
     @Test
     void testEqualsTrue(){
         Player testPlayer = new Player();
@@ -129,9 +138,34 @@ public class PlayerTest {
         assertFalse(testPlayer.equals(test));
     }
 
+    /**
+     * Test that the stock list method is properly gathering a stock list from a player but in this case there
+     * isn't any stocks bought in the company
+     */
     @Test
-    void test_sellStock(){
+    void test_stockList(){
+        Player testPlayer = TestHelper.helperMethod_custom_Player("P1");
+        Company testCo = TestHelper.helperMethod_Company("Test");
+        assertEquals(0,testPlayer.countStocks(testCo));
+    }
 
+    /**
+     * Same test as above but this time we actually have a stock bought inside of a players stock list to hit certain
+     * branches inside of the method
+     */
+    @Test
+    void test_stockList2(){
+        GameState testGame = TestHelper.helperMethod_GameStateInit();
+        LinkedList<Player> testList = testGame.getPlayerList();
+        Player testPlayer = testList.get(0);
+        Company testCom = TestHelper.helperMethod_Company("Test Company");
+        Stock testStock = new Stock(testCom);
+        List<Stock> testStockList = new LinkedList<>();
+        testStockList.add(testStock);
+        testPlayer.setStockList(testStockList);
+        testStock.setParentCompany(testCom);
+
+        assertEquals(1,testPlayer.countStocks(testCom));
     }
     @Test
     void test_countStocks(){

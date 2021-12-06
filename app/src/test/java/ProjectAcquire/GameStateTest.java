@@ -1,3 +1,7 @@
+/**
+ *  @author Team 404
+ *  @version v0.0.1
+ */
 package ProjectAcquire;
 
 import org.junit.jupiter.api.Test;
@@ -33,64 +37,14 @@ public class GameStateTest {
         GameState tester = TestHelper.helperMethod_GameStateInit();
 
         //Player initial turn
-
         Player initPlayer = tester.getCurrentPlayer(); //currentPlayer on initialization
-       // System.out.println("Current player is: " + initPlayer);
-       // System.out.println("playerList: "+ tester.getPlayerList());
-
         Player newCurrentPlayer = tester.getCurrentPlayer();//currentPlayer should be different
-        //System.out.println("Current player is: " + newCurrentPlayer);
-        //System.out.println("playerList: "+ tester.getPlayerList());
 
         //current player should now not be null.
         assertNotNull(newCurrentPlayer);
         TestHelper.helperMethod_tearDownGameState();
 
     }
-
-    /**
-     * Tests our GameState
-     */
-    @Test void test_GameState_initialTurn_deal_cards(){
-
-        GameState test_gameState = TestHelper.helperMethod_GameStateInit();
-
-    }
-
-
-    @Test void test_playTurnWorksProperly(){
-
-
-
-    }
-
-    /**
-     * We have tested the run game method thorughout the actual game in app
-     * @throws IOException
-     */
-    /*
-    @Test
-    void test_RunGame() throws IOException {
-        Game testGame = new Game();
-        testGame.runGame();
-        assertEquals(1,1);
-    }
-
-     */
-
-    /**
-     * We have tested the start method through actually implementing the game in app
-     * @throws IOException
-     */
-    /*
-    @Test
-    void test_Start() throws IOException {
-        Game testGame = new Game();
-        testGame.start();
-        assertEquals(1,1);
-    }
-     */
-
 
     /**
      * Test the next turn method to see if we can properly see who has the next turn in the game
@@ -211,12 +165,41 @@ public class GameStateTest {
 
     }
 
-//    @Test
-//    void test_setNull(){
-//        GameState stateTest = TestHelper.helperMethod_GameStateInit();
-//        stateTest.setNull();
-//        assertNull(stateTest.getInstance().getCurrentPlayer());
-//    }
+
+    /**
+     * A test that makes sure we can take in al chartered companies on the board and if they have more than 10 tiles on
+     * the board then the company should be set to a permanent company on the board
+     * @throws Exception
+     */
+    @Test
+    void test_checkPerm() throws Exception {
+        Board classUnderTest = TestHelper.helperMethod_custom_board();
+        LinkedList<Player> testList = TestHelper.helperMethod_GameStateInit().getPlayerList();
+        GameState testGame = new GameState(classUnderTest,testList);
+        Company testCom = classUnderTest.getUncharteredCompanies().get(0);
+        classUnderTest.charter(testCom);
+        testCom.setNumTiles(11);
+        testGame.checkPermanent();
+        assertTrue(testCom.isPermanent());
+    }
+
+    /**
+     * Test that is the same above except that the tiles on board is under 10 so it shouldn't be a permanenet tile
+     * @throws Exception
+     */
+    @Test
+    void test_checkPerm2() throws Exception {
+        Board classUnderTest = TestHelper.helperMethod_custom_board();
+        LinkedList<Player> testList = TestHelper.helperMethod_GameStateInit().getPlayerList();
+        GameState testGame = new GameState(classUnderTest, testList);
+        Company testCom = classUnderTest.getUncharteredCompanies().get(0);
+        classUnderTest.charter(testCom);
+        testCom.setNumTiles(9);
+        testGame.checkPermanent();
+        assertFalse(testCom.isPermanent());
+        TestHelper.helperMethod_tearDownBoard();
+        TestHelper.helperMethod_tearDownGameState();
+    }
 }
 
 

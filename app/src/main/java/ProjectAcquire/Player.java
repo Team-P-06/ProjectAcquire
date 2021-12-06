@@ -183,6 +183,11 @@ public class Player{
         return numberOfStocks;
     }
 
+    /**
+     * Take in an object.class and gets all of the object attributes we need for our board
+     * @param o
+     * @return Boolean
+     */
     @Override @Generated //Tested inside of the UI because no assertion tests are applicable to fully test
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -191,11 +196,19 @@ public class Player{
         return money == player.money && Objects.equals(name, player.name) && Objects.equals(stockList, player.stockList) && Objects.equals(tileList, player.tileList);
     }
 
+    /**
+     * Create a hash code for all of our instance variables inside of this class
+     * @return int hashcode
+     */
     @Override
     public int hashCode() {
         return Objects.hash(name, money, stockList, tileList);
     }
 
+    /**
+     * Creates a string for all of our instance variables insdie of this class
+     * @return string
+     */
     @Override
     public String toString() {
 
@@ -210,6 +223,11 @@ public class Player{
 
         return retString1;
     }
+
+    /**
+     * Checks to see if a tile is available to play
+     * @return tile
+     */
     public boolean availableTile(){
         return true;
     }

@@ -37,14 +37,17 @@ public class Stock {
 
     @Generated @Getter @Setter private Company parentCompany;
 
-    //Custom Constructor
+    /**
+     * Custom constructor
+     * @param parentCmpany
+     */
     Stock(Company parentCompany){
         this.parentCompany = parentCompany;
     }
 
 
     /**
-     *
+     * Calculate the stock price of a company and then gets the stock price
      * @return the price of the stocks based on its company's worth
      */
     public int getStockPriceFromCompany(){
@@ -53,7 +56,7 @@ public class Stock {
     }
 
     /**
-     * ???
+     * Calculates the max stock buy a player can buy from with their available money
      * @param player
      * @param company
      * @return

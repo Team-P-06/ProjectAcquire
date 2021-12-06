@@ -48,7 +48,7 @@ public class UpdateBoard {
      * @param UIController UIController for updating the UI
      * @param placeableTiles weather or not a player should be able to place a tile.
      */
-    public void update(GameState gameState, FXController UIController, boolean placeableTiles) {
+    public void update(GameState gameState, FXController UIController, boolean placeableTiles) throws IOException {
         this.UIController = UIController;
         List<Player> playerList = gameState.getPlayerList();
         List<Tile> allTileList = gameState.getCurrentBoard().getTileList();
@@ -171,11 +171,18 @@ public class UpdateBoard {
      * Relates the save game button with the current gameState to save to files.
      * @param gameState the current gamestate
      */
-    private void updateSaveGameButton(GameState gameState){
+    private void updateSaveGameButton(GameState gameState) throws IOException {
         IOManager ioManager = new IOManager();
         Button saveGameButton = UIController.getSaveGameButton();
         saveGameButton.setOnAction(a -> {
             saveGameButton.setText("Saved!");
-            ioManager.saveGame(gameState);});
+            try {
+                ioManager.saveGame(gameState);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+        ioManager.saveGame(gameState);
+
+            ioManager.saveGame(gameState);};
     }
-}

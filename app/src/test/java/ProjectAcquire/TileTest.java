@@ -1,3 +1,7 @@
+/**
+ *  @author Team 404
+ *  @version v0.0.1
+ */
 package ProjectAcquire;
 
 import org.junit.jupiter.api.Test;
@@ -27,8 +31,6 @@ public class TileTest {
     @Test void test_tile_isFlipped_on_initialize() {
         Company helperComp = new Company();
         int[] coord = {0,1};
-
-        // Tile helperTile = helperMethod_custom_tile();
 
         Tile classUnderTest = TestHelper.helperMethod_custom_tile_via_coord_and_companyName(coord,"TEST");
         assertFalse(classUnderTest.isFlipped());
@@ -68,7 +70,9 @@ public class TileTest {
         assertTrue(classUnderTest.getCompany().getCompanyName().equals("TEST"));
     }
 
-    //Tests that the name of the company is changed after setCompany is called
+    /**
+     * Tests that the name of the company is changed after setCompany is called
+     */
     @Test void test_tile_setCompany() {
         int[] coord = {0,1};
 
@@ -89,15 +93,6 @@ public class TileTest {
         Tile testTile = new Tile();
         assertFalse(testTile.isDealt());
     }
-
-    /**
-     * Tests that the isDealable() method returns the right boolean while calling is dealt and flipped inside of the tile class
-     */
-    /*@Test
-    void test_isDealable(){
-        Tile testTile = new Tile();
-        assertTrue(testTile.isDealable());
-    }*/
 
     /**
      * Tests that the method isFlipped() correctly checks to see if a tile is flipped
