@@ -50,6 +50,7 @@ public class Update {
 
     /**
      * Main update logic that branches out and updates different parts of the UI(Player data, Board, Company stocks, and stock options
+     * @param gameState the current gamestate to update
      */
     public void update(GameState gameState) {
         try {
@@ -95,10 +96,12 @@ public class Update {
         actionUpdater.update(gameState, UIController, true, null);
     }
 
+    /**
+     * When the next players turn is started, let them place tiles
+     * @param gameState the current gamestate
+     */
     public void nextTurnUI(GameState gameState) {
-
-            update(gameState);
-
+        update(gameState);
         try {
             boardUpdater.update(gameState, UIController, true);
         } catch (IOException e) {

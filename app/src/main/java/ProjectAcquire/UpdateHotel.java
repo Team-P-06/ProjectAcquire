@@ -43,6 +43,11 @@ import java.util.List;
 public class UpdateHotel implements Updatable {
     private FXController UIController;
 
+    /**
+     * Updates all the hotel information
+     * @param gameState the current gamestate
+     * @param UIController the UI controller for updating the UI
+     */
     public void update(GameState gameState, FXController UIController) {
         this.UIController = UIController;
         List<Company> cCompany = gameState.getCurrentBoard().getCharteredCompanies();
@@ -61,6 +66,7 @@ public class UpdateHotel implements Updatable {
 
     /**
      * Simply populates the name headers for the table of stocks.
+     * @param playerList all the players in the game
      */
     private void setHotelName(List<Player> playerList) {
         UIController.getHotelNameObserList().clear();
@@ -76,7 +82,7 @@ public class UpdateHotel implements Updatable {
     /**
      * Chooses what list to add the company data into based on the company name. (I'm sorry for the switch)
      *
-     * @param companyList full list of all the comanies on the board
+     * @param companyList full list of all the companies on the board
      * @param playerList  All the current players for # of stocks owned
      */
     private void addDataToHotelInformation(List<Company> companyList, List<Player> playerList) {
@@ -114,7 +120,6 @@ public class UpdateHotel implements Updatable {
                 }
             }
             curCompanyObserList.clear();
-            //curCompanyObserList.add(0); // Available stocks left
             addPlayerStocksToHotel(playerList, curCompanyListView, curCompanyObserList, company.getCompanyName());
             curCompanyObserList.add(company.getNumTiles());
             curCompanyObserList.add(company.setNewStockPrice());

@@ -57,7 +57,7 @@ public class Player{
     }
 
     /**
-     *
+     * Player constructor
      * @param name name of the player
      * @param tileHand the 6 tiles the player holds at any given time
      * @param money how much money they have

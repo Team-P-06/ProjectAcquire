@@ -90,12 +90,12 @@ public class UpdatePlayer implements Updatable{
         return playerNet;
     }
 
+    /**
+     * Sets the label to show whose turn it is
+     * @param currentPlayer the current player in the game
+     */
     private void updateCurrentPlayerLabel(Player currentPlayer){
         UIController.getCurrentPlayerTurnLabel().setText(currentPlayer.getName());
-    }
-
-    public void updateMergeOptions(){
-
     }
 
 }
