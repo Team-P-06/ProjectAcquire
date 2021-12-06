@@ -464,19 +464,11 @@ public class Board {
     }
 
     /**
-<<<<<<< HEAD
      * Checks if a tile is associated with a loser company and if it is, it changes a company to be the winner company
      * @param winnerCo
      * @param loserCos
      */
     @Generated //tested while actually playing the game
-=======
-     * Lets a merge happen based on a passed in winner and list of losers (companies)
-     *
-     * @param winnerCo The winning company of the merger
-     * @param loserCos The Losing companies of the merger
-     */
->>>>>>> 7e60c6b1888e18cb1ec480b8da446b6c5706a638
     public void mergeLogic(Company winnerCo, List<Company> loserCos){
 
         for(Tile tl: tileList){

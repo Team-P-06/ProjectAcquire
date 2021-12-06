@@ -7,21 +7,21 @@ package ProjectAcquire;
 
 
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class BoardTest {
 
-<<<<<<< HEAD
-
     /**
      * Test that chartered comapanies are actually contained inside of a list. Inside of this specific test it should
      * be empty since no chartered companies are created on this certain board
      */
-=======
+
     //This test is shitty for checking proper initialization change it.
->>>>>>> 7e60c6b1888e18cb1ec480b8da446b6c5706a638
     @Test void test_board_init_chartered_companies() {
         Board classUnderTest = TestHelper.helperMethod_custom_board();
         //tests that initialized chartered companies is empty
@@ -210,8 +210,6 @@ public class BoardTest {
             }
             z+=x.length;
         }
-<<<<<<< HEAD
-=======
         TestHelper.helperMethod_tearDownBoard();
 
     }
@@ -276,8 +274,6 @@ public class BoardTest {
         assertEquals(2,testAction); //since the Tiles in our helperTileList have companies associated with them, return 2.
         TestHelper.helperMethod_tearDownBoard();
 
-
->>>>>>> 7e60c6b1888e18cb1ec480b8da446b6c5706a638
     }
 
     /**

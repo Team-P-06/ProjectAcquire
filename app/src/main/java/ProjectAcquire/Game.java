@@ -181,12 +181,10 @@ public class Game {
 
         //initialize a board/GameState
         Board board = Board.getInstance(freeTileList, uncharteredList, charteredList, playerList);
-<<<<<<< HEAD
 
         //6. initialize our GameState using 4, 1 as our parameters.
         //ALEX NOTE: it seems that a GameState object holds exactly the same data as the Board object, since Board has the playerList just a thought.
-=======
->>>>>>> 7e60c6b1888e18cb1ec480b8da446b6c5706a638
+
         GameState gameState =  GameState.getInstance(board, playerList);
         setCurrentGameState(gameState);
         gameState.playTurn();

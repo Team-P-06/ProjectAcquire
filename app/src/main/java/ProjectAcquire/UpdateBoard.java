@@ -176,7 +176,6 @@ public class UpdateBoard {
         Button saveGameButton = UIController.getSaveGameButton();
         saveGameButton.setOnAction(a -> {
             saveGameButton.setText("Saved!");
-<<<<<<< HEAD
             try {
                 ioManager.saveGame(gameState);
             } catch (IOException e) {
@@ -184,8 +183,6 @@ public class UpdateBoard {
             }
         });
         ioManager.saveGame(gameState);
-=======
-            ioManager.saveGame(gameState);});
->>>>>>> 7e60c6b1888e18cb1ec480b8da446b6c5706a638
+
+            ioManager.saveGame(gameState);};
     }
-}
