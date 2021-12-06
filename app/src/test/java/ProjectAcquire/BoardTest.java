@@ -276,6 +276,10 @@ public class BoardTest {
 
     }
 
+    /**
+     * Test checkForAction's adding Flipped tiles to company branch
+     * @throws Exception
+     */
     @Test void test_checkForActionInitiation_addComp() throws Exception {
 
         Board helperBoard = TestHelper.helperMethod_custom_board();
@@ -292,6 +296,11 @@ public class BoardTest {
         TestHelper.helperMethod_tearDownBoard();
 
     }
+
+    /**
+     * Tests checkForActions normal merging branch
+     * @throws Exception
+     */
     @Test void test_checkForActionInitiation_merge() throws Exception {
 
         Board helperBoard = TestHelper.helperMethod_custom_board();
@@ -315,6 +324,10 @@ public class BoardTest {
 
     }
 
+    /**
+     * tests checkForActions merging between permanent companies branch
+     * @throws Exception
+     */
     @Test void test_checkForActionInitiation_merge_perms() throws Exception {
 
         Board helperBoard = TestHelper.helperMethod_custom_board();
