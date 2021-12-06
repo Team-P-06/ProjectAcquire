@@ -32,8 +32,9 @@ public class JsonTest{
         try{
         GameState testGame = TestHelper.helperMethod_GameStateInit();
         String file = TestHelper.helperMethod_init_save(testGame);
-        GameState testGame2 = TestHelper.helperMethod_init_load();
-        assertNotNull(testGame2);
+        IOManager manager = new IOManager();
+        GameState testGame2 = manager.loadGame("./src/main/resources/SavedGames/SavedGameTest.txt");
+        assertEquals(1000,testGame2.getCurrentPlayer().getMoney());
         } catch (IOException e){
             e.printStackTrace();
         }

@@ -7,6 +7,9 @@ package ProjectAcquire;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class GameTest {
@@ -41,4 +44,31 @@ public class GameTest {
         Game test = new Game();
         assertNotNull(test.start(2));
     }
+    /**
+     * Test that makes sure the load players method properly loads the players into the game
+     */
+    @Test
+    void test_loadPLayers(){
+        GameState testGame = TestHelper.helperMethod_GameStateInit();
+        GameState testGame2 = TestHelper.helperMethod_GameStateInit();
+        Game testLoad = new Game();
+        testLoad.loadPlayers(testGame);
+        assertEquals(testGame.getCurrentPlayer(), testGame2.getCurrentPlayer());
+    }
+    /*
+    /**
+     * Test that makes sure loaded company references are correctly loaded into a game
+
+     */
+
+    @Test
+    void test_loadCompanies(){
+        GameState testGame1 = TestHelper.helperMethod_GameStateInit();
+        GameState testGame2 = TestHelper.helperMethod_GameStateInit();
+        Game load = new Game();
+        load.setCurrentGameState(testGame1);
+        load.loadCompanies(testGame1);
+        assertEquals(testGame1.getCurrentPlayer(), testGame2.getCurrentPlayer());
+    }
+
 }

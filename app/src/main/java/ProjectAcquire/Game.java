@@ -71,7 +71,7 @@ public class Game {
      * Creates a gamestate and starts the game with a given gamestate that was loaded from a json file
      * @param game the loaded gamestate from a file
      */
-    @Generated //Until we use the method
+    @Generated //needs UI interaction for tile list
     public void loadGame(GameState game)throws IOException{
         loadCompanies(game);
         loadPlayers(game);
@@ -87,7 +87,8 @@ public class Game {
      * @param gameState the current loaded gameState
      * @param player the player whom we are updating the tile list for.
      */
-    private void loadTileList(GameState gameState, Player player){
+    @Generated //needs UI interaction for tile list
+    public void loadTileList(GameState gameState, Player player){
         List<Tile> playerTileListCopy = new ArrayList<>(player.getTileList());
         player.getTileList().clear();
 
@@ -105,7 +106,7 @@ public class Game {
      * Makes sure all company references are correct when loading a game
      * @param gameState the loaded gamestate
      */
-    private void loadCompanies(GameState gameState){
+    public void loadCompanies(GameState gameState){
             List<Company> cCompanyListCopy = new ArrayList<>(gameState.getCurrentBoard().getCharteredCompanies());
             List<Company> uCompanyListCopy = new ArrayList<>(gameState.getCurrentBoard().getUncharteredCompanies());
             gameState.getCurrentBoard().getCharteredCompanies().clear();
@@ -123,7 +124,7 @@ public class Game {
      * Makes sure all player references are correct when loading a game
      * @param gameState the loaded gamestate
      */
-    private void loadPlayers(GameState gameState) {
+    public void loadPlayers(GameState gameState) {
             List<Player> playerListCopy = new ArrayList<>(gameState.getPlayerList());
             gameState.getPlayerList().clear();
             for (Player player : playerListCopy) {

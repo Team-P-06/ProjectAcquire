@@ -248,12 +248,10 @@ public class TestHelper {
     /**
      * Test helper method for testing a load game so we dont overwrite the original save game file
      */
-    static GameState helperMethod_init_load() throws FileNotFoundException {
+    static GameState helperMethod_init_load(String file) throws FileNotFoundException {
             Gson converter = new Gson();
 
-            //readString with path.of(file) is causing the path exceptions io error when running gradle test not sure what to do here -Tyler
-            //String jsonString = Files.readString(Path.of(file)); // Added by Show, this resolved a loading error(Expected BEGIN_OBJECT but was STRING)
-            BufferedReader jsonString = new BufferedReader(new FileReader("./src/main/resources/SavedGames/SavedGameTest.txt"));
+            BufferedReader jsonString = new BufferedReader(new FileReader(file));
             GameState savedGame = converter.fromJson(jsonString, GameState.class);
 
             return savedGame;

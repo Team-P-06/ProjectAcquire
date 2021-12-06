@@ -152,7 +152,7 @@ public class BoardTest {
     }
 
 
-    //Not needed test anymore?
+
     @Test void test_getTileWest() throws Exception {
 
         GameState helperGameState = TestHelper.helperMethod_GameStateInit();
@@ -170,7 +170,7 @@ public class BoardTest {
 
     }
 
-    //Not needed test anymore?
+
     @Test void test_getTileEast() throws Exception {
 
         GameState helperGameState = TestHelper.helperMethod_GameStateInit();
