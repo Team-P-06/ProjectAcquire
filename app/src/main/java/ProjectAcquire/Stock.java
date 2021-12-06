@@ -1,4 +1,6 @@
 /**
+ * Stock.java
+ *
  * MIT License
  *
  * Copyright (c) 2021 404
@@ -22,7 +24,7 @@
  * SOFTWARE.
  *
  * @author Team 404
- * @version v1.0.0
+ * @version v1.1.0
  */
 
 
@@ -39,7 +41,7 @@ public class Stock {
 
     /**
      * Custom constructor
-     * @param parentCmpany
+     * @param parentCompany
      */
     Stock(Company parentCompany){
         this.parentCompany = parentCompany;
