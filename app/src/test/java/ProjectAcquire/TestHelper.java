@@ -142,6 +142,14 @@ public class TestHelper {
         oldBoard.setNull();
     }
 
+    static void helperMethod_tearDownGameState(){
+        GameState oldGameState = helperMethod_GameStateInit();
+        oldGameState.setNull();
+    }
+    static void helperMethod_tearDownGame(){
+        Game oldGame = Game.getInstance();
+        oldGame.setNull();
+    }
 
     static GameState helperMethod_GameStateInit(){
 

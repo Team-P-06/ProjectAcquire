@@ -89,8 +89,12 @@ public class Update {
         actionUpdater.update(gameState, UIController, true, null);
     }
 
-    public void nextTurnUI(GameState gameState) throws IOException {
-        update(gameState);
+    public void nextTurnUI(GameState gameState) {
+        try {
+            update(gameState);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         boardUpdater.update(gameState, UIController, true);
     }
 }

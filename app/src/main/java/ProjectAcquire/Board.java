@@ -147,13 +147,15 @@ public class Board {
    //Tested when playing the game in the UI
     public void dealTile(Player player) {
         Random ran = new Random();
+        int counter = 0;
         int randomIndex = ran.nextInt(getTileList().size());
         Tile pulledTile = getTileList().get(randomIndex);
         if (!pulledTile.isFlipped() && !pulledTile.isDealt() && !pulledTile.isDead()) { // If the tile is able to be dealt
             pulledTile.setDealt(true);
             player.addTile(pulledTile);
-        } else { // recursive call if it can't deal the tile
+        } else if(counter<1000) { // recursive call if it can't deal the tile
             dealTile(player);
+            counter++;
         }
     }
 

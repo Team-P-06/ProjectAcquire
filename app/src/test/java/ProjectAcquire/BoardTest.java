@@ -305,7 +305,8 @@ public class BoardTest {
 
         Board helperBoard = TestHelper.helperMethod_custom_board();
         List<Tile> tList = helperBoard.getTileList();
-        Tile companyTile =tList.get(0);
+        //System.out.println(tList);
+        Tile companyTile = tList.get(0);
         companyTile.setDealt(true);
         companyTile.setFlipped(true);
         Tile adjToCompanyTile = tList.get(1);

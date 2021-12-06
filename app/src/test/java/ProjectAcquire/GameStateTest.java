@@ -8,6 +8,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
+
 
 public class GameStateTest {
 
@@ -42,6 +44,7 @@ public class GameStateTest {
 
         //current player should now not be null.
         assertNotNull(newCurrentPlayer);
+        TestHelper.helperMethod_tearDownGameState();
 
     }
 
@@ -96,6 +99,8 @@ public class GameStateTest {
     void test_nextTurn(){
         GameState test_gameState = TestHelper.helperMethod_GameStateInit();
         assertNotNull(test_gameState.nextTurn());
+        TestHelper.helperMethod_tearDownGameState();
+
 
     }
 
@@ -109,6 +114,8 @@ public class GameStateTest {
         testPlayer = test_gameState.getCurrentPlayer();
         test_gameState.setUpInitialTurn();
         assertEquals(test_gameState.getCurrentPlayer(), testPlayer);
+        TestHelper.helperMethod_tearDownGameState();
+
     }
 
     /**
@@ -119,6 +126,8 @@ public class GameStateTest {
         GameState test_gameState = TestHelper.helperMethod_GameStateInit();
         Player testPlayer = test_gameState.getCurrentPlayer();
         assertTrue(test_gameState.hasTileToPlay(testPlayer));
+        TestHelper.helperMethod_tearDownGameState();
+
     }
 
     /**
@@ -132,6 +141,8 @@ public class GameStateTest {
         testList = null;
         testPlayer.setTileList(testList);
         assertFalse(test_gameState.hasTileToPlay(testPlayer));
+        TestHelper.helperMethod_tearDownGameState();
+
     }
 
     /**
@@ -142,6 +153,8 @@ public class GameStateTest {
         GameState test_gameState = TestHelper.helperMethod_GameStateInit();
         test_gameState.setOver(false);
         assertFalse(test_gameState.getisOver());
+        TestHelper.helperMethod_tearDownGameState();
+
     }
 
     /**
@@ -149,20 +162,25 @@ public class GameStateTest {
      */
     @Test
     void test_getInstance(){
-        GameState test_gameState = new GameState();
-        assertNotNull(test_gameState.getInstance());
+        GameState test_gameState = GameState.getInstance();
+        assertNotNull(test_gameState);
+        TestHelper.helperMethod_tearDownGameState();
+
     }
 
     /**
      * Test to make sure the play turn method actually gets the tilesize correctly and that it will deal cards after turn
      *
-     * @throws IOException
+     *
      */
     @Test
-    void test_playTurn() throws IOException {
+    void test_playTurn() {
         GameState test = TestHelper.helperMethod_GameStateInit();
-        test.playTurn();
-        assertEquals(6, test.getCurrentPlayer().getTileList().size());
+       // test.playTurn();
+       // System.out.println(test.getCurrentPlayer());
+        assertEquals(3, test.getCurrentPlayer().getTileList().size());
+        TestHelper.helperMethod_tearDownGameState();
+
     }
 
     /**
@@ -173,10 +191,32 @@ public class GameStateTest {
      */
     @Test
     void test_playTurnNull() throws IOException {
-        GameState test = new GameState();
-        test.playTurn();
-        assertNull(test.getCurrentPlayer());
+        //GameState test = GameState.getInstance();
+        GameState test2 = mock(GameState.getInstance().getClass());
+        when(test2.getCurrentPlayer()).thenReturn(null);
+        //test.playTurn();
+        assertNull(test2.getCurrentPlayer());
+        TestHelper.helperMethod_tearDownGameState();
     }
+
+    @Test
+    void test_setNextTurn(){
+       // GameState stateTest = mock(GameState.getInstance().getClass());
+
+        GameState stateTest = TestHelper.helperMethod_GameStateInit();
+       // Update updateTest = mock(Update.class);
+       // stateTest.setNextTurn();
+        assertNotNull(stateTest.getCurrentPlayer());
+        TestHelper.helperMethod_tearDownGameState();
+
+    }
+
+//    @Test
+//    void test_setNull(){
+//        GameState stateTest = TestHelper.helperMethod_GameStateInit();
+//        stateTest.setNull();
+//        assertNull(stateTest.getInstance().getCurrentPlayer());
+//    }
 }
 
 
