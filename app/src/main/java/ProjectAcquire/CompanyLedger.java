@@ -8,10 +8,12 @@ package ProjectAcquire;
 import lombok.Getter;
 import lombok.Setter;
 
-
-@Getter
-@Setter
-   class CompanyLedger{
+/**
+ * Holds a instance variable of the tile and company that we just placed on the board.
+ * This is to avoid passing a played tile through many classes when needed.
+ */
+@Setter @Getter
+class CompanyLedger{
     private static CompanyLedger instance;
     private Tile charterTile;
     private Company charterComp;

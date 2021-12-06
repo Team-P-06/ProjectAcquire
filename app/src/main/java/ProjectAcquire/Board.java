@@ -38,25 +38,25 @@ import java.util.Random;
 
 @Getter @Setter
 public class Board {
-    //instance variables
-
-    private
-    /**
-     * @param tileList List of tiles to set tileList to
-     * @return A list of the current Tiles on the board (all tiles except dead ones?)
-     */
-    List<Tile> tileList;
 
     /**
-     * @param companyList list of companies to update companies to
-     * @return A list of the current companies
+     *  tileList - List of tiles to set tileList to
+     *  uncharteredCompanies - List of all the companies that have not been chartered by the player yet.
+     *  charteredCompanies - List of all companies that a player has currently chartered
+     *  CurrentPlayer - Who the current player of a turn is.
+     *  playerList - list of all the players in the game
      */
     private List<Company> uncharteredCompanies;
     private List<Company> charteredCompanies;
     private List<Player> playerList;
     private Player CurrentPlayer;
+    private List<Tile> tileList;
 
-    private static Board instance = null; //Singleton instance variable
+
+    /**
+     * Singleton instance variable
+     */
+    private static Board instance = null;
 
     /**
      * Default constructor
@@ -82,7 +82,6 @@ public class Board {
         this.uncharteredCompanies = uc;
         this.charteredCompanies = cc;
         this.playerList = pl;
-        //  this.tileList2D = tileList2D;
     }
 
     /**
@@ -118,10 +117,8 @@ public class Board {
         instance = null;
     }
 
-    //special getter methods
-
     /**
-     * Should query the number of tiles of a given company that are on a board
+     * queries the number of tiles of a given company that are on a board
      *
      * @param company A company
      * @return
@@ -162,7 +159,6 @@ public class Board {
      *
      * @return Returns the lowest stock price of any company in chartered companies
      */
-
     //Need a full board with companies and proper UI set up in order to test. Testing inside of the game with UI
     public int getLowestStockPrice() {
         int currentLowestPrice = 10000; // Default value, very high since we descend as we get better prices.
@@ -175,7 +171,7 @@ public class Board {
     }
 
     /**
-     * This returns a list of Tiles around a given coord.
+     * Given the coordinate of a tile, returns all 4 (or less) tiles around the tile
      *
      * @param coord Coordinate of a tile
      * @return A List of all of the Tiles around the passed in coordinate.
@@ -208,12 +204,10 @@ public class Board {
 
 
     /**
-     * This method is NOT my finest work. It is vomitous, as they say.
-     *
      * It returns a Tile based on a passed in coordinate and a cardinal direction, eg.  ([1,1], "EAST") returns the Tile on the board
      * that has the coordinate [1,2]
      *
-     * @param coord       tile coordinate
+     * @param coord tile coordinate
      * @param cardinalDir A cardinal direction "WEST, EAST, NORTH, SOUTH"
      * @return a tile to the cardinal direction of the passed in coord eg. "West of [1,1]" would return [1,0]
      */
@@ -257,7 +251,7 @@ public class Board {
      * otherwise returns a tile with the coordinate [-1,-1]
      *
      * @param adj the adjacent tile that our getAdjacentTile() method has created.
-     * @return
+     * @return a tile that is being searched for otherwise return a [-1,-1] default tile
      */
     private Tile arrayEquals(int[] adj) {
         for (Tile tl : getTileList()) { //for each tile on the board.
@@ -267,8 +261,6 @@ public class Board {
         }
         return new Tile(); //else our default constructor for a Tile object instantiates a Tile with the Coordinate [-1,-1] and returns it
     }
-
-    //other methods
 
     /**
      * sets a passed in company to be chartered then calls charterLogic.
@@ -288,7 +280,7 @@ public class Board {
     }
 
     /**
-     * Unlike our charter method, our uncharter method should not initiate the unchartering process. Instead it should be called as part of the clean up process of a merge.
+     * Unlike our charter method, our uncharter method should not initiate the unchartering process. Instead, it should be called as part of the clean up process of a merge.
      *
      * @param company Company to uncharter
      */
@@ -303,15 +295,11 @@ public class Board {
     /**
      * Looks at the tiles around a played tile and decided whether a merge, charter, add to company, or no action is needed.
      *
-     *
      * @param tile Tile that was just played by a player
      * @return an integer representing the action that needs to happen.
      */
     //we want jacoco to ignore this, beacuse it throws an exception (tests are implemented though)
     public int checkForActionInitiation(Tile tile) {
-
-        //ALEX NOTE: If the passed in tile does not have a true isFlipped status we need to throw an exception,
-        //but i dont know how to do that.
         List<Tile> tilesAroundCoord = null;
         try {
             tilesAroundCoord = getTilesAround(tile.getCoord());
@@ -434,7 +422,7 @@ public class Board {
     }
 
     /**
-     * This algorithm should be pretty close to the one above, except that it checks inside out (tile -> adjacent tiles) as opposed to
+     * This algorithm should be pretty close to charterLogic(), except that it checks inside out (tile -> adjacent tiles) as opposed to
      * outside in (adjacent -> the tile that we are observing).
      *
      * @param comp The comp to set our adj tile to
@@ -465,8 +453,8 @@ public class Board {
 
     /**
      * Checks if a tile is associated with a loser company and if it is, it changes a company to be the winner company
-     * @param winnerCo
-     * @param loserCos
+     * @param winnerCo the winning company in a merge
+     * @param loserCos the list of companies going under
      */
     @Generated //tested while actually playing the game
     public void mergeLogic(Company winnerCo, List<Company> loserCos){
@@ -488,8 +476,8 @@ public class Board {
     }
 
     /**
-     * Creates a string of our instance variabels we have in the class
-     * @return
+     * Creates a string of our instance variables we have in the class
+     * @return The string representation of the board
      */
     @Override
     public String toString() {

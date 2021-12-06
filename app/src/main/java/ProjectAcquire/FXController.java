@@ -42,16 +42,13 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * Controller for actions of FXMLUI.
+ * Controller for actions of FXML.
  * All functions and variables that are used communicating with MainMenu.fxml need a @FXML proceeding them.
  */
 @Generated
 public class FXController {
     /**
-     * MainMenu UI logic and variables start here
-     */
-    /**
-     * Buttons, pane and lables for MainMenu
+     * Buttons, pane and labels for MainMenu
      */
     @FXML private Button newGameButton, loadGameMenuButton, exitGameButton;
     @FXML private Label loadGameLabel, player;
