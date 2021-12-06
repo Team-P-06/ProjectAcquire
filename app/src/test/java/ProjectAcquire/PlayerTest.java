@@ -1,16 +1,19 @@
+/**
+ *  @author Team 404
+ *  @version v0.0.1
+ */
 package ProjectAcquire;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class PlayerTest {
 
-    //Helper methods should be deprecated adn replaced once our gamestate
-    //initializer method works properly.
 
     /**
      * Need helper class for building a player.
@@ -74,31 +77,22 @@ public class PlayerTest {
         assertNotEquals(classUnderTest2.getTileList(),classUnderTest.getTileList());
     }
 
-/*
-    @Test
-    void test_buyStock(){
-        Company testCompany = new Company();
-        Stock testStock = new Stock(testCompany);
-        Player testPlayer1 = new Player();
-        List<Stock> testList = testPlayer1.getStockList();
-        testPlayer1.buyStock(testStock);
-        assertTrue(testPlayer1.getStockList() != testList);
-    }
-*/
+    /**
+     * Test that buy stocks correctly updates the player and stocks information
+     */
     @Test void buy_stocks_test(){
         List<Tile> helperTileList = TestHelper.helperMethod_tileList_company1_3_coord_A1_A3();
         Company testCo = TestHelper.helperMethod_Company("Sackson");
 
-        testCo.setTilesOnBoard(15);
+        testCo.setNumTiles(15);
         testCo.setNewStockPrice();
 
         List<Stock> testStockList = new ArrayList<>();
-        Stock test_stock = TestHelper.helperMethod_customStock("Sackson");
         Player testPlayer = new Player("P1", helperTileList, 1000);
         testPlayer.setStockList(testStockList);
-        testPlayer.buyStock(test_stock);
+        testPlayer.buyStock(testCo);
 
-        assertEquals(1000, testPlayer.getMoney());
+        assertEquals(200, testPlayer.getMoney());
     }
 
     /**
@@ -123,4 +117,68 @@ public class PlayerTest {
         classUnderTest.discardTile(testTile);
         assertEquals(classUnderTest.getTileList(), testList);
     }
+
+    /**
+     * Test that the equals method properly takes in an object and compares it to other player objects inside of the class
+     */
+    @Test
+    void test_Equals(){
+        Player testPlayer = new Player();
+        Object test = null;
+        assertFalse(testPlayer.equals(test));
+    }
+
+    /**
+     * Same test as above but instead the object ins't null
+     */
+    @Test
+    void testEqualsTrue(){
+        Player testPlayer = new Player();
+        Object test = new Object();
+        assertFalse(testPlayer.equals(test));
+    }
+
+    /**
+     * Test that the stock list method is properly gathering a stock list from a player but in this case there
+     * isn't any stocks bought in the company
+     */
+    @Test
+    void test_stockList(){
+        Player testPlayer = TestHelper.helperMethod_custom_Player("P1");
+        Company testCo = TestHelper.helperMethod_Company("Test");
+        assertEquals(0,testPlayer.countStocks(testCo));
+    }
+
+    /**
+     * Same test as above but this time we actually have a stock bought inside of a players stock list to hit certain
+     * branches inside of the method
+     */
+    @Test
+    void test_stockList2(){
+        GameState testGame = TestHelper.helperMethod_GameStateInit();
+        LinkedList<Player> testList = testGame.getPlayerList();
+        Player testPlayer = testList.get(0);
+        Company testCom = TestHelper.helperMethod_Company("Test Company");
+        Stock testStock = new Stock(testCom);
+        List<Stock> testStockList = new LinkedList<>();
+        testStockList.add(testStock);
+        testPlayer.setStockList(testStockList);
+        testStock.setParentCompany(testCom);
+
+        assertEquals(1,testPlayer.countStocks(testCom));
+    }
+    @Test
+    void test_countStocks(){
+
+        Player testPlayer = TestHelper.helperMethod_custom_Player("P1");
+        List<Stock> sList = new ArrayList<>();
+        Stock testStock1 = TestHelper.helperMethod_customStock("COMPANY1");
+        sList.add(testStock1);
+        testPlayer.setStockList(sList);
+        Company testCompany = sList.get(0).getParentCompany();
+        assertEquals(1, testPlayer.countStocks(testCompany));
+
+    }
+
+
 }

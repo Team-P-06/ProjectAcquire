@@ -54,6 +54,11 @@ dependencies {
 
     // https://mvnrepository.com/artifact/com.google.flogger/flogger-system-backend
     implementation 'com.google.flogger:flogger-system-backend:0.7.1' //should maybe switch this to "runtime" at some point -Alex
+
+    // https://mvnrepository.com/artifact/org.mockito/mockito-all
+    testImplementation 'org.mockito:mockito-all:1.10.19'
+
+
 }
 
 application {
@@ -86,30 +91,29 @@ pmd {
 
 jacoco {
     toolVersion = "0.8.7"
-    reportsDirectory = layout.buildDirectory.dir('customJacocoReportDir')
+    reportsDirectory = layout.buildDirectory.dir('JacocoTestCoverage')
 }
+test{
+    useJUnitPlatform()
+    finalizedBy jacocoTestReport;
 
-jacocoTestReport {
-    dependsOn test // tests are required to run before generating the report
 }
-
 jacocoTestReport {
-    reports {
-        xml.required = false
-        csv.required = false
-        html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
-            html{
-                enabled  true;
-            }
+    dependsOn test
+    reports{
+        xml.enabled false
+        csv.enabled false
+        html.enabled true
     }
     afterEvaluate{
-        classDirectories.setFrom(files(classDirectories.files.collect{
-            fileTree(dir : it, exclude:[
-                    //"com/ProjectAcquire/**/FXController.class"
+        classDirectories.setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: [
+
             ])
         }))
     }
 }
+
 test.finalizedBy(project.tasks.jacocoTestReport);
 jacocoTestCoverageVerification {
     violationRules {
@@ -122,8 +126,6 @@ jacocoTestCoverageVerification {
                 minimum = 0.90
             }
 
-            //includes['App']
-            //excludes = ["**/ProjectAquire/**"]
         }
 
     }

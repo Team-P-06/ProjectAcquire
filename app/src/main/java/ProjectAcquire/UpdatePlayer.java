@@ -1,4 +1,6 @@
 /**
+ * UpdatePlayer.java
+ *
  * MIT License
  *
  * Copyright (c) 2021 404
@@ -22,7 +24,7 @@
  * SOFTWARE.
  *
  * @author Team 404
- * @version v1.0.0
+ * @version v1.1.0
  */
 
 package ProjectAcquire;
@@ -33,6 +35,7 @@ import java.util.List;
 /**
  * Logic to update the player information (bottom left of UI)
  */
+@Generated
 public class UpdatePlayer implements Updatable{
     private FXController UIController;
 
@@ -68,11 +71,11 @@ public class UpdatePlayer implements Updatable{
     }
 
     /**
-     * Calulates the net value of the player by the stock prices they hold plus current money on hand.
+     * Calculates the net value of the player by the stock prices they hold plus current money on hand.
      * @param  player who's net worth would you like to calculate
      * @return  int value for cash worth
      */
-    private int calculateNet(Player player){
+    public int calculateNet(Player player){
         List<Stock> playerStockList = player.getStockList();
         int playerNet = 0;
         if(playerStockList == null){
@@ -87,12 +90,12 @@ public class UpdatePlayer implements Updatable{
         return playerNet;
     }
 
+    /**
+     * Sets the label to show whose turn it is
+     * @param currentPlayer the current player in the game
+     */
     private void updateCurrentPlayerLabel(Player currentPlayer){
         UIController.getCurrentPlayerTurnLabel().setText(currentPlayer.getName());
-    }
-
-    public void updateMergeOptions(){
-
     }
 
 }

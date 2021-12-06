@@ -4,13 +4,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
- - Full UI connection to board logic to fully run a game
- - Further testing including excluiding the UI.
- - Loading a game properly
- - Merge logic
+## [1.1.0]
+### Added
+ - Full implementation of UI actions such as merging, selling, and charting
+ - Ability to place tiles and charting dynamically add tiles to companies
+ - Merge payouts when a merge occurs
+ - End game conditions for ending the game from the game menu
+ - Ability to properly load a game
+ - Dynamic stock price changing based on the number of tiles for a company on a board
+ - Working merge algorithm with the UI implementation
+ - 85%+ test coverage
 
 ## [1.0.0]
+### Added
  - Logical implementation of UI and UI logic
  - Company calculation logic added
  - Logic for checking tiles around a given set tile
@@ -33,6 +39,3 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - basic testing of most classes
 - basic UI and UI updating 
 - functional initialized game
-
-### Changed
-

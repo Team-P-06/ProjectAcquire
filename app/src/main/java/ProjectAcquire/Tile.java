@@ -1,4 +1,6 @@
 /**
+ * Tile.java
+ *
  * MIT License
  *
  * Copyright (c) 2021 404
@@ -22,7 +24,7 @@
  * SOFTWARE.
  *
  * @author Team 404
- * @version v1.0.0
+ * @version v1.1.0
  */
 
 package ProjectAcquire;
@@ -32,22 +34,28 @@ import lombok.Setter;
 
 import java.util.Arrays;
 
+@Getter @Setter
 public class Tile {
     /**
+     * Instance variables
      * Coord is {Row, Column}
      */
-   private @Getter @Setter Company company;
-   private @Getter @Setter int[] coord;
+   private Company company;
+   private int[] coord;
    private boolean flipped;
-   private @Setter boolean dealt;
+   private boolean dealt;
+   private boolean dead;
 
 
-   //Default constructor
+    /**
+     * Default constructor
+     */
     Tile(){
         this.coord = new int[]{-1, -1};
         this.company = new Company();
         this.flipped = false;
         this.dealt = false;
+        this.dead = false;
     }
 
     /**
@@ -61,25 +69,7 @@ public class Tile {
         this.coord = tileCoord;
         this.flipped = false;
         this.dealt = false;
-    }
-
-    /**
-     * Checks if the tile is on the board yet.
-     */
-    public boolean isFlipped(){ return flipped; }
-
-    public boolean isDealt(){ return dealt; }
-
-    public boolean isDealable(){
-        return !isFlipped() && !isDealt();
-    }
-
-    /**
-     *
-     * @return the company the tile belongs to.
-     */
-    public void setFlipped(){
-        this.flipped = true;
+        this.dead = false;
     }
 
     /**
@@ -87,9 +77,9 @@ public class Tile {
      *
      * @return A coordinate name of the unique tile.
      */
+    @Generated //Tested when playing the game in the UI
     public String tileCoordToString() {
         String tileString;
-        int[] coord = getCoord();
         int row = coord[0];
         String col = Integer.toString(coord[1] + 1);
         switch (row) {
@@ -107,10 +97,14 @@ public class Tile {
         return tileString;
     }
 
+    /**
+     * Turn the comapny coordinates into a string with the compain name next to the coordinates
+     * @return String
+     */
     @Override
     public String toString() {
         return "Tile{" +
-                "coord=" + tileCoordToString() +
+                "coord=" + tileCoordToString() + " " + company.getCompanyName() +
                 '}';
     }
 }

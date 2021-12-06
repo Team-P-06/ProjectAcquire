@@ -1,4 +1,6 @@
 /**
+ * UpdateBoard.java
+ *
  * MIT License
  *
  * Copyright (c) 2021 404
@@ -22,7 +24,7 @@
  * SOFTWARE.
  *
  * @author Team 404
- * @version v1.0.0
+ * @version v1.1.0
  */
 
 package ProjectAcquire;
@@ -36,6 +38,7 @@ import java.util.List;
 /**
  * Updates the tiles' information that are places on the board. (top left of UI)
  */
+@Generated
 public class UpdateBoard {
 
     private FXController UIController;
@@ -47,7 +50,7 @@ public class UpdateBoard {
      * @param UIController UIController for updating the UI
      * @param placeableTiles weather or not a player should be able to place a tile.
      */
-    public void update(GameState gameState, FXController UIController, boolean placeableTiles) {
+    public void update(GameState gameState, FXController UIController, boolean placeableTiles) throws IOException {
         this.UIController = UIController;
         List<Player> playerList = gameState.getPlayerList();
         List<Tile> allTileList = gameState.getCurrentBoard().getTileList();
@@ -55,7 +58,7 @@ public class UpdateBoard {
         updateSaveGameButton(gameState);
         UIController.getEndTurnButton().setVisible(false);
 
-        if(endGameCondion(gameState.getCurrentBoard().getCharteredCompanies())){ setEndGameButton(gameState); }
+        if(endGameCondition(gameState.getCurrentBoard().getCharteredCompanies())){ setEndGameButton(); }
 
         for (Tile tile : allTileList) {
             if(!tile.isDealt()) { //Only add tiles that are not in a players hand
@@ -66,12 +69,11 @@ public class UpdateBoard {
         }
 
         for (Player player : playerList)
-            if (player.equals(currentPlayer)) {
+            if (player.equals(currentPlayer)) { // Make tiles for current player
                 makeCurrentPlayerTiles(player.getTileList(), player, gameState, placeableTiles);
-            } else {
+            } else { // Make tiles for all other players
                 makeOtherPlayerTile(player.getTileList());
             }
-
     }
 
     /**
@@ -90,11 +92,8 @@ public class UpdateBoard {
             if(placeableTiles) { // If this is a fresh turn allow the tile to be placed.
                 UIController.getActionLabel().setText("Place a tile");
                 currentButton.setOnAction(action -> {
-                    try { gameState.getTileChoice(tile); }
-                    catch (IOException e) { e.printStackTrace(); } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                });
+                    try { gameState.getTileChoice(tile, currentPlayer); } //Alex NOTE: This is Logic, and is the first step in a charter
+                    catch (IOException e) { e.printStackTrace(); } catch (Exception e) {e.printStackTrace();} });
             }
             UIController.getTileGrid().add(currentButton, tile.getCoord()[1], tile.getCoord()[0]);
         }
@@ -102,7 +101,7 @@ public class UpdateBoard {
 
     /**
      * Makes the tiles for the rest of the players. This will be a blank spot in the board
-     * @param tileList
+     * @param tileList the list of tiles belonging to the non current players
      */
     private void makeOtherPlayerTile(List<Tile> tileList) {
         for (Tile tile : tileList) {
@@ -115,8 +114,8 @@ public class UpdateBoard {
 
     /**
      * Default button style for the all the charted companies
-     * @param tileCom
-     * @return
+     * @param tileCom the name of the company
+     * @return a button
      */
     private Button setButtonProperties(String tileCom, boolean isFlipped) {
         Button currentButton = colorButton(tileCom, isFlipped);
@@ -127,8 +126,8 @@ public class UpdateBoard {
 
     /**
      * Uniquely colors each button based on their respective company.
-     * @param companyName
-     * @return
+     * @param companyName the name of the company accosted with the button on the board
+     * @return a button
      */
     private Button colorButton(String companyName, boolean isFlipped) {
         Button button = new Button();
@@ -140,7 +139,6 @@ public class UpdateBoard {
             case "American" -> button.setStyle("-fx-background-color: blue");
             case "Continental" -> button.setStyle("-fx-background-color: red");
             case "Tower" -> button.setStyle("-fx-background-color: grey");
-            //case "DEFAULT" && isFlipped -> button.setStyle("-fx-background-color: black; -fx-text-fill: white");
             default -> button.setStyle("-fx-background-color: 000000;");
         }
         if (companyName.equals("DEFAULT") && isFlipped){
@@ -152,48 +150,41 @@ public class UpdateBoard {
     /**
      * Check for the end game conditions if met, a chain has 41 or more tiles OR all hotel chains are permanent
      * All chain safe means that the total # of safe companies is 7.
-     * @return
+     * @return true or false based on the end game state
      */
-    private boolean endGameCondion(List<Company> charteredCom){
-        int numberOfPerminetCom = 0;
+    private boolean endGameCondition(List<Company> charteredCom){
+        int numberOfPermanentCom = 0;
         for (Company curCompany : charteredCom){
-            if (curCompany.getTilesOnBoard() >= 41){ return true; }
-            if (curCompany.isPermanent()){ numberOfPerminetCom++; }
+            if (curCompany.getNumTiles() >= 41){ return true; }
+            if (curCompany.isPermanent()){ numberOfPermanentCom++; }
         }
-        return numberOfPerminetCom == 7;
+        if (numberOfPermanentCom == 7) { return true; }
+        return false;
     }
 
     /**
      * If a player chooses to end the game it will add a end game button to the action list.
      */
-    private void setEndGameButton(GameState gameState){
-        UIController.getEndGameListView().setVisible(true);
-        UIController.getEndGameObserListView().clear();
-        Button endGameButton = new Button();
-        endGameButton.setText("End Game");
-        endGameButton.setOnAction(c -> {
-            try {
-                UIController.endGame(gameState);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
-        UIController.getEndGameObserListView().add(endGameButton);
-        UIController.getEndGameListView().setItems(UIController.getEndGameObserListView());
+    private void setEndGameButton(){
+        UIController.getEndGameButton().setVisible(true);
     }
 
     /**
      * Relates the save game button with the current gameState to save to files.
      * @param gameState the current gamestate
      */
-    private void updateSaveGameButton(GameState gameState){
+    private void updateSaveGameButton(GameState gameState) throws IOException {
         IOManager ioManager = new IOManager();
         Button saveGameButton = UIController.getSaveGameButton();
         saveGameButton.setOnAction(a -> {
             saveGameButton.setText("Saved!");
-            ioManager.saveGame(gameState);});
-        ioManager.saveGame(gameState); //Could be wrong but just added this to write the file -Tyler
+            try {
+                ioManager.saveGame(gameState);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+        ioManager.saveGame(gameState);
+
+            ioManager.saveGame(gameState);};
     }
-
-
-}

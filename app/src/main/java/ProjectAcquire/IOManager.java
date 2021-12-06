@@ -1,4 +1,6 @@
 /**
+ * IOManager.java
+ *
  * MIT License
  *
  * Copyright (c) 2021 404
@@ -22,7 +24,7 @@
  * SOFTWARE.
  *
  * @author Team 404
- * @version v1.0.0
+ * @version v1.1.0
  */
 package ProjectAcquire;
 
@@ -37,29 +39,39 @@ public class IOManager {
     /**
      * Default constructor
      */
+    @Generated
     public void IOManager(){}
     /**
      * Save a current game being played with its current game state being converted to a json file
-     * @param saveThisGame
+     * @param saveThisGame the current gamestate to save
      */
-    public String saveGame(GameState saveThisGame){
+    public String saveGame(GameState saveThisGame) throws IOException {
         Gson gson = new Gson();
         GameState savedGameState = saveThisGame;
         String jsonFile = gson.toJson(savedGameState);
-        writeFile(jsonFile);
+        FileWriter file = new FileWriter("./src/main/resources/SavedGames/SavedGame.txt");
+        file.write(jsonFile);
+        file.flush();
+        file.close();
+
         return jsonFile;
     }
 
     /**
+<<<<<<< HEAD
      * Load game methods that will handle all of the loading of a saved json file
+=======
+     * Load game methods that will handle all the loading of a saved json file
      * @param file Json file the contains the saved game objects
+>>>>>>> 834af487e80773b743b20cc672d6cb9921686740
      * @return The gamestate that was saved
      */
-    public GameState loadGame(String file) throws IOException {
+    public GameState loadGame(String file) throws FileNotFoundException{
         Gson converter = new Gson();
-        //readString with path.of(file) is causing the path exceptions io error when running gradle test not sure what to do here -Tyler
-        //String jsonString = Files.readString(Path.of(file)); // Added by Show, this resolved a loading error(Expected BEGIN_OBJECT but was STRING)
-        GameState savedGame = converter.fromJson(file, GameState.class);
+
+        BufferedReader jsonString = new BufferedReader(new FileReader(file));
+        GameState savedGame = converter.fromJson(jsonString, GameState.class);
+
         return savedGame;
     }
 
@@ -68,18 +80,5 @@ public class IOManager {
      * later when they try to load the game back up again
      * @param game the current game that is being saved into a gamestate json string
      */
-    public void writeFile(String game){
-        /**
-         * try to create a new file writer that will the to the resource folder with the name of saved game.txt for now
-         */
-        try{
-            FileWriter file = new FileWriter("./src/main/resources/SavedGames/SavedGame.txt");
-            file.write(game);
-            file.flush();
-            file.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
-    }
 }

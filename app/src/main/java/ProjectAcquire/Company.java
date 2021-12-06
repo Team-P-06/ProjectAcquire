@@ -1,4 +1,6 @@
 /**
+ * Company.java
+ *
  * MIT License
  *
  * Copyright (c) 2021 404
@@ -22,7 +24,7 @@
  * SOFTWARE.
  *
  * @author Team 404
- * @version v1.0.0
+ * @version v1.1.0
  */
 
 
@@ -31,43 +33,51 @@ package ProjectAcquire;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
+import java.util.List;
+import java.util.Objects;
+
+@Getter @Setter
 public class Company {
 
     private String companyName;
-    @Setter private int tilesOnBoard;
-    @Setter private int stockPrice;
-    @Setter private boolean chartered;
-    @Setter private boolean isPermanent;
+    private List<Tile> tilesOnBoard;
+    private int numTiles;
+    private int stockPrice;
+    private boolean chartered;
+    private boolean isPermanent;
 
 
     /**
      * Default constructor
      */
-    public Company(){
+    public Company() {
         this.companyName = "DEFAULT";
         this.stockPrice = 100;
         this.chartered = false;
         this.isPermanent = false;
-        this.tilesOnBoard = 0;
-
+        this.numTiles = 0;
     }
 
     /**
      * Class constructor
-     * @param cn name of the company
-     * @param sp default stock price of company
+     *
+     * @param cn    name of the company
+     * @param sp    default stock price of company
      * @param chart default charter state of company
-     * @param perm whether the company is permanent.
+     * @param perm  whether the company is permanent.
      */
-    public Company(String cn, int sp, boolean chart, boolean perm){
+    public Company(String cn, int sp, boolean chart, boolean perm) {
         this.companyName = cn;
         this.stockPrice = sp;
         this.chartered = chart;
         this.isPermanent = perm;
-        this.tilesOnBoard = 0;
+        this.numTiles = 0;
     }
 
+    /**
+     * Create a string with our instance variables inside the class
+     * @return String representation of the company
+     */
     @Override
     public String toString() {
         return "Company{" +
@@ -81,42 +91,48 @@ public class Company {
 
     /**
      * Calculates the stock price of the companies based on how many tiles they hold
-     * @return
+     *
+     * @return the price of the stock price for that particular comapny
      */
-    public int calculateStockPrice(){
+    public int calculateStockPrice() {
         int stockPrice = 0;
-        switch (tilesOnBoard){
-            case 0 -> stockPrice = 0;
-            case 1 -> stockPrice = 0;
+        switch (numTiles){
+
             case 2 -> stockPrice = 200;
             case 3 -> stockPrice = 300;
             case 4 -> stockPrice = 400;
             case 5 -> stockPrice = 500;
         }
-        if (tilesOnBoard >=6 && tilesOnBoard <= 10){ stockPrice = 700;}
-        else if (tilesOnBoard >=11 && tilesOnBoard <= 20){ stockPrice = 800;}
-        else if (tilesOnBoard >=21 && tilesOnBoard <= 30){ stockPrice = 900;}
-        else if (tilesOnBoard >=31 && tilesOnBoard <= 40){ stockPrice = 800;}
-        else if (tilesOnBoard >= 32) {stockPrice =  1000; }
+        if (numTiles >= 6 && numTiles <= 10) {
+            stockPrice = 700;
+        } else if (numTiles >= 11 && numTiles <= 20) {
+            stockPrice = 800;
+        } else if (numTiles >= 21 && numTiles <= 30) {
+            stockPrice = 900;
+        } else if (numTiles >= 31 && numTiles <= 40) {
+            stockPrice = 800;
+        } else if (numTiles >= 32) {
+            stockPrice = 1000;
+        }
 
-        if (companyName.equals("Worldwide") || companyName.equals("Sackson")){
-            stockPrice = stockPrice;
-        }
-        else if (companyName.equals("Festival") || companyName.equals("Imperial") || companyName.equals("American")){
+        if (numTiles == 0) {
+            stockPrice = 0;
+        } else if (companyName.equals("Festival") || companyName.equals("Imperial") || companyName.equals("American")) {
             stockPrice += 100;
-        }
-        else if (companyName.equals("Continental") || companyName.equals("Tower")){
+        } else if (companyName.equals("Continental") || companyName.equals("Tower")) {
             stockPrice += 200;
+        } else if (companyName.equals("DEFAULT")) {
+            stockPrice = 0;
         }
-        else if (companyName.equals("DEFAULT")) { stockPrice = 0; }
         return stockPrice;
     }
 
     /**
      * Majority payout is simply the stock price times 10
+     *
      * @return the payout to the majority holder
      */
-    public int getMajorityPayout(){
+    public int getMajorityPayout() {
         return calculateStockPrice() * 10;
     }
 
@@ -124,14 +140,39 @@ public class Company {
      * Minority payout is half of the majority payout.
      * @return the payout to all players who are not the majority holder.
      */
-    public int getMinoryPayout(){
+    public int getMinorityPayout() {
         return getMajorityPayout() / 2;
     }
 
     /**
      * Sets the new stock price for a given company
      */
-    public int setNewStockPrice(){
+    public int setNewStockPrice() {
         return stockPrice = calculateStockPrice();
+    }
+
+
+    /**
+     * Override equals methods for comparing companies
+     * @param o A company object
+     * @return Whether the passed in company equals our current company.
+     */
+    @Generated
+    @Override public boolean equals(Object o) {
+        if (o == this)
+            return true;
+        if (!(o instanceof Company))
+            return false;
+        Company comp = (Company)o;
+        return comp.getCompanyName().equals(this.getCompanyName());
+    }
+
+    /**
+     *
+     * @return a hash code generated by Intellij
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(companyName, tilesOnBoard, numTiles, stockPrice, chartered, isPermanent);
     }
 }

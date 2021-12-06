@@ -1,5 +1,5 @@
 /**
- * Updatable.java
+ * CompanyLedger.java
  *
  * MIT License
  *
@@ -27,19 +27,30 @@
  * @version v1.1.0
  */
 
-package ProjectAcquire;
 
-import java.io.IOException;
+//ALEX NOTE: This is a really bad way to do things, this is kind of like a local database that only holds a couple fields
+//I did it this way so that I could store a chartering tile outside of the class where it is instantiated.
+//If I had more time I would rework this greately, as it is codes equivalent of a dangling participle
+
+package ProjectAcquire;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
- * Interface for each class to update it's UI elements, such as Player and board.
+ * Holds a instance variable of the tile and company that we just placed on the board.
+ * This is to avoid passing a played tile through many classes when needed.
  */
-@Generated
-public interface Updatable {
+@Setter @Getter
+class CompanyLedger {
+    @Setter private static CompanyLedger instance;
+    private Tile charterTile;
+    private Company charterComp;
 
-    /**
-     * Updates UI
-     */
-    void update(GameState gameState, FXController UIController) throws IOException;
+    public static CompanyLedger getInstance() {
+        if (instance == null) {
+            instance = new CompanyLedger();
+        }
+        return instance;
 
+    }
 }

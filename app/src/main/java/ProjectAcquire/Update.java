@@ -1,4 +1,6 @@
 /**
+ * Update.java
+ *
  * MIT License
  *
  * Copyright (c) 2021 404
@@ -22,12 +24,13 @@
  * SOFTWARE.
  *
  * @author Team 404
- * @version v1.0.0
+ * @version v1.1.0
  */
 
 package ProjectAcquire;
 
 import lombok.Getter;
+import org.checkerframework.checker.guieffect.qual.UI;
 
 import java.io.IOException;
 import java.util.List;
@@ -35,10 +38,11 @@ import java.util.List;
 /**
  * Main update UI logic class. Branches out to other parts of the UI Logic for better organization.
  */
+@Generated
 public class Update {
 
     @Getter
-    FXController UIController = new FXController();
+    public static final FXController UIController = new FXController();
     static final UpdateBoard boardUpdater = new UpdateBoard();
     static final UpdateHotel hotelUpdater = new UpdateHotel();
     static final UpdatePlayer playerUpdater = new UpdatePlayer();
@@ -46,25 +50,28 @@ public class Update {
 
     /**
      * Main update logic that branches out and updates different parts of the UI(Player data, Board, Company stocks, and stock options
+     * @param gameState the current gamestate to update
      */
-    public void update(GameState gameState) throws IOException {
-        UIController.getMainStage().hide();
-        UIController.showBoardMenu(UIController.getGameBoardLoader());
-        hotelUpdater.update(gameState, UIController);
-        playerUpdater.update(gameState, UIController);
+    public void update(GameState gameState) {
+        try {
+            UIController.showBoardMenu(UIController.getGameBoardLoader());
+            hotelUpdater.update(gameState, UIController);
+            playerUpdater.update(gameState, UIController);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
      * Generates a specific UI for if a merge occurs
      * @param gameState current gamestate
-     * @param defunctCompany the company that's going under
+     * @param mergingCompanies List of companies going under
      * @throws IOException
      */
-    public void mergeUI(GameState gameState, Company defunctCompany) throws IOException {
+    public void mergeUI(GameState gameState, List<Company> mergingCompanies) throws IOException {
         update(gameState);
         boardUpdater.update(gameState, UIController, false);
-        actionUpdater.update(gameState, UIController, false, true,
-                defunctCompany, false, null);
+        actionUpdater.update(gameState, UIController, false, mergingCompanies);
     }
 
     /**
@@ -75,8 +82,7 @@ public class Update {
     public void buyUI(GameState gameState) throws IOException {
         update(gameState);
         boardUpdater.update(gameState, UIController, false);
-        actionUpdater.update(gameState, UIController, false, false,
-                null, false, null);
+        actionUpdater.update(gameState, UIController, false, null);
     }
 
     /**
@@ -87,25 +93,19 @@ public class Update {
     public void charterChoiceUI(GameState gameState) throws IOException {
         update(gameState);
         boardUpdater.update(gameState, UIController, false);
-        actionUpdater.update(gameState, UIController, true, false, null, false,
-                null);
+        actionUpdater.update(gameState, UIController, true, null);
     }
 
     /**
-     * Generates a UI for a list of companies if a merge has equal number of tiles in a company
+     * When the next players turn is started, let them place tiles
      * @param gameState the current gamestate
-     * @param companyChoiceList the list of companies that have the same number of tiles on the board.
-     * @throws IOException
      */
-    public void mergeChoiceUI(GameState gameState, List<Company> companyChoiceList) throws IOException{
+    public void nextTurnUI(GameState gameState) {
         update(gameState);
-        boardUpdater.update(gameState, UIController, false);
-        actionUpdater.update(gameState, UIController, true, false,
-                null, true, companyChoiceList);
-    }
-
-    public void nextTurnUI(GameState gameState) throws IOException {
-        update(gameState);
-        boardUpdater.update(gameState, UIController, true);
+        try {
+            boardUpdater.update(gameState, UIController, true);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

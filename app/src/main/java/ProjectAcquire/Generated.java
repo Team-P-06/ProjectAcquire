@@ -1,5 +1,5 @@
 /**
- * Updatable.java
+ * Generated.java
  *
  * MIT License
  *
@@ -26,20 +26,23 @@
  * @author Team 404
  * @version v1.1.0
  */
-
 package ProjectAcquire;
 
-import java.io.IOException;
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
+
+import static java.lang.annotation.ElementType.METHOD;
+import static java.lang.annotation.ElementType.TYPE;
+import static java.lang.annotation.RetentionPolicy.CLASS;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
- * Interface for each class to update it's UI elements, such as Player and board.
+ * Annotated class used to exclude javaFX classes and methods for jacoco
  */
-@Generated
-public interface Updatable {
-
-    /**
-     * Updates UI
-     */
-    void update(GameState gameState, FXController UIController) throws IOException;
-
+@Documented
+@Retention(RUNTIME)
+@Target({TYPE,METHOD})
+public @interface Generated {
 }

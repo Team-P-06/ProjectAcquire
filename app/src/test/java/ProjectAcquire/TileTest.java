@@ -1,3 +1,7 @@
+/**
+ *  @author Team 404
+ *  @version v0.0.1
+ */
 package ProjectAcquire;
 
 import org.junit.jupiter.api.Test;
@@ -8,7 +12,6 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TileTest {
-
 
     /**
      * Tests that the name of a custom initialized tile is set correctly
@@ -29,8 +32,6 @@ public class TileTest {
         Company helperComp = new Company();
         int[] coord = {0,1};
 
-        // Tile helperTile = helperMethod_custom_tile();
-
         Tile classUnderTest = TestHelper.helperMethod_custom_tile_via_coord_and_companyName(coord,"TEST");
         assertFalse(classUnderTest.isFlipped());
     }
@@ -42,7 +43,7 @@ public class TileTest {
         int[] coord = {0,1};
 
         Tile classUnderTest = TestHelper.helperMethod_custom_tile_via_coord_and_companyName(coord,"TEST");
-        classUnderTest.setFlipped();
+        classUnderTest.setFlipped(true);
         assertTrue(classUnderTest.isFlipped());
     }
 
@@ -54,7 +55,7 @@ public class TileTest {
         int[] coord = {0,1};
 
         Tile classUnderTest = TestHelper.helperMethod_custom_tile_via_coord_and_companyName(coord,"TEST");
-        classUnderTest.setFlipped();
+        classUnderTest.setFlipped(true);
         assertEquals(coord[0], classUnderTest.getCoord()[0]);
     }
 
@@ -65,11 +66,13 @@ public class TileTest {
         int[] coord = {0,1};
 
         Tile classUnderTest = TestHelper.helperMethod_custom_tile_via_coord_and_companyName(coord,"TEST");
-        classUnderTest.setFlipped();
+        classUnderTest.setFlipped(true);
         assertTrue(classUnderTest.getCompany().getCompanyName().equals("TEST"));
     }
 
-    //Tests that the name of the company is changed after setCompany is called
+    /**
+     * Tests that the name of the company is changed after setCompany is called
+     */
     @Test void test_tile_setCompany() {
         int[] coord = {0,1};
 
@@ -89,15 +92,6 @@ public class TileTest {
     void test_isDealt(){
         Tile testTile = new Tile();
         assertFalse(testTile.isDealt());
-    }
-
-    /**
-     * Tests that the isDealable() method returns the right boolean while calling is dealt and flipped inside of the tile class
-     */
-    @Test
-    void test_isDealable(){
-        Tile testTile = new Tile();
-        assertTrue(testTile.isDealable());
     }
 
     /**
