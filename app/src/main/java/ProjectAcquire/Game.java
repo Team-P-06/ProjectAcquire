@@ -1,4 +1,6 @@
 /**
+ * Game.java
+ *
  * MIT License
  *
  * Copyright (c) 2021 404
@@ -22,7 +24,7 @@
  * SOFTWARE.
  *
  * @author Team 404
- * @version v1.0.0
+ * @version v1.1.0
  */
 
 package ProjectAcquire;
@@ -36,20 +38,24 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Game class that can get the turns, start, load, or end a game
+ * Game class that will initialize the game with a new game or a loaded game
  */
 public class Game {
-   private @Getter @Setter GameState currentGameState;
+
+    /**
+     * Current instance of the gamestate and game.
+     */
+    private @Getter @Setter GameState currentGameState;
    private static Game instance;
 
     /**
      * Default constructor
      */
-    public Game(){}
+    private Game(){}
 
     /**
      * Get instance method for our singleton
-     * @return
+     * @return the current game instance or a new instance if there is not currently a game made.
      */
     public static Game getInstance(){
 
@@ -62,7 +68,7 @@ public class Game {
 
     /**
      * Turn method that will determine which players turn it is
-     * @return
+     * @return the current gamestate
      */
     public GameState getTurn(){
         return currentGameState;
@@ -71,8 +77,13 @@ public class Game {
      * Creates a gamestate and starts the game with a given gamestate that was loaded from a json file
      * @param game the loaded gamestate from a file
      */
+<<<<<<< HEAD
     @Generated //needs UI interaction for tile list
     public void loadGame(GameState game)throws IOException{
+=======
+
+    public void loadGame(GameState game){
+>>>>>>> 834af487e80773b743b20cc672d6cb9921686740
         loadCompanies(game);
         loadPlayers(game);
         for(Player player : game.getPlayerList()) {
@@ -134,75 +145,76 @@ public class Game {
 
     /**
      * Start game method that will begin a new game that isn't already saved
-     * This creates all the nessasary objects to create a gamestate, such as players, board, companies, and tiles.
-     * @param numOfPlayers The number of players the the user specified to start the game with
+     * This creates all the necessary objects to create a gamestate, such as players, board, companies, and tiles.
+     * @param numOfPlayers The number of players the user specified to start the game with
      * @throws IOException
      * @return The newly constructed gameState to start the game
      */
-    public GameState start(int numOfPlayers) throws IOException {
+    public GameState start(int numOfPlayers) {
         //queries for how many players there are, (UI), then adds x amount of players to a playerList.
-        LinkedList<Player> playerList = new LinkedList<Player>();
-        for (int i = 0; i < numOfPlayers; i++) {
-            List<Tile> newPlayerTileList = new ArrayList<>();
-            List<Stock> newPlayerStockList = new ArrayList<>();
-            Player newPlayer = new Player("Player " + (i+1), newPlayerTileList, 3000);
-            newPlayer.setStockList(newPlayerStockList);
-            playerList.add(newPlayer);
-        }
 
-        // Creates a list of chartered and unchartered companies (the unchartered list can be empty)
-        List<Company> charteredList = new ArrayList<>();
-        List<Company> uncharteredList = new ArrayList<>();
-        Company worldwideCo =  new Company("Worldwide", 0, false, false);
-        uncharteredList.add(worldwideCo);
-        Company SacksonCo =  new Company("Sackson", 0, false, false);
-        uncharteredList.add(SacksonCo);
-        Company festivalCo =  new Company("Festival", 0, false, false);
-        uncharteredList.add(festivalCo);
-        Company imperialCo =  new Company("Imperial", 0, false, false);
-        uncharteredList.add(imperialCo);
-        Company americanCo =  new Company("American", 0, false, false);
-        uncharteredList.add(americanCo);
-        Company continentalCo =  new Company("Continental", 0, false, false);
-        uncharteredList.add(continentalCo);
-        Company towerCo =  new Company("Tower", 0, false, false);
-        uncharteredList.add(towerCo);
-        Company defaultCo =  new Company("DEFAULT", 0, false, false); // for placed tiles but no company
-        uncharteredList.add(defaultCo);
-
-
-        // Creates a list of tiles with a int[] as a coordinate.
-        List<Tile> freeTileList = new ArrayList<>();
-        for (int r = 0; r < 9; r++){
-            for(int c = 0; c < 12; c++) {
-                Tile curTile = new Tile(defaultCo, new int[]{r, c});
-                freeTileList.add(curTile);
+            LinkedList<Player> playerList = new LinkedList<Player>();
+            for (int i = 0; i < numOfPlayers; i++) {
+                List<Tile> newPlayerTileList = new ArrayList<>();
+                List<Stock> newPlayerStockList = new ArrayList<>();
+                Player newPlayer = new Player("Player " + (i + 1), newPlayerTileList, 3000);
+                newPlayer.setStockList(newPlayerStockList);
+                playerList.add(newPlayer);
             }
+
+            // Creates a list of chartered and unchartered companies (the unchartered list can be empty)
+            List<Company> charteredList = new ArrayList<>();
+            List<Company> uncharteredList = new ArrayList<>();
+            Company worldwideCo = new Company("Worldwide", 0, false, false);
+            uncharteredList.add(worldwideCo);
+            Company SacksonCo = new Company("Sackson", 0, false, false);
+            uncharteredList.add(SacksonCo);
+            Company festivalCo = new Company("Festival", 0, false, false);
+            uncharteredList.add(festivalCo);
+            Company imperialCo = new Company("Imperial", 0, false, false);
+            uncharteredList.add(imperialCo);
+            Company americanCo = new Company("American", 0, false, false);
+            uncharteredList.add(americanCo);
+            Company continentalCo = new Company("Continental", 0, false, false);
+            uncharteredList.add(continentalCo);
+            Company towerCo = new Company("Tower", 0, false, false);
+            uncharteredList.add(towerCo);
+            Company defaultCo = new Company("DEFAULT", 0, false, false); // for placed tiles but no company
+            uncharteredList.add(defaultCo);
+
+
+            // Creates a list of tiles with a int[] as a coordinate.
+            List<Tile> freeTileList = new ArrayList<>();
+            for (int r = 0; r < 9; r++) {
+                for (int c = 0; c < 12; c++) {
+                    Tile curTile = new Tile(defaultCo, new int[]{r, c});
+                    freeTileList.add(curTile);
+                }
+            }
+        try {
+            //initialize a board/GameState
+            Board board = Board.getInstance(freeTileList, uncharteredList, charteredList, playerList);
+
+            GameState gameState = GameState.getInstance(board, playerList);
+            setCurrentGameState(gameState);
+            gameState.playTurn();
+            return gameState;
         }
+     catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
 
-        //initialize a board/GameState
-        Board board = Board.getInstance(freeTileList, uncharteredList, charteredList, playerList);
-
-        //6. initialize our GameState using 4, 1 as our parameters.
-        //ALEX NOTE: it seems that a GameState object holds exactly the same data as the Board object, since Board has the playerList just a thought.
-
-        GameState gameState =  GameState.getInstance(board, playerList);
-        setCurrentGameState(gameState);
-        gameState.playTurn();
-        return gameState;
     }
 
-    /**
-     * Run a game that is already saved from the gson file gathered from loadGame, (runs a game continuousely given starting data)
-     */
-    @Generated // deprecated
-    public void runGame() throws IOException {}
-
 
     /**
-     * Once a player ends the game on their turn the game will end using this method and determine the winner
+     * Resets the current board instance for a reset when necessary
      */
-    @Generated //deprecated
-    public void endGame(){ }
+    @Generated
+    public void setNull(){
+        instance = null;
+    }
+
 
 }

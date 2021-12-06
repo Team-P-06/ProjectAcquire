@@ -54,6 +54,11 @@ dependencies {
 
     // https://mvnrepository.com/artifact/com.google.flogger/flogger-system-backend
     implementation 'com.google.flogger:flogger-system-backend:0.7.1' //should maybe switch this to "runtime" at some point -Alex
+
+    // https://mvnrepository.com/artifact/org.mockito/mockito-all
+    testImplementation 'org.mockito:mockito-all:1.10.19'
+
+
 }
 
 application {

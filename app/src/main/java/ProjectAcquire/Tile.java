@@ -1,4 +1,6 @@
 /**
+ * Tile.java
+ *
  * MIT License
  *
  * Copyright (c) 2021 404
@@ -22,7 +24,7 @@
  * SOFTWARE.
  *
  * @author Team 404
- * @version v1.0.0
+ * @version v1.1.0
  */
 
 package ProjectAcquire;
@@ -78,7 +80,6 @@ public class Tile {
     @Generated //Tested when playing the game in the UI
     public String tileCoordToString() {
         String tileString;
-        //int[] coord = getCoord(); //deprecating since coord is an instance variable and we wont be editing it.
         int row = coord[0];
         String col = Integer.toString(coord[1] + 1);
         switch (row) {

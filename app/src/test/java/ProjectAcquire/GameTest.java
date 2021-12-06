@@ -21,9 +21,10 @@ public class GameTest {
     @Test
     void test_getTurn(){
         GameState test_Game = TestHelper.helperMethod_GameStateInit();
-        Game test = new Game();
+        Game test = Game.getInstance();
         test.setCurrentGameState(test_Game);
         assertNotNull(test.getTurn());
+        TestHelper.helperMethod_tearDownGame();
     }
 
     /**
@@ -31,8 +32,18 @@ public class GameTest {
      */
     @Test
     void test_getInstance(){
-        Game test = new Game();
-        assertNotNull(test.getInstance());
+        Game test = Game.getInstance();
+        assertNotNull(test);
+        TestHelper.helperMethod_tearDownGame();
+
+    }
+
+    @Test
+    void test_Start() {
+        Game test = Game.getInstance();
+        assertNull(test.start(3));
+        TestHelper.helperMethod_tearDownGame();
+
     }
 
     /**
@@ -40,9 +51,12 @@ public class GameTest {
      * @throws IOException
      */
     @Test
-    void test_Start() throws IOException {
-        Game test = new Game();
-        assertNotNull(test.start(2));
+    void test_loadGame(){
+        Game test = Game.getInstance();
+        GameState testGameState = TestHelper.helperMethod_GameStateInit();
+        test.loadGame(testGameState);
+        assertNotNull(Game.getInstance().getCurrentGameState());
+        TestHelper.helperMethod_tearDownGame();
     }
     /**
      * Test that makes sure the load players method properly loads the players into the game

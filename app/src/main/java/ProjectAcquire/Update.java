@@ -1,4 +1,6 @@
 /**
+ * Update.java
+ *
  * MIT License
  *
  * Copyright (c) 2021 404
@@ -22,7 +24,7 @@
  * SOFTWARE.
  *
  * @author Team 404
- * @version v1.0.0
+ * @version v1.1.0
  */
 
 package ProjectAcquire;
@@ -48,11 +50,16 @@ public class Update {
 
     /**
      * Main update logic that branches out and updates different parts of the UI(Player data, Board, Company stocks, and stock options
+     * @param gameState the current gamestate to update
      */
-    public void update(GameState gameState) throws IOException {
-        UIController.showBoardMenu(UIController.getGameBoardLoader());
-        hotelUpdater.update(gameState, UIController);
-        playerUpdater.update(gameState, UIController);
+    public void update(GameState gameState) {
+        try {
+            UIController.showBoardMenu(UIController.getGameBoardLoader());
+            hotelUpdater.update(gameState, UIController);
+            playerUpdater.update(gameState, UIController);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -89,8 +96,16 @@ public class Update {
         actionUpdater.update(gameState, UIController, true, null);
     }
 
-    public void nextTurnUI(GameState gameState) throws IOException {
+    /**
+     * When the next players turn is started, let them place tiles
+     * @param gameState the current gamestate
+     */
+    public void nextTurnUI(GameState gameState) {
         update(gameState);
-        boardUpdater.update(gameState, UIController, true);
+        try {
+            boardUpdater.update(gameState, UIController, true);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

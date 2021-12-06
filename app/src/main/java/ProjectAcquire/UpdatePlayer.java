@@ -1,4 +1,6 @@
 /**
+ * UpdatePlayer.java
+ *
  * MIT License
  *
  * Copyright (c) 2021 404
@@ -22,7 +24,7 @@
  * SOFTWARE.
  *
  * @author Team 404
- * @version v1.0.0
+ * @version v1.1.0
  */
 
 package ProjectAcquire;
@@ -88,12 +90,12 @@ public class UpdatePlayer implements Updatable{
         return playerNet;
     }
 
+    /**
+     * Sets the label to show whose turn it is
+     * @param currentPlayer the current player in the game
+     */
     private void updateCurrentPlayerLabel(Player currentPlayer){
         UIController.getCurrentPlayerTurnLabel().setText(currentPlayer.getName());
-    }
-
-    public void updateMergeOptions(){
-
     }
 
 }

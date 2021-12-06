@@ -1,4 +1,6 @@
 /**
+ * Player.java
+ *
  * MIT License
  *
  * Copyright (c) 2021 404
@@ -22,7 +24,7 @@
  * SOFTWARE.
  *
  * @author Team 404
- * @version v1.0.0
+ * @version v1.1.0
  */
 
 package ProjectAcquire;
@@ -55,7 +57,7 @@ public class Player{
     }
 
     /**
-     *
+     * Player constructor
      * @param name name of the player
      * @param tileHand the 6 tiles the player holds at any given time
      * @param money how much money they have

@@ -1,4 +1,6 @@
 /**
+ * UpdateBoard.java
+ *
  * MIT License
  *
  * Copyright (c) 2021 404
@@ -22,7 +24,7 @@
  * SOFTWARE.
  *
  * @author Team 404
- * @version v1.0.0
+ * @version v1.1.0
  */
 
 package ProjectAcquire;
@@ -56,7 +58,7 @@ public class UpdateBoard {
         updateSaveGameButton(gameState);
         UIController.getEndTurnButton().setVisible(false);
 
-        if(endGameCondion(gameState.getCurrentBoard().getCharteredCompanies())){ setEndGameButton(); }
+        if(endGameCondition(gameState.getCurrentBoard().getCharteredCompanies())){ setEndGameButton(); }
 
         for (Tile tile : allTileList) {
             if(!tile.isDealt()) { //Only add tiles that are not in a players hand
@@ -99,7 +101,7 @@ public class UpdateBoard {
 
     /**
      * Makes the tiles for the rest of the players. This will be a blank spot in the board
-     * @param tileList
+     * @param tileList the list of tiles belonging to the non current players
      */
     private void makeOtherPlayerTile(List<Tile> tileList) {
         for (Tile tile : tileList) {
@@ -112,8 +114,8 @@ public class UpdateBoard {
 
     /**
      * Default button style for the all the charted companies
-     * @param tileCom
-     * @return
+     * @param tileCom the name of the company
+     * @return a button
      */
     private Button setButtonProperties(String tileCom, boolean isFlipped) {
         Button currentButton = colorButton(tileCom, isFlipped);
@@ -124,8 +126,8 @@ public class UpdateBoard {
 
     /**
      * Uniquely colors each button based on their respective company.
-     * @param companyName
-     * @return
+     * @param companyName the name of the company accosted with the button on the board
+     * @return a button
      */
     private Button colorButton(String companyName, boolean isFlipped) {
         Button button = new Button();
@@ -148,9 +150,9 @@ public class UpdateBoard {
     /**
      * Check for the end game conditions if met, a chain has 41 or more tiles OR all hotel chains are permanent
      * All chain safe means that the total # of safe companies is 7.
-     * @return
+     * @return true or false based on the end game state
      */
-    private boolean endGameCondion(List<Company> charteredCom){
+    private boolean endGameCondition(List<Company> charteredCom){
         int numberOfPermanentCom = 0;
         for (Company curCompany : charteredCom){
             if (curCompany.getNumTiles() >= 41){ return true; }

@@ -1,4 +1,6 @@
 /**
+ * FXController.java
+ *
  * MIT License
  *
  * Copyright (c) 2021 404
@@ -22,7 +24,7 @@
  * SOFTWARE.
  *
  * @author Team 404
- * @version v1.0.0
+ * @version v1.1.0
  */
 
 package ProjectAcquire;
@@ -42,16 +44,13 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * Controller for actions of FXMLUI.
+ * Controller for actions of FXML.
  * All functions and variables that are used communicating with MainMenu.fxml need a @FXML proceeding them.
  */
 @Generated
 public class FXController {
     /**
-     * MainMenu UI logic and variables start here
-     */
-    /**
-     * Buttons, pane and lables for MainMenu
+     * Buttons, pane and labels for MainMenu
      */
     @FXML private Button newGameButton, loadGameMenuButton, exitGameButton;
     @FXML private Label loadGameLabel, player;
@@ -87,7 +86,7 @@ public class FXController {
 
     /**
      * fetches the main game menu screen.
-     * @return
+     * @return the FXMLLoader for loading a game scene
      */
     public FXMLLoader getGameBoardLoader() {
         FXMLLoader boardMenuLoader = new FXMLLoader(getClass().getResource("/GameBoard.fxml"));
@@ -97,6 +96,7 @@ public class FXController {
 
     /**
      * Button actions to begin a new game.
+     * @param numOfPlayers the number of players
      */
     private void newGame(int numOfPlayers) throws Exception { //ALEX NOTE: This will act as our main method as written.
         Update update = new Update();
@@ -122,7 +122,7 @@ public class FXController {
     }
 
     /**
-     * validates the player's choice of number of players is valid
+     * Validates the player's choice of number of players is valid
      * @param playerInput the player's input
      * @throws Exception
      */

@@ -1,4 +1,6 @@
 /**
+ * Company.java
+ *
  * MIT License
  *
  * Copyright (c) 2021 404
@@ -22,7 +24,7 @@
  * SOFTWARE.
  *
  * @author Team 404
- * @version v1.0.0
+ * @version v1.1.0
  */
 
 
@@ -73,8 +75,8 @@ public class Company {
     }
 
     /**
-     * Create a string with our instance variables inside of the class
-     * @return
+     * Create a string with our instance variables inside the class
+     * @return String representation of the company
      */
     @Override
     public String toString() {
@@ -90,7 +92,7 @@ public class Company {
     /**
      * Calculates the stock price of the companies based on how many tiles they hold
      *
-     * @return
+     * @return the price of the stock price for that particular comapny
      */
     public int calculateStockPrice() {
         int stockPrice = 0;
@@ -151,7 +153,7 @@ public class Company {
 
 
     /**
-     *
+     * Override equals methods for comparing companies
      * @param o A company object
      * @return Whether the passed in company equals our current company.
      */

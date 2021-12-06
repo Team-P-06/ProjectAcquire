@@ -1,4 +1,6 @@
 /**
+ * IOManager.java
+ *
  * MIT License
  *
  * Copyright (c) 2021 404
@@ -22,7 +24,7 @@
  * SOFTWARE.
  *
  * @author Team 404
- * @version v1.0.0
+ * @version v1.1.0
  */
 package ProjectAcquire;
 
@@ -41,7 +43,7 @@ public class IOManager {
     public void IOManager(){}
     /**
      * Save a current game being played with its current game state being converted to a json file
-     * @param saveThisGame
+     * @param saveThisGame the current gamestate to save
      */
     public String saveGame(GameState saveThisGame) throws IOException {
         Gson gson = new Gson();
@@ -56,7 +58,12 @@ public class IOManager {
     }
 
     /**
+<<<<<<< HEAD
      * Load game methods that will handle all of the loading of a saved json file
+=======
+     * Load game methods that will handle all the loading of a saved json file
+     * @param file Json file the contains the saved game objects
+>>>>>>> 834af487e80773b743b20cc672d6cb9921686740
      * @return The gamestate that was saved
      */
     public GameState loadGame(String file) throws FileNotFoundException{

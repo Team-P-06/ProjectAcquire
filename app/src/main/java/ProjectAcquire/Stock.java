@@ -1,4 +1,6 @@
 /**
+ * Stock.java
+ *
  * MIT License
  *
  * Copyright (c) 2021 404
@@ -22,7 +24,7 @@
  * SOFTWARE.
  *
  * @author Team 404
- * @version v1.0.0
+ * @version v1.1.0
  */
 
 
@@ -33,13 +35,17 @@ import lombok.Generated;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Stock object that holds a reference to it's parent company.
+ * This is an object given to players after buying stocks
+ */
 public class Stock {
 
     @Generated @Getter @Setter private Company parentCompany;
 
     /**
      * Custom constructor
-     * @param parentCmpany
+     * @param parentCompany
      */
     Stock(Company parentCompany){
         this.parentCompany = parentCompany;
@@ -57,9 +63,9 @@ public class Stock {
 
     /**
      * Calculates the max stock buy a player can buy from with their available money
-     * @param player
-     * @param company
-     * @return
+     * @param player the player who is buying stocks
+     * @param company the company that the stocks are from
+     * @return the maximum number of stocks a player can buy
      */
     public int maxStockBuy(Player player, Company company){
     return 0; //DEFAULT
