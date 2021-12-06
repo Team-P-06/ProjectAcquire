@@ -59,8 +59,8 @@ public class GameState {
     /**
      * Creates a GameSate for a game to be passed
      *
-     * @param currentBoard
-     * @param playerList
+     * @param currentBoard the board class that instantiated all our objects
+     * @param playerList the list of players in our game
      */
     public GameState(Board currentBoard, LinkedList<Player> playerList) {
         this.currentPlayer = playerList.get(0);
@@ -70,7 +70,7 @@ public class GameState {
 
     /**
      * Default get instance for singleton
-     * @return
+     * @return the single instance of GameState
      */
     @Generated
     public static GameState getInstance(){
@@ -82,7 +82,7 @@ public class GameState {
     }
 
     /**
-     *
+     * Gets the single instance of GameState
      * @param currentBoard The current Board
      * @param playerList The current list of players
      * @return A GameState instance
@@ -95,16 +95,12 @@ public class GameState {
         return instance;
     }
 
-    //Getters
-
     /**
      * @return true if the game is over
      */
     boolean isOver() {
         return this.isOver;
     }
-
-    //Setters
 
     /**
      * Sets whether the game is done or not
@@ -114,17 +110,14 @@ public class GameState {
         this.isOver = isOver;
     }
 
-
-
     /**
      * Sets the next players turn
      * @return the player that is at the top of the list but is not currentPlayer
      */
     public Player nextTurn() {
-
         return playerList.peekFirst();
-
     }
+
     /**
      * If a player has a tile in their hand they can lay on the board let the player place the tile
      * @return true if the player can place a tile
@@ -160,7 +153,7 @@ public class GameState {
 
     /**
      * Counts the number of tiles still able to be dealt to players
-     * @return Numer of tiles left
+     * @return Number of tiles left to deal to players
      */
     private int tilesLeft(){
         int numOfTilesLeft = 108;
@@ -175,7 +168,6 @@ public class GameState {
     /**
      * Sets the next player as the current and puts the player who just went to the back of the list.
      * This is called after stocks are sold.
-     *
      *
      * ALEX NOTE: We cannot test this due to UI elements, Ie. the update call.
      */
@@ -194,7 +186,7 @@ public class GameState {
 
 
     /**
-     * Deals initial cards to players, and... what else does this method need to do for playTurn to be able to run?
+     * Sets up the first player in the list to be the player to go first
      */
     public void setUpInitialTurn() {
         currentPlayer = playerList.peekFirst();
@@ -205,6 +197,7 @@ public class GameState {
      * This is called when you click a tile on the board.
      * Decides 1 of 4 actions based on how the tiles should be merged/created
      * @param tile tile that the player placed on the board.
+     * @param player the player who played the tile
      * @throws IOException
      */
     @Generated
@@ -264,7 +257,7 @@ public class GameState {
 
     @Generated
     /**
-     * Check to see if a company inside of the players company list is permanent
+     * Check to see if a company inside the players company list is permanent
      */
     public void checkPermanent(){
         for (Company com : currentBoard.getCharteredCompanies()) {
@@ -337,12 +330,15 @@ public class GameState {
     @Generated
     /**
      * Check to see if the game is over
-     * @return
+     * @return true or false based on if the game is over
      */
     public boolean getisOver(){
         return isOver;
     }
 
+    /**
+     * Sets the instance of the gameState to null
+     */
     @Generated
     public void setNull(){
         instance = null;

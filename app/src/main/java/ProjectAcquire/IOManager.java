@@ -41,7 +41,7 @@ public class IOManager {
     public void IOManager(){}
     /**
      * Save a current game being played with its current game state being converted to a json file
-     * @param saveThisGame
+     * @param saveThisGame the current gamestate to save
      */
     public String saveGame(GameState saveThisGame) throws IOException {
         Gson gson = new Gson();
@@ -56,7 +56,7 @@ public class IOManager {
     }
 
     /**
-     * Load game methods that will handle all of the loading of a saved json file
+     * Load game methods that will handle all the loading of a saved json file
      * @param file Json file the contains the saved game objects
      * @return The gamestate that was saved
      */

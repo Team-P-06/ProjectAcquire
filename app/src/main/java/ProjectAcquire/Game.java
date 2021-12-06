@@ -36,10 +36,14 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Game class that can get the turns, start, load, or end a game
+ * Game class that will initialize the game with a new game or a loaded game
  */
 public class Game {
-   private @Getter @Setter GameState currentGameState;
+
+    /**
+     * Current instance of the gamestate and game.
+     */
+    private @Getter @Setter GameState currentGameState;
    private static Game instance;
 
     /**
@@ -49,7 +53,7 @@ public class Game {
 
     /**
      * Get instance method for our singleton
-     * @return
+     * @return the current game instance or a new instance if there is not currently a game made.
      */
     public static Game getInstance(){
 
@@ -62,7 +66,7 @@ public class Game {
 
     /**
      * Turn method that will determine which players turn it is
-     * @return
+     * @return the current gamestate
      */
     public GameState getTurn(){
         return currentGameState;
@@ -133,8 +137,8 @@ public class Game {
 
     /**
      * Start game method that will begin a new game that isn't already saved
-     * This creates all the nessasary objects to create a gamestate, such as players, board, companies, and tiles.
-     * @param numOfPlayers The number of players the the user specified to start the game with
+     * This creates all the necessary objects to create a gamestate, such as players, board, companies, and tiles.
+     * @param numOfPlayers The number of players the user specified to start the game with
      * @throws IOException
      * @return The newly constructed gameState to start the game
      */
@@ -196,7 +200,9 @@ public class Game {
     }
 
 
-
+    /**
+     * Resets the current board instance for a reset when necessary
+     */
     @Generated
     public void setNull(){
         instance = null;
