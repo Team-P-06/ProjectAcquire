@@ -31,6 +31,7 @@ import javafx.scene.control.Button;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -42,7 +43,6 @@ public class UpdateAction{
 
     private FXController UIController;
     private GameState gameState;
-    //private Update update = new Update();
 
     /**
      * Updates the list of companies that you can buy stocks from. if merge is true, update via merge method with different choice UI.
@@ -62,7 +62,6 @@ public class UpdateAction{
 
         if(charter){ // Charter a new company
             showCharterMenu(gameState.getCurrentBoard().getUncharteredCompanies());
-           // System.out.println("UpdateAction.update() was reached");
         }
 
         else if(listOfMergingCompanies == null) { //If there is no merge. buy stocks
@@ -185,11 +184,19 @@ public class UpdateAction{
         }
     }
 
+    /**
+     * Simply sets an error label
+     */
     private void invalidInputError(){
         UIController.getInvalidInputLabel().setVisible(true);
         UIController.getInvalidInputLabel().setText("Invalid input");
     }
 
+    /**
+     * Gets the string from the user for a company when buying stocks
+     * @param companyAssociatedWithString what company the player is buying from
+     * @return the value of the user
+     */
     private String getBuyString(Company companyAssociatedWithString){
         String userValue = "";
             switch (companyAssociatedWithString.getCompanyName()){
@@ -252,9 +259,14 @@ public class UpdateAction{
             List<Company> companyListCopy = new ArrayList<>(defunctCompanies);
             Player curPlayer = playerListCopy.get(0);
             Company curDefunctCompanies = companyListCopy.get(0);
+            if (gameState.getPlayerList().size() == playerListCopy.size()){
+                mergePayout(defunctCompanies.get(0)); // Give merge payouts once per company
+            }
 
             if (validateMergeOptions(curDefunctCompanies, curPlayer)){ // If all the inputs are valid
                 UIController.getInvalidInputLabel().setText(""); // Clear any labels after a success
+                copyStocks(originalDefunctCompanies); // Makes sure stock references are correct before selling
+
                 sellTradeKeepStocks(curPlayer, winnerCo, curDefunctCompanies);
                 playerListCopy.remove(0);
 
@@ -262,21 +274,57 @@ public class UpdateAction{
                     showMergeInfo(winnerCo, companyListCopy, playerListCopy, originalDefunctCompanies);
                 }
                 else if (playerListCopy.size() == 0 && defunctCompanies.size() > 1){ // rotate the defunct company and give payouts
-
-                    mergePayout(defunctCompanies.get(0)); // Give merge payouts
-
                     companyListCopy.remove(0);
                     showMergeInfo(winnerCo, companyListCopy, gameState.getPlayerList(), originalDefunctCompanies);
                 }
                 else{ // When both lists are empty the merge turn ends and set the placed tile to be a part of the winner company.
-                    mergePayout(defunctCompanies.get(0)); // give merge payouts
-                    gameState.getCurrentBoard().mergeLogic(winnerCo, originalDefunctCompanies); // Merges the companies and updates the board.
+                    for(Company defunctCoList : originalDefunctCompanies){
+                        winnerCo.setNumTiles(winnerCo.getNumTiles() + defunctCoList.getNumTiles());
+                        defunctCoList.setNumTiles(0);
+                    }
+
+                    // Makes sure to fix any references when in a loaded game
+                    for(Company company : gameState.getCurrentBoard().getCharteredCompanies()) {
+                        if (company.getCompanyName().equals(winnerCo.getCompanyName())) {
+                            gameState.getCurrentBoard().getCharteredCompanies().remove(company);
+                            break;
+                        }
+                    }
+
                     Tile charterTile = CompanyLedger.getInstance().getCharterTile();
                     charterTile.setCompany(winnerCo);
-                    winnerCo.setNumTiles(winnerCo.getNumTiles() + 1);
-                    CompanyLedger.getInstance().setCharterComp(winnerCo);
+                    winnerCo.setNumTiles(winnerCo.getNumTiles() + 1); // Add the played tile to the total count of stocks
 
+                    gameState.getCurrentBoard().getCharteredCompanies().add(winnerCo);
+                    gameState.getCurrentBoard().mergeLogic(winnerCo, originalDefunctCompanies); // Merges the companies and updates the board.
+                    CompanyLedger.getInstance().setCharterComp(winnerCo);
                     gameState.setNextTurn();
+                }
+            }
+        }
+
+    /**
+     * This fixes an issues with references when loading a game.
+     * Effectively makes sure all the stocks for each player corresponds to the correct company.
+     * @param originalDefunctCompanies
+     */
+    private void copyStocks(List<Company> originalDefunctCompanies){
+            for(Company defunctCompany : originalDefunctCompanies) {
+
+                for (Player player : gameState.getPlayerList()) {
+                    int defunctStocks = player.countStocks(defunctCompany);
+                    Iterator<Stock> stockIter = player.getStockList().iterator();
+
+                    while (stockIter.hasNext()) {
+                        Stock curStock = stockIter.next();
+                        if (curStock.getParentCompany().getCompanyName().equals(defunctCompany.getCompanyName())) {
+                            stockIter.remove();
+                        }
+                    }
+
+                    for (int i = 0; i < defunctStocks; i++){
+                        player.getStockList().add(new Stock(defunctCompany));
+                    }
                 }
             }
         }
@@ -351,7 +399,6 @@ public class UpdateAction{
                     tiedMinorityPlayers.add(curPlayer);
                 }
             }
-
 
             if(listToReturn == 0) {
                 return tiedMajorityPlayers;
@@ -448,15 +495,15 @@ public class UpdateAction{
             choiceButton.setStyle("-fx-background-color: ffffff; -fx-border-color: black");
             choiceButton.setOnAction(a -> {
                 try {
-                   Tile charterTile = CompanyLedger.getInstance().getCharterTile();
-                   charterTile.setCompany(com);
-                   CompanyLedger.getInstance().setCharterComp(com);
+                    Tile charterTile = CompanyLedger.getInstance().getCharterTile();
+                    charterTile.setCompany(com);
+                    CompanyLedger.getInstance().setCharterComp(com);
                     gameState.addToACompany(com);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             });
-            if(com.getCompanyName() != "DEFAULT") {
+            if (!com.getCompanyName().equals("DEFAULT")) {
                 UIController.getActionChoiceObserList().add(choiceButton);
             }
         }

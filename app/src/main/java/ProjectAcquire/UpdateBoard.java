@@ -165,19 +165,6 @@ public class UpdateBoard {
      */
     private void setEndGameButton(){
         UIController.getEndGameButton().setVisible(true);
-        /*UIController.getEndGameListView().setVisible(true);
-        UIController.getEndGameObserListView().clear();
-        Button endGameButton = new Button();
-        endGameButton.setText("End Game");
-        endGameButton.setOnAction(c -> {
-            try {
-                UIController.endGame();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
-        UIController.getEndGameObserListView().add(endGameButton);
-        UIController.getEndGameListView().setItems(UIController.getEndGameObserListView());*/
     }
 
     /**
@@ -189,6 +176,7 @@ public class UpdateBoard {
         Button saveGameButton = UIController.getSaveGameButton();
         saveGameButton.setOnAction(a -> {
             saveGameButton.setText("Saved!");
+<<<<<<< HEAD
             try {
                 ioManager.saveGame(gameState);
             } catch (IOException e) {
@@ -196,5 +184,8 @@ public class UpdateBoard {
             }
         });
         ioManager.saveGame(gameState);
+=======
+            ioManager.saveGame(gameState);});
+>>>>>>> 7e60c6b1888e18cb1ec480b8da446b6c5706a638
     }
 }

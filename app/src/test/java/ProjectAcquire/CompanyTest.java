@@ -27,6 +27,7 @@ public class CompanyTest {
         assertNotNull(test.getInstance());
     }
 
+<<<<<<< HEAD
     /**
      * Tests that the hash method actually generates a proper hash code with the variables inside of company class
      */
@@ -34,5 +35,10 @@ public class CompanyTest {
     void test_Hash(){
         Company testCompany =  new Company();
         assertNotNull(testCompany.hashCode());
+=======
+    @Test void test_hashCode(){
+        Company helperComp = TestHelper.helperMethod_Company("DEFAULT");
+        assertNotEquals(0, helperComp.hashCode());
+>>>>>>> 7e60c6b1888e18cb1ec480b8da446b6c5706a638
     }
 }

@@ -31,8 +31,10 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.ConcurrentMap;
 
 /**
  * GameSate class that contains a games current status
@@ -269,17 +271,17 @@ public class GameState {
      */
     @Generated
     public void getTileChoice(Tile tile, Player player) throws Exception {
-        player.placeTile(tile); // Might want to move this when we implement dead tiles.
+        player.placeTile(tile);
         checkPermanent();
 
         int action = currentBoard.checkForActionInitiation(tile);
 
         if (action == 0) { // If not chartering then jump to buying stocks
-            System.out.println("ACTION 0");
+            playTurn();
             buyStocksInterrupt();
         }
         else if (action == 1){ // If we place a tile next to another empty tile.
-            System.out.println("ACTION 1");
+            playTurn();
             if(currentBoard.getUncharteredCompanies().size() > 1) { // If there are companies to charter (DEFAULT is always uncharted)
                 CompanyLedger.getInstance().setCharterTile(tile);
                 charterChoiceInterrupt(); // UI calls addToACompany -- > board.charter(playerChoice) --> buyInterrupt
@@ -287,14 +289,23 @@ public class GameState {
             else{ buyStocksInterrupt(); }
         }
         else if (action == 2){ // If we place a tile next to another company
+            playTurn();
             Company adjComp = new Company();
             for(Company com: currentBoard.companiesAroundTile(tile)){
                 if(!com.getCompanyName().equals("DEFAULT")){
                     adjComp = com;
                 }
             }
-            System.out.println("ACTION 2");
-            currentBoard.addToCompLogic(adjComp); //add flipped tile to adjacent company.
+
+            //This makes sure the reference to the company is correct when loading a game. Doesn't affect new games.
+            for(Company com : currentBoard.getCharteredCompanies()){
+                if (com.getCompanyName().equals(adjComp.getCompanyName())){
+                    adjComp.setNumTiles(com.getNumTiles());
+                    currentBoard.getCharteredCompanies().remove(com);
+                    break;
+                }
+            }
+            currentBoard.getCharteredCompanies().add(adjComp);
             buyStocksInterrupt();
         }
         else if( action == 3){ //If there is a merge action needed

@@ -108,6 +108,7 @@ public class TestHelper {
         testTileList.add(tile2);
         testTileList.add(tile3);
 
+        //System.out.println(testTileList);
         return testTileList;
     }
 
@@ -142,7 +143,7 @@ public class TestHelper {
      * Test helper that creates a custom board to be used for testing
      * @return a Board instance for testing
      */
-    @Before
+   // @Before
     static Board helperMethod_custom_board(){
 
         List<Tile> helperTileList = helperMethod_tileList_company1_3_coord_A1_A3();
@@ -154,15 +155,17 @@ public class TestHelper {
         List<Company> helperUncharteredCompanyList = helperMethod_CompanyList();
 
         List<Player> helperPlayerList = new ArrayList<Player>();
-        Player player = new Player();
+        Player player = helperMethod_custom_Player("Test1");
+        Player player2 = helperMethod_custom_Player("Test2");
         helperPlayerList.add(player);
+        helperPlayerList.add(player2);
 
 
         Board customBoard = Board.getInstance(helperTileList,helperUncharteredCompanyList,helperCharteredCompList,helperPlayerList);
         return customBoard;
     }
 
-    @After
+   // @After
     static void helperMethod_tearDownBoard(){
         Board oldBoard = helperMethod_custom_board();
         oldBoard.setNull();
@@ -226,6 +229,8 @@ public class TestHelper {
         //setCurrentGameState(gameState);
         return gameState;
     }
+
+
 
 
 

@@ -68,31 +68,78 @@ public class Game {
         return currentGameState;
     }
     /**
-     * Load game method that accepts a gson file to get the game state of a specific game
-     * @param game
+     * Creates a gamestate and starts the game with a given gamestate that was loaded from a json file
+     * @param game the loaded gamestate from a file
      */
     @Generated //Until we use the method
-    public void loadGame(String game)throws IOException{
-
-        //this.currentGameState = (gamestate that we pull from a file)
+    public void loadGame(GameState game)throws IOException{
+        loadCompanies(game);
+        loadPlayers(game);
+        for(Player player : game.getPlayerList()) {
+                loadTileList(game, player);
+            }
+            this.currentGameState = game;
     }
 
     /**
+     * When a game is loaded the references to the player tile list are not kept for some reason.
+     * This function refreshes the player tile list at the begging of the load with the loaded, correct, tile list.
+     * @param gameState the current loaded gameState
+     * @param player the player whom we are updating the tile list for.
+     */
+    private void loadTileList(GameState gameState, Player player){
+        List<Tile> playerTileListCopy = new ArrayList<>(player.getTileList());
+        player.getTileList().clear();
+
+            for (Tile playerTile : playerTileListCopy) {
+                for (Tile boardTile : gameState.getCurrentBoard().getTileList()) {
+                    if (playerTile.toString().equals(boardTile.toString())) {
+                        player.getTileList().add(boardTile);
+                        boardTile.setDealt(true);
+                    }
+                }
+            }
+        }
+
+    /**
+     * Makes sure all company references are correct when loading a game
+     * @param gameState the loaded gamestate
+     */
+    private void loadCompanies(GameState gameState){
+            List<Company> cCompanyListCopy = new ArrayList<>(gameState.getCurrentBoard().getCharteredCompanies());
+            List<Company> uCompanyListCopy = new ArrayList<>(gameState.getCurrentBoard().getUncharteredCompanies());
+            gameState.getCurrentBoard().getCharteredCompanies().clear();
+            gameState.getCurrentBoard().getUncharteredCompanies().clear();
+            for (Company cCompany : cCompanyListCopy){
+                gameState.getCurrentBoard().getCharteredCompanies().add(cCompany);
+            }
+
+            for (Company uCompany : uCompanyListCopy){
+                gameState.getCurrentBoard().getUncharteredCompanies().add(uCompany);
+            }
+        }
+
+    /**
+     * Makes sure all player references are correct when loading a game
+     * @param gameState the loaded gamestate
+     */
+    private void loadPlayers(GameState gameState) {
+            List<Player> playerListCopy = new ArrayList<>(gameState.getPlayerList());
+            gameState.getPlayerList().clear();
+            for (Player player : playerListCopy) {
+                gameState.getPlayerList().add(player);
+            }
+        }
+
+    /**
      * Start game method that will begin a new game that isn't already saved
+     * This creates all the nessasary objects to create a gamestate, such as players, board, companies, and tiles.
+     * @param numOfPlayers The number of players the the user specified to start the game with
+     * @throws IOException
+     * @return The newly constructed gameState to start the game
      */
     public GameState start(int numOfPlayers) throws IOException {
-        //Company defaultCompany = new Company("emptyCo", 0, false, false);
-
-        /*
-        precheck: UI initializes with a starting screen. Player chooses either to exit, start, or load. if load, then call the loadGame() function instead.
-
-        App starts the UI with start(Stage stage) (Not sure if that can be changed), but from there selecting new game can start this e.g: Game.start()
-       when the player hits the start button in the UI, the UI calls this method, which does the following:
-         */
-
-        //1. queries for how many players there are, (UI), then adds x amount of players to a playerList.
-        //This is just a static creation of players for now, will be more dynamic in the future.
-        //List<Tile> playerTileList = new ArrayList<>();
+        //queries for how many players there are, (UI), then adds x amount of players to a playerList.
         LinkedList<Player> playerList = new LinkedList<Player>();
         for (int i = 0; i < numOfPlayers; i++) {
             List<Tile> newPlayerTileList = new ArrayList<>();
@@ -102,7 +149,7 @@ public class Game {
             playerList.add(newPlayer);
         }
 
-        //2. creates our list of chartered and unchartered companies (the unchartered list can be empty)
+        // Creates a list of chartered and unchartered companies (the unchartered list can be empty)
         List<Company> charteredList = new ArrayList<>();
         List<Company> uncharteredList = new ArrayList<>();
         Company worldwideCo =  new Company("Worldwide", 0, false, false);
@@ -123,66 +170,40 @@ public class Game {
         uncharteredList.add(defaultCo);
 
 
-        //3. creates 2d list of tiles.
+        // Creates a list of tiles with a int[] as a coordinate.
         List<Tile> freeTileList = new ArrayList<>();
         for (int r = 0; r < 9; r++){
             for(int c = 0; c < 12; c++) {
                 Tile curTile = new Tile(defaultCo, new int[]{r, c});
                 freeTileList.add(curTile);
-              //  tl2D.get(r).add(curTile);
             }
         }
 
-
-
-        //4. initialize a board using 1-4 as our parameters (using getInstance())
+        //initialize a board/GameState
         Board board = Board.getInstance(freeTileList, uncharteredList, charteredList, playerList);
+<<<<<<< HEAD
 
         //6. initialize our GameState using 4, 1 as our parameters.
         //ALEX NOTE: it seems that a GameState object holds exactly the same data as the Board object, since Board has the playerList just a thought.
+=======
+>>>>>>> 7e60c6b1888e18cb1ec480b8da446b6c5706a638
         GameState gameState =  GameState.getInstance(board, playerList);
-
-
-        //7. call setCurrentGame() of Game using 6 as our parameter
         setCurrentGameState(gameState);
-        //gameState.playTurnNoUI();
         gameState.playTurn();
-
-        //if loadGame was called, then simply: setCurrentGame(loadGame())
-
-        //now we pass this to JavaFX (javafx calls this whole method)
-        //Game.start() is invoked upon the player hitting "new game". So FXController call Game.start()
-
         return gameState;
     }
 
     /**
      * Run a game that is already saved from the gson file gathered from loadGame, (runs a game continuousely given starting data)
      */
-    @Generated //Until we use the method
-    public void runGame() throws IOException {
-        //currentGameState.playTurn();
-        //while the game has not ended
-//        while(!currentGameState.isOver()){
-//            //game plays
-//            currentGameState.playTurnNoUI();
-//        }
-        /*for(int x=0;x<9;x++) {
-            currentGameState.playTurn();
-            //currentGameState.playTurnNoUI();
-            System.out.println("Current Player is: " + currentGameState.getCurrentPlayer());
-            int[] testCoord ={1,1};
-            System.out.println("Tiles around 1,1: " + currentGameState.getCurrentBoard().getTilesAround(testCoord));
-        }
-        System.out.println("Game.runGame() was finished");*/
-
-    }
+    @Generated // deprecated
+    public void runGame() throws IOException {}
 
 
     /**
      * Once a player ends the game on their turn the game will end using this method and determine the winner
      */
-    @Generated //Not used yet
-    public void endGame(){ }//We should probably move this to GameState.
+    @Generated //deprecated
+    public void endGame(){ }
 
 }
