@@ -4,10 +4,12 @@
  */
 package ProjectAcquire;
 
+import com.google.gson.Gson;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.jupiter.api.Test;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -229,9 +231,31 @@ public class TestHelper {
         //setCurrentGameState(gameState);
         return gameState;
     }
+    /**
+     * Test helper method for testing a saved game so we dont overwrite the original save game file
+     */
+    static String helperMethod_init_save(GameState saveThisGame) throws IOException {
+        Gson gson = new Gson();
+        GameState savedGameState = saveThisGame;
+        String jsonFile = gson.toJson(savedGameState);
+        FileWriter file = new FileWriter("./src/main/resources/SavedGames/SavedGameTest.txt");
+        file.write(jsonFile);
+        file.flush();
+        file.close();
 
+        return jsonFile;
+    }
+    /**
+     * Test helper method for testing a load game so we dont overwrite the original save game file
+     */
+    static GameState helperMethod_init_load() throws FileNotFoundException {
+            Gson converter = new Gson();
 
+            //readString with path.of(file) is causing the path exceptions io error when running gradle test not sure what to do here -Tyler
+            //String jsonString = Files.readString(Path.of(file)); // Added by Show, this resolved a loading error(Expected BEGIN_OBJECT but was STRING)
+            BufferedReader jsonString = new BufferedReader(new FileReader("./src/main/resources/SavedGames/SavedGameTest.txt"));
+            GameState savedGame = converter.fromJson(jsonString, GameState.class);
 
-
-
-}
+            return savedGame;
+        }
+    }
