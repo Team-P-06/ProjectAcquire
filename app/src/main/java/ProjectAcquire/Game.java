@@ -51,7 +51,7 @@ public class Game {
     /**
      * Default constructor
      */
-    private Game(){}
+    public Game(){}
 
     /**
      * Get instance method for our singleton
@@ -77,13 +77,8 @@ public class Game {
      * Creates a gamestate and starts the game with a given gamestate that was loaded from a json file
      * @param game the loaded gamestate from a file
      */
-<<<<<<< HEAD
     @Generated //needs UI interaction for tile list
-    public void loadGame(GameState game)throws IOException{
-=======
-
     public void loadGame(GameState game){
->>>>>>> 834af487e80773b743b20cc672d6cb9921686740
         loadCompanies(game);
         loadPlayers(game);
         for(Player player : game.getPlayerList()) {

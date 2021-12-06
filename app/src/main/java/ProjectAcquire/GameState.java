@@ -74,7 +74,6 @@ public class GameState {
      * Default get instance for singleton
      * @return the single instance of GameState
      */
-    @Generated
     public static GameState getInstance(){
 
         if(instance == null){
@@ -135,6 +134,7 @@ public class GameState {
     /**
      * recursively called play method that is called when a player decides to play their turn
      */
+    @Generated
     public void playTurn() {
 
             if (currentPlayer == null) {
@@ -257,7 +257,7 @@ public class GameState {
         }
     }
 
-    @Generated
+
     /**
      * Check to see if a company inside the players company list is permanent
      */
@@ -329,7 +329,7 @@ public class GameState {
         update.charterChoiceUI(this); //passes in the tile that caused the charter
     }
 
-    @Generated
+
     /**
      * Check to see if the game is over
      * @return true or false based on if the game is over
@@ -341,7 +341,6 @@ public class GameState {
     /**
      * Sets the instance of the gameState to null
      */
-    @Generated
     public void setNull(){
         instance = null;
     }

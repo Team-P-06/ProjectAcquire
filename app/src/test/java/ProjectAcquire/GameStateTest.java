@@ -200,6 +200,16 @@ public class GameStateTest {
         TestHelper.helperMethod_tearDownBoard();
         TestHelper.helperMethod_tearDownGameState();
     }
+
+    /**
+     * Make sure our instance is null for later use when we need it to be null
+     */
+    @Test
+    void test_Null(){
+        GameState test = TestHelper.helperMethod_GameStateInit();
+        test.setNull();
+        assertNotNull(test.getCurrentPlayer());
+    }
 }
 
 
